@@ -1,0 +1,20 @@
+body{
+    font-family: calibri, "Microsoft JhengHei", 微軟正黑體;
+}
+
+/* line 4, ../stylesheets/css_category_list.scss */
+#sortable .onDraging {
+  background-color: #FFE271;
+  color: #333;
+  font-weight: 900;
+}
+
+.form-group{
+    margin: 3px 0px;
+}
+
+.form-group > label:first-child{
+    font-size: 15px;
+    font-weight: 900;
+    line-height: 25px;
+}

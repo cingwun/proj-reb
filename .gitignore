@@ -1,0 +1,8 @@
+*.swp
+*.swo
+/bootstrap/compiled.php
+/app/storage/*
+composer.phar
+composer.lock
+.DS_Store
+Thumbs.db

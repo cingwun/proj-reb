@@ -1,0 +1,45 @@
+/*
+ * uploader
+ */
+.uploader #thumb {
+  padding: 1px;
+  border: 1px solid #CCC;
+  display: none;
+  margin: 0px 0px 5px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px; }
+.uploader .toolbar #progress {
+  height: 18px;
+  padding: 1px 0px;
+  margin-top: 5px;
+  display: none; }
+  .uploader .toolbar #progress .bar {
+    width: 0%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75);
+    color: #FEFEFE;
+    font-size: 12px;
+    text-align: center;
+    line-height: 18px;
+    -webkit-transition-property: all;
+    -moz-transition-property: all;
+    -o-transition-property: all;
+    transition-property: all;
+    -webkit-transition-duration: 0.2s;
+    -moz-transition-duration: 0.2s;
+    -o-transition-duration: 0.2s;
+    transition-duration: 0.2s;
+    -webkit-transition-timing-function: ease-out;
+    -moz-transition-timing-function: ease-out;
+    -o-transition-timing-function: ease-out;
+    transition-timing-function: ease-out; }
+
+/*
+ * form layout
+ */
+.radio-inline {
+  display: inline-table; }
+

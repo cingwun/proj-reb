@@ -1,0 +1,6 @@
+/* line 4, ../stylesheets/css_category_list.scss */
+#sortable .onDraging {
+  background-color: #FFE271;
+  color: #333;
+  font-weight: 900;
+}

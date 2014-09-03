@@ -1,0 +1,1 @@
+This is a image slider that it is used to specify case of rebeauty.

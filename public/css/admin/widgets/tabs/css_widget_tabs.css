@@ -1,0 +1,4 @@
+/*
+ * tabs
+ */
+.tab-box .order{width:60px}.tab-box .btn-bar{position:relative;float:right;display:table;bottom:-50px}.tab-box .btn-bar .btn-editbar,.tab-box .btn-bar .btn-storebar{display:none}.tab-box .btn-bar .btn-editbar.active,.tab-box .btn-bar .btn-storebar.active{display:block}.tab-box .nav-tabs{margin:0px}.tab-box .tab-content{width:100%;min-height:200px;max-height:450px;margin-bottom:10px}.tab-box .tab-content .tab-pane{width:auto;height:100%;min-height:360px;position:relative;padding:5px;border-left:1px solid #DDD;border-right:1px solid #DDD;border-bottom:1px solid #DDD}.tab-box .tab-content textarea.editor{display:none}
