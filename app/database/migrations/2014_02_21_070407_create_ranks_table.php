@@ -15,6 +15,7 @@ class CreateRanksTable extends Migration {
 		//
                 Schema::create('ranks', function($table)
                 {
+                        $table->dropIfExists();
                         $table->increments('id');
                         $table->string('title');
                         $table->string('link');

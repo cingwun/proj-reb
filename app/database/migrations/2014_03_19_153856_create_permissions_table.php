@@ -13,15 +13,16 @@ class CreatePermissionsTable extends Migration {
 	public function up()
 	{
 		//
-                Schema::create('permissions', function($table)
-                {
-                        $table->increments('id');
-                        $table->string('name')->unique();
-                        $table->string('title');
-                        $table->tinyInteger('status')->default(1);
-                        $table->integer('sort');
-                        $table->timestamps();
-                });
+        Schema::create('permissions', function($table)
+        {
+                $table->dropIfExists();
+                $table->increments('id');
+                $table->string('name')->unique();
+                $table->string('title');
+                $table->tinyInteger('status')->default(1);
+                $table->integer('sort');
+                $table->timestamps();
+        });
 	}
 
 	/**

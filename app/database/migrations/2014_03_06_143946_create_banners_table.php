@@ -15,18 +15,18 @@ class CreateBannersTable extends Migration {
 		//
         Schema::create('banners', function($table)
         {
+            $table->dropIfExists();
             $table->increments('bid');
             $table->string('title', 64);
 			$table->string('image', 256);
-            $table->enum('size', array('large', 'medium', 'small'))->index();
+            $table->enum('size', array('large', 'medium', 'small'));
             $table->string('link', 256);
             $table->enum('target', array('_self', '_blank'));
             $table->enum('status', array('0', '1'));
-            $table->integer('on_time', 11)->unsigned()->default(0);
-            $table->integer('off_time', 11)->unsigned()->default(0);
+            $table->integer('on_time', false, true);
+            $table->integer('off_time', false, true);
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
-            $table->primary('bid');
         });
 	}
 

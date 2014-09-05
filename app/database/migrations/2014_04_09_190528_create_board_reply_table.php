@@ -12,14 +12,14 @@ class CreateBoardReplyTable extends Migration {
 	 */
 	public function up(){
 		Schema::create('board_replys', function($table){
+			$table->dropIfExists();
 	        $table->engine = 'InnoDB';
-	        $table->increments('id')->unsigned();
+	        $table->increments('id');
 	        $table->string('tag', 128);
 	        $table->text('content');
-	        $table->integer('creator')->unsigned();
+	        $table->integer('creator', false, true);
 	        $table->dateTime('created_at');
-	        $table->integer('board_id')->unsigned();
-	        $table->primary('id');
+	        $table->integer('board_id', false, true);
 	        $table->index('board_id');
 	        $table->foreign('board_id')
 			      ->references('id')->on('board')

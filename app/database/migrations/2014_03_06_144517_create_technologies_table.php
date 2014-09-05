@@ -15,6 +15,7 @@ class CreateTechnologiesTable extends Migration {
 		//
                 Schema::create('technologies', function($table)
                 {
+                        $table->dropIfExists();
                         $table->increments('id');
                         $table->string('title');
                         $table->string('image');

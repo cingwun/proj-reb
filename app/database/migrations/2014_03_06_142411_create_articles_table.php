@@ -15,6 +15,7 @@ class CreateArticlesTable extends Migration {
 		//
                 Schema::create('articles', function($table)
                 {
+                        $table->dropIfExists();
                         $table->increments('id');
                         $table->string('title');
                         $table->text('description');
