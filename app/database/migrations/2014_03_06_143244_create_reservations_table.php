@@ -15,6 +15,7 @@ class CreateReservationsTable extends Migration {
 		//
                 Schema::create('reservations', function($table)
                 {
+                        $table->dropIfExists();
                         $table->increments('id');
                         $table->string('name');
                         $table->enum('sex', array('male', 'female'));

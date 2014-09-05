@@ -12,22 +12,22 @@ class CreateServiceFaqTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('service_faq', function($table)
-        {
-        		$table->engine = 'InnoDB';
-        		
-                $table->increments('id');
-                $table->enum('type', array('service','faq'));
-                $table->string('title',100);
-                $table->string('image',100);
-                $table->text('content');
-                $table->string('labels',128);
-                $table->text('tabs');
-                $table->string('_parent');
-                $table->integer('views');
-                $table->integer('sort');
-                $table->timestamps();
-                $table->enum('status', array('Y','N'));
+		Schema::create('service_faq', function($table){
+                        $table->dropIfExists();
+                	$table->engine = 'InnoDB';
+                        $table->increments('id');
+                        $table->enum('type', array('service','faq'));
+                        $table->string('title',100);
+                        $table->string('image',100);
+                        $table->text('content');
+                        $table->string('labels',128);
+                        $table->text('tabs');
+                        $table->string('_parent');
+                        $table->integer('views');
+                        $table->integer('sort');
+                        $table->timestamps();
+                        $table->enum('status', array('Y','N')
+                );
 
         });
 
@@ -42,15 +42,15 @@ class CreateServiceFaqTable extends Migration {
         	$table->integer('sort');
 
         	$table->index('sid');
-        	
-        	
+
+
         });
 
         Schema::table('service_faq_images', function($table)
         {
         	$table->foreign('sid')->references('id')->on('service_faq')->onDelete('cascade');
         });
-        
+
 	}
 
 	/**
@@ -64,7 +64,7 @@ class CreateServiceFaqTable extends Migration {
 		Schema::drop('service_faq_images');
 
 		Schema::drop('service_faq');
-		
+
 	}
 
 }

@@ -12,8 +12,9 @@ class CreateMemberTable extends Migration {
 	 */
 	public function up(){
 		Schema::create('members', function($table){
+			$table->dropIfExists();
 			$table->engine = 'InnoDB';
-	        $table->increments('id')->unsigned();
+	        $table->increments('id');
 	        $table->char('uid', 32);
 	        $table->enum('social', array('facebook', 'google'))->default('facebook');
 	        $table->string('password', 32)->nullable();
@@ -26,7 +27,6 @@ class CreateMemberTable extends Migration {
 	        $table->string('interest', 64)->nullable();
 	        $table->dateTime('created_at');
 	        $table->dateTime('updated_at');
-	        $table->primary('id');
 	        $table->unique(array('uid', 'social'));
 		});
 	}

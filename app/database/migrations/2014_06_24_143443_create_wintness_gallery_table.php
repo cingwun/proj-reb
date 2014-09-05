@@ -15,16 +15,16 @@ class CreateWintnessGalleryTable extends Migration {
 		//
         Schema::create('wintness_gallery', function($table)
         {
-            $table->increments('id')->unsigned();
+            $table->dropIfExists();
+            $table->increments('id');
             $table->string('title', 128);
             $table->string('link', 255);
             $table->enum('target', array('_blank', '_self'))->default('_self');
             $table->string('imageURL', 255);
-            $table->integer('sort', 11)->unsigned()->default(1);
+            $table->integer('sort', false, true)->default(1);
             $table->enum('status', array('0', '1'));
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
-            $table->primary('id');
             $table->index(array('sort', 'status', 'updated_at'));
         });
 	}
