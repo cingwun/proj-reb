@@ -23,11 +23,13 @@ if (in_array($locale, $languages)) {
 
 Route::group(array('prefix'=>$locale), function(){
 
+
     //Kettan test
     Route::get('iop', function(){
         return View::make('spa.iop');
     });
     Route::get('kettan', 'spa\\KettanController@kettan');
+
 
     //首頁
     Route::get('/', array('uses'=>'aesthetics\\IndexController@getIndex', 'as'=>'frontend.index'));
@@ -216,4 +218,11 @@ Route::group(array('prefix'=>'admin', 'before'=>'auth.admin'), function()
         //   sort
         Route::post('beautynews/sort/update', array('as'=>'admin.beautynews.sort.update', 'uses'=>'BeautyNewsController@postUpdateSort'));
 
+});
+/*
+ *  rebeauty spa admin
+ */
+Route::group(array('prefix'=>'adminSpa'), function(){
+
+    Route::get('/','spaAdmin\\TestController@test');
 });
