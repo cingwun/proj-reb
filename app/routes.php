@@ -22,7 +22,6 @@ if (in_array($locale, $languages)) {
 
 
 Route::group(array('prefix'=>$locale), function(){
-
     //首頁
     Route::get('/', array('uses'=>'aesthetics\\IndexController@getIndex', 'as'=>'frontend.index'));
 
@@ -210,4 +209,11 @@ Route::group(array('prefix'=>'admin', 'before'=>'auth.admin'), function()
         //   sort
         Route::post('beautynews/sort/update', array('as'=>'admin.beautynews.sort.update', 'uses'=>'BeautyNewsController@postUpdateSort'));
 
+});
+/*
+ *  rebeauty spa admin
+ */
+Route::group(array('prefix'=>'adminSpa'), function(){
+
+    Route::get('/','spaAdmin\\TestController@test');
 });
