@@ -23,6 +23,12 @@ if (in_array($locale, $languages)) {
 
 Route::group(array('prefix'=>$locale), function(){
 
+    //Kettan test
+    Route::get('iop', function(){
+        return View::make('spa.iop');
+    });
+    Route::get('kettan', 'spa\\KettanController@kettan');
+
     //首頁
     Route::get('/', array('uses'=>'aesthetics\\IndexController@getIndex', 'as'=>'frontend.index'));
 
