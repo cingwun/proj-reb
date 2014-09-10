@@ -142,7 +142,7 @@ Route::group(array('prefix'=>'admin', 'before'=>'auth.admin'), function()
         Route::get('banners/{size}', array('as'=>'admin.banners.list', 'uses'=>'BannersController@getList'));
 
         // test
-        Route::controller('test', 'TestController');
+        //Route::controller('test', 'TestController');
 
         //預約
         Route::resource('reservations','ReservationsController');
@@ -222,7 +222,17 @@ Route::group(array('prefix'=>'admin', 'before'=>'auth.admin'), function()
 /*
  *  rebeauty spa admin
  */
-Route::group(array('prefix'=>'adminSpa'), function(){
+Route::group(array('prefix'=>'admin/spa'), function()
+{
 
     Route::get('/','spaAdmin\\TestController@test');
+
+    /*
+     * Spa Articles
+     * 
+     */
+    Route::get('articles/list/{category?}', array('as'=>'spa.admin.articles.list', 'uses'=>'spaAdmin\\ArticleController@getList'));
+    Route::get('articles/create', array('as'=>'spa.admin.articles.action', 'uses'=>'spaAdmin\\ArticleController@getCreate'));
+    Route::post('articles/create', array('as'=>'spa.admin.articles.store', 'uses'=>'spaAdmin\\ArticleController@postCreate'));
+
 });

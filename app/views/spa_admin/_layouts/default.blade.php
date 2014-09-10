@@ -132,15 +132,14 @@
     <!-- /#wrapper -->
 
     <!-- jQuery Version 1.11.0 -->
-    <script src="spa_admin/js/jquery-1.11.0.js"></script>
-
+    
+    {{ HTML::style(asset('spa_admin/js/jquery-1.11.0.js'))}}
     <!-- Bootstrap Core JavaScript -->
-    <script src="spa_admin/js/bootstrap.min.js"></script>
-
+    {{ HTML::style(asset('spa_admin/js/bootstrap.min.js'))}}
     <!-- Morris Charts JavaScript -->
-    <script src="spa_admin/js/plugins/morris/raphael.min.js"></script>
-    <script src="spa_admin/js/plugins/morris/morris.min.js"></script>
-    <script src="spa_admin/js/plugins/morris/morris-data.js"></script>
+    {{ HTML::style(asset('spa_admin/js//plugins/morris/raphael.min.js'))}}
+    {{ HTML::style(asset('spa_admin/js/plugins/morris/morris.min.js'))}}
+    {{ HTML::style(asset('spa_admin/js/plugins/morris/morris-data.js'))}}
 
 </body>
 
