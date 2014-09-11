@@ -187,7 +187,7 @@ class ServiceFaqController extends BaseController{
      * @params (string) $type
      */
     public function postDelete($type){
-        $this->beforeAction($type);
+        var_dump($this->beforeAction($type));
         try{
             if (!isset($_POST) || !isset($_POST['id']))
                 throw new Exception('Error request [10]');
@@ -410,7 +410,7 @@ class ServiceFaqController extends BaseController{
             $model->tabs       = json_encode($tabs);
             $model->status     = Input::get('status');
             $model->_parent    = Input::get('category');
-            $model->created_at = time();
+            //$model->created_at = time();
             $model->updated_at = time();
             $model->save();
 
