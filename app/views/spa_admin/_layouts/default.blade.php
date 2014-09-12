@@ -27,7 +27,7 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
+    @yield('head');
 </head>
 
 <body>
@@ -120,7 +120,7 @@
                     </div>
                 </div>
                 <!-- /.row -->
-                <div class="row">
+                <div class='container'>
                     @yield('main')
                 </div>
                 <!-- /.row -->
@@ -132,16 +132,14 @@
     <!-- /#wrapper -->
 
     <!-- jQuery Version 1.11.0 -->
-    <script src="spa_admin/js/jquery-1.11.0.js"></script>
-
+    {{ HTML::style(asset('spa_admin/js/jquery-1.11.0.js'))}}
     <!-- Bootstrap Core JavaScript -->
-    <script src="spa_admin/js/bootstrap.min.js"></script>
-
+    {{ HTML::style(asset('spa_admin/js/bootstrap.min.js'))}}
     <!-- Morris Charts JavaScript -->
-    <script src="spa_admin/js/plugins/morris/raphael.min.js"></script>
-    <script src="spa_admin/js/plugins/morris/morris.min.js"></script>
-    <script src="spa_admin/js/plugins/morris/morris-data.js"></script>
-
+    {{ HTML::style(asset('spa_admin/js/plugins/morris/raphael.min.js'))}}
+    {{ HTML::style(asset('spa_admin/js/plugins/morris/morris.min.js'))}}
+    {{ HTML::style(asset('spa_admin/js/plugins/morris/morris-data.js'))}}
+    @yield('bottom')
 </body>
 
 </html>

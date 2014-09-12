@@ -213,7 +213,42 @@ Route::group(array('prefix'=>'admin', 'before'=>'auth.admin'), function()
 /*
  *  rebeauty spa admin
  */
-Route::group(array('prefix'=>'adminSpa'), function(){
+Route::group(array('prefix'=>'admin/spa'), function(){
 
     Route::get('/','spaAdmin\\TestController@test');
+
+    /*
+     * Display service list page
+     */
+    Route::get('service/article/list/{category?}', array('as'=>'spa.admin.service.article.list', 'uses'=>'spaAdmin\\ServiceController@getServiceList'));
+
+    /*
+     * Display service create/edit page
+     * @params (string) $id
+     */
+    Route::get('service/article/action/{id?}/{lan?}', array('as'=>'spa.admin.service.article.action', 'uses'=>'spaAdmin\\ServiceController@getServiceAction'));
+
+    /*
+     * Write(create/edit action) service data.
+     * @params (string) $id
+     */
+    Route::post('service/article/write/{id?}', array('as'=>'spa.admin.service.article.write', 'uses'=>'spaAdmin\\ServiceController@postWriteService'));
+
+    /*
+     * Delete Service.
+     * @param (string) $id
+     */
+    Route::get('service/article/delete/{id?}', array('as'=>'spa.admin.service.article.delete', 'uses'=>'spaAdmin\\ServiceController@postDeleteService'));
+
+    /*
+     * Display category list page
+     */
+    Route::get('service/category/list', array('as'=>'spa.admin.service.category.list', 'uses'=>'spaAdmin\\ServiceController@getCategoryList'));
+    
+    /*
+     * handle AJAX request of change category item
+     */
+    Route::post('service/category/action', array('as'=>'spa.admin.service.category.action', 'uses'=>'spaAdmin\\ServiceController@postCategoryAction'));
+    
+    Route::post('service/category/delete', array('as'=>'spa.admin.service.category.delete', 'uses'=>'spaAdmin\\ServiceController@postDeleteCategory'));
 });
