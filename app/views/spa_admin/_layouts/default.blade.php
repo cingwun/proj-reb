@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="adminApp">
 
 <head>
 
@@ -27,6 +27,9 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    {{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'); }}
+    {{ HTML::script('packages/angularjs/angular.min.js'); }}
 
 </head>
 
@@ -112,15 +115,13 @@
             <div class="container-fluid">
 
                 <!-- Page Heading -->
-                <div class="row">
-                    <div class="col-lg-12">
+                <div class="container">
                         <h1 class="page-header">
                             @yield('title')
                         </h1>
-                    </div>
                 </div>
                 <!-- /.row -->
-                <div class="container-fluid">
+                <div class="container">
                     @yield('main')
                 </div>
                 <!-- /.row -->
@@ -139,7 +140,9 @@
     <!-- Morris Charts JavaScript -->
     {{ HTML::style(asset('spa_admin/js//plugins/morris/raphael.min.js'))}}
     {{ HTML::style(asset('spa_admin/js/plugins/morris/morris.min.js'))}}
-    {{ HTML::style(asset('spa_admin/js/plugins/morris/morris-data.js'))}}
+    {{ HTML::style(asset('spa_admin/js/plugins/morris/morris-data.js'))}}   
+
+    @yield('bottom')
 
 </body>
 
