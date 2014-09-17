@@ -5,8 +5,11 @@
 @stop
 
 @section('main')
-<div class="col-lg-6">
-	<form action="<? if($action=="create"){echo URL::Route('spa.admin.articles.store');}?>" method="post" role="form">
+<div class="col-lg-12">
+	<form action="<? if($action=="create") echo URL::Route('spa.admin.articles.store');
+					 elseif($changeLan==null) echo URL::Route('spa.admin.articles.store')."/".$specArticle->id."/";
+					 else echo URL::Route('spa.admin.articles.store')."/".$specArticle->id."/".$changeLan; ?>" method="post" role="form">
+
 
 		
 		<div class="form-group">
@@ -14,7 +17,7 @@
 				<select name="category" class="form-control">
 					<option value="1" @if($action=="create" && $createCategory == 1 || $action=="update" && $specArticle->category==1) selected @endif>關於煥麗</option>
 					<option value="2" @if($action=="create" && $createCategory == 2 || $action=="update" && $specArticle->category==2) selected @endif>最新消息</option>
-					<option value="3" @if($action=="create" && $createCategory == 3 || $action=="update" && $specArticle->category==3) selected @endif>美麗分享</option>
+					<option value="3" @if($action=="create" && $createCategory == 3 || $action=="update" && $specArticle->category==3) selected @endif>海外專區</option>
 				</select>
 		</div>
 

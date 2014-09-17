@@ -27,7 +27,7 @@ class ArticleController extends \BaseController {
 			if(isset($_POST['category']))
 				$category = Input::get('category');
 			$selectedArticles[0] = $category;
-			$selectedArticles[1] = \SpaArticles::where('category',$category)->get();
+			$selectedArticles[1] = \SpaArticles::where('category',$category)->orderBy('sort', 'desc')->get();
 
 			return \View::make('spa_admin.articles.view_list', array('category'=>$category, 'selectedArticles'=>$selectedArticles));
 		}catch(Exception $e){
@@ -62,6 +62,7 @@ class ArticleController extends \BaseController {
 		
 		try
 		{
+			$nosort = 0;   
 			if(empty($id))
 				$article = new \SpaArticles;
 			elseif($changeLan=="modifyLanguage"){
@@ -82,8 +83,10 @@ class ArticleController extends \BaseController {
 				$refArticle->ref_id = $newArticle->id;
 				$refArticle->save();
 				return \Redirect::route('spa.admin.articles.list', array('category'=>$newArticle->category));
-			}else
+			}else{
 				$article = \SpaArticles::find($id);
+				$nosort = 1;
+			}
 
 			$article->title = \Input::get('title');
 			$article->content = \Input::get('content');
@@ -91,7 +94,7 @@ class ArticleController extends \BaseController {
 			$article->open_at = \Input::get('open_at');
 			$article->status = \Input::get('status');
 			$article->lan = \Input::get('lan');
-			$article->sort = \SpaArticles::max('sort')+1;
+			($nosort = 0) ? $article->sort = \SpaArticles::max('sort')+1 : $nosort = 1;
 			$article->save();
 			return \Redirect::route('spa.admin.articles.list', array('category'=>$article->category));
 		}catch(Exception $e)
@@ -114,14 +117,20 @@ class ArticleController extends \BaseController {
 				return \Redirect::route('spa.admin.articles.list');
 
 			$article = \SpaArticles::find($id);
+			$category = $article->category;
+			if($article->ref_id != 0){
+				$refArticle = \SpaArticles::where('id',"=",$article->ref_id)->first();
+				$refArticle->ref_id = 0;
+				$refArticle->save();
+			}
 			$article->delete();
-			return \Redirect::route('spa.admin.articles.list');
+			return \Redirect::route('spa.admin.articles.list', array('category'=>$category));
 		}catch(Exception $e){
 			return Redirect::route('spa.admin.articles.list', array('errorMessage'=>$e->getMessage()));
 		}
 	}
 
-	public function postSort()
+	/*public function postSort()
 	{
                 $sort = explode(',',Input::get('sort'));
 
@@ -144,6 +153,61 @@ class ArticleController extends \BaseController {
             Cache::put($key, $data, 2);
         }
         return $data;
+    }*/
+
+     public function postSort(){
+        try{
+            if (!isset($_POST) || !isset($_POST['id']) || !isset($_POST['sort']) || !isset($_POST['role']))
+                throw new Exception('Error request [10]');	
+
+            $id = (int) \Input::get('id');
+            $role = \Input::get('role');
+            $sort = (int) \Input::get('sort');
+            $isUpdatedTime = \Input::get('isUpdatedTime', false);
+            $lastUpdatedId = \Input::get('lastUpdatedId', false);
+
+            $model = \SpaArticles::find($id);
+            if (empty($model))
+                throw new Exception("Error request [11]");
+
+            $model->sort = $sort;
+
+            if (!$model->save())
+                throw new Exception("更新排序失敗，請通知工程師");
+
+            if ($isUpdatedTime){
+                $cmd = \SpaArticles::where('id', '<>', $id)
+                                 ->where('sort', '=', $sort)
+                                 ->where('id', '>=', $lastUpdatedId)
+                                 ->orderBy('sort', 'desc')
+                                 ->orderBy('updated_at', 'desc');
+                /*if ($role=='category')
+                    $cmd->where('_parent', '=', 'N');
+                else
+                    $cmd->where('_parent', '=', $model->_parent);*/
+
+                $items = $cmd->get();
+                if (sizeof($items)>0){
+                    $t = time();
+                    foreach($items as $key=>$item){
+                        $t = $t+$key;
+                        $item->updated_at = $t;
+                        $item->save();
+                    }
+                }
+            }
+
+            return \Response::json(array(
+                    'status' => 'ok',
+                    'message' => '更新排序完成',
+                ));
+
+        }catch(Exception $e){
+            return Response::json(array(
+                    'status' => 'error',
+                    'message' => $e->getMessage()
+                ));
+        }
     }
 
 

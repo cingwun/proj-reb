@@ -30,7 +30,12 @@
 
     {{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'); }}
     {{ HTML::script('packages/angularjs/angular.min.js'); }}
-
+    {{ HTML::script('packages/bootstrap/js/bootstrap.min.js'); }}
+    {{ HTML::script('packages/angularjs/angular.min.js'); }}
+    {{ HTML::script('js/admin/app.js'); }}
+    {{ HTML::style(asset('css/admin/css_global.css'))}}
+    {{ HTML::style('aesthetics/css/ckeditor.css'); }}
+    @yield('head')
 </head>
 
 <body>
@@ -134,13 +139,14 @@
 
     <!-- jQuery Version 1.11.0 -->
     
-    {{ HTML::style(asset('spa_admin/js/jquery-1.11.0.js'))}}
+    <!--{{ HTML::style(asset('spa_admin/js/jquery-1.11.0.js'))}}-->
+    {{ HTML::script('spa_admin/js/jquery-1.11.0.js'); }}
     <!-- Bootstrap Core JavaScript -->
-    {{ HTML::style(asset('spa_admin/js/bootstrap.min.js'))}}
+    {{ HTML::script(asset('spa_admin/js/bootstrap.min.js'))}}
     <!-- Morris Charts JavaScript -->
-    {{ HTML::style(asset('spa_admin/js//plugins/morris/raphael.min.js'))}}
-    {{ HTML::style(asset('spa_admin/js/plugins/morris/morris.min.js'))}}
-    {{ HTML::style(asset('spa_admin/js/plugins/morris/morris-data.js'))}}   
+    {{ HTML::script(asset('spa_admin/js/plugins/morris/raphael.min.js'))}}
+    {{ HTML::script(asset('spa_admin/js/plugins/morris/morris.min.js'))}}
+    {{ HTML::script(asset('spa_admin/js/plugins/morris/morris-data.js'))}}   
 
     @yield('bottom')
 

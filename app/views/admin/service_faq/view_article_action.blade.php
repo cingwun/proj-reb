@@ -84,10 +84,10 @@
 	{{ HTML::script(asset('js/admin/service_faq/js_action.js')) }}
     <script type="text/javascript">
         var imgUploader = _imageUploader({
-                el: '#image-box',
-                imageBoxMeta: {photoFieldName: 'images[]', descFieldName: 'imageDesc[]', delFieldName: 'deleteImages[]'},
-                isMultiple: true,
-                files: <?php echo json_encode($images) ?>
-            });
+            el: '#image-box',
+            imageBoxMeta: {photoFieldName: 'images[]', descFieldName: 'imageDesc[]', delFieldName: 'deleteImages[]'},
+            isMultiple: true,
+            files: <?php echo json_encode($images) ?>
+        });
     </script>
 @stop
