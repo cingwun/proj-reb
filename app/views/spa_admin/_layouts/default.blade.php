@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en" ng-app="adminApp">
+<html lang="en">
 
 <head>
 
@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Spa Admin 試做版</title>
+    <title>SB Admin - Bootstrap Admin Template</title>
 
     <!-- Bootstrap Core CSS -->
     
@@ -26,130 +26,121 @@
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+        <![endif]-->
+        {{ HTML::style(asset('css/admin/css_global.css'))}}
+        {{ HTML::style('aesthetics/css/ckeditor.css'); }}
+        @yield('head')
+    </head>
 
-    {{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'); }}
-    {{ HTML::script('packages/angularjs/angular.min.js'); }}
-    {{ HTML::script('packages/bootstrap/js/bootstrap.min.js'); }}
-    {{ HTML::script('packages/angularjs/angular.min.js'); }}
-    {{ HTML::script('js/admin/app.js'); }}
-    {{ HTML::style(asset('css/admin/css_global.css'))}}
-    {{ HTML::style('aesthetics/css/ckeditor.css'); }}
-    @yield('head')
-</head>
+    <body>
 
-<body>
+        <div id="wrapper">
 
-    <div id="wrapper">
-
-        <!-- Navigation -->
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.html">Rebeauty SPA</a>
-            </div>
-            
-            <!-- Top Menu Items -->
-            <ul class="nav navbar-right top-nav">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav side-nav">
-                    <li class="active">
-                        <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
-                    </li>
-                    <li>
-                        <a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
-                    </li>
-                    <li>
-                        <a href="tables.html"><i class="fa fa-fw fa-table"></i> Tables</a>
-                    </li>
-                    <li>
-                        <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Forms</a>
-                    </li>
-                    <li>
-                        <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
-                    </li>
-                    <li>
-                        <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>
-                    </li>
-                    <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="demo" class="collapse">
+            <!-- Navigation -->
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="index.html">Rebeauty SPA</a>
+                </div>
+                
+                <!-- Top Menu Items -->
+                <ul class="nav navbar-right top-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
                             <li>
-                                <a href="#">Dropdown Item</a>
+                                <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
                             </li>
                             <li>
-                                <a href="#">Dropdown Item</a>
+                                <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="blank-page.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>
-                    </li>
                 </ul>
-            </div>
+            </nav>
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <ul class="nav navbar-nav side-nav">
+                <li class="active">
+                    <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                </li>
+                <li>
+                    <a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
+                </li>
+                <li>
+                    <a href="tables.html"><i class="fa fa-fw fa-table"></i> Tables</a>
+                </li>
+                <li>
+                    <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Forms</a>
+                </li>
+                <li>
+                    <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
+                </li>
+                <li>
+                    <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>
+                </li>
+                <li>
+                    <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
+                    <ul id="demo" class="collapse">
+                        <li>
+                            <a href="#">Dropdown Item</a>
+                        </li>
+                        <li>
+                            <a href="#">Dropdown Item</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="blank-page.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>
+                </li>
+            </ul>
             <!-- /.navbar-collapse -->
-        </nav>
+            <div id="page-wrapper">
+                <div class="container-fluid">
 
-        <div id="page-wrapper">
-            <div class="container-fluid">
-
-                <!-- Page Heading -->
-                <div class="container">
-                        <h1 class="page-header">
-                            @yield('title')
-                        </h1>
+                    <!-- Page Heading -->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h1 class="page-header">
+                                @yield('title')
+                            </h1>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                    <div class='container'>
+                        @yield('main')
+                    </div>
+                    <!-- /.row -->
                 </div>
-                <!-- /.row -->
-                <div class="container">
-                    @yield('main')
-                </div>
-                <!-- /.row -->
+                <!-- /.container-fluid -->
             </div>
-            <!-- /.container-fluid -->
+            <!-- /#page-wrapper -->
         </div>
-        <!-- /#page-wrapper -->
-    </div>
-    <!-- /#wrapper -->
+        <!-- /#wrapper -->
 
-    <!-- jQuery Version 1.11.0 -->
-    
-    <!--{{ HTML::style(asset('spa_admin/js/jquery-1.11.0.js'))}}-->
-    {{ HTML::script('spa_admin/js/jquery-1.11.0.js'); }}
-    <!-- Bootstrap Core JavaScript -->
-    {{ HTML::script(asset('spa_admin/js/bootstrap.min.js'))}}
-    <!-- Morris Charts JavaScript -->
-    {{ HTML::script(asset('spa_admin/js/plugins/morris/raphael.min.js'))}}
-    {{ HTML::script(asset('spa_admin/js/plugins/morris/morris.min.js'))}}
-    {{ HTML::script(asset('spa_admin/js/plugins/morris/morris-data.js'))}}   
+        <!-- jQuery Version 1.11.0 -->
+        {{ HTML::script(asset('spa_admin/js/jquery-1.11.0.js'))}}
+        <!-- Bootstrap Core JavaScript -->
+        {{ HTML::script(asset('spa_admin/js/bootstrap.min.js'))}}
+        <!-- Morris Charts JavaScript -->
+        {{ HTML::script('packages/angularjs/angular.min.js'); }}
+        {{ HTML::script('js/admin/app.js'); }}
+        {{ HTML::script('spa_admin/js/plugins/morris/raphael.min.js')}}
+        <!-- {{ HTML::script(asset('spa_admin/js/plugins/morris/morris.min.js'))}}
+        {{ HTML::script(asset('spa_admin/js/plugins/morris/morris-data.js'))}} -->
+        @yield('bottom')
+    </body>
 
-    @yield('bottom')
-
-</body>
-
-</html>
+    </html>

@@ -222,7 +222,7 @@ Route::group(array('prefix'=>'admin', 'before'=>'auth.admin'), function()
 /*
  *  rebeauty spa admin
  */
-Route::group(array('prefix'=>'admin/spa'), function()
+Route::group(array('prefix'=>'admin/spa', 'before'=>'auth.admin'), function()
 {
 
     Route::get('/','spaAdmin\\TestController@test');

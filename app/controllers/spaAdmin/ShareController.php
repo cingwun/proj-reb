@@ -11,10 +11,10 @@ class ShareController extends \BaseController {
         $cmd = new \SpaShares;
         $rowsNum = $cmd->count();
         $articles = $cmd->orderBy('sort', 'desc')
-                        ->orderBy('updated_at', 'desc')
-                        ->skip($offset)
-                        ->take($limit)
-                        ->get();
+        ->orderBy('updated_at', 'desc')
+        ->skip($offset)
+        ->take($limit)
+        ->get();
 
         $widgetParam = array(
             'currPage' => $page,
@@ -23,12 +23,12 @@ class ShareController extends \BaseController {
             'URL' => null,
             'route' => 'spa.admin.share.article.list',
             'params' => &$params
-        );
+            );
 
         return \View::make('spa_admin.shares.view_shares_list', array(
             'articles' => &$articles,
             'pagerParam' => &$widgetParam
-        ));
+            ));
     }
 
     /*
@@ -51,21 +51,21 @@ class ShareController extends \BaseController {
                 //'after' => array('fieldName'=>'img_after', 'items'=>null),
                 'image' => array('fieldName'=>'image', 'items'=>null),
                 'gallery' => array('fieldName'=>'gallery', 'items'=>null),
-            );
+                );
 
             foreach($imgUploaderList as $key=>$val){
                 $value = \Arr::get($article, $val['fieldName'], null);
                 $imgUploaderList[$key]['items']  = (empty($value)) ? array() : json_decode($value, true);
                 if(isset($changeLang))
-                    $imgUploaderList[$key]['items'] = array();   //I force users upload images while modifying tw/cn lang 'cause I can not fix the bug
-                                                                 // that if user delete reference article and the other's images will be delete, too. Kettan
+                    $imgUploaderList[$key]['items'] = array();   //I force users upload images while modifying tw/cn lang 'cause I can not fix the bug 
+                                                                 //that if user delete reference article and the other's images will be delete, too. Kettan
             }
 
             // detect whether the request has spa_shares_tabs or not
             $rows = \SpaSharesTabs::where('type', '=', 'shares')
-                            ->where('item_id', '=', $article['id'])
-                            ->orderBy('sort', 'asc')
-                            ->get(array('title', 'content', 'sort'));
+            ->where('item_id', '=', $article['id'])
+            ->orderBy('sort', 'asc')
+            ->get(array('title', 'content', 'sort'));
 
             $tabItems = array();
             if (!empty($rows)){
@@ -81,33 +81,52 @@ class ShareController extends \BaseController {
                             'title' => $tab,
                             'content' => $tabContents[$key],
                             'sort' => $order
-                        );
+                            );
                     }
                 }
             }
 
             //For Label Using
-            /*$labelItmes = array('service'=>array(), 'faq'=>array());
-            $list = ServiceFaq::where("status", "=", 'Y')
-                              ->where('_parent', '<>', 'N')
+            $labelItems = array('service'=>array(), 'product'=>array());
+            $items = \SpaService::where('_parent', '<>', 'N')
+                    ->orderBy('_parent', 'desc')
+                    ->orderBy('sort', 'desc')
+                    ->orderBy('updated_at', 'desc')
+                    ->get(array('id', 'title'));
+            foreach($items as $item)
+                $labelItems['service'][$item->id] = $item->title;
+            
+            $items = \SpaProduct::where('_parent', '<>', 'N')
+                    ->orderBy('_parent', 'desc')
+                    ->orderBy('sort', 'desc')
+                    ->orderBy('updated_at', 'desc')
+                    ->get(array('id', 'title'));
+            foreach($items as $item)
+                $labelItems['product'][$item->id] = $item->title;
+
+            $labelSelected = \SpaSharesLabels::where('share_id', '=', $article['id'])
+                                              ->lists('label_id');
+
+            /*$labelItmes = array('service'=>array(), 'product'=>array());
+            $list = \SpaService::where('_parent', '<>', 'N')
                               ->orderBy('_parent', 'desc')
                               ->orderBy('sort', 'desc')
                               ->orderBy('updated_at', 'desc')
-                              ->get(array('id', 'title', 'type'));
+                              ->get(array('id', 'title'));
             foreach($list as $item)
-                $labelItmes[$item->type][$item->id] = $item->title;
+                $labelItmes['service'][$item->id] = $item->title;
 
             $labelSelected = WintnessLabels::where('wid', '=', $article['id'])
-                                           ->lists('label_id');*/
-
+            ->lists('label_id');*/
+            
             return \View::make('spa_admin.shares.view_shares_action', array(
                 'article'=>$article,
-                'labelItems' => &$labelItmes,
+                'labelItems' => &$labelItems,
                 'labelSelected' => &$labelSelected,
                 'tabItems' => &$tabItems,
                 'imgUploaderList' => &$imgUploaderList,
                 'changeLang' => &$changeLang
-            ));
+                ));
 
         }catch(Exception $e){
             return Redirect::route('spa_admin.shares.view_shares_list', array('errorMessage'=>$e->getMessage()));
@@ -155,7 +174,7 @@ class ShareController extends \BaseController {
                 //'before' => array('fieldName'=>'img_before', 'items'=>null),
                 'image' => array('fieldName'=>'img', 'items'=>null),
                 'gallery' => array('fieldName'=>'galle', 'items'=>null),//////////////////////////////////////////////
-            );
+                );
 
 
 
@@ -178,7 +197,7 @@ class ShareController extends \BaseController {
                         'id' => basename($image),
                         'image' => $image,
                         'text' => $imagesDesc[$idx],
-                    );
+                        );
                 }
 
                 $imgUploaderList[$key]['items'] = $list;
@@ -209,6 +228,19 @@ class ShareController extends \BaseController {
                 $refmodel->save();
             }
 
+            \SpaSharesLabels::where('share_id', '=', $model->id)
+            ->delete();
+
+            $types = array('service', 'product');
+            foreach($types as $type){
+                $fieldName = 'label_' . $type;
+                $labels  = \Input::get($fieldName, array());
+                foreach ($labels as $label){
+                    \SpaSharesLabels::create(array('share_id'=>(int) $model->id, 'label_id'=>((int) $label)));
+                    $insertShare[] = $label;
+                }
+            }
+
 
             /*WintnessLabels::where('wid', '=', $model->id)
                           ->delete();
@@ -219,34 +251,34 @@ class ShareController extends \BaseController {
                 $labels  = \Input::get($fieldName, array());
                 foreach ($labels as $label)
                     WintnessLabels::create(array('wid'=>(int) $model->id, 'label_id'=>((int) $label)));
-            }*/
+                }*/
 
-            \SpaSharesTabs::where('type', '=', 'shares')
-                        ->where('item_id', '=', $model->id)
-                        ->delete();
+                \SpaSharesTabs::where('type', '=', 'shares')
+                ->where('item_id', '=', $model->id)
+                ->delete();
             // collect SpaSharesTabs
-            $tabContents = \Input::get('tabContents', array());
-            $tabs        = array();
-            $tabName = \Input::get('tabName', array());
-            $order = 1;
-            foreach ($tabName as $key => $tab){
-                if (!isset($tabContents[$key]))
-                    continue;
-                else
-                    $tabInner = new \SpaSharesTabs;
+                $tabContents = \Input::get('tabContents', array());
+                $tabs        = array();
+                $tabName = \Input::get('tabName', array());
+                $order = 1;
+                foreach ($tabName as $key => $tab){
+                    if (!isset($tabContents[$key]))
+                        continue;
+                    else
+                        $tabInner = new \SpaSharesTabs;
                     $tabInner->type = 'shares';
                     $tabInner->item_id = $model->id;
                     $tabInner->title = $tab;
                     $tabInner->content = $tabContents[$key];
                     $tabInner->sort = $order++;
                     $tabInner->save();
-            }
+                }
 
-            return \Redirect::route('spa.admin.share.article.list', array('page'=>1, 'message'=>'success'));
-        }catch (Exception $e) {
-            return Redirect::back()->withInput()->withErrors($e->getMessage());
+                return \Redirect::route('spa.admin.share.article.list', array('page'=>1, 'message'=>'success'));
+            }catch (Exception $e) {
+                return Redirect::back()->withInput()->withErrors($e->getMessage());
+            }
         }
-    }
 
 
     /*
@@ -322,10 +354,10 @@ class ShareController extends \BaseController {
                 //$orm = ($type=='gallery') ? 'WintnessGallery' : 'Wintness';
                 $orm = 'SpaShares';
                 $cmd = $orm::where('id', '<>', $id)
-                           ->where('sort', '=', $sort)
-                           ->where('id', '>=', $lastUpdatedId)
-                           ->orderBy('sort', 'desc')
-                           ->orderBy('updated_at', 'desc');
+                ->where('sort', '=', $sort)
+                ->where('id', '>=', $lastUpdatedId)
+                ->orderBy('sort', 'desc')
+                ->orderBy('updated_at', 'desc');
 
                 $items = $cmd->get();
                 if (sizeof($items)>0){
@@ -339,14 +371,14 @@ class ShareController extends \BaseController {
             }
 
             return \Response::json(array(
-                    'status' => 'ok',
-                    'message' => '更新排序完成',
+                'status' => 'ok',
+                'message' => '更新排序完成',
                 ));
 
         }catch(Exception $e){
             return \Response::json(array(
-                    'status' => 'error',
-                    'message' => $e->getMessage()
+                'status' => 'error',
+                'message' => $e->getMessage()
                 ));
         }
     }
