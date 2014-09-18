@@ -213,20 +213,25 @@ Route::group(array('prefix'=>'admin', 'before'=>'auth.admin'), function()
 /*
  *  rebeauty spa admin
  */
+//, 'before'=>'auth.admin'
 Route::group(array('prefix'=>'admin/spa'), function(){
 
-    Route::get('/','spaAdmin\\TestController@test');
+    Route::get('/',array('as'=>'spa.admin.index', 'uses'=>function(){
+        return \View::make('spa_admin._layouts.default');
+    }));
 
+    /*----------Service----------*/
     /*
      * Display service list page
      */
-    Route::get('service/article/list/{category?}', array('as'=>'spa.admin.service.article.list', 'uses'=>'spaAdmin\\ServiceController@getServiceList'));
+    Route::get('service/article/list/', array('as'=>'spa.admin.service.article.list', 'uses'=>'spaAdmin\\ServiceController@getServiceList'));
 
     /*
      * Display service create/edit page
      * @params (string) $id
+    * @params (string) $lang
      */
-    Route::get('service/article/action/{id?}/{lan?}', array('as'=>'spa.admin.service.article.action', 'uses'=>'spaAdmin\\ServiceController@getServiceAction'));
+    Route::get('service/article/action/{id?}/{lang?}', array('as'=>'spa.admin.service.article.action', 'uses'=>'spaAdmin\\ServiceController@getServiceAction'));
 
     /*
      * Write(create/edit action) service data.
@@ -244,11 +249,76 @@ Route::group(array('prefix'=>'admin/spa'), function(){
      * Display category list page
      */
     Route::get('service/category/list', array('as'=>'spa.admin.service.category.list', 'uses'=>'spaAdmin\\ServiceController@getCategoryList'));
-    
+
     /*
      * handle AJAX request of change category item
      */
     Route::post('service/category/action', array('as'=>'spa.admin.service.category.action', 'uses'=>'spaAdmin\\ServiceController@postCategoryAction'));
     
+    /*
+     * hadnle AJAX request for delete category
+     */
     Route::post('service/category/delete', array('as'=>'spa.admin.service.category.delete', 'uses'=>'spaAdmin\\ServiceController@postDeleteCategory'));
+
+    /*
+     * handle AJAX request of change sort 
+     */
+    Route::post('service/sort/update', array('as'=>'spa.admin.service.sort.update', 'uses'=>'spaAdmin\\ServiceController@postUpdateSort'));
+
+    /*----------product----------*/
+    /*
+     * Display product list.
+     */
+    Route::get('product/article/list/', array('as'=>'spa.admin.product.article.list', 'uses'=>'spaAdmin\\ProductController@getProductList'));
+    
+    /*
+     * Display product create/edit page.
+     * @params (string) $id
+     * @params (string) $lang
+     */
+    Route::get('product/article/action/{id?}/{lang?}', array('as'=>'spa.admin.product.article.action', 'uses'=>'spaAdmin\\ProductController@getProductAction'));
+
+    /*
+     * Write(create/edit action) product data.
+     * @params (string) $id
+     */
+    Route::post('product/article/write/{id?}', array('as'=>'spa.admin.product.article.write', 'uses'=>'spaAdmin\\ProductController@postWriteProduct'));
+
+    /*
+     * Delete Service.
+     * @param (string) $id
+     */
+    Route::get('product/article/delete/{id?}', array('as'=>'spa.admin.product.article.delete', 'uses'=>'spaAdmin\\ProductController@postDeleteProduct'));
+
+    /*
+     * Display category list page
+     */
+    Route::get('product/category/list', array('as'=>'spa.admin.product.category.list', 'uses'=>'spaAdmin\\ProductController@getCategoryList'));
+
+    /*
+     * handle AJAX request of change category item
+     */
+    Route::post('product/category/action', array('as'=>'spa.admin.product.category.action', 'uses'=>'spaAdmin\\ProductController@postCategoryAction'));
+
+    /*
+     * hadnle AJAX request for delete category
+     */
+    Route::post('product/category/delete', array('as'=>'spa.admin.product.category.delete', 'uses'=>'spaAdmin\\ProductController@postDeleteCategory'));
+
+    /*
+     * handle AJAX request of change sort 
+     */
+    Route::post('product/sort/update', array('as'=>'spa.admin.product.sort.update', 'uses'=>'spaAdmin\\ProductController@postUpdateSort'));
+
+    /*----------reservation----------*/
+
+    /*
+     * Display reservation list page
+     */
+    Route::get('reservation/list', array('as'=>'spa.admin.reservation.list', 'uses'=>'spaAdmin\\ReservationController@getReservationList'));
+
+    /*
+     * AJAX request for reservation details
+     */
+    Route::post('reservation/details', array('as'=>'spa.admin.reservation.details', 'uses'=>'spaAdmin\\ReservationController@postReservationDetails'));
 });

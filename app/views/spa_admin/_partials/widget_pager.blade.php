@@ -54,7 +54,7 @@
     $qs .= (!empty($qs)) ? '&' : '';
     $url .= '?' . $qs . 'page=';
 
-    $pageList = '<div class="pagination"><ul>';
+    $pageList = '<ul class="pagination">';
 
 
     if (($currPage-1)>0){
@@ -72,5 +72,5 @@
 	if (($currPage+1)<=$totalPage)
 		$pageList .= sprintf('<li><a href="%s" title="上一頁">»</a></li>', createURL($url, $qs, $route, $params, ($currPage+1)));
 
-	echo $pageList .= '</ul></div>';
+	echo $pageList .= '</ul>';
 ?>

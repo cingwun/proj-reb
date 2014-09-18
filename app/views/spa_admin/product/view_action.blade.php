@@ -2,9 +2,9 @@
 
 @section('title')
 @if($action == 'create')
-新增服務項目
+新增產品項目
 @elseif($action == 'edit')
-編輯服務項目
+編輯產品項目
 @endif
 
 @if($ref == '0')
@@ -19,7 +19,7 @@
 <form action='{{$write_url}}' method="post" enctype="multipart/form-data">
 	<div class="form-group">
 		<label>標題</label>
-		<input class="form-control" type="text" name="title" value="@if($action == 'edit'){{$service->title}}@endif"/>
+		<input class="form-control" type="text" name="title" value="@if($action == 'edit'){{$product->title}}@endif"/>
 	</div>
 	@include('spa_admin._partials.widget_imageUploader', array('options'=>array('elementId'=>'image-main-box', 'title'=>'描述圖片', 'uploadURL'=>fps::getUploadURL(), 'deleteURL'=>fps::getDeleteURL())))
 	<!-- image uploader -->
@@ -27,29 +27,37 @@
 		<label>所屬分類</label>
 		<select class="form-control" name="cat">
 			@foreach($category_list as $category)
-			<option value="{{$category->id}}" @if($action == 'edit' && $category->id == $service->_parent)selected@endif>{{$category->title}}</option>
+			<option value="{{$category->id}}" @if($action == 'edit' && $category->id == $product->_parent)selected@endif>{{$category->title}}</option>
 			@endforeach
 		</select>
+	</div>
+	<div class="form-group">
+		<label>容量</label>
+		<input class="form-control" type="text" name="capacity" value="@if($action == 'edit'){{$product->capacity}}@endif"/>
+	</div>
+	<div class="form-group">
+		<label>價格</label>
+		<input class="form-control" type="text" name="price" value="@if($action == 'edit'){{$product->price}}@endif"/>
 	</div>
 	@include('spa_admin._partials.widget_imageUploader', array('options'=>array('elementId'=>'image-box', 'title'=>'圖片', 'uploadURL'=>fps::getUploadURL(), 'deleteURL'=>fps::getDeleteURL())))
 	<!-- image uploader -->
 	<div class="form-group">
 		<label>狀態</label><br/>
 		<label class="radio-inline">
-			<input type="radio" name="display" value="yes" @if($action == 'edit')@if($service->display == 'yes') checked @endif@endif @if($action=='create')checked@endif/>顯示
+			<input type="radio" name="display" value="yes" @if($action == 'edit')@if($product->display == 'yes') checked @endif@endif @if($action=='create')checked@endif/>顯示
 		</label>
 		<label class="radio-inline">
-			<input type="radio" name="display" value="no" @if($action == 'edit')@if($service->display == 'no') checked @endif@endif/>隱藏
+			<input type="radio" name="display" value="no" @if($action == 'edit')@if($product->display == 'no') checked @endif@endif/>隱藏
 		</label>
 	</div>
 	<div class="form-group">
 		<label>語系</label><br/>
 		@if($ref == '0')
 		<label class="radio-inline">
-			<input type="radio" name="lang" value="tw" @if($action == 'edit')@if($service->lang == 'tw') checked @endif@endif @if($action=='create' && $ref == '0')checked@endif />繁體
+			<input type="radio" name="lang" value="tw" @if($action == 'edit')@if($product->lang == 'tw') checked @endif@endif @if($action=='create' && $ref == '0')checked@endif />繁體
 		</label>
 		<label class="radio-inline">
-			<input type="radio" name="lang" value="cn" @if($action == 'edit')@if($service->lang == 'cn') checked @endif@endif />簡體
+			<input type="radio" name="lang" value="cn" @if($action == 'edit')@if($product->lang == 'cn') checked @endif@endif />簡體
 		</label>
 		@elseif($ref_lang != 'tw')
 		繁體<input type='hidden' name="lang" value="tw"/>
@@ -89,13 +97,13 @@
             el: '#image-main-box',
             imageBoxMeta: {photoFieldName: 'main_image[]', descFieldName: 'main_imageDesc[]', delFieldName: 'main_deleteImages[]'},
             isMultiple: false,
-            files: <?php echo json_encode($service_mian_img) ?>
+            files: <?php echo json_encode($product_mian_img) ?>
         });
     	imgUploader = _imageUploader({
     		el: '#image-box',
     		imageBoxMeta:{photoFieldName: 'images[]', descFieldName: 'imageDesc[]', delFieldName: 'deleteImages[]'},
     		isMultiple: true,
-    		files: <?php echo json_encode($service_imgs)?>
+    		files: <?php echo json_encode($product_imgs)?>
     	});
 </script>
 @stop

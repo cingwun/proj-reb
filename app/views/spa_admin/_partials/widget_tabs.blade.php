@@ -16,8 +16,8 @@
      */
 ?>
 <div class="form-group tab-box" id="<?=$tab['elementId']?>">
-    <label class="col-sm-3 control-label" for="link"><?=$tab['formTitle']?>&nbsp;:&nbsp;(若要編輯Tab，請點頁籤->編輯->變更內容及標題->離開->編輯完成)</label>
-    <div class="col-sm-5 form-inline">
+    <label class="control-label" for="link"><?=$tab['formTitle']?>&nbsp;:&nbsp;(若要編輯Tab，請點頁籤->編輯->變更內容及標題->離開->編輯完成)</label>
+    <div class="form-inline">
         <input type="text" name="tabName" value="" placeholder="請輸入tab名稱" />
         <input type="text" name="tabOrder" value="" placeholder="順序" class="order"/>
         <button type="button" href="#" class="btn btn-primary btn-add">新增</button>
@@ -27,12 +27,12 @@
                 <button type="button" class="btn btn-danger btn-remove">移除</button>
             </div>
             <div class="btn-storebar">
-                <button type="button" class="btn btn-info btn-store">離開</button>
+                <button type="button" class="btn btn-info btn-store">儲存</button>
             </div>
         </div>
     </div>
     <br />
-    <div class="col-sm-5 form-inline tabs-container">
+    <div class="form-inline tabs-container">
         <ul class="nav nav-tabs">
             <?php if (sizeof($tab['items'])>0):?>
                 <?php foreach($tab['items'] as $idx=> &$item):?>

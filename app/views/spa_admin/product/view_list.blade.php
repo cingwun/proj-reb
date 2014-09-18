@@ -2,7 +2,7 @@
 
 @section('title')
 
-服務項目-文章列表
+產品項目-文章列表
 
 @stop
 
@@ -16,9 +16,11 @@
 <table class="table table-bordered table-hover" id="sortable" data-sortAction="{{$update_sort_url}}">
 	<thead>
 		<tr>
-			<th>服務項目標題</th>
+			<th>產品項目標題</th>
 			<th>分類</th>
 			<th>瀏覽數</th>
+			<th>容量</th>
+			<th>價格</th>
 			<th>顯示狀態</th>
 			<th>發表/更新日期</th>
 			<th>語系</th>
@@ -27,32 +29,34 @@
 		</tr>
 	</thead>
 	<tbody>
-		@foreach($service_list as $service)
-		<tr id='{{$service->id}}'>
-			<td>{{$service->title}}</td>
-			<td>{{$category_array[$service->_parent]}}</td>
-			<td>{{$service->views}}</td>
+		@foreach($product_list as $product)
+		<tr id='{{$product->id}}'>
+			<td>{{$product->title}}</td>
+			<td>{{$category_array[$product->_parent]}}</td>
+			<td>{{$product->views}}</td>
+			<td>{{$product->capacity}}</td>
+			<td>{{$product->price}}</td>
 			<td>
-				@if($service->display === 'yes')
+				@if($product->display === 'yes')
 				<span style="color: #00AA00">顯示</span>
 				@else
 				隱藏
 				@endif
 			</td>
-			<td>{{$service->created_at}}<br/>{{$service->updated_at}}</td>
+			<td>{{$product->created_at}}<br/>{{$product->updated_at}}</td>
 			<td>
-				@if($service->lang == 'tw')
+				@if($product->lang == 'tw')
 				繁體
 				@else
 				簡體
 				@endif
 			</td>
-			<td>{{$service->sort}}</td>
+			<td>{{$product->sort}}</td>
 			<td>
-				<a href="{{$acrion_url}}/{{$service->id}}" type="button" class="btn btn-sm btn-primary">修改</a>
-				<a href="{{$delete_url}}/{{$service->id}}" type="button" class="btn btn-sm btn-danger">刪除</a>
-				@if($service->ref == '0')
-				<a href="{{$acrion_url}}/{{$service->id}}/create_lang" type="button" class="btn btn-sm btn-warning">新增@if($service->lang == 'tw')簡體@else繁體@endif語系</a>
+				<a href="{{$acrion_url}}/{{$product->id}}" type="button" class="btn btn-sm btn-primary">修改</a>
+				<a href="{{$delete_url}}/{{$product->id}}" type="button" class="btn btn-sm btn-danger">刪除</a>
+				@if($product->ref == '0')
+				<a href="{{$acrion_url}}/{{$product->id}}/create_lang" type="button" class="btn btn-sm btn-warning">新增@if($product->lang == 'tw')簡體@else繁體@endif語系</a>
 				@endif
 			</td>
 		</tr>
@@ -69,6 +73,6 @@
 {{ HTML::script(asset('packages/tableDnD/js/jquery.tablednd.0.8.min.js'))}}
 {{ HTML::script(asset('js/admin/service_faq/js_article_list.js'))}}
 <script type="text/javascript">
-    var sortTable = _sortTable({el: '#sortable', role: 'article', sortColumn: 7, hasCategory: <?php echo (!empty($category))?'true':'false'?>});
+    var sortTable = _sortTable({el: '#sortable', role: 'article', sortColumn: 9, hasCategory: <?php echo (!empty($category))?'true':'false'?>});
 </script>
 @stop

@@ -52,7 +52,7 @@ var formCategory = function(o){
         self.ajaxURL = self.$form.attr('action');
         self.isNew = true;
         self.mode = 'create'; // create, update
-        self.model = {title: '', sort: 1, id: 'null'};
+        self.model = {title: '', sort: 1, id: 'null', lang: 'tw', ref: 'null'};
         self.reset();
         return self;
     }
@@ -72,11 +72,29 @@ var formCategory = function(o){
      * reset all input field and property
      */
     o.reset = function(){
+
+        $("label[id=lang_tw]").show();
+        $("label[id=lang_cn]").show();
         this.mode = 'create';
-        this.model = {title: '', sort: 1, id: 'null'};
+        this.model = {title: '', sort: 1, id: 'null', lang: 'tw', ref: 'null'};
         this.isNew = true;
         this.setValue();
         this.toggleStatus('create');
+    }
+
+    /*
+     * create other lang
+     */
+    o.create_other_lang = function(model){
+        if(model.lang=='tw'){
+            $("label[id=lang_cn]").hide();
+        }else if(model.lang=='cn'){
+            $("label[id=lang_tw]").hide();
+        }
+        this.isNew = true;
+        this.mode = 'create';
+        this.setValue(model);
+        this.toggleStatus('create_lang', model.lang);
     }
 
     /*
@@ -89,13 +107,20 @@ var formCategory = function(o){
         else
             this.model = model;
         this.$input.each(function(idx, input){
-            var value;
+            var value = "null";
             if (input.name=='title')
                 value = model.title;
             if (input.name=='sort')
                 value = model.sort;
             if (input.name=='id')
                 value = model.id;
+            if (input.name=='ref')
+                value = model.ref;
+            if (input.name=='lang'){
+                if (input.value==model.lang)
+                    $(input).prop('checked', 'checked');
+                return;
+            }
             $(this).val(value);
         });
     }
@@ -104,12 +129,19 @@ var formCategory = function(o){
      * toggle status
      * @params (string) action
      */
-    o.toggleStatus = function(action){
+    o.toggleStatus = function(action,lang){
         if (action=='update'){
             this.$panelTitle.html('編輯分類');
             this.$submit.html('編輯完成');
-        }else{
+        }else if(action=='create'){
             this.$panelTitle.html('新增分類');
+            this.$submit.html('新增');
+        }else if(action=='create_lang'){
+            if(lang=='tw')
+                lang = "繁體";
+            else
+                lang = "簡體";
+            this.$panelTitle.html('新增分類-'+lang);
             this.$submit.html('新增');
         }
     }
@@ -184,6 +216,7 @@ var sortTable = function(o){
         var r = this.getTr(id),
             model = {};
             model.id = id;
+            model.ref = "null";
         this.resetStatus();
         this.updateId = id;
 
@@ -192,10 +225,35 @@ var sortTable = function(o){
                 model.title = td.innerHTML;
             if (idx==1)
                 model.sort = parseInt(td.innerHTML);
+            if (idx==2)
+                model.lang = td.id;
         }).end()
           .toggleClass('onDraging');
-
         formCategory.update(model);
+    }
+
+    o.onClick_lang = function(id){
+        var r = this.getTr(id),
+            model = {};
+            model.id = "null";
+            model.ref = id;
+        this.resetStatus();
+        this.updateId = id;
+
+        r.tr.$el.find('td').each(function(idx, td){
+            if (idx==0)
+                model.title = td.innerHTML;
+            if (idx==1)
+                model.sort = parseInt(td.innerHTML);
+            if (idx==2){
+                if(td.id=='tw')
+                    model.lang = 'cn';
+                if(td.id=='cn')
+                    model.lang = 'tw';
+            }
+        }).end()
+          .toggleClass('onDraging');
+        formCategory.create_other_lang(model);
     }
 
     /*
@@ -237,6 +295,12 @@ var sortTable = function(o){
                         alert('提醒您:\n\n    系統刪除錯誤，請通知工程師');
                     }
                 });
+            });
+
+            $el.find('.btn-lang').click(function(e){
+                e.stopPropagation();
+                e.preventDefault();
+                self.onClick_lang(tr.id);
             });
 
             self.trs.push({

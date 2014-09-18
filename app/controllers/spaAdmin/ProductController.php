@@ -1,11 +1,11 @@
 <?php
 namespace spaAdmin;
-class ServiceController extends \BaseController {
+class ProductController extends \BaseController {
 
 	/*
-	 * Display service list.
+	 * Display product list.
 	 */
-	public function getServiceList() {
+	public function getProductList() {
 		try {
 			$category = \Input::get('category', null);
 			$page = \Input::get('page', 1);
@@ -19,17 +19,18 @@ class ServiceController extends \BaseController {
 				$parent_value = $category;
 			}
 			
-			$cmd = \SpaService::where('_parent', $parent_equality, $parent_value);
+			$cmd = \SpaProduct::where('_parent', $parent_equality, $parent_value);
 
 			$rowsNum = $cmd->count();
-			
-			$service_list = $cmd->orderBy('_parent', 'DESC')
+
+			$product_list = $cmd->orderBy('_parent', 'DESC')
 								->orderBy('ref', 'DESC')
-								->orderBy('sort','DESC')->skip($offset)
-                        		->take($limit)
+								->orderBy('sort','DESC')
+								->skip($offset)
+                    			->take($limit)
 								->get();
 
-			$category_list = \SpaService::where('_parent', 'N')
+			$category_list = \SpaProduct::where('_parent', 'N')
 									->get(array('id', 'title', '_parent'));
 
 			$category_array = array();
@@ -39,20 +40,20 @@ class ServiceController extends \BaseController {
 				}
 			}
 
-			$action_url = \URL::route('spa.admin.service.article.action');
-			$delete_url = \URL::route('spa.admin.service.article.delete');
-			$update_sort_url = \URL::route('spa.admin.service.sort.update');
+			$action_url = \URL::route('spa.admin.product.article.action');
+			$delete_url = \URL::route('spa.admin.product.article.delete');
+			$update_sort_url = \URL::route('spa.admin.product.sort.update');
 
 			$widgetParam = array(
 			    'currPage' => $page,
 			    'total' => $rowsNum,
 			    'perPage' => $limit,
 			    'URL' => null,
-			    'route' => 'spa.admin.service.article.list'
+			    'route' => 'spa.admin.product.article.list'
 			);
 
-			return \View::make('spa_admin.service.view_list', array(
-				'service_list'=>&$service_list,
+			return \View::make('spa_admin.product.view_list', array(
+				'product_list'=>&$product_list,
 				'category_array'=>&$category_array,
 				'acrion_url'=>$action_url,
 				'delete_url'=>$delete_url,
@@ -68,11 +69,11 @@ class ServiceController extends \BaseController {
 
 
 	/*
-	 * Display service create/edit page.
+	 * Display product create/edit page.
 	 * @params (string) $id
 	 * @params (string) $lang
 	 */
-	public function getServiceAction($id=null, $lang=null) {
+	public function getProductAction($id=null, $lang=null) {
 		$action = "create";
 		try {
 			//lang_create
@@ -80,40 +81,40 @@ class ServiceController extends \BaseController {
 			$ref_lang = null;
 			if(isset($lang)){
 				$ref = $id;
-				$ref_lang = \SpaService::where('id',$id)->first(array('lang'))->lang;
+				$ref_lang = \SpaProduct::where('id',$id)->first(array('lang'))->lang;
 			}
 
 			$category_list = array();
-			$category = \SpaService::where('_parent', 'N');
+			$category = \SpaProduct::where('_parent', 'N');
 			if(!empty($lang))
 				$category = $category->where('lang', '!=', $ref_lang);
 			$category_list = $category->get();
 
-			$write_url = \URL::route('spa.admin.service.article.write');
+			$write_url = \URL::route('spa.admin.product.article.write');
 
 			//edit data
-			$service = array();
-			$service_mian_img = array();
-			$service_imgs = array();
+			$product = array();
+			$product_mian_img = array();
+			$product_imgs = array();
 			$items = array();
 			if (isset($id) && empty($lang)){
 				$action = "edit";
 				$write_url .= "/".$id;
 
-				$service = \SpaService::find($id);
-				if (empty($service))
-					return \Redirect::route('spa.admin.service.article.list');
-				if($service->image != '')
-					$service_mian_img[] = array('id'=>$service->id, 'image'=>$service->image, 'text'=>$service->image_desc);
+				$product = \SpaProduct::find($id);
+				if (empty($product))
+					return \Redirect::route('spa.admin.service.list');
+				if($product->image != '')
+					$product_mian_img[] = array('id'=>$product->id, 'image'=>$product->image, 'text'=>$product->image_desc);
 				
 				$service_imgs_list = \SpaServiceImages::where('ser_id',$id)->get(array('id', 'image_path', 'description'));
 				if (!empty($service_imgs_list)){
 					foreach ($service_imgs_list as $key => $img) {
-						$service_imgs[] = array('id'=>$img->id, 'image'=>$img->image_path, 'text'=>$img->description);
+						$product_imgs[] = array('id'=>$img->id, 'image'=>$img->image_path, 'text'=>$img->description);
 					}	
 				}
 				
-				$tags = json_decode($service->tag);
+				$tags = json_decode($product->tag);
 				if (!empty($tags)) {
 					foreach ($tags as $tag) {
 						$items[] = array(
@@ -125,11 +126,11 @@ class ServiceController extends \BaseController {
 				}
 			}
 			
-			return \View::make('spa_admin.service.view_action', array(
+			return \View::make('spa_admin.product.view_action', array(
 				'action'=>$action,
-				'service'=>&$service, //edit data
-				'service_mian_img'=>$service_mian_img,
-				'service_imgs'=>$service_imgs,
+				'product'=>&$product, //edit data
+				'product_mian_img'=>$product_mian_img,
+				'product_imgs'=>$product_imgs,
 				'category_list'=>&$category_list,
 				'write_url'=>$write_url,
 				'ref'=>$ref,
@@ -148,10 +149,11 @@ class ServiceController extends \BaseController {
 
 
 	/*
-	 * Write(create/edit action) service data.
+	 * Write(create/edit action) product data.
 	 * @params (string) $id
 	 */
-	public function postWriteService($id = null) {
+	public function postWriteProduct($id = null) {
+		
 		$action = \Input::get('action');
 		try {
 			//tags
@@ -171,38 +173,43 @@ class ServiceController extends \BaseController {
 	                $order++;
 	            }
 			}
+
 			$ref = \Input::get('ref');
 
 			//service_table 
 			if($action == 'create')
-				$service = new \SpaService;
+				$product = new \SpaProduct;
 			else
-				$service = \SpaService::find($id);
+				$product = \SpaProduct::find($id);
 
 			$title = \Input::get('title');
 			$image = \Input::get('images')[0];
 			$image_desc = \Input::get('main_imageDesc')[0];
+			$capacity = \Input::get('capacity');
+			$price = \Input::get('price');
 
-			$service->title = !empty($title) ? $title : "";
-			$service->image = !empty($image) ? $image : "";
-			$service->image_desc = !empty($image_desc) ? $image_desc : "";
-			$service->tag = json_encode($tabs);
-			$service->_parent = \Input::get('cat');
-			$service->display = \Input::get('display');
-			$service->lang = \Input::get('lang');
-			$service->ref = $ref;
-			$service->save();
+			$product->title = !empty($title) ? $title : "";;
+			$product->image = !empty($image) ? $image : "";
+			$product->image_desc = !empty($image_desc) ? $image_desc : "";
+			$product->capacity = !empty($capacity) ? $capacity : "";
+			$product->price = !empty($price) ? $price : "";
+			$product->tag = json_encode($tabs);
+			$product->_parent = \Input::get('cat');
+			$product->display = \Input::get('display');
+			$product->lang = \Input::get('lang');
+			$product->ref = $ref;
+			$product->save();
 
 			//create service id
 			if($action == 'create'){
-				$inserted_id = $service->id;
+				$inserted_id = $product->id;
 			}else{
 				$inserted_id = $id;
 			}
 
 			//set ref
 			if($ref != '0'){
-				$ref_service_data = \SpaService::find($ref);
+				$ref_service_data = \SpaProduct::find($ref);
 				$ref_service_data->ref = $inserted_id;
 				$ref_service_data->save();
 			}
@@ -226,7 +233,7 @@ class ServiceController extends \BaseController {
 				}
 			}
 
-			return \Redirect::route("spa.admin.service.article.list");
+			return \Redirect::route("spa.admin.product.article.list");
 		} catch (Exception $e) {
 			echo $e->getMessage();
 			exit;
@@ -237,23 +244,23 @@ class ServiceController extends \BaseController {
      * Delete Service.
      * @param (string) $id
      */
-	public function postDeleteService($id = null) {
+	public function postDeleteProduct($id = null) {
 		try {
 			if(empty($id))
-				return \Redirect::route('spa.admin.service.article.list');
-			$service = \SpaService::find($id); 
+				return \Redirect::route('spa.admin.product.article.list');
+			$service = \SpaProduct::find($id); 
 			if(empty($service))
-				return \Redirect::route('spa.admin.service.article.list');
+				return \Redirect::route('spa.admin.product.article.list');
 
 			$service->delete();
 
 			if($service->ref != '0'){
-				$ref_service = \SpaService::find($service->ref);
+				$ref_service = \SpaProduct::find($service->ref);
 				$ref_service->ref = 0;
 				$ref_service->save();
 			}
 
-			return \Redirect::route('spa.admin.service.article.list');
+			return \Redirect::route('spa.admin.product.article.list');
 		} catch (Exception $e) {
 			echo $e->getMessage();
 			exit;
@@ -265,16 +272,16 @@ class ServiceController extends \BaseController {
 	 */
 	public function getCategoryList() {
 		try {
-			$category_list = \SpaService::where('_parent', 'N')
-										->orderBy('sort', 'DESC')
-										->get(array('id', 'title', 'sort', 'lang', 'ref'));
-			
-			$service_list_url = \URL::route('spa.admin.service.article.list');
-			$category_action_url = \URL::route('spa.admin.service.category.action');
-			$category_delete_url = \URL::route('spa.admin.service.category.delete');
-			$update_sort_url = \URL::route('spa.admin.service.sort.update');
+			$category_list = \SpaProduct::where('_parent','N')
+										->orderBy('sort','DESC')
+										->get(array('id','title','sort', 'lang', 'ref'));
 
-			return \View::make('spa_admin.service.view_category_list', array(
+			$service_list_url = \URL::route('spa.admin.product.article.list');
+			$category_action_url = \URL::route('spa.admin.product.category.action');
+			$category_delete_url = \URL::route('spa.admin.product.category.delete');
+			$update_sort_url = \URL::route('spa.admin.product.sort.update');
+
+			return \View::make('spa_admin.product.view_category_list', array(
 				"category_list"=>&$category_list,
 				"service_list_url"=>$service_list_url,
 				"category_action_url"=>$category_action_url,
@@ -295,22 +302,22 @@ class ServiceController extends \BaseController {
     		$category_id = \Input::get('id');
     		$ref_id = \Input::get('ref');
     		if($category_id == "null"){
-    			$service_category = new \SpaService;
+    			$product_category = new \SpaProduct;
     		}else{
-    			$service_category = \SpaService::find($category_id);
+    			$product_category = \SpaProduct::find($category_id);
     		}	
-    		$service_category->title = \Input::get('title');
-    		$service_category->sort = \Input::get('sort');
-    		$service_category->lang = \Input::get('lang');
+    		$product_category->title = \Input::get('title');
+    		$product_category->sort = \Input::get('sort');
+    		$product_category->lang = \Input::get('lang');
     		if($ref_id != "null"){
-	    		$service_category->ref = $ref_id;
+	    		$product_category->ref = $ref_id;
 	    	}
-    		$service_category->save();
+    		$product_category->save();
 
 			//set ref
 			if($ref_id != "null"){
-				$inserted_id = $service_category->id;
-				$ref_category = \SpaService::find($ref_id);
+				$inserted_id = $product_category->id;
+				$ref_category = \SpaProduct::find($ref_id);
 				$ref_category->ref = $inserted_id;
 				$ref_category->save();
 			}
@@ -331,12 +338,10 @@ class ServiceController extends \BaseController {
     	try {
     		$category_id = \Input::get('id');
 
-    		$service_category = \SpaService::find(\Input::get('id'));
+    		$product_category = \SpaProduct::find(\Input::get('id'));
 
-    		$service_category->delete();
-    		
-    		$service = \SpaService::where('_parent',$category_id)->delete();
-
+    		$product_category->delete();
+    			
     		return \Response::json(array(
 	            'status' => 'ok',
 	            'message' => '刪除完成!'
@@ -361,7 +366,7 @@ class ServiceController extends \BaseController {
             $lastUpdatedId = \Input::get('lastUpdatedId', false);
             
             
-            $model = \SpaService::find($id);
+            $model = \SpaProduct::find($id);
             if (empty($model))
                 throw new Exception("Error request [11]");
 
@@ -371,7 +376,7 @@ class ServiceController extends \BaseController {
                 throw new Exception("更新排序失敗，請通知工程師");
 
             if ($isUpdatedTime){
-                $cmd = \SpaService::where('id', '!=', $id)
+                $cmd = \SpaProduct::where('id', '!=', $id)
                                  ->where('sort', '=', $sort)
                                  ->where('id', '>=', $lastUpdatedId)
                                  ->orderBy('sort', 'desc')

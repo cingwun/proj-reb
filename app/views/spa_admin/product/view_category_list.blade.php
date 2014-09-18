@@ -1,7 +1,7 @@
 @extends('spa_admin._layouts.default')
 
 @section('title')
-服務項目-類型列表
+產品項目-類型列表
 @stop
 
 @section('main')
@@ -26,7 +26,7 @@
         		<td>
         			<a href="{{$service_list_url}}?category={{$cat->id}}" title="{{$cat->title}}相關文章" class="btn btn-sm btn-success">文章</a>
                     <span class="btn btn-sm btn-primary btn-modify">修改</span>
-                    <span href="" class="btn btn-sm btn-danger btn-delete">刪除</span>
+                    <span href="#" class="btn btn-sm btn-danger btn-delete">刪除</span>
                     @if($cat->ref == '0')
                     <span class="btn btn-sm btn-warning btn-lang">新增語系</span>
                     @endif

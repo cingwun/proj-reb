@@ -15,9 +15,11 @@ class AuthController extends BaseController {
          */
         public function getLogin()
         {
+                
                 if(Sentry::check()){
-                	return Redirect::route('admin.index');
+                        //return Redirect::route('admin.index');
                 }
+                
                 
                 return View::make('admin.auth.login');
         }
@@ -37,9 +39,13 @@ class AuthController extends BaseController {
                 {
                         $user = Sentry::authenticate($credentials, false);
  
-                        if ($user)
+                        if ($user && Input::get('where')=='rebeauty')
                         {
                                 return Redirect::route('admin.index');
+                        }
+                        if ($user && Input::get('where')=='spa')
+                        {
+                                return \Redirect::route('spa.admin.service.article.list');
                         }
                 }
                 catch(\Exception $e)

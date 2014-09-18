@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSpaServiceTable extends Migration {
+class CreateSpaProductTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,12 +12,14 @@ class CreateSpaServiceTable extends Migration {
 	 */
 	public function up()
 	{
-		if(!Schema::hasTable('spa_service')){
-			Schema::create('spa_service',function($table){
+		if(!Schema::hasTable('spa_product')){
+			Schema::create('spa_product',function($table){
 				$table->increments('id')->unsigned();
 				$table->string('title');
 				$table->string('image');
 				$table->string('image_desc');
+				$table->string('capacity');
+				$table->integer('price');
 				$table->text('tag');
 				$table->integer('views');
 				$table->string('_parent')->default('N');
@@ -28,10 +30,10 @@ class CreateSpaServiceTable extends Migration {
 				$table->timestamps();
 			});
 		}
-		if(!Schema::hasTable('spa_service_images')){
-			Schema::create('spa_service_images',function($table){
+		if(!Schema::hasTable('spa_product_images')){
+			Schema::create('spa_product_images',function($table){
 				$table->increments('id')->unsigned();
-				$table->integer('ser_id')->unsigned(); //service id
+				$table->integer('pro_id')->unsigned(); //service id
 				$table->string('image_path');
 				$table->string('description');
 				$table->integer('sort');
@@ -46,8 +48,8 @@ class CreateSpaServiceTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('spa_service');
-		Schema::drop('spa_service_images');
+		Schema::drop('spa_product');
+		Schema::drop('spa_product_images');
 	}
 
 }
