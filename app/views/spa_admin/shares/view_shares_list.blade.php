@@ -61,7 +61,7 @@
                       endif;?>
             </tbody>
         </table>
-        @include('admin._partials.widget_pager', array('wp'=>$pagerParam))
+        @include('spa_admin._partials.widget_pager', array('wp'=>$pagerParam))
     </div>
 </div>
 @stop

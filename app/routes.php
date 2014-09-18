@@ -225,7 +225,9 @@ Route::group(array('prefix'=>'admin', 'before'=>'auth.admin'), function()
 Route::group(array('prefix'=>'admin/spa', 'before'=>'auth.admin'), function()
 {
 
-    Route::get('/','spaAdmin\\TestController@test');
+    Route::get('/',array('as'=>'spa.admin.index', 'uses'=>function(){
+        return \View::make('spa_admin._layouts.default');
+    }));
 
     // Spa Articles
     Route::get('articles/list/{category?}', array('as'=>'spa.admin.articles.list', 'uses'=>'spaAdmin\\ArticleController@getList'));
@@ -235,11 +237,12 @@ Route::group(array('prefix'=>'admin/spa', 'before'=>'auth.admin'), function()
     Route::post('articles/sort', array('as'=>'spa.admin.articles.sort', 'uses'=>'spaAdmin\\ArticleController@postSort'));
 
     // Spa Shares
+    // Article
     Route::get('share/article/list/{page?}', array('as'=>'spa.admin.share.article.list', 'uses'=>'spaAdmin\\ShareController@getArticleList'));
     Route::get('share/article/action/{id?}/{changeLang?}', array('as'=>'spa.admin.share.article.action', 'uses'=>'spaAdmin\\ShareController@getArticleAction'));
     Route::post('share/article/action', array('as'=>'spa.admin.share.article.write', 'uses'=>'spaAdmin\\ShareController@postArticleAction'));
     Route::post('share/article/delete', array('as'=>'spa.admin.share.article.delete', 'uses'=>'spaAdmin\\ShareController@postArticleDelete'));
-    //   sort
+    // sort
     Route::post('share/{type}/sort/update', array('as'=>'spa.admin.share.sort.update', 'uses'=>'spaAdmin\\ShareController@postUpdateSort'));
 
 });

@@ -1,5 +1,6 @@
 @extends('admin._layouts.default')
 
+
 @section('main')
     <h2>Banner&nbsp;管理&nbsp;(&nbsp;<?=$size['text']?>&nbsp;)</h2>
     <div class="pull-right" style="margin: 0px 0px 10px;"><a href="<?=URL::route('admin.banners.action', array($size['value'], 0))?>" class="btn">新增</a></div>

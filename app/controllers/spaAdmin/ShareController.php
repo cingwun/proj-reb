@@ -95,7 +95,7 @@ class ShareController extends \BaseController {
                     ->get(array('id', 'title'));
             foreach($items as $item)
                 $labelItems['service'][$item->id] = $item->title;
-            
+
             $items = \SpaProduct::where('_parent', '<>', 'N')
                     ->orderBy('_parent', 'desc')
                     ->orderBy('sort', 'desc')
@@ -117,8 +117,8 @@ class ShareController extends \BaseController {
                 $labelItmes['service'][$item->id] = $item->title;
 
             $labelSelected = WintnessLabels::where('wid', '=', $article['id'])
-            ->lists('label_id');*/
-            
+            ->lists('label_id');*/        
+
             return \View::make('spa_admin.shares.view_shares_action', array(
                 'article'=>$article,
                 'labelItems' => &$labelItems,
@@ -316,6 +316,10 @@ class ShareController extends \BaseController {
 
             if (!$m->delete())
                 throw new Exception("Error request [110]");
+
+            $label = \SpaSharesLabels::where('share_id', '=', $id)->get();
+            foreach($label as $label)
+                $label->delete();
 
             foreach($images as $img)
                 \fps::getInstance()->delete($img);

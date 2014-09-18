@@ -61,10 +61,11 @@ class ArticleController extends \BaseController {
 	{
 		
 		try
-		{
-			$nosort = 0;   
-			if(empty($id))
+		{   
+			if(empty($id)){
 				$article = new \SpaArticles;
+				$dosort = 1;
+			}
 			elseif($changeLan=="modifyLanguage"){
 				$refArticle = \SpaArticles::find($id);
 
@@ -85,7 +86,7 @@ class ArticleController extends \BaseController {
 				return \Redirect::route('spa.admin.articles.list', array('category'=>$newArticle->category));
 			}else{
 				$article = \SpaArticles::find($id);
-				$nosort = 1;
+				$dosort = 0;
 			}
 
 			$article->title = \Input::get('title');
@@ -94,7 +95,7 @@ class ArticleController extends \BaseController {
 			$article->open_at = \Input::get('open_at');
 			$article->status = \Input::get('status');
 			$article->lan = \Input::get('lan');
-			($nosort = 0) ? $article->sort = \SpaArticles::max('sort')+1 : $nosort = 1;
+			($dosort = 1) ? $article->sort = \SpaArticles::max('sort')+1 : $dosort = 1;
 			$article->save();
 			return \Redirect::route('spa.admin.articles.list', array('category'=>$article->category));
 		}catch(Exception $e)

@@ -21,7 +21,7 @@ class AuthController extends BaseController {
                 }
                 
                 
-                return View::make('admin.auth.login');
+                return View::make('admin.auth.login', array('where'=>Input::get('where')));
         }
  
         /**
@@ -41,11 +41,11 @@ class AuthController extends BaseController {
  
                         if ($user && Input::get('where')=='rebeauty')
                         {
-                                return Redirect::route('admin.index');
+                                return Redirect::route('admin.index', array('where'=>Input::get('where')));
                         }
                         if ($user && Input::get('where')=='spa')
                         {
-                                return Redirect::route('spa.admin.articles.list');
+                                return Redirect::route('spa.admin.index', array('where'=>Input::get('where')));
                         }
                 }
                 catch(\Exception $e)
