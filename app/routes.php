@@ -245,4 +245,13 @@ Route::group(array('prefix'=>'admin/spa', 'before'=>'auth.admin'), function()
     // sort
     Route::post('share/{type}/sort/update', array('as'=>'spa.admin.share.sort.update', 'uses'=>'spaAdmin\\ShareController@postUpdateSort'));
 
+    // banners
+    Route::get('banners/{size}', array('as'=>'admin.banners.list', 'uses'=>'BannersController@getList'));
+
+    //member
+    // Route::get('member/list', array('as'=>'admin.member.list', 'uses'=>'MemberController@getList'));
+    // Route::get('member/action/{member_id}', array('as'=>'admin.member.action', 'uses'=>'MemberController@getAction'))
+    //         ->where(array('member_id'=>'([0-9]+)'));
+    // Route::post('member/action', array('as'=>'admin.member.action.post', 'uses'=>'MemberController@postAction'));
+
 });

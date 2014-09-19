@@ -50,11 +50,19 @@ class BannersController extends BaseController {
 			'perPage' => $limit,
 			'URL' => URL::route('admin.banners.list', array($size)),
 		);
-		return View::make('admin.banners.view_list', array(
-				'size' => $this->_getSize($size),
-				'wp' => &$widgetParam,
-				'data' => $data
-			));
+		if(Input::get('where')=='rebeauty'){
+			return View::make('admin.banners.view_list', array(
+					'size' => $this->_getSize($size),
+					'wp' => &$widgetParam,
+					'data' => $data
+				));
+		}else{
+			return View::make('spa_admin.banners.view_list', array(
+					'size' => $this->_getSize($size),
+					'wp' => &$widgetParam,
+					'data' => $data
+				));
+		}
 	}
 
 	/*
@@ -67,10 +75,17 @@ class BannersController extends BaseController {
 		$data['on_time'] = (isset($data['on_time']) && $data['on_time']>0) ? date('Y-m-d', $data['on_time']) : '';
 		$data['off_time'] = (isset($data['off_time']) && $data['off_time']>0) ? date('Y-m-d', $data['off_time']) : '';
 
-		return View::make('admin.banners.view_action', array(
+		if(Input::get('where')=='rebeauty'){
+			return View::make('admin.banners.view_action', array(
 				'size' => $this->_getSize($size),
 				'data' => $data
-			));
+				));
+		}else{
+			return View::make('spa_admin.banners.view_action', array(
+				'size' => $this->_getSize($size),
+				'data' => $data
+				));
+		}
 	}
 
 	/*

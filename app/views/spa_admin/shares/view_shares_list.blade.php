@@ -2,7 +2,6 @@
 
 @section('title')
 美麗分享
-{{ HTML::style(asset('css/admin/service_faq/css_category_list.css'))}}
 @stop
 
 @section('main')
@@ -64,6 +63,10 @@
         @include('spa_admin._partials.widget_pager', array('wp'=>$pagerParam))
     </div>
 </div>
+@stop
+
+@section('head')
+{{ HTML::style(asset('css/admin/service_faq/css_category_list.css'))}}
 @stop
 
 @section('bottom')

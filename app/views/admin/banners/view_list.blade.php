@@ -1,9 +1,8 @@
 @extends('admin._layouts.default')
 
-
 @section('main')
     <h2>Banner&nbsp;管理&nbsp;(&nbsp;<?=$size['text']?>&nbsp;)</h2>
-    <div class="pull-right" style="margin: 0px 0px 10px;"><a href="<?=URL::route('admin.banners.action', array($size['value'], 0))?>" class="btn">新增</a></div>
+    <div class="pull-right" style="margin: 0px 0px 10px;"><a href="<?=URL::route('admin.banners.action', array($size['value'], 0, 'where'=>Input::get('where')))?>" class="btn">新增</a></div>
     <table class="table table-bordered" ng-controller="articlesCtrl">
         <thead>
             <tr>
@@ -30,7 +29,7 @@
                 <td><?=($r->off_time==0) ? '不指定' : date('Y-m-d', (int) $r->off_time)?></td>
                 <td><?=($r->status==1) ? '顯示' : '隱藏'?></td>
                 <td><?=$r->updated_at?></td>
-                <td><a href="<?=URL::route('admin.banners.action', array($size['value'], $r->bid))?>" class="btn btn-primary">修改</a> <a href="<?=URL::route('admin.banners.delete', array($size['value'], $r->bid))?>" class="btn btn-danger btn-delete">刪除</a></td>
+                <td><a href="<?=URL::route('admin.banners.action', array($size['value'], $r->bid, 'where'=>Input::get('where')))?>" class="btn btn-primary">修改</a> <a href="<?=URL::route('admin.banners.delete', array($size['value'], $r->bid, 'where'=>Input::get('where')))?>" class="btn btn-danger btn-delete">刪除</a></td>
             </tr>
             <?php   endforeach;
                 endif;

@@ -95,6 +95,7 @@ var _sortTable = function(o){
             var $el = $(this);
 
             $el.find('.btn-delete').click(function(e){
+                alert('a');
                 e.stopPropagation();
                 e.preventDefault();
                 var msg = "提醒您:\n\n    刪除該文章時，將連同刪除該文章相關圖片等資料\n\n    請問您是否刪除?";

@@ -32,7 +32,7 @@
                 <td><?=$r->name . '<br /><strong>' . $r->email . '</strong>'?> </td>
                 <td><?=$r->birthday . '<br /><strong>' . $r->phone . '</strong>'?></td>
                 <td><?=$r->created_at . '<br /><strong>' . $r->updated_at . '</strong>'?></td>
-                <td><a href="<?=URL::route('admin.member.action', array($r->id))?>" class="btn btn-primary">編輯</a></td>
+                <td><a href="<?=URL::route('admin.member.action', array($r->id, 'where'=>Input::get('where')))?>" class="btn btn-primary">編輯</a></td>
             </tr>
             <?php   endforeach;
                 endif;?>

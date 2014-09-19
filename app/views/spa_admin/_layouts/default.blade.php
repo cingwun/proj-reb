@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="adminApp">
 
 <head>
 
@@ -29,6 +29,7 @@
         <![endif]-->
         {{ HTML::style(asset('css/admin/css_global.css'))}}
         {{ HTML::style('aesthetics/css/ckeditor.css'); }}
+        {{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'); }}
         @yield('head')
     </head>
 
@@ -51,7 +52,7 @@
                 
                 <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">
-                    <li class="dropdown">
+                    <!-- <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
@@ -68,20 +69,44 @@
                                 <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                             </li>
                         </ul>
-                    </li>
+                    </li> -->
+                    <p class="navbar-text pull-right">{{ Sentry::getUser()->email }} | <a href="{{ URL::route('admin.logout') }}" class="navbar-link">Logout</a>
                 </ul>
             </nav>
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <ul class="nav navbar-nav side-nav">
+                <!-- 系統管理 -->
+                <li>
+                    <a href="javascript:;" data-toggle="collapse" data-target="#system"><i class="fa fa-fw fa-arrows-v"></i> 系統管理 <i class="fa fa-fw fa-caret-down"></i></a>
+                    <ul id="system" class="collapse">
+                        <li>
+                            <a href="{{URL::route('admin.users.index')}}">使用者</a>
+                        </li>
+                        <li>
+                            <a href="{{URL::route('admin.groups.index')}}">群組</a>
+                        </li>
+                        <li>
+                            <a href="{{URL::route('admin.permissions.index')}}">權限</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- 文章管理 -->
                 <li class="active">
                     <a href="{{URL::route('spa.admin.articles.list')}}"><i class="fa fa-fw fa-dashboard"></i> 文章管理</a>
                 </li>
+
+                <!-- 預約管理 -->
                 <li>
                     <a href="{{URL::route('spa.admin.articles.list')}}"><i class="fa fa-fw fa-edit"></i> 預約管理</a>
                 </li>
+
+                <!-- 美麗分享 -->
                 <li>
                     <a href="{{URL::route('spa.admin.share.article.list')}}"><i class="fa fa-fw fa-desktop"></i> 美麗分享</a>
                 </li>
+
+                <!-- 美麗服務 -->
                 <li>
                     <a href="javascript:;" data-toggle="collapse" data-target="#service"><i class="fa fa-fw fa-arrows-v"></i> 美麗服務 <i class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="service" class="collapse">
@@ -93,6 +118,8 @@
                         </li>
                     </ul>
                 </li>
+
+                <!-- 美麗產品 -->
                 <li>
                     <a href="javascript:;" data-toggle="collapse" data-target="#product"><i class="fa fa-fw fa-arrows-v"></i> 美麗產品 <i class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="product" class="collapse">
@@ -104,8 +131,26 @@
                         </li>
                     </ul>
                 </li>
+
+                <!-- Banner管理 -->
+                <li> 
+                    <a href="javascript:;" data-toggle="collapse" data-target="#banner"><i class="fa fa-fw fa-arrows-v"></i> Banner管理 <i class="fa fa-fw fa-caret-down"></i></a>
+                    <ul id="banner" class="collapse">
+                        <li>
+                            <a href="{{ URL::route('admin.banners.list', array('large', 'where'=>Input::get('where')))}}">尺寸 960x430</a>
+                        </li>
+                        <li>
+                            <a href="{{ URL::route('admin.banners.list', array('medium', 'where'=>Input::get('where')))}}">尺寸 960x250</a>
+                        </li>
+                        <li>
+                            <a href="{{ URL::route('admin.banners.list', array('small', 'where'=>Input::get('where')))}}">尺寸 700x300</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- 會員管理 -->
                 <li>
-                    <a href="blank-page.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>
+                    <a href="{{URL::route('admin.member.list', array('where'=>Input::get('where')))}}"><i class="fa fa-fw fa-desktop"></i> 會員管理</a>
                 </li>
             </ul>
             <!-- /.navbar-collapse -->
