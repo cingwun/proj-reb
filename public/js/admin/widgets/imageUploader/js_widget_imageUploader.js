@@ -183,7 +183,7 @@ var _imageUploader = function(o){
      * @params (bool) force
      */
     o.addImageBox = function(item, force){
-        if (typeof(item)=='undefined')
+        if (typeof(item)=='undefined')                                  
             return false;
 
         if (typeof(force)=='undefined')
@@ -194,7 +194,7 @@ var _imageUploader = function(o){
                         '<input class="desc" type="text" value="' + item.text + '" name="' + this.imageBoxMeta.descFieldName + '" placeholder="請輸入描述…"/>' :
                         '',
             html = '<li data-id="' + id + '">' +
-                   '<span class="btn-remove" title="刪除圖片"><i class="icon-trash icon-white"></i></span>' +
+                   '<span class="btn-remove" title="刪除圖片"><i class="icon-trash icon-white glyphicon glyphicon-trash"></i></span>' +
                    '<img src="' + item.image + '?w=120&h=90&ar=i" />' + desc +
                    '<input class="photoField" type="hidden" value="' + item.image + '" name="' + this.imageBoxMeta.photoFieldName + '" />' +
                    '</li>';

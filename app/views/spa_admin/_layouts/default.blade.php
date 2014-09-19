@@ -48,7 +48,6 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="{{URL::route('switch.to.admin.spa')}}">SPA後台</a>
-                    <a class="navbar-brand" href="{{URL::route('switch.to.admin.rebeauty')}}">Rebeauty後台</a>
                 </div>
                 
                 <!-- Top Menu Items -->
@@ -88,6 +87,9 @@
                         </li>
                         <li>
                             <a href="{{URL::route('admin.permissions.index')}}">權限</a>
+                        </li>
+                        <li>
+                            <a href="{{URL::route('switch.to.admin.rebeauty')}}">Rebeauty後台</a>
                         </li>
                     </ul>
                 </li>

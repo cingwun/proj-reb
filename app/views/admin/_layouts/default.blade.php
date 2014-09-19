@@ -23,18 +23,23 @@
                 <div class="container-fluid"> 
                     <!-- <a class="brand" href="/admin">rebeauty</a> -->
                     <a class="brand" href="{{URL::route('switch.to.admin.rebeauty')}}">Rebeauty</a>
-                    <a class="brand" href="{{URL::route('switch.to.admin.spa')}}">SPA</a>
                     <div class="nav-collapse collapse">
                         <p class="navbar-text pull-right">{{ Sentry::getUser()->email }} | <a href="{{ URL::route('admin.logout') }}" class="navbar-link">Logout</a>
                         </p>
                         <ul class="nav">@if (Sentry::getUser()->hasAnyAccess(array('system')))
                             <li class="dropdown @if(Request::is('admin/users*') || Request::is('admin/permissions*') || Request::is('admin/groups*')) active @endif"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">系統管理</a>
                                 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-                                    <li><a tabindex="-1" href="{{ URL::route('admin.users.index', array('where'=>Input::get('where'))) }}">使用者</a>
+                                    <li>
+                                        <a tabindex="-1" href="{{ URL::route('admin.users.index', array('where'=>Input::get('where'))) }}">使用者</a>
                                     </li>
-                                    <li><a tabindex="-1" href="{{ URL::route('admin.groups.index') }}">群組</a>
+                                    <li>
+                                        <a tabindex="-1" href="{{ URL::route('admin.groups.index') }}">群組</a>
                                     </li>
-                                    <li><a tabindex="-1" href="{{ URL::route('admin.permissions.index') }}">權限</a>
+                                    <li>
+                                        <a tabindex="-1" href="{{ URL::route('admin.permissions.index') }}">權限</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{URL::route('switch.to.admin.spa')}}">Spa後台</a>
                                     </li>
                                 </ul>
                             </li>
