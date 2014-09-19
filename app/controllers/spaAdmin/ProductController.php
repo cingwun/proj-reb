@@ -26,6 +26,7 @@ class ProductController extends \BaseController {
 			$product_list = $cmd->orderBy('_parent', 'DESC')
 								->orderBy('ref', 'DESC')
 								->orderBy('sort','DESC')
+								->orderBy('updated_at', 'desc')
 								->skip($offset)
                     			->take($limit)
 								->get();
@@ -76,6 +77,7 @@ class ProductController extends \BaseController {
 	public function getProductAction($id=null, $lang=null) {
 		$action = "create";
 		try {
+			$list_category = \Input::get('category', null);
 			//lang_create
 			$ref = 0;
 			$ref_lang = null;
@@ -139,7 +141,8 @@ class ProductController extends \BaseController {
 	                'elementId' => 'tab-box',
 	                'formTitle' => 'Tab項目',
 	                'items' => $items
-            	)
+            	),
+            	'list_category'=>$list_category
 			));
 		} catch (Exception $e) {
 			echo $e->getMessage();
@@ -153,7 +156,7 @@ class ProductController extends \BaseController {
 	 * @params (string) $id
 	 */
 	public function postWriteProduct($id = null) {
-		
+		$list_category = \Input::get('category', null);
 		$action = \Input::get('action');
 		try {
 			//tags
@@ -233,7 +236,7 @@ class ProductController extends \BaseController {
 				}
 			}
 
-			return \Redirect::route("spa.admin.product.article.list");
+			return \Redirect::route("spa.admin.product.article.list", array('category'=>$list_category));
 		} catch (Exception $e) {
 			echo $e->getMessage();
 			exit;
@@ -241,16 +244,14 @@ class ProductController extends \BaseController {
 	}
 	
 	/*
-     * Delete Service.
+     * AJAX request for Delete Service.
      * @param (string) $id
      */
-	public function postDeleteProduct($id = null) {
+	public function postDeleteProduct() {
 		try {
-			if(empty($id))
-				return \Redirect::route('spa.admin.product.article.list');
+			$id = \Input::get('id');
+
 			$service = \SpaProduct::find($id); 
-			if(empty($service))
-				return \Redirect::route('spa.admin.product.article.list');
 
 			$service->delete();
 
@@ -260,10 +261,15 @@ class ProductController extends \BaseController {
 				$ref_service->save();
 			}
 
-			return \Redirect::route('spa.admin.product.article.list');
+			return \Response::json(array(
+	            'status' => 'ok',
+	            'message' => '刪除完成!'
+	        ));
 		} catch (Exception $e) {
-			echo $e->getMessage();
-			exit;
+			return Response::json(array(
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ));
 		}
 	}
 

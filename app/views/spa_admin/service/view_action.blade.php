@@ -16,7 +16,7 @@
 @stop
 
 @section('main')
-<form action='{{$write_url}}' method="post" enctype="multipart/form-data">
+<form action='{{$write_url}}@if($list_category != '')?category={{$list_category}}@endif' method="post" enctype="multipart/form-data">
 	<div class="form-group">
 		<label>標題</label>
 		<input class="form-control" type="text" name="title" value="@if($action == 'edit'){{$service->title}}@endif"/>

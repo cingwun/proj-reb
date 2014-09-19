@@ -2,7 +2,7 @@
 
 @section('title')
 
-產品項目-文章列表
+產品項目<?php echo (!empty($category)) ? sprintf(' ( %s ) ', $category_array[$category]) : ' '?>-文章列表
 
 @stop
 
@@ -10,10 +10,10 @@
 
 <div>
 	<a href='javascript:history.back()' type="button" class="btn btn-default pull-lift">回上一頁</a>
-	<a href='{{$acrion_url}}' type="button" class="btn btn-success pull-right">新增</a>
+	<a href='{{$acrion_url}}@if($category != '')?category={{$category}}@endif' type="button" class="btn btn-success pull-right">新增</a>
 </div>
 <br/>
-<table class="table table-bordered table-hover" id="sortable" data-sortAction="{{$update_sort_url}}">
+<table class="table table-bordered table-hover" id="sortable" data-sortAction="{{$update_sort_url}}" data-deleteAction="{{$delete_url}}">
 	<thead>
 		<tr>
 			<th>產品項目標題</th>
@@ -54,9 +54,9 @@
 			<td>{{$product->sort}}</td>
 			<td>
 				<a href="{{$acrion_url}}/{{$product->id}}" type="button" class="btn btn-sm btn-primary">修改</a>
-				<a href="{{$delete_url}}/{{$product->id}}" type="button" class="btn btn-sm btn-danger">刪除</a>
+				<a href="#" type="button" class="btn btn-sm btn-danger btn-delete">刪除</a>
 				@if($product->ref == '0')
-				<a href="{{$acrion_url}}/{{$product->id}}/create_lang" type="button" class="btn btn-sm btn-warning">新增@if($product->lang == 'tw')簡體@else繁體@endif語系</a>
+				<a href="{{$acrion_url}}/{{$product->id}}/create_lang?category={{$category}}" type="button" class="btn btn-sm btn-warning">新增@if($product->lang == 'tw')簡體@else繁體@endif語系</a>
 				@endif
 			</td>
 		</tr>

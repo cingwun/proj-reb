@@ -49,7 +49,7 @@
                     <label class="control-label" for="title">類別標題</label>
                     <input type="text" class="form-control" name="title" size="12" value="" />
                     <label class="control-label" for="title">排序 (輸入數字)</label>
-                    <input type="text" class="form-control" name="sort" size="12" value="1" />
+                    <input type="text" class="form-control" name="sort" size="12" value="1" onkeyup="value=value.replace(/[^\d]/g,'')"/>
                     <label>語系</label><br/>
                     <label class="radio-inline" id="lang_tw">
                         <input type="radio" name="lang" value="tw"/>繁體

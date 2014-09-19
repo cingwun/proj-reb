@@ -243,7 +243,7 @@ Route::group(array('prefix'=>'admin/spa'), function(){
      * Delete Service.
      * @param (string) $id
      */
-    Route::get('service/article/delete/{id?}', array('as'=>'spa.admin.service.article.delete', 'uses'=>'spaAdmin\\ServiceController@postDeleteService'));
+    Route::post('service/article/delete', array('as'=>'spa.admin.service.article.delete', 'uses'=>'spaAdmin\\ServiceController@postDeleteService'));
 
     /*
      * Display category list page
@@ -285,10 +285,10 @@ Route::group(array('prefix'=>'admin/spa'), function(){
     Route::post('product/article/write/{id?}', array('as'=>'spa.admin.product.article.write', 'uses'=>'spaAdmin\\ProductController@postWriteProduct'));
 
     /*
-     * Delete Service.
+     * Delete product.
      * @param (string) $id
      */
-    Route::get('product/article/delete/{id?}', array('as'=>'spa.admin.product.article.delete', 'uses'=>'spaAdmin\\ProductController@postDeleteProduct'));
+    Route::post('product/article/delete', array('as'=>'spa.admin.product.article.delete', 'uses'=>'spaAdmin\\ProductController@postDeleteProduct'));
 
     /*
      * Display category list page
@@ -321,4 +321,21 @@ Route::group(array('prefix'=>'admin/spa'), function(){
      * AJAX request for reservation details
      */
     Route::post('reservation/details', array('as'=>'spa.admin.reservation.details', 'uses'=>'spaAdmin\\ReservationController@postReservationDetails'));
+
+    /*
+     * AJAX request for delete reservation
+     */
+    Route::post('reservation/delete', array('as'=>'spa.admin.reservation.delete','uses'=>'spaAdmin\\ReservationController@postDeleteReservation'));
+
+    /*
+     * Display reservation action page
+     * @params (string) $id
+     */
+    Route::get('reservation/action/{id?}', array('as'=>'spa.admin.reservation.action', 'uses'=>'spaAdmin\\ReservationController@getReservationAction'));
+
+    /*
+     * Write(create/edit action) reservation data.
+     * @params (string) $id
+     */
+    Route::post('reservation/write/{id?}', array('as'=>'spa.admin.reservation.write', 'uses'=>'spaAdmin\\ReservationController@postReservationWrite'));
 });

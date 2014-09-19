@@ -5,31 +5,44 @@
 @stop
 
 @section('main')
-<table class="table table-bordered table-hover" id="reservationTable" data-detailsAction="{{$details_url}}">
+<div>
+    <a href='{{$action_url}}' type="button" class="btn btn-success pull-right">新增</a>
+</div>
+<table class="table table-bordered table-hover" id="reservationTable" data-detailsAction="{{$details_url}}" data-deleteAction="{{$delete_url}}">
 	<thead>
 		<tr>
 			<th>姓名</th>
+            <th>性別</th>
 			<th>國家</th>
-			<th>聯絡方式(時段)</th>
-			<th>生日</th>
+			<th>聯絡方式</th>
+            <th>時段</th>
 			<th>E-Mail</th>
-			<th>服務項目</th>
+            <th>諮詢／療程時間</th>
 			<th>新增時間</th>
 			<th>功能</th>
 		</tr>
 	</thead>
 	<tbody>
-		@foreach($reservation_list as $reservation)
+		@foreach($reservation_list as $key => $reservation)
 		<tr id="{{$reservation->id}}">
 			<td>{{$reservation->name}}</td>
+            <td>{{$sex_array[$reservation->sex]}}</td>
 			<td>{{$reservation->country}}</td>
-			<td>{{$contact_array[$reservation->contact_style]}}&nbsp:&nbsp{{$reservation->contact_content}}&nbsp({{$contact_time_array[$reservation->contact_time]}})</td>
-			<td>{{$reservation->birthday}}</td>
-			<td>{{$reservation->email}}</td>
-			<td>{{$reservation->improve_item}}</td>
-			<td>{{$reservation->created_at}}</td>
 			<td>
-				<a href="#" type="button" class="btn btn-sm btn-primary btn-details">詳細資料</a>
+            @foreach ($contact_array as $contact)
+                @for ($i = 0; $i < $contact['count']; $i++)
+                    {{$style_array[$i]}}{{$contact['data'][$i]}}<br/>
+                @endfor
+            @endforeach
+            </td>
+            <td>{{$contact_time_array[$reservation->contact_time]}}</td>
+			<td>{{$reservation->email}}</td>
+            <td>{{$reservation->service_date}}</td>
+			<td>{{$reservation->created_at}}<br/>{{$reservation->updated_at}}</td>
+			<td>
+				<a href="#" type="button" class="btn btn-sm btn-warning btn-details">詳細資料</a>
+                <a href="{{$action_url}}/{{$reservation->id}}" type="button" class="btn btn-sm btn-primary">修改</a>
+                <a href="#" type="button" class="btn btn-sm btn-danger btn-delete">刪除</a>
 			</td>
 		</tr>
 		@endforeach
@@ -51,7 +64,11 @@
             <dd>{%=o.data.country%}</dd>
 
             <dt>聯絡方式</dt>
-            <dd>{%=o.data.contact_style%}&nbsp:&nbsp{%=o.data.contact_content%}</dd>
+            <dd>
+                {% for (var i=0; i<o.data.contact.count; i++) { %}
+                    <div>{%=o.data.style_array[i]%}{%=o.data.contact.data[i]%}</div>
+                {% } %}
+            </dd>
 
             <dt>方便聯繫的時間</dt>
             <dd>{%=o.data.contact_time%}</dd>
@@ -81,7 +98,6 @@
 </div>
 </script>
 @stop
-
 @section('head')
 {{ HTML::style(asset('spa_admin/js/plugins/featherlight/featherlight.min.css'))}}
 <style type="text/css">
@@ -90,51 +106,9 @@
 }
 </style>
 @stop
-
 @section('bottom')
 {{ HTML::script(asset('spa_admin/js/plugins/featherlight/jquery-latest.js'))}}
 {{ HTML::script(asset('spa_admin/js/plugins/featherlight/featherlight.min.js'))}}
 {{ HTML::script(asset('spa_admin/js/plugins/templates/tmpl.min.js'))}}
-<script type="text/javascript">
-var reservationTable = function(o){
-    o.init = function(){
-    	var self = this;
-    	self.$el = $(self.el);
-
-    	self.resetTrCollection();
-        self.ajaxdetailsURL = self.$el.attr('data-detailsAction');
-
-        return self;
-    }
-    o.resetTrCollection = function(){
-        var self = this, tr;
-
-        self.$el.find('tbody tr').each(function(idx, tr){
-            var $el = $(this);
-
-            $el.find('.btn-details').click(function(e){
-                e.stopPropagation();
-                e.preventDefault();
-                $.ajax({
-                    url: self.ajaxdetailsURL,
-                    type: 'POST',
-                    data: {id: tr.id},
-                    dataType: 'json',
-                    async: true,
-                    success: function(res, s, xhr){
-                        if (res.status=='ok'){
-                            var content = tmpl('tmpl-details', res.data_str);
-                            $.featherlight(content, {closeOnClick: false});
-                        }
-                    },
-                    error: function(){
-                        alert('提醒您:\n\n    系統刪除錯誤，請通知工程師');
-                    }
-                });
-            });
-        });
-    }
-    return o.init();
-}({el: '#reservationTable'});
-</script>
+{{ HTML::script(asset('spa_admin/js/reservation/js_reservation_list.js'))}}
 @stop

@@ -16,9 +16,9 @@ class CreateSpaReservationTable extends Migration {
 			Schema::create('spa_reservation', function($table){
 				$table->increments('id')->unsigned();
 				$table->string('name');
+				$table->enum('sex', array('male', 'women'));
 				$table->string('country');
-				$table->enum('contact_style', array('phone', 'line', 'wechat', 'qq'));
-				$table->string('contact_content');
+				$table->string('contact');
 				$table->enum('contact_time', array('morning', 'noon', 'afternoon', 'night'));
 				$table->date('birthday');
 				$table->string('email');

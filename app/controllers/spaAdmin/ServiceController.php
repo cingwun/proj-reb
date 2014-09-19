@@ -25,7 +25,9 @@ class ServiceController extends \BaseController {
 			
 			$service_list = $cmd->orderBy('_parent', 'DESC')
 								->orderBy('ref', 'DESC')
-								->orderBy('sort','DESC')->skip($offset)
+								->orderBy('sort','DESC')
+								->orderBy('updated_at', 'desc')
+								->skip($offset)
                         		->take($limit)
 								->get();
 
@@ -75,6 +77,7 @@ class ServiceController extends \BaseController {
 	public function getServiceAction($id=null, $lang=null) {
 		$action = "create";
 		try {
+			$list_category = \Input::get('category', null);
 			//lang_create
 			$ref = 0;
 			$ref_lang = null;
@@ -138,7 +141,8 @@ class ServiceController extends \BaseController {
 	                'elementId' => 'tab-box',
 	                'formTitle' => 'Tab項目',
 	                'items' => $items
-            	)
+            	),
+            	'list_category'=>$list_category
 			));
 		} catch (Exception $e) {
 			echo $e->getMessage();
@@ -152,6 +156,7 @@ class ServiceController extends \BaseController {
 	 * @params (string) $id
 	 */
 	public function postWriteService($id = null) {
+		$list_category = \Input::get('category', null);
 		$action = \Input::get('action');
 		try {
 			//tags
@@ -226,7 +231,7 @@ class ServiceController extends \BaseController {
 				}
 			}
 
-			return \Redirect::route("spa.admin.service.article.list");
+			return \Redirect::route("spa.admin.service.article.list", array('category'=>$list_category));
 		} catch (Exception $e) {
 			echo $e->getMessage();
 			exit;
@@ -239,11 +244,9 @@ class ServiceController extends \BaseController {
      */
 	public function postDeleteService($id = null) {
 		try {
-			if(empty($id))
-				return \Redirect::route('spa.admin.service.article.list');
+			$id = \Input::get('id');
+			
 			$service = \SpaService::find($id); 
-			if(empty($service))
-				return \Redirect::route('spa.admin.service.article.list');
 
 			$service->delete();
 
@@ -253,10 +256,15 @@ class ServiceController extends \BaseController {
 				$ref_service->save();
 			}
 
-			return \Redirect::route('spa.admin.service.article.list');
+			return \Response::json(array(
+	            'status' => 'ok',
+	            'message' => '刪除完成!'
+	        ));
 		} catch (Exception $e) {
-			echo $e->getMessage();
-			exit;
+			return Response::json(array(
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ));
 		}
 	}
 
