@@ -100,6 +100,8 @@ Route::group(array('prefix'=>'admin', 'before'=>'auth.admin'), function()
         //admin index
         Route::any('/', array('as'=>'admin.index', 'uses'=>'AuthController@index'));
 
+        Route::get('switch_to_spa', array('as'=>'switch.to.admin.spa', 'uses'=>'BackendSwitchController@getSpa'));
+
         // admin delete fps url
         Route::post('fps/delete', array('as'=>'admin.fps.delete', 'uses'=>'FpsController@postDelete'));
 
@@ -246,12 +248,8 @@ Route::group(array('prefix'=>'admin/spa', 'before'=>'auth.admin'), function()
     Route::post('share/{type}/sort/update', array('as'=>'spa.admin.share.sort.update', 'uses'=>'spaAdmin\\ShareController@postUpdateSort'));
 
     // banners
-    Route::get('banners/{size}', array('as'=>'admin.banners.list', 'uses'=>'BannersController@getList'));
+    //Route::get('banners/{size}', array('as'=>'admin.banners.list', 'uses'=>'BannersController@getList'));
 
-    //member
-    // Route::get('member/list', array('as'=>'admin.member.list', 'uses'=>'MemberController@getList'));
-    // Route::get('member/action/{member_id}', array('as'=>'admin.member.action', 'uses'=>'MemberController@getAction'))
-    //         ->where(array('member_id'=>'([0-9]+)'));
-    // Route::post('member/action', array('as'=>'admin.member.action.post', 'uses'=>'MemberController@postAction'));
+    Route::get('switch_to_rebeauty', array('as'=>'switch.to.admin.rebeauty', 'uses'=>'BackendSwitchController@getRebeauty'));
 
 });

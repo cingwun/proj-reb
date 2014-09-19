@@ -47,7 +47,8 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="{{URL::route('spa.admin.index')}}">Rebeauty SPA</a>
+                    <a class="navbar-brand" href="{{URL::route('switch.to.admin.spa')}}">SPA後台</a>
+                    <a class="navbar-brand" href="{{URL::route('switch.to.admin.rebeauty')}}">Rebeauty後台</a>
                 </div>
                 
                 <!-- Top Menu Items -->

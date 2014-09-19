@@ -50,7 +50,7 @@ class BannersController extends BaseController {
 			'perPage' => $limit,
 			'URL' => URL::route('admin.banners.list', array($size)),
 		);
-		if(Input::get('where')=='rebeauty'){
+		if(Session::get('where')=='rebeauty'){
 			return View::make('admin.banners.view_list', array(
 					'size' => $this->_getSize($size),
 					'wp' => &$widgetParam,
@@ -75,7 +75,7 @@ class BannersController extends BaseController {
 		$data['on_time'] = (isset($data['on_time']) && $data['on_time']>0) ? date('Y-m-d', $data['on_time']) : '';
 		$data['off_time'] = (isset($data['off_time']) && $data['off_time']>0) ? date('Y-m-d', $data['off_time']) : '';
 
-		if(Input::get('where')=='rebeauty'){
+		if(Session::get('where')=='rebeauty'){
 			return View::make('admin.banners.view_action', array(
 				'size' => $this->_getSize($size),
 				'data' => $data

@@ -35,7 +35,7 @@ class MemberController extends BaseController{
 			'qs' => http_build_query($params)
 		);
 
-		if((Input::get('where'))=='rebeauty'){
+		if((Session::get('where'))=='rebeauty'){
 			return View::make('admin.member.view_list', array(
 				'wp' => &$widgetParam,
 				'data' => &$data
@@ -58,7 +58,7 @@ class MemberController extends BaseController{
 		if ($r==null)
 			return Response::back();
 
-		if((Input::get('where')=='rebeauty')){
+		if((Session::get('where')=='rebeauty')){
 			return View::make('admin.member.view_action', array(
 				'm' => &$r
 			));

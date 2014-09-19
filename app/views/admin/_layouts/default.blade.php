@@ -20,7 +20,10 @@
     <body id="admin">
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-inner">
-                <div class="container-fluid"> <a class="brand" href="/admin">rebeauty</a>
+                <div class="container-fluid"> 
+                    <!-- <a class="brand" href="/admin">rebeauty</a> -->
+                    <a class="brand" href="{{URL::route('switch.to.admin.rebeauty')}}">Rebeauty</a>
+                    <a class="brand" href="{{URL::route('switch.to.admin.spa')}}">SPA</a>
                     <div class="nav-collapse collapse">
                         <p class="navbar-text pull-right">{{ Sentry::getUser()->email }} | <a href="{{ URL::route('admin.logout') }}" class="navbar-link">Logout</a>
                         </p>
