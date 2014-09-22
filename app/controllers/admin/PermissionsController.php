@@ -21,7 +21,11 @@ class PermissionsController extends \BaseController {
 	public function index()
 	{
 		//
-                return View::make('admin.permissions.index')->with('permissions',Permission::all()->sortBy('sort'));
+                if((Session::get('where'))=='rebeauty')
+                	return View::make('admin.permissions.index')->with('permissions',Permission::all()->sortBy('sort'));
+                else
+                	return View::make('spa_admin.permissions.index')->with('permissions',Permission::all()->sortBy('sort'));
+
 	}
 
 	/**
@@ -32,7 +36,10 @@ class PermissionsController extends \BaseController {
 	public function create()
 	{
 		//
-                return View::make('admin.permissions.create');
+                if((Session::get('where'))=='rebeauty')
+                	return View::make('admin.permissions.create')->with('permissions',Permission::all()->sortBy('sort'));
+                else
+                	return View::make('spa_admin.permissions.create')->with('permissions',Permission::all()->sortBy('sort'));
 	}
 
 	/**
@@ -78,7 +85,10 @@ class PermissionsController extends \BaseController {
 	public function edit($id)
 	{
 		//
-                return View::make('admin.permissions.edit')->with('permission',Permission::find($id));
+                if((Session::get('where'))=='rebeauty')
+                	return View::make('spa_admin.permissions.edit')->with('permission',Permission::find($id));
+                else
+                	return View::make('spa_admin.permissions.edit')->with('permission',Permission::find($id));
 	}
 
 	/**

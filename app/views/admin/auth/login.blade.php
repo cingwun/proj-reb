@@ -3,7 +3,8 @@
 <head>
         <meta charset="utf-8">
         <title>rebeauty</title>
- {{ HTML::style('packages/bootstrap/css/bootstrap.min.css'); }}
+   {{ HTML::style('packages/bootstrap/css/bootstrap.min.css'); }}
+   {{ HTML::style(asset('spa_admin/css/admin/bootstrap.min.css'))}}
 <style type="text/css">
       body {
         padding-top: 40px;
@@ -46,19 +47,37 @@
                         @if ($errors->has('login'))
                                 <div class="alert alert-error">{{ $errors->first('login', ':message') }}</div>
                         @endif
-                        <div class="control-group">
+                        <div class="form-group">
                                 {{ Form::label('email', 'Email') }}
-                                <div class="controls">
+                                <div class="form-control">
                                        {{ Form::text('email') }}
                                 </div>
                         </div>
-                        <div class="control-group">
+                        <div class="form-group">
                                 {{ Form::label('password', 'Password') }}
-                                <div class="controls">
+                                <div class="form-control">
                                         {{ Form::password('password') }}
                                 </div>
                         </div>
-                                {{ Form::submit('Login', array('class' => 'btn btn-inverse btn-login')) }}
+
+                        <!--<div class="form-group">
+                            <label>連線至</label>
+                            <label class="radio inline">
+                                <input type="radio" name="where" value="rebeauty"/>Rebeauty後台
+                            </label>
+                            <label class="radio inline">
+                                <input type="radio" name="where" value="spa"  checked  />Spa後台
+                            </label>
+                        </div>-->
+
+                        <select name="where" class="form-control">
+                          <option>rebeauty</option>
+                          <option>spa</option>
+                        </select>
+                        <br>
+
+                        {{ Form::submit('Login', array('class' => 'btn btn-inverse btn-login')) }}
+
                 {{ Form::close() }}
         </div>
 </div>

@@ -183,7 +183,7 @@ var _imageUploader = function(o){
      * @params (bool) force
      */
     o.addImageBox = function(item, force){
-        if (typeof(item)=='undefined')
+        if (typeof(item)=='undefined')                                  
             return false;
 
         if (typeof(force)=='undefined')

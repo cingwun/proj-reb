@@ -22,6 +22,15 @@ if (in_array($locale, $languages)) {
 
 
 Route::group(array('prefix'=>$locale), function(){
+
+
+    //Kettan test
+    Route::get('iop', function(){
+        return View::make('spa.iop');
+    });
+    Route::get('kettan', 'spa\\KettanController@kettan');
+
+
     //首頁
     Route::get('/', array('uses'=>'aesthetics\\IndexController@getIndex', 'as'=>'frontend.index'));
 
@@ -91,6 +100,8 @@ Route::group(array('prefix'=>'admin', 'before'=>'auth.admin'), function()
         //admin index
         Route::any('/', array('as'=>'admin.index', 'uses'=>'AuthController@index'));
 
+        Route::get('switch_to_spa', array('as'=>'switch.to.admin.spa', 'uses'=>'BackendSwitchController@getSpa'));
+
         // admin delete fps url
         Route::post('fps/delete', array('as'=>'admin.fps.delete', 'uses'=>'FpsController@postDelete'));
 
@@ -133,7 +144,7 @@ Route::group(array('prefix'=>'admin', 'before'=>'auth.admin'), function()
         Route::get('banners/{size}', array('as'=>'admin.banners.list', 'uses'=>'BannersController@getList'));
 
         // test
-        Route::controller('test', 'TestController');
+        //Route::controller('test', 'TestController');
 
         //預約
         Route::resource('reservations','ReservationsController');
@@ -210,10 +221,152 @@ Route::group(array('prefix'=>'admin', 'before'=>'auth.admin'), function()
         Route::post('beautynews/sort/update', array('as'=>'admin.beautynews.sort.update', 'uses'=>'BeautyNewsController@postUpdateSort'));
 
 });
+
 /*
  *  rebeauty spa admin
  */
-Route::group(array('prefix'=>'adminSpa'), function(){
+Route::group(array('prefix'=>'admin/spa', 'before'=>'auth.admin'), function()
+{
 
-    Route::get('/','spaAdmin\\TestController@test');
+    Route::get('/',array('as'=>'spa.admin.index', 'uses'=>function(){
+        return \View::make('spa_admin._layouts.default');
+    }));
+
+    // Spa Articles
+    Route::get('articles/list/{category?}', array('as'=>'spa.admin.articles.list', 'uses'=>'spaAdmin\\ArticleController@getList'));
+    Route::get('articles/action/{id?}/{changeLan?}/{category?}', array('as'=>'spa.admin.articles.action', 'uses'=>'spaAdmin\\ArticleController@getAction'));
+    Route::post('articles/action/{id?}/{changeLan?}', array('as'=>'spa.admin.articles.store', 'uses'=>'spaAdmin\\ArticleController@postAction'));
+    Route::get('articles/kickout/{id?}', array('as'=>'spa.admin.articles.delete', 'uses'=>'spaAdmin\\ArticleController@postDelete'));
+    Route::post('articles/sort', array('as'=>'spa.admin.articles.sort', 'uses'=>'spaAdmin\\ArticleController@postSort'));
+
+    // Spa Shares
+    // Article
+    Route::get('share/article/list/{page?}', array('as'=>'spa.admin.share.article.list', 'uses'=>'spaAdmin\\ShareController@getArticleList'));
+    Route::get('share/article/action/{id?}/{changeLang?}', array('as'=>'spa.admin.share.article.action', 'uses'=>'spaAdmin\\ShareController@getArticleAction'));
+    Route::post('share/article/action', array('as'=>'spa.admin.share.article.write', 'uses'=>'spaAdmin\\ShareController@postArticleAction'));
+    Route::post('share/article/delete', array('as'=>'spa.admin.share.article.delete', 'uses'=>'spaAdmin\\ShareController@postArticleDelete'));
+    // sort
+    Route::post('share/{type}/sort/update', array('as'=>'spa.admin.share.sort.update', 'uses'=>'spaAdmin\\ShareController@postUpdateSort'));
+
+    //switch to rebeauty backgroupd
+    Route::get('switch_to_rebeauty', array('as'=>'switch.to.admin.rebeauty', 'uses'=>'BackendSwitchController@getRebeauty'));
+
+    /*----------Service----------*/
+    /*
+     * Display service list page
+     */
+    Route::get('service/article/list/', array('as'=>'spa.admin.service.article.list', 'uses'=>'spaAdmin\\ServiceController@getServiceList'));
+
+    /*
+     * Display service create/edit page
+     * @params (string) $id
+    * @params (string) $lang
+     */
+    Route::get('service/article/action/{id?}/{lang?}', array('as'=>'spa.admin.service.article.action', 'uses'=>'spaAdmin\\ServiceController@getServiceAction'));
+
+    /*
+     * Write(create/edit action) service data.
+     * @params (string) $id
+     */
+    Route::post('service/article/write/{id?}', array('as'=>'spa.admin.service.article.write', 'uses'=>'spaAdmin\\ServiceController@postWriteService'));
+
+    /*
+     * Delete Service.
+     * @param (string) $id
+     */
+    Route::post('service/article/delete', array('as'=>'spa.admin.service.article.delete', 'uses'=>'spaAdmin\\ServiceController@postDeleteService'));
+
+    /*
+     * Display category list page
+     */
+    Route::get('service/category/list', array('as'=>'spa.admin.service.category.list', 'uses'=>'spaAdmin\\ServiceController@getCategoryList'));
+
+    /*
+     * handle AJAX request of change category item
+     */
+    Route::post('service/category/action', array('as'=>'spa.admin.service.category.action', 'uses'=>'spaAdmin\\ServiceController@postCategoryAction'));
+
+    /*
+     * hadnle AJAX request for delete category
+     */
+    Route::post('service/category/delete', array('as'=>'spa.admin.service.category.delete', 'uses'=>'spaAdmin\\ServiceController@postDeleteCategory'));
+
+    /*
+     * handle AJAX request of change sort
+     */
+    Route::post('service/sort/update', array('as'=>'spa.admin.service.sort.update', 'uses'=>'spaAdmin\\ServiceController@postUpdateSort'));
+
+    /*----------product----------*/
+    /*
+     * Display product list.
+     */
+    Route::get('product/article/list/', array('as'=>'spa.admin.product.article.list', 'uses'=>'spaAdmin\\ProductController@getProductList'));
+
+    /*
+     * Display product create/edit page.
+     * @params (string) $id
+     * @params (string) $lang
+     */
+    Route::get('product/article/action/{id?}/{lang?}', array('as'=>'spa.admin.product.article.action', 'uses'=>'spaAdmin\\ProductController@getProductAction'));
+
+    /*
+     * Write(create/edit action) product data.
+     * @params (string) $id
+     */
+    Route::post('product/article/write/{id?}', array('as'=>'spa.admin.product.article.write', 'uses'=>'spaAdmin\\ProductController@postWriteProduct'));
+
+    /*
+     * Delete product.
+     * @param (string) $id
+     */
+    Route::post('product/article/delete', array('as'=>'spa.admin.product.article.delete', 'uses'=>'spaAdmin\\ProductController@postDeleteProduct'));
+
+    /*
+     * Display category list page
+     */
+    Route::get('product/category/list', array('as'=>'spa.admin.product.category.list', 'uses'=>'spaAdmin\\ProductController@getCategoryList'));
+
+    /*
+     * handle AJAX request of change category item
+     */
+    Route::post('product/category/action', array('as'=>'spa.admin.product.category.action', 'uses'=>'spaAdmin\\ProductController@postCategoryAction'));
+
+    /*
+     * hadnle AJAX request for delete category
+     */
+    Route::post('product/category/delete', array('as'=>'spa.admin.product.category.delete', 'uses'=>'spaAdmin\\ProductController@postDeleteCategory'));
+
+    /*
+     * handle AJAX request of change sort
+     */
+    Route::post('product/sort/update', array('as'=>'spa.admin.product.sort.update', 'uses'=>'spaAdmin\\ProductController@postUpdateSort'));
+
+    /*----------reservation----------*/
+
+    /*
+     * Display reservation list page
+     */
+    Route::get('reservation/list', array('as'=>'spa.admin.reservation.list', 'uses'=>'spaAdmin\\ReservationController@getReservationList'));
+
+    /*
+     * AJAX request for reservation details
+     */
+    Route::post('reservation/details', array('as'=>'spa.admin.reservation.details', 'uses'=>'spaAdmin\\ReservationController@postReservationDetails'));
+
+    /*
+     * AJAX request for delete reservation
+     */
+    Route::post('reservation/delete', array('as'=>'spa.admin.reservation.delete','uses'=>'spaAdmin\\ReservationController@postDeleteReservation'));
+
+    /*
+     * Display reservation action page
+     * @params (string) $id
+     */
+    Route::get('reservation/action/{id?}', array('as'=>'spa.admin.reservation.action', 'uses'=>'spaAdmin\\ReservationController@getReservationAction'));
+
+    /*
+     * Write(create/edit action) reservation data.
+     * @params (string) $id
+     */
+    Route::post('reservation/write/{id?}', array('as'=>'spa.admin.reservation.write', 'uses'=>'spaAdmin\\ReservationController@postReservationWrite'));
 });
