@@ -23,6 +23,14 @@ if (in_array($locale, $languages)) {
 
 Route::group(array('prefix'=>$locale), function(){
 
+
+    //Kettan test
+    Route::get('iop', function(){
+        return View::make('spa.iop');
+    });
+    Route::get('kettan', 'spa\\KettanController@kettan');
+
+
     //首頁
     Route::get('/', array('uses'=>'aesthetics\\IndexController@getIndex', 'as'=>'frontend.index'));
 
@@ -92,6 +100,8 @@ Route::group(array('prefix'=>'admin', 'before'=>'auth.admin'), function()
         //admin index
         Route::any('/', array('as'=>'admin.index', 'uses'=>'AuthController@index'));
 
+        Route::get('switch_to_spa', array('as'=>'switch.to.admin.spa', 'uses'=>'BackendSwitchController@getSpa'));
+
         // admin delete fps url
         Route::post('fps/delete', array('as'=>'admin.fps.delete', 'uses'=>'FpsController@postDelete'));
 
@@ -134,7 +144,7 @@ Route::group(array('prefix'=>'admin', 'before'=>'auth.admin'), function()
         Route::get('banners/{size}', array('as'=>'admin.banners.list', 'uses'=>'BannersController@getList'));
 
         // test
-        Route::controller('test', 'TestController');
+        //Route::controller('test', 'TestController');
 
         //預約
         Route::resource('reservations','ReservationsController');
@@ -209,5 +219,37 @@ Route::group(array('prefix'=>'admin', 'before'=>'auth.admin'), function()
 
         //   sort
         Route::post('beautynews/sort/update', array('as'=>'admin.beautynews.sort.update', 'uses'=>'BeautyNewsController@postUpdateSort'));
+
+});
+/*
+ *  rebeauty spa admin
+ */
+Route::group(array('prefix'=>'admin/spa', 'before'=>'auth.admin'), function()
+{
+
+    Route::get('/',array('as'=>'spa.admin.index', 'uses'=>function(){
+        return \View::make('spa_admin._layouts.default');
+    }));
+
+    // Spa Articles
+    Route::get('articles/list/{category?}', array('as'=>'spa.admin.articles.list', 'uses'=>'spaAdmin\\ArticleController@getList'));
+    Route::get('articles/action/{id?}/{changeLan?}/{category?}', array('as'=>'spa.admin.articles.action', 'uses'=>'spaAdmin\\ArticleController@getAction'));
+    Route::post('articles/action/{id?}/{changeLan?}', array('as'=>'spa.admin.articles.store', 'uses'=>'spaAdmin\\ArticleController@postAction'));
+    Route::get('articles/kickout/{id?}', array('as'=>'spa.admin.articles.delete', 'uses'=>'spaAdmin\\ArticleController@postDelete'));
+    Route::post('articles/sort', array('as'=>'spa.admin.articles.sort', 'uses'=>'spaAdmin\\ArticleController@postSort'));
+
+    // Spa Shares
+    // Article
+    Route::get('share/article/list/{page?}', array('as'=>'spa.admin.share.article.list', 'uses'=>'spaAdmin\\ShareController@getArticleList'));
+    Route::get('share/article/action/{id?}/{changeLang?}', array('as'=>'spa.admin.share.article.action', 'uses'=>'spaAdmin\\ShareController@getArticleAction'));
+    Route::post('share/article/action', array('as'=>'spa.admin.share.article.write', 'uses'=>'spaAdmin\\ShareController@postArticleAction'));
+    Route::post('share/article/delete', array('as'=>'spa.admin.share.article.delete', 'uses'=>'spaAdmin\\ShareController@postArticleDelete'));
+    // sort
+    Route::post('share/{type}/sort/update', array('as'=>'spa.admin.share.sort.update', 'uses'=>'spaAdmin\\ShareController@postUpdateSort'));
+
+    // banners
+    //Route::get('banners/{size}', array('as'=>'admin.banners.list', 'uses'=>'BannersController@getList'));
+
+    Route::get('switch_to_rebeauty', array('as'=>'switch.to.admin.rebeauty', 'uses'=>'BackendSwitchController@getRebeauty'));
 
 });
