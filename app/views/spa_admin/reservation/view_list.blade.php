@@ -53,7 +53,7 @@
 <script type="text/x-tmpl" id="tmpl-details">
 <div class="panel panel-info">
     <div class="panel-heading">
-        <h3 class="panel-title">{%=o.data.name%}-預約資料</h3>
+        <h3 class="panel-title">{%=o.data.name%}-基本資料</h3>
     </div>
     <div class="panel-body">
         <dl class="dl-horizontal">
@@ -87,7 +87,15 @@
 
             <dt>諮詢／療程時間</dt>
             <dd>{%=o.data.service_date%}</dd>
-
+        </dl>
+    </div>
+</div>
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h3 class="panel-title">諮詢資料</h3>
+    </div>
+    <div class="panel-body">
+        <dl class="dl-horizontal">
             <dt>想改善的項目</dt>
             <dd>{%=o.data.improve_item%}</dd>
 
