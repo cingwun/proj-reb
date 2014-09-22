@@ -20,18 +20,26 @@
     <body id="admin">
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-inner">
-                <div class="container-fluid"> <a class="brand" href="/admin">rebeauty</a>
+                <div class="container-fluid"> 
+                    <!-- <a class="brand" href="/admin">rebeauty</a> -->
+                    <a class="brand" href="{{URL::route('switch.to.admin.rebeauty')}}">Rebeauty</a>
                     <div class="nav-collapse collapse">
                         <p class="navbar-text pull-right">{{ Sentry::getUser()->email }} | <a href="{{ URL::route('admin.logout') }}" class="navbar-link">Logout</a>
                         </p>
                         <ul class="nav">@if (Sentry::getUser()->hasAnyAccess(array('system')))
                             <li class="dropdown @if(Request::is('admin/users*') || Request::is('admin/permissions*') || Request::is('admin/groups*')) active @endif"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">系統管理</a>
                                 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-                                    <li><a tabindex="-1" href="{{ URL::route('admin.users.index') }}">使用者</a>
+                                    <li>
+                                        <a tabindex="-1" href="{{ URL::route('admin.users.index', array('where'=>Input::get('where'))) }}">使用者</a>
                                     </li>
-                                    <li><a tabindex="-1" href="{{ URL::route('admin.groups.index') }}">群組</a>
+                                    <li>
+                                        <a tabindex="-1" href="{{ URL::route('admin.groups.index') }}">群組</a>
                                     </li>
-                                    <li><a tabindex="-1" href="{{ URL::route('admin.permissions.index') }}">權限</a>
+                                    <li>
+                                        <a tabindex="-1" href="{{ URL::route('admin.permissions.index') }}">權限</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{URL::route('switch.to.admin.spa')}}">Spa後台</a>
                                     </li>
                                 </ul>
                             </li>
@@ -52,11 +60,11 @@
                             @if (helper::nav_show('banners'))
                             <li class="dropdown {{ (Request::is('admin/banners*') ? 'active' : '') }}"> <a href="#" data-toggle="dropdown">Banner管理</a>
                                 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                                    <li role="presentation"><a role="menuitem" href="{{ URL::route('admin.banners.list', array('large'))}}">尺寸 960x430</a>
+                                    <li role="presentation"><a role="menuitem" href="{{ URL::route('admin.banners.list', array('large', 'where'=>Input::get('where')))}}">尺寸 960x430</a>
                                     </li>
-                                    <li role="presentation"><a role="menuitem" href="{{ URL::route('admin.banners.list', array('medium'))}}">尺寸 960x250</a>
+                                    <li role="presentation"><a role="menuitem" href="{{ URL::route('admin.banners.list', array('medium', 'where'=>Input::get('where')))}}">尺寸 960x250</a>
                                     </li>
-                                    <li role="presentation"><a role="menuitem" href="{{ URL::route('admin.banners.list', array('small'))}}">尺寸 700x300</a>
+                                    <li role="presentation"><a role="menuitem" href="{{ URL::route('admin.banners.list', array('small', 'where'=>Input::get('where')))}}">尺寸 700x300</a>
                                     </li>
                                 </ul>
                             </li>
@@ -93,7 +101,7 @@
                             @endif
 
                             @if (helper::nav_show('member'))
-                            <li class="{{ (Request::is('admin/member*') ? 'active' : '') }}"> <a href="<?=URL::route('admin.member.list')?>">會員管理</a></li>
+                            <li class="{{ (Request::is('admin/member*') ? 'active' : '') }}"> <a href="<?=URL::route('admin.member.list', array('where'=>Input::get('where')))?>">會員管理</a></li>
                             @endif
 
                             @if (helper::nav_show('wintness'))

@@ -21,7 +21,10 @@ class GroupsController extends \BaseController {
 	public function index()
 	{
 		//
-                return View::make('admin.groups.index')->with('groups',Sentry::findAllGroups());
+                if((Session::get('where')=='rebeauty'))
+                	return View::make('admin.groups.index')->with('groups',Sentry::findAllGroups());
+                else
+                	return View::make('spa_admin.groups.index')->with('groups',Sentry::findAllGroups());
 	}
 
 	/**
@@ -32,7 +35,10 @@ class GroupsController extends \BaseController {
 	public function create()
 	{
 		//
-                return View::make('admin.groups.create');
+                if((Session::get('where')=='rebeauty'))
+                	return View::make('admin.groups.create');
+                else
+                	return View::make('spa_admin.groups.create');
 	}
 
 	/**
@@ -81,8 +87,12 @@ class GroupsController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
-                return View::make('admin.groups.edit')->with('group',Sentry::findGroupById($id));
+		//                
+                if((Session::get('where')=='rebeauty'))
+                	return View::make('admin.groups.edit')->with('group',Sentry::findGroupById($id));
+                else
+                	return View::make('spa_admin.groups.edit')->with('group',Sentry::findGroupById($id));
+
 	}
 
 	/**

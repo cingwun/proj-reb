@@ -35,10 +35,17 @@ class MemberController extends BaseController{
 			'qs' => http_build_query($params)
 		);
 
-		return View::make('admin.member.view_list', array(
-			'wp' => &$widgetParam,
-			'data' => &$data
-		));
+		if((Session::get('where'))=='rebeauty'){
+			return View::make('admin.member.view_list', array(
+				'wp' => &$widgetParam,
+				'data' => &$data
+			));
+		}else{
+			return View::make('spa_admin.member.view_list', array(
+				'wp' => &$widgetParam,
+				'data' => &$data
+			));
+		}
 	}
 
 	/*
@@ -51,9 +58,15 @@ class MemberController extends BaseController{
 		if ($r==null)
 			return Response::back();
 
-		return View::make('admin.member.view_action', array(
-			'm' => &$r
-		));
+		if((Session::get('where')=='rebeauty')){
+			return View::make('admin.member.view_action', array(
+				'm' => &$r
+			));
+		}else{
+			return View::make('spa_admin.member.view_action', array(
+				'm' => &$r
+			));
+		}
 	}
 
 	/*
