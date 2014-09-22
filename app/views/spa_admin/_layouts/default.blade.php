@@ -149,6 +149,11 @@
                     </ul>
                 </li>
 
+                <!-- 會員管理 -->
+                <li>
+                    <a href="{{URL::route('admin.member.list')}}">會員管理</a>
+                </li>
+
             </ul>
             <!-- /.navbar-collapse -->
             <div id="page-wrapper">
