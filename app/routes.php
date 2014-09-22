@@ -100,6 +100,7 @@ Route::group(array('prefix'=>'admin', 'before'=>'auth.admin'), function()
         //admin index
         Route::any('/', array('as'=>'admin.index', 'uses'=>'AuthController@index'));
 
+        //switch to spa backgroupd
         Route::get('switch_to_spa', array('as'=>'switch.to.admin.spa', 'uses'=>'BackendSwitchController@getSpa'));
 
         // admin delete fps url
@@ -247,9 +248,7 @@ Route::group(array('prefix'=>'admin/spa', 'before'=>'auth.admin'), function()
     // sort
     Route::post('share/{type}/sort/update', array('as'=>'spa.admin.share.sort.update', 'uses'=>'spaAdmin\\ShareController@postUpdateSort'));
 
-    // banners
-    //Route::get('banners/{size}', array('as'=>'admin.banners.list', 'uses'=>'BannersController@getList'));
-
+    //switch to rebeauty backgroupd
     Route::get('switch_to_rebeauty', array('as'=>'switch.to.admin.rebeauty', 'uses'=>'BackendSwitchController@getRebeauty'));
 
 });
