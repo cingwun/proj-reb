@@ -3,17 +3,18 @@ namespace aesthetics;
 
 class IndexController extends \BaseController {
 
-	/*
+    /**
      * display index page
      */
-    public function getIndex(){
-    	$boards = \Board::where('status', '=', '1')
-    				   ->orderBy('created_at', 'desc')
-    				   ->skip(0)
-    				   ->take(10)
-    				   ->get(array('id', 'name', 'topic', 'count_num', \DB::raw("date_format(created_at,'%Y-%m-%d') as d")));
-        if ($boards===null)
-        	$boards = array();
+    public function getIndex() {
+        $boards = \Board::where('status', '=', '1')
+                        ->orderBy('created_at', 'desc')
+                        ->skip(0)
+                        ->take(10)
+                        ->get(array('id', 'name', 'topic', 'count_num', \DB::raw("date_format(created_at,'%Y-%m-%d') as d")));
+
+        if ($boards === null)
+            $boards = array();
 
         $newses = \Article::where('status', '=', '1')
                           ->where('category', '=', '3')
@@ -25,13 +26,18 @@ class IndexController extends \BaseController {
                           ->take(10)
                           ->get(array('id', 'title', 'open_at'));
 
-        if ($newses===null)
+        if ($newses === null)
             $newses = array();
 
+        $techs = \Technology::where('status', '=', 'Y')
+                           ->take(5)
+                           ->orderBy('sort')
+                           ->get();
+
         return \View::make('aesthetics.index.index', array(
-        	   'boards' => &$boards,
-            'newses' => &$newses
+            'boards' => &$boards,
+            'newses' => &$newses,
+            'techs' => &$techs
         ));
     }
-
 }
