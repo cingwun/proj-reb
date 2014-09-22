@@ -1,5 +1,8 @@
 <?php
+
 class SpaProduct extends Eloquent {
 
-	protected $table = 'spa_product';
+	protected $table = "spa_product";
 }
+
+?>

@@ -41,6 +41,7 @@ class AuthController extends BaseController {
                         $user = Sentry::authenticate($credentials, false);
  
                         if ($user && Input::get('where')=='rebeauty')
+
                         {
                                 Session::put('where', 'rebeauty');
                                 return Redirect::route('admin.index', array('where'=>Input::get('where')));
