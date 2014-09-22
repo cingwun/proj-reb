@@ -24,12 +24,12 @@
     <article id="newTechBox">
             <h2 class="titleRp h2_tech">美麗新技術</h2>
             <ul class="tabNav">
-            @foreach (TechnologiesController::index_show() as $key=>$technology)
+            @foreach ($techs as $key=>$technology)
                 <li><a @if($key==0) {{'class="curr"'}} @endif href="#">{{$technology->title}}</a></li>
             @endforeach
             </ul>
 
-            <?php foreach(TechnologiesController::index_show() as $key=>$technology):
+            <?php foreach($techs as $key=>$technology):
                     $class = ($key!=0) ? '' : 'curr';
             ?>
             <a class="tabBox <?php echo $class?>" href="<?php echo $technology->link?>" target="<?php echo $technology->target?>">
