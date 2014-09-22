@@ -16,7 +16,7 @@
      */
 ?>
 <div class="form-group tab-box" id="<?=$tab['elementId']?>">
-    <label class="control-label" for="link"><?=$tab['formTitle']?>&nbsp;:&nbsp;(若要編輯Tab，請點頁籤->編輯->變更內容及標題->離開->編輯完成)</label>
+    <label class="control-label" for="link"><?=$tab['formTitle']?>&nbsp;:&nbsp;(若要編輯Tab，請點頁籤->編輯->變更內容及標題->儲存->編輯完成)</label>
     <div class="form-inline">
         <input type="text" name="tabName" value="" placeholder="請輸入tab名稱" />
         <input type="text" name="tabOrder" value="" placeholder="順序" class="order"/>

@@ -50,18 +50,18 @@
         <!--The admin._partials.widget_imageUploader's div class had been modified by Kettan.-->
         <div>
             <div>
-                @include('admin._partials.widget_imageUploader', array('options'=>array('elementId'=>'image-box-cover', 'title'=>'封面圖片', 'uploadURL'=>fps::getUploadURL(), 'deleteURL'=>fps::getDeleteURL())))
+                @include('spa_admin._partials.widget_imageUploader', array('options'=>array('elementId'=>'image-box-cover', 'title'=>'封面圖片', 'uploadURL'=>fps::getUploadURL(), 'deleteURL'=>fps::getDeleteURL())))
                 <!-- image uploader -->
             </div>
             <br>
             <div>
-                @include('admin._partials.widget_imageUploader', array('options'=>array('elementId'=>'image-box', 'title'=>'圖片', 'uploadURL'=>fps::getUploadURL(), 'deleteURL'=>fps::getDeleteURL())))
+                @include('spa_admin._partials.widget_imageUploader', array('options'=>array('elementId'=>'image-box', 'title'=>'圖片', 'uploadURL'=>fps::getUploadURL(), 'deleteURL'=>fps::getDeleteURL())))
                 <!-- image uploader -->
             </div>
         </div>
 
         <div>
-        @include('admin._partials.widget_imageUploader', array('options'=>array('elementId'=>'image-box-gallery', 'title'=>'單文圖片集', 'uploadURL'=>fps::getUploadURL(), 'deleteURL'=>fps::getDeleteURL())))
+        @include('spa_admin._partials.widget_imageUploader', array('options'=>array('elementId'=>'image-box-gallery', 'title'=>'單文圖片集', 'uploadURL'=>fps::getUploadURL(), 'deleteURL'=>fps::getDeleteURL())))
         <!-- image uploader -->
         </div>
         <br>
@@ -102,7 +102,7 @@
         @include('spa_admin._partials.widget_tabs', array('tab'=>array('elementId'=>'tab-box', 'formTitle'=>'Tab項目', 'items'=>$tabItems)))
         <!-- tabs -->
 
-        
+
         <input type="hidden" name="id" value="<?php echo \Arr::get($article, 'id', null) ?>" />
         @if($changeLang!=null)
         <input type="hidden" name="changeLang" value="{{$article['language']}}" />
@@ -133,9 +133,9 @@
     <script type="text/javascript">
         var imgUploaderCover = _imageUploader({
                 el: '#image-box-cover',
-                imageBoxMeta: {photoFieldName: 'cov[]', descFieldName: 'cov_desc[]', delFieldName: 'deleteImages[]'},/////////////////////////
+                imageBoxMeta: {photoFieldName: 'cov[]', descFieldName: 'cov_desc[]', delFieldName: 'deleteImages[]'},
                 isMultiple: false,
-                files: <?=json_encode($imgUploaderList['cover']['items'])?>//////////////////////////////////////////
+                files: <?=json_encode($imgUploaderList['cover']['items'])?>
             }),
             imgUploaderAfter = _imageUploader({
                 el: '#image-box',
@@ -145,9 +145,9 @@
             }),
             imgUploaderGallery = _imageUploader({
                 el: '#image-box-gallery',
-                imageBoxMeta: {photoFieldName: 'galle[]', descFieldName: 'galle_desc[]', delFieldName: 'deleteImages[]'},//////////////////////////////
+                imageBoxMeta: {photoFieldName: 'galle[]', descFieldName: 'galle_desc[]', delFieldName: 'deleteImages[]'},
                 isMultiple: true,
-                files: <?=json_encode($imgUploaderList['gallery']['items'])?>///////////////////////////////
+                files: <?=json_encode($imgUploaderList['gallery']['items'])?>
             }),
             labelsService = _labels({
                 el: '#label-service'

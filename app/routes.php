@@ -228,7 +228,6 @@ Route::group(array('prefix'=>'admin', 'before'=>'auth.admin'), function()
 Route::group(array('prefix'=>'admin/spa', 'before'=>'auth.admin'), function()
 {
 
-
     Route::get('/',array('as'=>'spa.admin.index', 'uses'=>function(){
         return \View::make('spa_admin._layouts.default');
     }));
@@ -249,11 +248,8 @@ Route::group(array('prefix'=>'admin/spa', 'before'=>'auth.admin'), function()
     // sort
     Route::post('share/{type}/sort/update', array('as'=>'spa.admin.share.sort.update', 'uses'=>'spaAdmin\\ShareController@postUpdateSort'));
 
-    // banners
-    //Route::get('banners/{size}', array('as'=>'admin.banners.list', 'uses'=>'BannersController@getList'));
-
+    //switch to rebeauty backgroupd
     Route::get('switch_to_rebeauty', array('as'=>'switch.to.admin.rebeauty', 'uses'=>'BackendSwitchController@getRebeauty'));
-
 
     /*----------Service----------*/
     /*
