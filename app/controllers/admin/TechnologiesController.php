@@ -10,16 +10,20 @@ class TechnologiesController extends \BaseController
     public function index() {
         return View::make('admin.technologies.index')->with('technologies', Technology::all()->sortBy('sort'));
     }
+
     // Index Technologies Showing
     public static function index_show() {
         $num_showed = 5;
-         //Number of Technologies Showed
+
+        //Number of Technologies Showed
         try {
             $key = 'technologies_index';
-            $data = false;//Cache::get($key);
-
+            $data = Cache::get($key);
             if (!$data) {
-                $data = Technology::where('status', '=', 'Y')->take($num_showed)->orderBy('sort')->get();
+                $data = Technology::where('status', '=', 'Y')
+                                  ->take($num_showed)
+                                  ->orderBy('sort')
+                                  ->get();
                 Cache::put($key, $data, 15);
             }
             return $data;
@@ -71,6 +75,7 @@ class TechnologiesController extends \BaseController
     public function show($id) {
 
         //
+
 
     }
 
