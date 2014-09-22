@@ -12,24 +12,27 @@
 
     <title>SB Admin - Bootstrap Admin Template</title>
 
-    <!-- Bootstrap Core CSS -->
-    
-    {{ HTML::style(asset('spa_admin/css/admin/bootstrap.min.css'))}}
-    <!-- Custom CSS -->
-    {{ HTML::style(asset('spa_admin/css/admin/sb-admin.css'))}}
-    <!-- Morris Charts CSS -->
-    {{ HTML::style(asset('spa_admin/css/admin/plugins/morris.css'))}}
-    <!-- Custom Fonts -->
-    {{ HTML::style(asset('spa_admin/font-awesome-4.1.0/css/font-awesome.min.css'))}}
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
+        <!-- Bootstrap Core CSS -->
+        
+        {{ HTML::style(asset('spa_admin/css/admin/bootstrap.min.css'))}}
+        <!-- Custom CSS -->
+        {{ HTML::style(asset('spa_admin/css/admin/sb-admin.css'))}}
+        <!-- Morris Charts CSS -->
+        {{ HTML::style(asset('spa_admin/css/admin/plugins/morris.css'))}}
+        <!-- Custom Fonts -->
+        {{ HTML::style(asset('spa_admin/font-awesome-4.1.0/css/font-awesome.min.css'))}}
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
         {{ HTML::style(asset('css/admin/css_global.css'))}}
         {{ HTML::style('aesthetics/css/ckeditor.css'); }}
+<<<<<<< HEAD
         {{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'); }}
+=======
+>>>>>>> b290acbf75ca76338e3e8dbf3467d6f8a54983e1
         @yield('head')
     </head>
 
@@ -47,12 +50,20 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
+<<<<<<< HEAD
                     <a class="navbar-brand" href="{{URL::route('switch.to.admin.spa')}}">SPA後台</a>
+=======
+                    <a class="navbar-brand" href="index.html">Rebeauty SPA</a>
+>>>>>>> b290acbf75ca76338e3e8dbf3467d6f8a54983e1
                 </div>
                 
                 <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">
+<<<<<<< HEAD
                     <!-- <li class="dropdown">
+=======
+                    <li class="dropdown">
+>>>>>>> b290acbf75ca76338e3e8dbf3467d6f8a54983e1
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
@@ -69,12 +80,17 @@
                                 <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                             </li>
                         </ul>
+<<<<<<< HEAD
                     </li> -->
                     <p class="navbar-text pull-right">{{ Sentry::getUser()->email }} | <a href="{{ URL::route('admin.logout') }}" class="navbar-link">Logout</a>
+=======
+                    </li>
+>>>>>>> b290acbf75ca76338e3e8dbf3467d6f8a54983e1
                 </ul>
             </nav>
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <ul class="nav navbar-nav side-nav">
+<<<<<<< HEAD
                 <!-- 系統管理 -->
                 <li>
                     <a href="javascript:;" data-toggle="collapse" data-target="#system"><i class="fa fa-fw fa-arrows-v"></i> 系統管理 <i class="fa fa-fw fa-caret-down"></i></a>
@@ -110,10 +126,22 @@
                 </li>
 
                 <!-- 美麗服務 -->
+=======
+                <li class="active">
+                    <a href=""><i class="fa fa-fw fa-dashboard"></i> 文章管理</a>
+                </li>
+                <li>
+                    <a href="{{URL::route('spa.admin.reservation.list')}}"><i class="fa fa-fw fa-edit"></i> 預約管理</a>
+                </li>
+                <li>
+                    <a href=""><i class="fa fa-fw fa-desktop"></i> 美麗分享</a>
+                </li>
+>>>>>>> b290acbf75ca76338e3e8dbf3467d6f8a54983e1
                 <li>
                     <a href="javascript:;" data-toggle="collapse" data-target="#service"><i class="fa fa-fw fa-arrows-v"></i> 美麗服務 <i class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="service" class="collapse">
                         <li>
+<<<<<<< HEAD
                             <a href="#">類型列表</a>
                         </li>
                         <li>
@@ -123,10 +151,20 @@
                 </li>
 
                 <!-- 美麗產品 -->
+=======
+                            <a href="{{URL::route('spa.admin.service.category.list')}}">類型列表</a>
+                        </li>
+                        <li>
+                            <a href="{{URL::route('spa.admin.service.article.list')}}">文章列表</a>
+                        </li>
+                    </ul>
+                </li>
+>>>>>>> b290acbf75ca76338e3e8dbf3467d6f8a54983e1
                 <li>
                     <a href="javascript:;" data-toggle="collapse" data-target="#product"><i class="fa fa-fw fa-arrows-v"></i> 美麗產品 <i class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="product" class="collapse">
                         <li>
+<<<<<<< HEAD
                             <a href="#">類型列表</a>
                         </li>
                         <li>
@@ -154,6 +192,17 @@
                 <!-- 會員管理 -->
                 <li>
                     <a href="{{URL::route('admin.member.list', array('where'=>Input::get('where')))}}"><i class="fa fa-fw fa-desktop"></i> 會員管理</a>
+=======
+                            <a href="{{URL::route('spa.admin.product.category.list')}}">類型列表</a>
+                        </li>
+                        <li>
+                            <a href="{{URL::route('spa.admin.product.article.list')}}">文章列表</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="blank-page.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>
+>>>>>>> b290acbf75ca76338e3e8dbf3467d6f8a54983e1
                 </li>
             </ul>
             <!-- /.navbar-collapse -->

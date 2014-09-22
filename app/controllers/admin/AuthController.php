@@ -18,7 +18,10 @@ class AuthController extends BaseController {
                 
                 if(Sentry::check()){
                         //return Redirect::route('admin.index');
+<<<<<<< HEAD
                         return View::make('admin.auth.login');
+=======
+>>>>>>> b290acbf75ca76338e3e8dbf3467d6f8a54983e1
                 }
                 
                 
@@ -41,14 +44,21 @@ class AuthController extends BaseController {
                         $user = Sentry::authenticate($credentials, false);
  
                         if ($user && Input::get('where')=='rebeauty')
+<<<<<<< HEAD
                         {
                                 Session::put('where', 'rebeauty');
                                 return Redirect::route('admin.index', array('where'=>Input::get('where')));
                         }
                         if ($user && Input::get('where')=='spa')
+=======
+>>>>>>> b290acbf75ca76338e3e8dbf3467d6f8a54983e1
                         {
                                 Session::put('where', 'spa');
                                 return Redirect::route('spa.admin.index', array('where'=>Input::get('where')));
+                        }
+                        if ($user && Input::get('where')=='spa')
+                        {
+                                return \Redirect::route('spa.admin.service.article.list');
                         }
                 }
                 catch(\Exception $e)

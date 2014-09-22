@@ -57,6 +57,7 @@
     $pageList = '<ul class="pagination">';
 
 
+<<<<<<< HEAD
    if (($currPage-1)>0){
         $pageList .= sprintf('<li><a href="%s" title="上一頁">«</a></li>', createURL($url, $qs, $route, $params, ($currPage-1)));
 
@@ -71,6 +72,22 @@
 
     if (($currPage+1)<=$totalPage)
         $pageList .= sprintf('<li><a href="%s" title="上一頁">»</a></li>', createURL($url, $qs, $route, $params, ($currPage+1)));
+=======
+    if (($currPage-1)>0){
+    	$pageList .= sprintf('<li><a href="%s" title="上一頁">«</a></li>', createURL($url, $qs, $route, $params, ($currPage-1)));
+
+    }
+	for($i=$st; $i<=$end; $i++){
+        $num = str_pad($i, 2, "0", STR_PAD_LEFT);
+		if ($i!=$currPage)
+            $pageList .= sprintf('<li><a href="%s">%s</a></li>', createURL($url, $qs, $route, $params, $i), $num);
+        else
+            $pageList .= sprintf('<li class="active"><a href="%s">%s</a></li>', createURL($url, $qs, $route, $params, $i), $num);
+	}
+
+	if (($currPage+1)<=$totalPage)
+		$pageList .= sprintf('<li><a href="%s" title="上一頁">»</a></li>', createURL($url, $qs, $route, $params, ($currPage+1)));
+>>>>>>> b290acbf75ca76338e3e8dbf3467d6f8a54983e1
 
 	echo $pageList .= '</ul>';
 ?>

@@ -11,6 +11,7 @@ class ServiceFaqController extends \BaseController {
      * @params (int) $id
      */
     public function getArticle($type, $id){
+
         $model = \ServiceFaq::find($id);
         if ($model===null)
             return \Redirect::back();
