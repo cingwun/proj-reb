@@ -221,22 +221,18 @@ Route::group(array('prefix'=>'admin', 'before'=>'auth.admin'), function()
         Route::post('beautynews/sort/update', array('as'=>'admin.beautynews.sort.update', 'uses'=>'BeautyNewsController@postUpdateSort'));
 
 });
+
 /*
  *  rebeauty spa admin
  */
-<<<<<<< HEAD
 Route::group(array('prefix'=>'admin/spa', 'before'=>'auth.admin'), function()
 {
-=======
-//, 'before'=>'auth.admin'
-Route::group(array('prefix'=>'admin/spa'), function(){
->>>>>>> b290acbf75ca76338e3e8dbf3467d6f8a54983e1
+
 
     Route::get('/',array('as'=>'spa.admin.index', 'uses'=>function(){
         return \View::make('spa_admin._layouts.default');
     }));
 
-<<<<<<< HEAD
     // Spa Articles
     Route::get('articles/list/{category?}', array('as'=>'spa.admin.articles.list', 'uses'=>'spaAdmin\\ArticleController@getList'));
     Route::get('articles/action/{id?}/{changeLan?}/{category?}', array('as'=>'spa.admin.articles.action', 'uses'=>'spaAdmin\\ArticleController@getAction'));
@@ -258,7 +254,7 @@ Route::group(array('prefix'=>'admin/spa'), function(){
 
     Route::get('switch_to_rebeauty', array('as'=>'switch.to.admin.rebeauty', 'uses'=>'BackendSwitchController@getRebeauty'));
 
-=======
+
     /*----------Service----------*/
     /*
      * Display service list page
@@ -293,14 +289,14 @@ Route::group(array('prefix'=>'admin/spa'), function(){
      * handle AJAX request of change category item
      */
     Route::post('service/category/action', array('as'=>'spa.admin.service.category.action', 'uses'=>'spaAdmin\\ServiceController@postCategoryAction'));
-    
+
     /*
      * hadnle AJAX request for delete category
      */
     Route::post('service/category/delete', array('as'=>'spa.admin.service.category.delete', 'uses'=>'spaAdmin\\ServiceController@postDeleteCategory'));
 
     /*
-     * handle AJAX request of change sort 
+     * handle AJAX request of change sort
      */
     Route::post('service/sort/update', array('as'=>'spa.admin.service.sort.update', 'uses'=>'spaAdmin\\ServiceController@postUpdateSort'));
 
@@ -309,7 +305,7 @@ Route::group(array('prefix'=>'admin/spa'), function(){
      * Display product list.
      */
     Route::get('product/article/list/', array('as'=>'spa.admin.product.article.list', 'uses'=>'spaAdmin\\ProductController@getProductList'));
-    
+
     /*
      * Display product create/edit page.
      * @params (string) $id
@@ -345,7 +341,7 @@ Route::group(array('prefix'=>'admin/spa'), function(){
     Route::post('product/category/delete', array('as'=>'spa.admin.product.category.delete', 'uses'=>'spaAdmin\\ProductController@postDeleteCategory'));
 
     /*
-     * handle AJAX request of change sort 
+     * handle AJAX request of change sort
      */
     Route::post('product/sort/update', array('as'=>'spa.admin.product.sort.update', 'uses'=>'spaAdmin\\ProductController@postUpdateSort'));
 
@@ -377,5 +373,4 @@ Route::group(array('prefix'=>'admin/spa'), function(){
      * @params (string) $id
      */
     Route::post('reservation/write/{id?}', array('as'=>'spa.admin.reservation.write', 'uses'=>'spaAdmin\\ReservationController@postReservationWrite'));
->>>>>>> b290acbf75ca76338e3e8dbf3467d6f8a54983e1
 });
