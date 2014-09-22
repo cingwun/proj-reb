@@ -71,6 +71,6 @@ foreach($servicefaq as $item){
             </ul>
         </li>
     </ul>
-    <a class="goSpa" href="#">關於煥儷SPA</a><!-- ../sap/ -->
+    <a class="goSpa" href="#">前進煥儷美顏SPA</a><!-- ../sap/ -->
 </nav>
 <!-- ======================== mainNav end ======================== -->
