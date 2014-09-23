@@ -10,10 +10,10 @@
 
 <div>
 	<a href='javascript:history.back()' type="button" class="btn btn-default pull-lift">回上一頁</a>
-	<a href='{{$acrion_url}}@if($category != '')?category={{$category}}@endif' type="button" class="btn btn-success pull-right">新增</a>
+	<a href='{{$acrionURL}}@if($category != '')?category={{$category}}@endif' type="button" class="btn btn-success pull-right">新增</a>
 </div>
 <br/>
-<table class="table table-bordered table-hover" id="sortable" data-sortAction="{{$update_sort_url}}" data-deleteAction="{{$delete_url}}">
+<table class="table table-bordered table-hover" id="sortable" data-sortAction="{{$updateSortURL}}" data-deleteAction="{{$deleteURL}}">
 	<thead>
 		<tr>
 			<th>服務項目標題</th>
@@ -27,7 +27,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		@foreach($service_list as $service)
+		@foreach($services as $service)
 		<tr id='{{$service->id}}'>
 			<td>{{$service->title}}</td>
 			<td>{{$category_array[$service->_parent]}}</td>
@@ -49,10 +49,10 @@
 			</td>
 			<td>{{$service->sort}}</td>
 			<td>
-				<a href="{{$acrion_url}}/{{$service->id}}" type="button" class="btn btn-sm btn-primary">修改</a>
+				<a href="{{$acrionURL}}/{{$service->id}}" type="button" class="btn btn-sm btn-primary">修改</a>
 				<a href="#" type="button" class="btn btn-sm btn-danger btn-delete">刪除</a>
 				@if($service->ref == '0')
-				<a href='{{$acrion_url}}/{{$service->id}}/create_lang?category={{$category}}' type="button" class="btn btn-sm btn-warning">新增@if($service->lang == 'tw')簡體@else繁體@endif語系</a>
+				<a href='{{$acrionURL}}/{{$service->id}}/create_lang?category={{$category}}' type="button" class="btn btn-sm btn-warning">新增@if($service->lang == 'tw')簡體@else繁體@endif語系</a>
 				@endif
 			</td>
 		</tr>

@@ -10,10 +10,10 @@
 
 <div>
 	<a href='javascript:history.back()' type="button" class="btn btn-default pull-lift">回上一頁</a>
-	<a href='{{$acrion_url}}@if($category != '')?category={{$category}}@endif' type="button" class="btn btn-success pull-right">新增</a>
+	<a href='{{$actionURL}}@if($category != '')?category={{$category}}@endif' type="button" class="btn btn-success pull-right">新增</a>
 </div>
 <br/>
-<table class="table table-bordered table-hover" id="sortable" data-sortAction="{{$update_sort_url}}" data-deleteAction="{{$delete_url}}">
+<table class="table table-bordered table-hover" id="sortable" data-sortAction="{{$updateSortURL}}" data-deleteAction="{{$deleteURL}}">
 	<thead>
 		<tr>
 			<th>產品項目標題</th>
@@ -29,7 +29,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		@foreach($product_list as $product)
+		@foreach($products as $product)
 		<tr id='{{$product->id}}'>
 			<td>{{$product->title}}</td>
 			<td>{{$category_array[$product->_parent]}}</td>
@@ -53,10 +53,10 @@
 			</td>
 			<td>{{$product->sort}}</td>
 			<td>
-				<a href="{{$acrion_url}}/{{$product->id}}" type="button" class="btn btn-sm btn-primary">修改</a>
+				<a href="{{$actionURL}}/{{$product->id}}" type="button" class="btn btn-sm btn-primary">修改</a>
 				<a href="#" type="button" class="btn btn-sm btn-danger btn-delete">刪除</a>
 				@if($product->ref == '0')
-				<a href="{{$acrion_url}}/{{$product->id}}/create_lang?category={{$category}}" type="button" class="btn btn-sm btn-warning">新增@if($product->lang == 'tw')簡體@else繁體@endif語系</a>
+				<a href="{{$actionURL}}/{{$product->id}}/create_lang?category={{$category}}" type="button" class="btn btn-sm btn-warning">新增@if($product->lang == 'tw')簡體@else繁體@endif語系</a>
 				@endif
 			</td>
 		</tr>

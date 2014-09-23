@@ -8,15 +8,15 @@
 @endif
 
 @if($ref == '0')
-@elseif($ref_lang != 'tw')
+@elseif($refLang != 'tw')
 (繁體)
-@elseif($ref_lang != 'cn')
+@elseif($refLang != 'cn')
 (簡體)
 @endif
 @stop
 
 @section('main')
-<form action='{{$write_url}}@if($list_category != '')?category={{$list_category}}@endif' method="post" enctype="multipart/form-data">
+<form action='{{$writeURL}}@if($articleCat != '')?category={{$articleCat}}@endif' method="post" enctype="multipart/form-data">
 	<div class="form-group">
 		<label>標題</label>
 		<input class="form-control" type="text" name="title" value="@if($action == 'edit'){{$service->title}}@endif"/>
@@ -26,8 +26,8 @@
 	<div class="form-group">
 		<label>所屬分類</label>
 		<select class="form-control" name="cat">
-			@foreach($category_list as $category)
-			<option value="{{$category->id}}" @if($action == 'edit' && $category->id == $service->_parent)selected@endif>{{$category->title}}</option>
+			@foreach($categorys as $category)
+			<option value="{{$category->id}}" @if($action == 'edit' && $category->id == $service->_parent)selected@endif @if($action == 'create' && $category->id == $createLangCat)selected @endif>{{$category->title}}</option>
 			@endforeach
 		</select>
 	</div>
@@ -51,9 +51,9 @@
 		<label class="radio-inline">
 			<input type="radio" name="lang" value="cn" @if($action == 'edit')@if($service->lang == 'cn') checked @endif@endif />簡體
 		</label>
-		@elseif($ref_lang != 'tw')
+		@elseif($refLang != 'tw')
 		繁體<input type='hidden' name="lang" value="tw"/>
-		@elseif($ref_lang != 'cn')
+		@elseif($refLang != 'cn')
 		簡體<input type='hidden' name="lang" value="cn"/>
 		@endif
 	</div>
@@ -89,13 +89,13 @@
             el: '#image-main-box',
             imageBoxMeta: {photoFieldName: 'main_image[]', descFieldName: 'main_imageDesc[]', delFieldName: 'main_deleteImages[]'},
             isMultiple: false,
-            files: <?php echo json_encode($service_mian_img) ?>
+            files: <?php echo json_encode($serviceCover) ?>
         });
     	imgUploader = _imageUploader({
     		el: '#image-box',
     		imageBoxMeta:{photoFieldName: 'images[]', descFieldName: 'imageDesc[]', delFieldName: 'deleteImages[]'},
     		isMultiple: true,
-    		files: <?php echo json_encode($service_imgs)?>
+    		files: <?php echo json_encode($serviceImages)?>
     	});
 </script>
 @stop
