@@ -1,5 +1,9 @@
 <?php
 namespace spaAdmin;
+
+/*
+ * this controller is used to handle all request of spa reservation
+ */
 class ReservationController extends \BaseController{
 
 	/*
@@ -11,38 +15,38 @@ class ReservationController extends \BaseController{
 			$limit = 10;
 			$offset = ($page-1) * $limit;
 
-			$cmd = \SpaReservation::orderBy('updated_at','DESC');
+			$reseCmd = \SpaReservation::orderBy('updated_at','DESC');
 
-			$rowsNum = $cmd->count();
+			$rowsNum = $reseCmd->count();
 
-			$reservation_list = $cmd->skip($offset)
+			$reservations = $reseCmd->skip($offset)
 									->take($limit)
 									->get();
 
-			$style_array = array('電話 : ', 'Line ID : ', 'WeChat : ', 'QQ : ');
-			$sex_array = array(
+			$styleArray = array('電話 : ', 'Line ID : ', 'WeChat : ', 'QQ : ');
+			$sexArray = array(
 				'male'=>'男',
 				'women'=>'女'
-				);
-			$contact_time_array = array(
+			);
+			$contactTimeArray = array(
 				'morning'=>'早上',
 				'noon'=>'中午',
 				'afternoon'=>'下午',
 				'night'=>'晚上',
-				);
+			);
 
 			//process contact
-			$contact_array = array();
-			if (!empty($reservation_list)) {
-				foreach ($reservation_list as $key => $reservation) {
+			$contactArray = array();
+			if (!empty($reservations)) {
+				foreach ($reservations as $key => $reservation) {
 					$data = json_decode($reservation->contact);
-					$contact_array[$key] = array('data'=>$data, 'count'=>count($data));
+					$contactArray[$key] = array('data'=>$data, 'count'=>count($data));
 				}
 			}
 
-			$details_url = \URL::route('spa.admin.reservation.details');
-			$delete_url = \URL::route('spa.admin.reservation.delete');
-			$action_url = \URL::route('spa.admin.reservation.action');
+			$detailsURL = \URL::route('spa.admin.reservation.details');
+			$deleteURL = \URL::route('spa.admin.reservation.delete');
+			$actionURL = \URL::route('spa.admin.reservation.action');
 
 			$widgetParam = array(
 				'currPage' => $page,
@@ -50,19 +54,19 @@ class ReservationController extends \BaseController{
 				'perPage' => $limit,
 				'URL' => null,
 				'route' => 'spa.admin.reservation.list'
-				);
+			);
 
 			return \View::make('spa_admin.reservation.view_list', array(
-				'reservation_list'=>&$reservation_list,
-				'style_array'=>&$style_array,
-				'sex_array'=>&$sex_array,
-				'contact_time_array'=>&$contact_time_array,
-				'contact_array'=>&$contact_array,
-				'details_url'=>$details_url,
+				'reservations'=>&$reservations,
+				'styleArray'=>&$styleArray,
+				'sexArray'=>&$sexArray,
+				'contactTimeArray'=>&$contactTimeArray,
+				'contactArray'=>&$contactArray,
+				'detailsURL'=>$detailsURL,
 				'pagerParam' => &$widgetParam,
-				'delete_url'=>$delete_url,
-				'action_url'=>$action_url
-				));
+				'deleteURL'=>$deleteURL,
+				'actionURL'=>$actionURL
+			));
 		} catch (Exception $e) {
 			echo $e->getMessage();
 			return;
@@ -78,14 +82,14 @@ class ReservationController extends \BaseController{
 
 			$reservation = \SpaReservation::find($id);
 
-			$style_array = array('電話 : ', 'Line ID : ', 'WeChat : ', 'QQ : ');
-			$contact_array = array(
+			$styleArray = array('電話 : ', 'Line ID : ', 'WeChat : ', 'QQ : ');
+			$contactArray = array(
 				'phone'=>'電話',
 				'line'=>'Line',
 				'wechat'=>'WeChat',
 				'qq'=>'QQ',
 				);
-			$contact_time_array = array(
+			$contactTimeArray = array(
 				'morning'=>'早上',
 				'noon'=>'中午',
 				'afternoon'=>'下午',
@@ -99,13 +103,13 @@ class ReservationController extends \BaseController{
 				$contact = array('data'=>$data, 'count'=>count($data));
 			}
 			
-			$reservation_array = array(
+			$reservationArray = array(
 				"data"=>array(
 					"name"=>$reservation->name,
 					"country"=>$reservation->country,
-					"style_array"=>$style_array,
+					"styleArray"=>$styleArray,
 					"contact"=>$contact,
-					"contact_time"=>$contact_time_array[$reservation->contact_time],
+					"contact_time"=>$contactTimeArray[$reservation->contact_time],
 					"birthday"=>$reservation->birthday,
 					"email"=>$reservation->email,
 					"stay_start_date"=>$reservation->stay_start_date,
@@ -114,13 +118,13 @@ class ReservationController extends \BaseController{
 					"improve_item"=>$reservation->improve_item,
 					"other_notes"=>$reservation->other_notes,
 					"created_at"=>$reservation->created_at,
-					)
-				);
+				)
+			);
 
 			return \Response::json(array(
 				'status' => 'ok',
-				'data_str'=>&$reservation_array
-				));
+				'dataStr'=>&$reservationArray
+			));
 		} catch (Exception $e) {
 			echo $e->getMessage();
 			return;
@@ -140,12 +144,12 @@ class ReservationController extends \BaseController{
 			return \Response::json(array(
 				'status' => 'ok',
 				'message'=>"刪除完成"
-				));
+			));
 		} catch (Exception $e) {
 			return \Response::json(array(
 				'status' => 'error',
 				'message' => $e->getMessage()
-				));
+			));
 		}
 	}
 
@@ -156,12 +160,12 @@ class ReservationController extends \BaseController{
 	public function getReservationAction($id=null){
 		$action = "create";
 		try {
-			$write_url = \URL::route('spa.admin.reservation.write');
+			$writeURL = \URL::route('spa.admin.reservation.write');
 
 			//edit date
 			$reservation = array();
 			$contact = array();
-			$date_time_array = array();
+			$dateTimeArray = array();
 			if(!empty($id)){
 				$action = 'edit';
 				$reservation = \SpaReservation::find($id);
@@ -170,21 +174,20 @@ class ReservationController extends \BaseController{
 				if (!empty($reservation)) {
 					$contact = json_decode($reservation->contact);
 				}
-				var_dump($contact);
 				//process date
-				$date_time_array['stay_start_date'] = date("m/d/Y h:i:s A", strtotime($reservation->stay_start_date));
-				$date_time_array['stay_exit_date'] = date("m/d/Y h:i:s A", strtotime($reservation->stay_exit_date));
-				$date_time_array['service_date'] = date("m/d/Y h:i:s A", strtotime($reservation->service_date));
+				$dateTimeArray['stay_start_date'] = date("m/d/Y h:i:s A", strtotime($reservation->stay_start_date));
+				$dateTimeArray['stay_exit_date'] = date("m/d/Y h:i:s A", strtotime($reservation->stay_exit_date));
+				$dateTimeArray['service_date'] = date("m/d/Y h:i:s A", strtotime($reservation->service_date));
 
-				$write_url .= "/".$id;
+				$writeURL .= "/".$id;
 			}
 
 			return \View::make('spa_admin.reservation.view_action',array(
-				'write_url'=>$write_url,
+				'writeURL'=>$writeURL,
 				'action'=>$action,
 				'reservation'=>&$reservation,
 				'contact'=>&$contact,
-				'date_time_array'=>&$date_time_array
+				'dateTimeArray'=>&$dateTimeArray
 				));
 			
 		} catch (Exception $e) {

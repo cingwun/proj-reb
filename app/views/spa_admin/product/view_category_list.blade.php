@@ -24,7 +24,7 @@
                     @if($cat->lang == 'tw')繁體@else簡體@endif
                 </td>
         		<td>
-        			<a href="{{$serviceListURL}}?category={{$cat->id}}" title="{{$cat->title}}相關文章" class="btn btn-sm btn-success">文章</a>
+        			<a href="{{$serviceListURL}}?lang={{$cat->lang}}&category={{$cat->id}}" title="{{$cat->title}}相關文章" class="btn btn-sm btn-success">文章</a>
                     <span class="btn btn-sm btn-primary btn-modify">修改</span>
                     <span href="#" class="btn btn-sm btn-danger btn-delete">刪除</span>
                     @if($cat->ref == '0')

@@ -7,11 +7,13 @@
 編輯產品項目
 @endif
 
-@if($ref == '0')
-@elseif($refLang != 'tw')
+@if($action == 'edit')
+@if($product->lang == 'tw')
 (繁體)
-@elseif($refLang != 'cn')
+@endif
+@if($product->lang == 'cn')
 (簡體)
+@endif
 @endif
 @stop
 
@@ -26,8 +28,8 @@
 	<div class="form-group">
 		<label>所屬分類</label>
 		<select class="form-control" name="cat">
-			@foreach($category_list as $category)
-			<option value="{{$category->id}}" @if($action == 'edit' && $category->id == $product->_parent)selected@endif @if($action == 'create' && $category->id == $createLangCat)selected @endif>{{$category->title}}</option>
+			@foreach($categorys as $category)
+			<option value="{{$category['id']}}" @if($action == 'edit' && $category['id'] == $product->_parent)selected@endif>{{$category['title']}}</option>
 			@endforeach
 		</select>
 	</div>
@@ -52,16 +54,13 @@
 	</div>
 	<div class="form-group">
 		<label>語系</label><br/>
-		@if($ref == '0')
-		<label class="radio-inline">
-			<input type="radio" name="lang" value="tw" @if($action == 'edit')@if($product->lang == 'tw') checked @endif@endif @if($action=='create' && $ref == '0')checked@endif />繁體
-		</label>
-		<label class="radio-inline">
-			<input type="radio" name="lang" value="cn" @if($action == 'edit')@if($product->lang == 'cn') checked @endif@endif />簡體
-		</label>
-		@elseif($refLang != 'tw')
+		@if($action == 'create' && $listLang =='tw')
 		繁體<input type='hidden' name="lang" value="tw"/>
-		@elseif($refLang != 'cn')
+		@elseif($action == 'create' && $listLang =='cn')
+		簡體<input type='hidden' name="lang" value="cn"/>
+		@elseif($action == 'edit' && $product->lang == 'tw')
+		繁體<input type='hidden' name="lang" value="tw"/>
+		@elseif($action == 'edit' && $product->lang == 'cn')
 		簡體<input type='hidden' name="lang" value="cn"/>
 		@endif
 	</div>
@@ -69,7 +68,6 @@
 	<!-- tabs -->
 	<div class="form-group">
 		<input type="hidden" name="action" value="{{$action}}"/>
-		<input type="hidden" name="ref" value="{{$ref}}"/>
 		<a href='javascript:history.back()' type="button" class="btn btn-danger">取消</a>
 		<button class="btn btn-primary btn-submit">編輯完成</button>
 	</div>

@@ -11,7 +11,9 @@ class ServiceController extends \BaseController {
 	 */
 	public function getServiceList() {
 		try {
+			$listLang = \Input::get('lang', "tw");
 			$category = \Input::get('category', null);
+
 			$page = \Input::get('page', 1);
 			$limit = 10;
        		$offset = ($page-1) * $limit;
@@ -24,18 +26,25 @@ class ServiceController extends \BaseController {
 				$parent_value = $category;
 			}
 			
-			$cmd = \SpaService::where('_parent', $parent_equality, $parent_value);
+			$cmd = \SpaService::where('_parent', $parent_equality, $parent_value)
+							  ->where('lang', $listLang);
 
 			$rowsNum = $cmd->count();
 			
 			$services = $cmd->orderBy('_parent', 'DESC')
-								->orderBy('ref', 'DESC')
 								->orderBy('sort','DESC')
 								->orderBy('updated_at', 'desc')
 								->skip($offset)
                         		->take($limit)
 								->get();
 
+			if(!empty($services)) {
+				foreach ($services as $key => $service) {
+					$services[$key]['ref_display']=\SpaService::where('id', $service->ref)
+					 						       			  ->first(array('display'))
+					 						       			  ->display;
+				}
+			}
 			//get category list
 			$categorys = \SpaService::where('_parent', 'N')
 									->get(array('id', 'title', '_parent'));
@@ -52,6 +61,8 @@ class ServiceController extends \BaseController {
 			$actionURL = \URL::route('spa.admin.service.article.action');
 			$deleteURL = \URL::route('spa.admin.service.article.delete');
 			$updateSortURL = \URL::route('spa.admin.service.sort.update');
+			$twListUrl = \URL::route('spa.admin.service.article.list', array('lang'=>'tw', "category"=>$category));
+			$cnListUrl = \URL::route('spa.admin.service.article.list', array('lang'=>'cn', "category"=>$category));
 
 			$widgetParam = array(
 			    'currPage' => $page,
@@ -60,7 +71,10 @@ class ServiceController extends \BaseController {
 			    'URL' => null,
 			    'route' => 'spa.admin.service.article.list'
 			);
-
+			$langControlGroup = array(
+				'tw' => 'cn',
+				'cn' => 'tw'
+			);
 			return \View::make('spa_admin.service.view_list', array(
 				'services'=>&$services,
 				'category_array'=>&$category_array,
@@ -68,7 +82,11 @@ class ServiceController extends \BaseController {
 				'deleteURL'=>$deleteURL,
 				'category'=>$category,
 				'updateSortURL'=>$updateSortURL,
-				'pagerParam' => &$widgetParam
+				'pagerParam' => &$widgetParam,
+				'twListUrl' => $twListUrl,
+				'cnListUrl' => $cnListUrl,
+				'listLang' => $listLang,
+				'langControlGroup'=>$langControlGroup
 			));
 		} catch (Exception $e) {
 			echo $e->getMessage();
@@ -82,36 +100,11 @@ class ServiceController extends \BaseController {
 	 * @params (int) $id
 	 * @params (string) $lang
 	 */
-	public function getServiceAction($id=null, $lang=null) {
+	public function getServiceAction($id=null) {
 		$action = "create";
 		try {
+			$listLang = \Input::get('lang', "tw");
 			$articleCat = \Input::get('category', null);
-
-			//create lang 
-			$ref = 0;
-			$refLang = null;
-			$createLangCat = null;
-			if($id && $lang){
-				$ref = $id;
-				$refCat = null;
-				$servCmd = \SpaService::where('id',$id)
-									  ->first(array('lang','_parent'));
-				
-				if($servCmd){
-					$refLang = $servCmd->lang;
-					$refCat = $servCmd->_parent;
-				}else
-					return \Redirect::route('spa.admin.service.article.list', array('category', $articleCat));
-
-				$createLangCat = \SpaService::where('ref', $refCat)->first(array('id'))->id;
-			}
-			
-			$categorys = array();
-			$catCmd = \SpaService::where('_parent', 'N');
-			if(!empty($lang))
-				$catCmd = $catCmd->where('lang', '!=', $refLang);
-			if($catCmd->get())
-				$categorys = $catCmd->get();
 
 			$writeURL = \URL::route('spa.admin.service.article.write');
 			
@@ -120,7 +113,7 @@ class ServiceController extends \BaseController {
 			$serviceCover = array();
 			$serviceImages = array();
 			$items = array();
-			if ($id && !$lang){
+			if ($id){
 				$action = "edit";
 				$writeURL .=  "/".$id;
 
@@ -158,6 +151,24 @@ class ServiceController extends \BaseController {
 					}
 				}
 			}
+			//categorys
+			$categorys = array();
+			$catCmd = \SpaService::where('_parent', 'N');
+			if(!empty($listLang))
+				$catCmd = $catCmd->where('lang', '=', $listLang);
+			if($catCmd->get()){
+				if($id) {
+					if($service->_parent == "") {
+						$categorys[] = array(
+							"id"=>'',
+							'title'=>''
+						);
+					}
+				}
+				foreach ($catCmd->get(array('id', 'title'))->toArray() as $category) {
+					$categorys[] = $category;
+				}
+			}
 			
 			return \View::make('spa_admin.service.view_action', array(
 				'action' => $action,
@@ -166,15 +177,13 @@ class ServiceController extends \BaseController {
 				'serviceImages' => &$serviceImages,
 				'categorys' => &$categorys,
 				'writeURL' => $writeURL,
-				'ref' => $ref,
-				'refLang' => $refLang,
 				'tab' => array(
 	                'elementId' => 'tab-box',
 	                'formTitle' => 'Tab項目',
 	                'items' => &$items
             	),
             	'articleCat' => $articleCat,
-            	'createLangCat' => $createLangCat
+            	'listLang' => $listLang
 			));
 		} catch (Exception $e) {
 			echo $e->getMessage();
@@ -188,6 +197,7 @@ class ServiceController extends \BaseController {
 	 * @params (int) $id
 	 */
 	public function postWriteService($id = null) {
+		$listLang = \Input::get('lang', "tw");
 		$articlecat = \Input::get('category', null);
 		$action = \Input::get('action');
 		try {
@@ -208,7 +218,6 @@ class ServiceController extends \BaseController {
 	                $order++;
 	            }
 			}
-			$ref = \Input::get('ref');
 
 			//service_table 
 			if($action == 'create') {
@@ -218,11 +227,6 @@ class ServiceController extends \BaseController {
 				if (!$service)
 					$service = new \SpaService;
 			}
-			
-			//check ref service data
-			$refServCmd = \SpaService::find($ref);
-			if (!$refServCmd)
-				$ref = 0;
 			
 			$title = \Input::get('title');
 			$image = \Input::get('images')[0];
@@ -235,7 +239,6 @@ class ServiceController extends \BaseController {
 			$service->_parent = \Input::get('cat');
 			$service->display = \Input::get('display');
 			$service->lang = \Input::get('lang');
-			$service->ref = $ref;
 			$service->save();
 
 			//create service id
@@ -243,12 +246,6 @@ class ServiceController extends \BaseController {
 				$inserted_id = $service->id;
 			}else{
 				$inserted_id = $id;
-			}
-
-			//set ref
-			if($ref != '0'){
-				$refServCmd->ref = $inserted_id;
-				$refServCmd->save();
 			}
 
 			//service_image_table
@@ -270,7 +267,35 @@ class ServiceController extends \BaseController {
 				}
 			}
 
-			return \Redirect::route("spa.admin.service.article.list", array('category'=>$articlecat));
+			//system automatically generates another language,and the corresponding
+			if($action == 'create') {
+				$langControlGroup = array(
+					'tw' => 'cn',
+					'cn' => 'tw'
+				);
+				$anotherServiceCat = "";
+				$anotherServiceCatCmd = \SpaService::where('ref', \Input::get('cat'))->first(array('id'));
+				if($anotherServiceCatCmd)
+					$anotherServiceCat = $anotherServiceCatCmd->id;
+
+				$anotherService = new \SpaService;
+				$anotherService->title = !empty($title) ? $title : "";
+				$anotherService->image = "";
+				$anotherService->image_desc = "";
+				$anotherService->tag = json_encode($tabs);
+				$anotherService->_parent = $anotherServiceCat;
+				$anotherService->display = "no";
+				$anotherService->lang = $langControlGroup[\Input::get('lang')];
+				$anotherService->ref = $inserted_id;
+				$anotherService->save();
+
+				$anotherId = $anotherService->id;
+
+				$createService = \SpaService::find($inserted_id);
+				$createService->ref = $anotherId;
+				$createService->save();
+			}
+			return \Redirect::route("spa.admin.service.article.list", array('category'=>$articlecat, 'listLang'=>$listLang));
 		} catch (Exception $e) {
 			echo $e->getMessage();
 			exit;
@@ -284,19 +309,15 @@ class ServiceController extends \BaseController {
 		try {
 			$id = \Input::get('id');
 
-			$servCmd = \SpaService::find($id);
+			//delete service
+			\SpaService::find($id)->delete();;
 
 			//delete service image
-			$serviceImages = \SpaServiceImages::where('ser_id', $id)
-											  ->delete();
-			//edit ref service
-			if($servCmd->ref != '0'){
-				$ref_service = \SpaService::find($servCmd->ref);
-				$ref_service->ref = 0;
-				$ref_service->save();
-			}
-
-			$servCmd->delete();
+			\SpaServiceImages::where('ser_id', $id)
+							 ->delete();
+			//delete ref service
+			\SpaService::where('ref', $id)
+					   ->delete();
 
 			return \Response::json(array(
 	            'status' => 'ok',

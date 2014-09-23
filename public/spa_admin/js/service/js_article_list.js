@@ -97,7 +97,7 @@ var _sortTable = function(o){
             $el.find('.btn-delete').click(function(e){
                 e.stopPropagation();
                 e.preventDefault();
-                var msg = "提醒您:\n\n    刪除該文章時，將連同刪除該文章相關圖片等資料\n\n    請問您是否刪除?";
+                var msg = "提醒您:\n\n    刪除該文章時，將連同刪除該文章其他語系等資料\n\n    請問您是否刪除?";
                 if (!confirm(msg))
                     return ;
                 $.ajax({

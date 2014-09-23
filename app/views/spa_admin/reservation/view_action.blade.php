@@ -5,7 +5,7 @@
 @stop
 
 @section('main')
-<form action='{{$write_url}}' method='post' enctype='multipart/form-data'>
+<form action='{{$writeURL}}' method='post' enctype='multipart/form-data'>
 	<div class="panel panel-info">
 		<div class="panel-heading">
 			<h3 class="panel-title">基本資料</h3>
@@ -65,7 +65,7 @@
 				<label >預計在台停留時間</label>
 				<div>
 	                <div class='input-datetime input-group date'>
-	                    <input type='text' class="form-control" name="stay_start_date" value="@if($action == 'edit') {{$date_time_array['stay_start_date']}}@endif"/>
+	                    <input type='text' class="form-control" name="stay_start_date" value="@if($action == 'edit') {{$dateTimeArray['stay_start_date']}}@endif"/>
 	                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
 	                    </span>
 	                </div>
@@ -73,7 +73,7 @@
 		        <div>到</div>
 				<div>
 	                <div class='input-datetime input-group date'>
-	                    <input type='text' class="form-control" name="stay_exit_date" value="@if($action == 'edit') {{$date_time_array['stay_exit_date']}}@endif"/>
+	                    <input type='text' class="form-control" name="stay_exit_date" value="@if($action == 'edit') {{$dateTimeArray['stay_exit_date']}}@endif"/>
 	                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
 	                    </span>
 	                </div>
@@ -83,7 +83,7 @@
 				<label>希望安排諮詢／療程時間</label>
 				<div>
 	                <div class='input-datetime input-group date'>
-	                    <input type='text' class="form-control" name="service_date" value="@if($action == 'edit') {{$date_time_array['service_date']}}@endif"/>
+	                    <input type='text' class="form-control" name="service_date" value="@if($action == 'edit') {{$dateTimeArray['service_date']}}@endif"/>
 	                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
 	                    </span>
 	                </div>

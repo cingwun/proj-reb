@@ -26,7 +26,7 @@ var reservationTable = function(o){
                     async: true,
                     success: function(res, s, xhr){
                         if (res.status=='ok'){
-                            var content = tmpl('tmpl-details', res.data_str);
+                            var content = tmpl('tmpl-details', res.dataStr);
                             $.featherlight(content, {closeOnClick: false});
                         }
                     },

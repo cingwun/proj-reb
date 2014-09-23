@@ -10,7 +10,11 @@
 
 <div>
 	<a href='javascript:history.back()' type="button" class="btn btn-default pull-lift">回上一頁</a>
-	<a href='{{$acrionURL}}@if($category != '')?category={{$category}}@endif' type="button" class="btn btn-success pull-right">新增</a>
+	<select onchange = "langList(this)">
+		<option value="tw" @if($listLang == 'tw') selected @endif>繁體</option>
+		<option value="cn" @if($listLang == 'cn') selected @endif>簡體</option>
+	</select>
+	<a href='{{$acrionURL}}?lang={{$listLang}}@if($category != '')&category={{$category}}@endif' type="button" class="btn btn-success pull-right">新增</a>
 </div>
 <br/>
 <table class="table table-bordered table-hover" id="sortable" data-sortAction="{{$updateSortURL}}" data-deleteAction="{{$deleteURL}}">
@@ -30,7 +34,11 @@
 		@foreach($services as $service)
 		<tr id='{{$service->id}}'>
 			<td>{{$service->title}}</td>
-			<td>{{$category_array[$service->_parent]}}</td>
+			<td>
+				@if($service->_parent != "")
+				{{$category_array[$service->_parent]}}
+				@endif
+			</td>
 			<td>{{$service->views}}</td>
 			<td>
 				@if($service->display === 'yes')
@@ -49,10 +57,10 @@
 			</td>
 			<td>{{$service->sort}}</td>
 			<td>
-				<a href="{{$acrionURL}}/{{$service->id}}" type="button" class="btn btn-sm btn-primary">修改</a>
-				<a href="#" type="button" class="btn btn-sm btn-danger btn-delete">刪除</a>
-				@if($service->ref == '0')
-				<a href='{{$acrionURL}}/{{$service->id}}/create_lang?category={{$category}}' type="button" class="btn btn-sm btn-warning">新增@if($service->lang == 'tw')簡體@else繁體@endif語系</a>
+				<a href="{{$acrionURL}}/{{$service->id}}?lang={{$listLang}}" type="button" class="btn btn-sm btn-primary">修改</a>
+				<a href="" type="button" class="btn btn-sm btn-danger btn-delete">刪除</a>
+				@if($service->ref_display == 'yes')
+				<a href='{{$acrionURL}}/{{$service->ref}}?lang={{$langControlGroup[$listLang]}}&category={{$category}}' type="button" class="btn btn-sm btn-warning">編輯@if($service->lang == 'tw')簡體@else繁體@endif語系</a>
 				@endif
 			</td>
 		</tr>
@@ -67,8 +75,14 @@
 @stop
 @section('bottom')
 {{ HTML::script(asset('packages/tableDnD/js/jquery.tablednd.0.8.min.js'))}}
-{{ HTML::script(asset('js/admin/service_faq/js_article_list.js'))}}
+{{ HTML::script(asset('/spa_admin/js/service/js_article_list.js'))}}
 <script type="text/javascript">
     var sortTable = _sortTable({el: '#sortable', role: 'article', sortColumn: 7, hasCategory: <?php echo (!empty($category))?'true':'false'?>});
+    function langList(e) {
+    	if(e.value == "tw")
+    		document.location.href='{{$twListUrl}}';
+    	else
+    		document.location.href='{{$cnListUrl}}';
+	}
 </script>
 @stop

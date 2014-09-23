@@ -11,7 +11,9 @@ class ProductController extends \BaseController {
 	 */
 	public function getProductList() {
 		try {
+			$listLang = \Input::get('lang', "tw");
 			$category = \Input::get('category', null);
+
 			$page = \Input::get('page', 1);
 			$limit = 10;
        		$offset = ($page-1) * $limit;
@@ -24,18 +26,25 @@ class ProductController extends \BaseController {
 				$parent_value = $category;
 			}
 			
-			$cmd = \SpaProduct::where('_parent', $parent_equality, $parent_value);
+			$cmd = \SpaProduct::where('_parent', $parent_equality, $parent_value)
+							  ->where('lang', $listLang);
 
 			$rowsNum = $cmd->count();
 
 			$products = $cmd->orderBy('_parent', 'DESC')
-								->orderBy('ref', 'DESC')
 								->orderBy('sort','DESC')
 								->orderBy('updated_at', 'desc')
 								->skip($offset)
                     			->take($limit)
 								->get();
 
+			if(!empty($products)) {
+				foreach ($products as $key => $service) {
+					$products[$key]['ref_display']=\SpaProduct::where('id', $service->ref)
+					 						       			  ->first(array('display'))
+					 						       			  ->display;
+				}
+			}
 			$categorys = \SpaProduct::where('_parent', 'N')
 									->get(array('id', 'title', '_parent'));
 
@@ -50,6 +59,8 @@ class ProductController extends \BaseController {
 			$actionURL = \URL::route('spa.admin.product.article.action');
 			$deleteURL = \URL::route('spa.admin.product.article.delete');
 			$updateSortURL = \URL::route('spa.admin.product.sort.update');
+			$twListUrl = \URL::route('spa.admin.product.article.list', array('lang'=>'tw', "category"=>$category));
+			$cnListUrl = \URL::route('spa.admin.product.article.list', array('lang'=>'cn', "category"=>$category));
 
 			$widgetParam = array(
 			    'currPage' => $page,
@@ -58,7 +69,10 @@ class ProductController extends \BaseController {
 			    'URL' => null,
 			    'route' => 'spa.admin.product.article.list'
 			);
-
+			$langControlGroup = array(
+				'tw' => 'cn',
+				'cn' => 'tw'
+			);
 			return \View::make('spa_admin.product.view_list', array(
 				'products'=>&$products,
 				'category_array'=>&$category_array,
@@ -66,7 +80,11 @@ class ProductController extends \BaseController {
 				'deleteURL'=>$deleteURL,
 				'category'=>$category,
 				'updateSortURL'=>$updateSortURL,
-				'pagerParam' => &$widgetParam
+				'pagerParam' => &$widgetParam,
+				'twListUrl' => $twListUrl,
+				'cnListUrl' => $cnListUrl,
+				'listLang' => $listLang,
+				'langControlGroup'=>$langControlGroup
 			));
 		} catch (Exception $e) {
 			echo $e->getMessage();
@@ -80,33 +98,11 @@ class ProductController extends \BaseController {
 	 * @params (int) $id
 	 * @params (string) $lang
 	 */
-	public function getProductAction($id=null, $lang=null) {
+	public function getProductAction($id=null) {
 		$action = "create";
 		try {
+			$listLang = \Input::get('lang', "tw");
 			$articleCat = \Input::get('category', null);
-
-			//create lang
-			$ref = 0;
-			$refLang = null;
-			$createLangCat = null;
-			if($id && $lang){
-				$ref = $id;
-				$refCat = null;
-				$prodCmd = \SpaProduct::where('id',$id)
-									  ->first(array('lang','_parent'));
-				if($prodCmd) {
-					$refLang = $prodCmd->lang;
-					$refCat = $prodCmd->_parent;
-				}else
-					return \SpaProduct::route('spa.admin.product.article.list', array('category', $articleCat));
-				$createLangCat = \SpaProduct::where('ref', $refCat)->first(array('id'))->id;
-			}
-			
-			$category_list = array();
-			$category = \SpaProduct::where('_parent', 'N');
-			if(!empty($lang))
-				$category = $category->where('lang', '!=', $refLang);
-			$category_list = $category->get();
 
 			$writeURL = \URL::route('spa.admin.product.article.write');
 
@@ -115,13 +111,14 @@ class ProductController extends \BaseController {
 			$productCover = array();
 			$productImages = array();
 			$items = array();
-			if (isset($id) && empty($lang)){
+			if ($id){
 				$action = "edit";
 				$writeURL .= "/".$id;
 
 				$product = \SpaProduct::find($id);
 				if (empty($product))
 					return \Redirect::route('spa.admin.service.list');
+
 				if($product->image != '')
 					$productCover[] = array(
 						'id' => $product->id,
@@ -129,7 +126,7 @@ class ProductController extends \BaseController {
 						'text' => $product->image_desc
 					);
 				
-				$serviceImagesList = \SpaServiceImages::where('ser_id',$id)
+				$serviceImagesList = \SpaProductImages::where('pro_id',$id)
 													  ->get(array('id', 'image_path', 'description'));
 				if (!empty($serviceImagesList)){
 					foreach ($serviceImagesList as $key => $img) {
@@ -152,23 +149,39 @@ class ProductController extends \BaseController {
 					}
 				}
 			}
-			
+			//categorys
+			$categorys = array();
+			$catCmd = \SpaProduct::where('_parent', 'N');
+			if(!empty($listLang))
+				$catCmd = $catCmd->where('lang', '=', $listLang);
+			if($catCmd->get()){
+				if($id) {
+					if($product->_parent == "") {
+						$categorys[] = array(
+							"id"=>'',
+							'title'=>''
+						);
+					}
+				}
+				foreach ($catCmd->get(array('id', 'title'))->toArray() as $category) {
+					$categorys[] = $category;
+				}
+			}
+
 			return \View::make('spa_admin.product.view_action', array(
 				'action'=>$action,
 				'product'=>&$product, //edit data
 				'productCover'=>$productCover,
 				'productImages'=>$productImages,
-				'category_list'=>&$category_list,
+				'categorys'=>&$categorys,
 				'writeURL'=>$writeURL,
-				'ref'=>$ref,
-				'refLang'=>$refLang,
 				'tab' => array(
 	                'elementId' => 'tab-box',
 	                'formTitle' => 'Tab項目',
 	                'items' => $items
             	),
             	'articleCat'=>$articleCat,
-            	'createLangCat' => $createLangCat
+            	'listLang' => $listLang
 			));
 		} catch (Exception $e) {
 			echo $e->getMessage();
@@ -182,6 +195,7 @@ class ProductController extends \BaseController {
 	 * @params (int) $id
 	 */
 	public function postWriteProduct($id = null) {
+		$listLang = \Input::get('lang', "tw");
 		$articlecat = \Input::get('category', null);
 		$action = \Input::get('action');
 		try {
@@ -205,7 +219,7 @@ class ProductController extends \BaseController {
 
 			$ref = \Input::get('ref');
 
-			//service_table 
+			//product_table 
 			if($action == 'create') {
 				$product = new \SpaProduct;
 			}else {
@@ -213,11 +227,6 @@ class ProductController extends \BaseController {
 				if(!$product)
 					$product = new \SpaProduct;
 			}
-
-			//check ref service data
-			$refprodCmd = \SpaProduct::find($ref);
-			if (!$refprodCmd)
-				$ref = 0;
 
 			$title = \Input::get('title');
 			$image = \Input::get('images')[0];
@@ -234,7 +243,6 @@ class ProductController extends \BaseController {
 			$product->_parent = \Input::get('cat');
 			$product->display = \Input::get('display');
 			$product->lang = \Input::get('lang');
-			$product->ref = $ref;
 			$product->save();
 
 			//create service id
@@ -242,12 +250,6 @@ class ProductController extends \BaseController {
 				$inserted_id = $product->id;
 			}else{
 				$inserted_id = $id;
-			}
-
-			//set ref
-			if($ref != '0'){
-				$refprodCmd->ref = $inserted_id;
-				$refprodCmd->save();
 			}
 
 			//service_image_table
@@ -268,7 +270,36 @@ class ProductController extends \BaseController {
 					$service_img->save();
 				}
 			}
+			//system automatically generates another language,and the corresponding
+			if($action == 'create') {
+				$langControlGroup = array(
+					'tw' => 'cn',
+					'cn' => 'tw'
+				);
+				$anotherProductCat = "";
+				$anotherProductCatCmd = \SpaProduct::where('ref', \Input::get('cat'))->first(array('id'));
+				if($anotherProductCatCmd)
+					$anotherProductCat = $anotherProductCatCmd->id;
 
+				$anotherService = new \SpaProduct;
+				$anotherService->title = !empty($title) ? $title : "";
+				$anotherService->image = "";
+				$anotherService->image_desc = "";
+				$anotherService->capacity = !empty($capacity) ? $capacity : "";
+				$anotherService->price = !empty($price) ? $price : "";
+				$anotherService->tag = json_encode($tabs);
+				$anotherService->_parent = $anotherProductCat;
+				$anotherService->display = "no";
+				$anotherService->lang = $langControlGroup[\Input::get('lang')];
+				$anotherService->ref = $inserted_id;
+				$anotherService->save();
+
+				$anotherId = $anotherService->id;
+
+				$createProduct = \SpaProduct::find($inserted_id);
+				$createProduct->ref = $anotherId;
+				$createProduct->save();
+			}
 			return \Redirect::route("spa.admin.product.article.list", array('category'=>$articlecat));
 		} catch (Exception $e) {
 			echo $e->getMessage();
@@ -282,21 +313,16 @@ class ProductController extends \BaseController {
 	public function postDeleteProduct() {
 		try {
 			$id = \Input::get('id');
-
-			$prodCmd = \SpaProduct::find($id);
+			
+			//delete service
+			\SpaProduct::find($id)->delete();;
 
 			//delete service image
-			$serviceImages = \SpaProductImages::where('pro_id', $id)
-											  ->delete();
-			//edit ref service
-			if($prodCmd->ref != '0'){
-				$ref_product = \SpaProduct::find($prodCmd->ref);
-				$ref_product->ref = 0;
-				$ref_product->save();
-			}
-
-			$prodCmd->delete();
-			
+			\SpaProductImages::where('pro_id', $id)
+							 ->delete();
+			//delete ref service
+			\SpaProduct::where('ref', $id)
+					   ->delete();
 			return \Response::json(array(
 	            'status' => 'ok',
 	            'message' => '刪除完成!'
