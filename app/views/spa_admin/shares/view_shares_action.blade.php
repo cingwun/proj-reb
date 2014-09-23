@@ -75,20 +75,20 @@
 
         <div class="form-group">
             <label for="link">狀態</label>
-            <label class="radio inline">
+            <label class="radio-inline">
                 <input type="radio" name="status" value="1" <?php echo ($article['status']=='1') ? 'checked' : '' ?> />顯示
             </label>
-            <label class="radio inline">
+            <label class="radio-inline">
                 <input type="radio" name="status" value="0" <?php echo ($article['status']=='0') ? 'checked' : '' ?> />隱藏
             </label>
         </div>
 
         <div class="form-group">
             <label for="link">顯示至Siderbar</label>
-            <label class="radio inline">
+            <label class="radio-inline">
                 <input type="radio" name="isInSiderbar" value="1" <?php echo ($article['isInSiderbar']=='1') ? 'checked' : '' ?> />顯示
             </label>
-            <label class="radio inline">
+            <label class="radio-inline">
                 <input type="radio" name="isInSiderbar" value="0" <?php echo ($article['isInSiderbar']=='0') ? 'checked' : '' ?> />不顯示
             </label>
         </div>

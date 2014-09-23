@@ -87,8 +87,19 @@
 
                 <!-- 美麗分享 -->
                 <li>
-                    <a href="{{URL::route('spa.admin.share.article.list')}}"><i class="fa fa-fw fa-desktop"></i> 美麗分享</a>
+                    <a href="{{URL::route('spa.admin.share.article.list')}}"><i class="fa fa-fw fa-edit"></i> 美麗分享</a>
                 </li>
+                <!--<li>
+                    <a href="javascript:;" data-toggle="collapse" data-target="#share"><i class="fa fa-fw fa-arrows-v"></i> 美麗分享 <i class="fa fa-fw fa-caret-down"></i></a>
+                    <ul id="share" class="collapse">
+                        <li>
+                            <a href="{{URL::route('spa.admin.share.article.list')}}">文章列表</a>
+                        </li>
+                        <li>
+                            <a href="{{URL::route('spa.admin.share.gallery')}}">圖片列表</a>
+                        </li>
+                    </ul>
+                </li>-->
 
                 <!-- 美麗服務 -->
                 <li>

@@ -99,7 +99,7 @@ Route::group(array('prefix'=>'admin', 'before'=>'auth.admin'), function()
 {
         //admin index
         Route::any('/', array('as'=>'admin.index', 'uses'=>'AuthController@index'));
-        
+
         //switch to spa backgroupd
         Route::get('switch_to_spa', array('as'=>'switch.to.admin.spa', 'uses'=>'BackendSwitchController@getSpa'));
 
@@ -234,20 +234,38 @@ Route::group(array('prefix'=>'admin/spa', 'before'=>'auth.admin'), function()
     }));
 
     // Spa Articles
-    Route::get('articles/list/{category?}', array('as'=>'spa.admin.articles.list', 'uses'=>'spaAdmin\\ArticleController@getList'));
-    Route::get('articles/action/{id?}/{changeLan?}/{category?}', array('as'=>'spa.admin.articles.action', 'uses'=>'spaAdmin\\ArticleController@getAction'));
-    Route::post('articles/action/{id?}/{changeLan?}', array('as'=>'spa.admin.articles.store', 'uses'=>'spaAdmin\\ArticleController@postAction'));
-    Route::get('articles/kickout/{id?}', array('as'=>'spa.admin.articles.delete', 'uses'=>'spaAdmin\\ArticleController@postDelete'));
+    Route::get('articles/list/{category?}', array('as'=>'spa.admin.articles.list', 'uses'=>'spaAdmin\\ArticleController@getList'))
+         ->where(array('category'=>'(about|news|oversea)'));
+
+    Route::get('articles/action/{id?}/{changeLan?}/{category?}', array('as'=>'spa.admin.articles.action', 'uses'=>'spaAdmin\\ArticleController@getAction'))
+         ->where(array('id'=>'([0-9]+)', 'changeLan'=>'(modifyLanguage|0)', 'category'=>'(about|news|oversea)'));
+
+    Route::post('articles/action/{id?}/{changeLan?}', array('as'=>'spa.admin.articles.store', 'uses'=>'spaAdmin\\ArticleController@postAction'))
+         ->where(array('id'=>'([0-9]+)', 'changeLan'=>'(modifyLanguage)'));
+
+    Route::get('articles/kickout/{id?}', array('as'=>'spa.admin.articles.delete', 'uses'=>'spaAdmin\\ArticleController@postDelete'))
+         ->where(array('id'=>'([0-9]+)'));
+
     Route::post('articles/sort', array('as'=>'spa.admin.articles.sort', 'uses'=>'spaAdmin\\ArticleController@postSort'));
 
     // Spa Shares
     // Article
-    Route::get('share/article/list/{page?}', array('as'=>'spa.admin.share.article.list', 'uses'=>'spaAdmin\\ShareController@getArticleList'));
-    Route::get('share/article/action/{id?}/{changeLang?}', array('as'=>'spa.admin.share.article.action', 'uses'=>'spaAdmin\\ShareController@getArticleAction'));
+    Route::get('share/article/list/{page?}', array('as'=>'spa.admin.share.article.list', 'uses'=>'spaAdmin\\ShareController@getArticleList'))
+         ->where(array('page'=>'([0-9]+)'));
+
+    Route::get('share/article/action/{id?}/{changeLang?}', array('as'=>'spa.admin.share.article.action', 'uses'=>'spaAdmin\\ShareController@getArticleAction'))
+         ->where(array('id'=>'([0-9]+)', 'changeLang'=>'(tw|cn)'));
+
     Route::post('share/article/action', array('as'=>'spa.admin.share.article.write', 'uses'=>'spaAdmin\\ShareController@postArticleAction'));
     Route::post('share/article/delete', array('as'=>'spa.admin.share.article.delete', 'uses'=>'spaAdmin\\ShareController@postArticleDelete'));
-    // sort
     Route::post('share/{type}/sort/update', array('as'=>'spa.admin.share.sort.update', 'uses'=>'spaAdmin\\ShareController@postUpdateSort'));
+    // Gallery
+    Route::get('share/gallery/{page?}/{lang?}', array('as'=>'spa.admin.share.gallery', 'uses'=>'spaAdmin\\ShareController@getGallery'))
+         ->where(array('page'=>'([0-9]+)'));
+    Route::get('share/gallery/action/{id?}', array('as'=>'spa.admin.share.gallery.action', 'uses'=>'spaAdmin\\ShareController@getGalleryAction'))
+         ->where(array('type'=>'(shares|gallery)'));
+    Route::get('share/gallery/delete', array('as'=>'spa.admin.share.gallery.delete', 'uses'=>'spaAdmin\\ShareController@getGalleryDelete'));
+    Route::post('share/gallery/write', array('as'=>'spa.admin.share.gallery.write', 'uses'=>'spaAdmin\\ShareController@postGalleryAction'));
 
     //switch to rebeauty backgroupd
     Route::get('switch_to_rebeauty', array('as'=>'switch.to.admin.rebeauty', 'uses'=>'BackendSwitchController@getRebeauty'));

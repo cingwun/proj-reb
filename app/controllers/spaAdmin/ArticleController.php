@@ -32,13 +32,17 @@ class ArticleController extends \BaseController {
 
 
 	/*
-	 * Get the form for create new article.
-	 * 
+	 * Get the form for create new article or modify a specific article.
+	 * @params (int) $id, (string) $changeLang, (string) $Category
 	 * 
 	 */
 	public function getAction($id = null, $changeLang = null, $Category = null) {
 		if(empty($id)){
-			$specArticle = array('id'=>0, 'status'=>1, 'lang'=>'tw');
+			$specArticle = array(
+							'id'=>0,
+							'status'=>1,
+							'lang'=>'tw'
+							);
 			return \View::make('spa_admin.articles.view_articles_action', array('specArticle'=>$specArticle, 'createCategory'=>$Category));
 		}else {
 			$specArticle = \SpaArticles::find($id)->toArray();
@@ -47,8 +51,8 @@ class ArticleController extends \BaseController {
 	}
 
 	/**
-	 * Create or update a article.
-	 * 
+	 * Save the modidied article into database.
+	 * @params (int) $id, (string) $changeLang
 	 * 
 	 */
 	public function postAction($id = null, $changeLang = null) {
@@ -100,7 +104,7 @@ class ArticleController extends \BaseController {
 
 	/**
 	 * Delete a specific article.
-	 * @param (int) $id
+	 * @params (int) $id
 	 * 
 	 */
 	public function postDelete($id)
@@ -123,56 +127,61 @@ class ArticleController extends \BaseController {
 		}
 	}
 
-     public function postSort(){
-        try{
-            if (!isset($_POST) || !isset($_POST['id']) || !isset($_POST['sort']) || !isset($_POST['role']))
-                throw new Exception('Error request [10]');	
+	/*
+	 * Sort articles.
+	 * @params (int) $id, (int) $sort, (string) $role
+	 *
+	 */
+	public function postSort(){
+		try{
+		    if (!isset($_POST) || !isset($_POST['id']) || !isset($_POST['sort']) || !isset($_POST['role']))
+		        throw new Exception('Error request [10]');	
 
-            $id = (int) \Input::get('id');
-            $role = \Input::get('role');
-            $sort = (int) \Input::get('sort');
-            $isUpdatedTime = \Input::get('isUpdatedTime', false);
-            $lastUpdatedId = \Input::get('lastUpdatedId', false);
+		    $id = (int) \Input::get('id');
+		    $role = \Input::get('role');
+		    $sort = (int) \Input::get('sort');
+		    $isUpdatedTime = \Input::get('isUpdatedTime', false);
+		    $lastUpdatedId = \Input::get('lastUpdatedId', false);
 
-            $model = \SpaArticles::find($id);
-            if (empty($model))
-                throw new Exception("Error request [11]");
+		    $model = \SpaArticles::find($id);
+		    if (empty($model))
+		        throw new Exception("Error request [11]");
 
-            $model->sort = $sort;
+		    $model->sort = $sort;
 
-            if (!$model->save())
-                throw new Exception("更新排序失敗，請通知工程師");
+		    if (!$model->save())
+		        throw new Exception("更新排序失敗，請通知工程師");
 
-            if ($isUpdatedTime){
-                $cmd = \SpaArticles::where('id', '<>', $id)
-                                   ->where('sort', '=', $sort)
-                                   ->where('id', '>=', $lastUpdatedId)
-                                   ->orderBy('sort', 'desc')
-                                   ->orderBy('updated_at', 'desc');
+		    if ($isUpdatedTime){
+		        $cmd = \SpaArticles::where('id', '<>', $id)
+		                           ->where('sort', '=', $sort)
+		                           ->where('id', '>=', $lastUpdatedId)
+		                           ->orderBy('sort', 'desc')
+		                           ->orderBy('updated_at', 'desc');
 
-                $items = $cmd->get();
-                if (sizeof($items)>0){
-                    $t = time();
-                    foreach($items as $key=>$item){
-                        $t = $t+$key;
-                        $item->updated_at = $t;
-                        $item->save();
-                    }
-                }
-            }
+		        $items = $cmd->get();
+		        if (sizeof($items)>0){
+		            $t = time();
+		            foreach($items as $key=>$item){
+		                $t = $t+$key;
+		                $item->updated_at = $t;
+		                $item->save();
+		            }
+		        }
+		    }
 
-            return \Response::json(array(
-                    'status' => 'ok',
-                    'message' => '更新排序完成',
-                ));
+		    return \Response::json(array(
+		            'status' => 'ok',
+		            'message' => '更新排序完成',
+		        ));
 
-        }catch(Exception $e){
-            return Response::json(array(
-                    'status' => 'error',
-                    'message' => $e->getMessage()
-                ));
-        }
-    }
+		}catch(Exception $e){
+		    return Response::json(array(
+		            'status' => 'error',
+		            'message' => $e->getMessage()
+		        ));
+		}
+	}
 
 
 }
