@@ -21,7 +21,7 @@ if (in_array($locale, $languages)) {
 }
 
 
-Route::group(array('prefix'=>$locale), function(){
+Route::group(array('prefix'=>$locale, 'domain'=>'www.rebeauty.com.tw'), function(){
 
     //首頁
     Route::get('/', array('uses'=>'aesthetics\\IndexController@getIndex', 'as'=>'frontend.index'));
@@ -388,7 +388,7 @@ Route::group(array('prefix'=>'admin/spa', 'before'=>'auth.admin'), function()
              ->where(array('id'=>'([0-9]+)'));
 });
 
-Route::group(array('prefix'=>'spa'), function() {
+Route::group(array('prefix'=>$locale, 'domain'=>'spa.rebeauty.com.tw'), function() {
 
     Route::get('/', array('as'=>'spa.index', 'uses'=>'spa\\IndexController@getIndex'));
 
@@ -396,5 +396,11 @@ Route::group(array('prefix'=>'spa'), function() {
 
     /*----------service----------*/
 
+    /*
+     * Display service
+     */
     Route::get('service', array('as'=>'spa.service', 'uses'=>'spa\\ServiceController@getService'));
+
+    Route::get('service/detail/{id?}', array('as'=>'spa.service.detail', 'uses'=>'spa\\ServiceController@getServiceDetail'))
+             ->where(array('id'=>'([0-9]+)'));
 });

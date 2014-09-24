@@ -5,7 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<!-- <meta name="viewport" content="width=device-width, initial-scale=0.7, maximum-scale=3.0, user-scalable=1" /> -->
 	<title>煥儷美顏SPA</title>
-	<link rel="stylesheet" href="../spa/css/layout_spa.css" />
+	{{ HTML::style('spa/css/layout_spa.css'); }}
 	<!--[if lt IE 9]>
 	<script type="text/javascript" src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>		
 	<![endif]-->
@@ -21,7 +21,7 @@
 				@include('spa._partials.widget_mainBanner')
 				@yield('content')
 				<a id="scrollToTop" href="javascript:void(0)">
-					<img src="../spa/img/sign/top.png" />
+					<img src="<?=asset('spa/img/sign/top.png')?>" />
 				</a>
 			</div><!-- ======================== midWrap end ======================== -->
 		</div>
@@ -33,15 +33,14 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<![endif]-->
 	<!--[if !IE]>-->
-	{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js'); }}
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 	<!--<![endif]-->
 	<!-- // <script type="text/javascript" src="../js/share_slider.js"></script> -->
-	<script src="../spa/js/jq_plugin.js"></script>
-	<script src="../spa/js/isotope.js"></script>
-	<script src="../spa/js/jq_index.js"></script>
-	<script type="text/javascript" src="../spa/js/jquery.colorbox.js"></script>
-	<script type="text/javascript" src="../spa/js/jq_slider.js"></script>
-
+	{{ HTML::script('spa/js/jq_plugin.js'); }}
+	{{ HTML::script('spa/js/isotope.js'); }}
+	{{ HTML::script('spa/js/jq_index.js'); }}
+	{{ HTML::script('spa/js/jquery.colorbox.js'); }}
+	{{ HTML::script('spa/js/jq_slider.js'); }}
 	<!--<%= livereload_js if ENV["RACK_ENV"] != "production" %>-->
 </body>
 </html>
