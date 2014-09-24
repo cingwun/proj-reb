@@ -10,10 +10,16 @@
 
 <div>
 	<a href='javascript:history.back()' type="button" class="btn btn-default pull-lift">回上一頁</a>
-	<a href='{{$acrion_url}}@if($category != '')?category={{$category}}@endif' type="button" class="btn btn-success pull-right">新增</a>
+	@if($category == '')
+	<select onchange = "langList(this)">
+		<option value="tw" @if($listLang == 'tw') selected @endif>繁體</option>
+		<option value="cn" @if($listLang == 'cn') selected @endif>簡體</option>
+	</select>
+	@endif
+	<a href='{{$actionURL}}?lang={{$listLang}}@if($category != '')&category={{$category}}@endif' type="button" class="btn btn-success pull-right">新增</a>
 </div>
 <br/>
-<table class="table table-bordered table-hover" id="sortable" data-sortAction="{{$update_sort_url}}" data-deleteAction="{{$delete_url}}">
+<table class="table table-bordered table-hover" id="sortable" data-sortAction="{{$updateSortURL}}" data-deleteAction="{{$deleteURL}}">
 	<thead>
 		<tr>
 			<th>產品項目標題</th>
@@ -29,10 +35,14 @@
 		</tr>
 	</thead>
 	<tbody>
-		@foreach($product_list as $product)
+		@foreach($products as $product)
 		<tr id='{{$product->id}}'>
 			<td>{{$product->title}}</td>
-			<td>{{$category_array[$product->_parent]}}</td>
+			<td>
+				@if($product->_parent != "")
+				{{$category_array[$product->_parent]}}
+				@endif
+			</td>
 			<td>{{$product->views}}</td>
 			<td>{{$product->capacity}}</td>
 			<td>{{$product->price}}</td>
@@ -53,10 +63,10 @@
 			</td>
 			<td>{{$product->sort}}</td>
 			<td>
-				<a href="{{$acrion_url}}/{{$product->id}}" type="button" class="btn btn-sm btn-primary">修改</a>
+				<a href="{{$actionURL}}/{{$product->id}}" type="button" class="btn btn-sm btn-primary">修改</a>
 				<a href="#" type="button" class="btn btn-sm btn-danger btn-delete">刪除</a>
-				@if($product->ref == '0')
-				<a href="{{$acrion_url}}/{{$product->id}}/create_lang?category={{$category}}" type="button" class="btn btn-sm btn-warning">新增@if($product->lang == 'tw')簡體@else繁體@endif語系</a>
+				@if($product->ref_display == 'yes')
+				<a href="{{$actionURL}}/{{$product->ref}}?lang={{$langControlGroup[$listLang]}}&category={{$category}}" type="button" class="btn btn-sm btn-warning">編輯@if($product->lang == 'tw')簡體@else繁體@endif語系</a>
 				@endif
 			</td>
 		</tr>
@@ -71,8 +81,14 @@
 @stop
 @section('bottom')
 {{ HTML::script(asset('packages/tableDnD/js/jquery.tablednd.0.8.min.js'))}}
-{{ HTML::script(asset('js/admin/service_faq/js_article_list.js'))}}
+{{ HTML::script(asset('/spa_admin/js/service/js_article_list.js'))}}
 <script type="text/javascript">
     var sortTable = _sortTable({el: '#sortable', role: 'article', sortColumn: 9, hasCategory: <?php echo (!empty($category))?'true':'false'?>});
+    function langList(e) {
+    	if(e.value == "tw")
+    		document.location.href='{{$twListUrl}}';
+    	else
+    		document.location.href='{{$cnListUrl}}';
+	}
 </script>
 @stop

@@ -281,13 +281,15 @@ Route::group(array('prefix'=>'admin/spa', 'before'=>'auth.admin'), function()
      * @params (string) $id
     * @params (string) $lang
      */
-    Route::get('service/article/action/{id?}/{lang?}', array('as'=>'spa.admin.service.article.action', 'uses'=>'spaAdmin\\ServiceController@getServiceAction'));
+    Route::get('service/article/action/{id?}', array('as'=>'spa.admin.service.article.action', 'uses'=>'spaAdmin\\ServiceController@getServiceAction'))
+             ->where(array('id'=>'([0-9]+)'));
 
     /*
      * Write(create/edit action) service data.
      * @params (string) $id
      */
-    Route::post('service/article/write/{id?}', array('as'=>'spa.admin.service.article.write', 'uses'=>'spaAdmin\\ServiceController@postWriteService'));
+    Route::post('service/article/write/{id?}', array('as'=>'spa.admin.service.article.write', 'uses'=>'spaAdmin\\ServiceController@postWriteService'))
+             ->where(array('id'=>'([0-9]+)'));
 
     /*
      * Delete Service.
@@ -326,13 +328,15 @@ Route::group(array('prefix'=>'admin/spa', 'before'=>'auth.admin'), function()
      * @params (string) $id
      * @params (string) $lang
      */
-    Route::get('product/article/action/{id?}/{lang?}', array('as'=>'spa.admin.product.article.action', 'uses'=>'spaAdmin\\ProductController@getProductAction'));
+    Route::get('product/article/action/{id?}', array('as'=>'spa.admin.product.article.action', 'uses'=>'spaAdmin\\ProductController@getProductAction'))
+             ->where(array('id'=>'([0-9]+)'));
 
     /*
      * Write(create/edit action) product data.
      * @params (string) $id
      */
-    Route::post('product/article/write/{id?}', array('as'=>'spa.admin.product.article.write', 'uses'=>'spaAdmin\\ProductController@postWriteProduct'));
+    Route::post('product/article/write/{id?}', array('as'=>'spa.admin.product.article.write', 'uses'=>'spaAdmin\\ProductController@postWriteProduct'))
+             ->where(array('id'=>'([0-9]+)'));
 
     /*
      * Delete product.
@@ -381,11 +385,13 @@ Route::group(array('prefix'=>'admin/spa', 'before'=>'auth.admin'), function()
      * Display reservation action page
      * @params (string) $id
      */
-    Route::get('reservation/action/{id?}', array('as'=>'spa.admin.reservation.action', 'uses'=>'spaAdmin\\ReservationController@getReservationAction'));
+    Route::get('reservation/action/{id?}', array('as'=>'spa.admin.reservation.action', 'uses'=>'spaAdmin\\ReservationController@getReservationAction'))
+             ->where(array('id'=>'([0-9]+)'));
 
     /*
      * Write(create/edit action) reservation data.
      * @params (string) $id
      */
-    Route::post('reservation/write/{id?}', array('as'=>'spa.admin.reservation.write', 'uses'=>'spaAdmin\\ReservationController@postReservationWrite'));
+    Route::post('reservation/write/{id?}', array('as'=>'spa.admin.reservation.write', 'uses'=>'spaAdmin\\ReservationController@postReservationWrite'))
+             ->where(array('id'=>'([0-9]+)'));
 });
