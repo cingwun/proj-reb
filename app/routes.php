@@ -388,7 +388,10 @@ Route::group(array('prefix'=>'admin/spa', 'before'=>'auth.admin'), function()
              ->where(array('id'=>'([0-9]+)'));
 });
 
-Route::group(array('prefix'=>'rebeauty_spa'), function() {
+Route::group(array('prefix'=>'spa'), function() {
 
     Route::get('/', array('as'=>'spa.index', 'uses'=>'spa\\IndexController@getIndex'));
+
+    Route::get('about/{id?}', array('as'=>'spa.about', 'uses'=>'spa\\AboutController@getArticle'));
+
 });

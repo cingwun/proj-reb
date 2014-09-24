@@ -19,7 +19,9 @@ class ArticleController extends \BaseController {
 	public function getList($category = 'about') {
 		try{
 			$Articles = array();
-			$Articles = \SpaArticles::where('category', $category)->orderBy('sort', 'desc')->get();
+			$Articles = \SpaArticles::where('category', $category)
+									->orderBy('sort', 'desc')
+									->get();
 
 			if($Articles)
 				return \View::make('spa_admin.articles.view_list', array('category'=>$category, 'selectedArticles'=>$Articles));
