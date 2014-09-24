@@ -387,3 +387,8 @@ Route::group(array('prefix'=>'admin/spa', 'before'=>'auth.admin'), function()
     Route::post('reservation/write/{id?}', array('as'=>'spa.admin.reservation.write', 'uses'=>'spaAdmin\\ReservationController@postReservationWrite'))
              ->where(array('id'=>'([0-9]+)'));
 });
+
+Route::group(array('prefix'=>'rebeauty_spa'), function() {
+
+    Route::get('/', array('as'=>'spa.index', 'uses'=>'spa\\IndexController@getIndex'));
+});
