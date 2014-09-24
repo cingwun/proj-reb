@@ -15,20 +15,20 @@
 		<p><i class="fa fa-warning"></i>&nbsp;為了正常瀏覽本站，請開啟瀏覽器的 JavaScript，然後<a href="">再試一次</a>。</p>
 	</div></noscript><!-- ======================== JavaScript 停用警告 end ======================== -->
 	<div id="wrap">
-		@include('spa._partials.header')
+		@include('spa._partials.widget_header')
 		<div id="wrapInner">
 			<div id="midWrap">
-				@include('spa._partials.mainBanner')
+				@include('spa._partials.widget_mainBanner')
 				@yield('content')
 				<a id="scrollToTop" href="javascript:void(0)">
-					<img src="../spa/img//sign/top.png" />
+					<img src="../spa/img/sign/top.png" />
 				</a>
 			</div><!-- ======================== midWrap end ======================== -->
 		</div>
 	</div><!-- ======================== wrap end ======================== -->
 	
-	@include('spa._partials.footer')
-	@include('spa._partials.quickReservation')
+	@include('spa._partials.widget_footer')
+	@include('spa._partials.widget_quickReservation')
 	<!--[if IE]>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<![endif]-->
