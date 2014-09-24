@@ -394,4 +394,7 @@ Route::group(array('prefix'=>'spa'), function() {
 
     Route::get('about/{id?}', array('as'=>'spa.about', 'uses'=>'spa\\AboutController@getArticle'));
 
+    /*----------service----------*/
+
+    Route::get('service', array('as'=>'spa.service', 'uses'=>'spa\\ServiceController@getService'));
 });
