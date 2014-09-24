@@ -6,7 +6,7 @@
 
 @section('main')
 <div class="col-lg-8">
-    <table class="table table-bordered" id="sortable" data-sortAction="{{$update_sort_url}}" data-deleteAction="{{$category_delete_url}}">
+    <table class="table table-bordered" id="sortable" data-sortAction="{{$updateSortURL}}" data-deleteAction="{{$categoryDeleteURL}}">
         <thead>
             <tr>
                 <th>分類標題</th>
@@ -16,7 +16,7 @@
             </tr>
         </thead>
         <tbody>
-        	@foreach($category_list as $cat)
+        	@foreach($categorys as $cat)
         	<tr id='{{$cat->id}}'>
         		<td>{{$cat->title}}</td>
         		<td>{{$cat->sort}}</td>
@@ -24,7 +24,7 @@
                     @if($cat->lang == 'tw')繁體@else簡體@endif
                 </td>
         		<td>
-        			<a href="{{$service_list_url}}?category={{$cat->id}}" title="{{$cat->title}}相關文章" class="btn btn-sm btn-success">文章</a>
+        			<a href="{{$serviceListURL}}?lang={{$cat->lang}}&category={{$cat->id}}" title="{{$cat->title}}相關文章" class="btn btn-sm btn-success">文章</a>
                     <span class="btn btn-sm btn-primary btn-modify">修改</span>
                     <span href="#" class="btn btn-sm btn-danger btn-delete">刪除</span>
                     @if($cat->ref == '0')
@@ -44,7 +44,7 @@
             </tr>
         </thead>
         <tbody><tr><td>
-            <form name="form-category" action="{{$category_action_url}}" method="post" >
+            <form name="form-category" action="{{$categoryActionURL}}" method="post" >
                 <div class="form-group">
                     <label class="control-label" for="title">類別標題</label>
                     <input type="text" class="form-control" name="title" size="12" value="" />

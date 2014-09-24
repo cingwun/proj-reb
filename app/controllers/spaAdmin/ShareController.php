@@ -1,9 +1,16 @@
 <?php
 namespace spaAdmin;
 
+/*
+ * Manage share articles.
+ */
 class ShareController extends \BaseController {
 
-    public function getArticleList($page=1){
+    /* 
+     * Get share articles' list
+     * @params (int) $page
+     */
+    public function getArticleList($page=1) {
 
         $limit = 10;
         $offset = ($page-1) * $limit;
@@ -11,10 +18,10 @@ class ShareController extends \BaseController {
         $cmd = new \SpaShares;
         $rowsNum = $cmd->count();
         $articles = $cmd->orderBy('sort', 'desc')
-        ->orderBy('updated_at', 'desc')
-        ->skip($offset)
-        ->take($limit)
-        ->get();
+                        ->orderBy('updated_at', 'desc')
+                        ->skip($offset)
+                        ->take($limit)
+                        ->get();
 
         $widgetParam = array(
             'currPage' => $page,
@@ -35,7 +42,7 @@ class ShareController extends \BaseController {
      * display article edit page
      * @params (mixed) $id, default: null
      */
-    public function getArticleAction($id=null, $changeLang=null){
+    public function getArticleAction($id=null, $changeLang=null) {
         try{
             $article = array('id'=>null, 'status'=>1, 'isInSiderbar'=>0, 'language'=>1, 'reference'=>0);
 
@@ -57,8 +64,7 @@ class ShareController extends \BaseController {
                 $value = \Arr::get($article, $val['fieldName'], null);
                 $imgUploaderList[$key]['items']  = (empty($value)) ? array() : json_decode($value, true);
                 if(isset($changeLang))
-                    $imgUploaderList[$key]['items'] = array();   //I force users upload images while modifying tw/cn lang 'cause I can not fix the bug 
-                                                                 //that if user delete reference article and the other's images will be delete, too. Kettan
+                    $imgUploaderList[$key]['items'] = array();
             }
 
             // detect whether the request has spa_shares_tabs or not
@@ -105,19 +111,7 @@ class ShareController extends \BaseController {
                 $labelItems['product'][$item->id] = $item->title;
 
             $labelSelected = \SpaSharesLabels::where('share_id', '=', $article['id'])
-                                              ->lists('label_id');
-
-            /*$labelItmes = array('service'=>array(), 'product'=>array());
-            $list = \SpaService::where('_parent', '<>', 'N')
-                              ->orderBy('_parent', 'desc')
-                              ->orderBy('sort', 'desc')
-                              ->orderBy('updated_at', 'desc')
-                              ->get(array('id', 'title'));
-            foreach($list as $item)
-                $labelItmes['service'][$item->id] = $item->title;
-
-            $labelSelected = WintnessLabels::where('wid', '=', $article['id'])
-            ->lists('label_id');*/        
+                                             ->lists('label_id');
 
             return \View::make('spa_admin.shares.view_shares_action', array(
                 'article'=>$article,
@@ -137,12 +131,12 @@ class ShareController extends \BaseController {
     /*
      * handle request of write
      */
-    public function postArticleAction(){
+    public function postArticleAction() {
         try {
             if (!isset($_POST['id']))
                 throw new Exception("Error Processing Request [10]");
 
-            $nosort = 0; //
+            $sort = 'do'; 
             $id = (int) \Input::get('id', null);
             if (empty($id))
                 $model = new \SpaShares;
@@ -152,7 +146,7 @@ class ShareController extends \BaseController {
             }
             else{
                 $model = \SpaShares::find($id);
-                $nosort = 1;
+                $sort = 'doNot';
             }
             if ($model==null)
                 throw new Exception("Error Processing Request [11]");
@@ -170,10 +164,9 @@ class ShareController extends \BaseController {
                 $delLength[$i] = \basename($delLength);
 
             $imgUploaderList = array(
-                'cover' => array('fieldName'=>'cov', 'items'=>null),/////////////////////////////////////////////////////
-                //'before' => array('fieldName'=>'img_before', 'items'=>null),
+                'cover' => array('fieldName'=>'cov', 'items'=>null),
                 'image' => array('fieldName'=>'img', 'items'=>null),
-                'gallery' => array('fieldName'=>'galle', 'items'=>null),//////////////////////////////////////////////
+                'gallery' => array('fieldName'=>'galle', 'items'=>null),
                 );
 
 
@@ -210,14 +203,13 @@ class ShareController extends \BaseController {
 
             $model->title = \Input::get('title');
             $model->background_color = \Input::get('background_color', '#ccc');
-            $model->cover = json_encode($imgUploaderList['cover']['items']);//////////////////////////////////////////////
-            //$model->img_before = json_encode($imgUploaderList['before']['items']);
+            $model->cover = json_encode($imgUploaderList['cover']['items']);
             $model->image = json_encode($imgUploaderList['image']['items']);
             $model->description = \Input::get('description', '');
-            $model->gallery = json_encode($imgUploaderList['gallery']['items']);///////////////////////////////////////////
+            $model->gallery = json_encode($imgUploaderList['gallery']['items']);
             $model->status = $status % 2;
             $model->isInSiderbar = $isInSiderbar % 2;
-            ($nosort == 1) ? $nosort = 1 : $model->sort = \SpaShares::max('sort')+1;
+            ($sort == 'do') ? $model->sort = \SpaShares::max('sort')+1 : $sort = 'doNot';
             $model->language = \Input::get('lang');
             $model->save();
 
@@ -253,27 +245,26 @@ class ShareController extends \BaseController {
                     WintnessLabels::create(array('wid'=>(int) $model->id, 'label_id'=>((int) $label)));
                 }*/
 
-                \SpaSharesTabs::where('type', '=', 'shares')
-                ->where('item_id', '=', $model->id)
-                ->delete();
+            \SpaSharesTabs::where('type', '=', 'shares')
+            ->where('item_id', '=', $model->id)
+            ->delete();
             // collect SpaSharesTabs
-                $tabContents = \Input::get('tabContents', array());
-                $tabs        = array();
-                $tabName = \Input::get('tabName', array());
-                $order = 1;
-                foreach ($tabName as $key => $tab){
-                    if (!isset($tabContents[$key]))
-                        continue;
-                    else
-                        $tabInner = new \SpaSharesTabs;
-                    $tabInner->type = 'shares';
-                    $tabInner->item_id = $model->id;
-                    $tabInner->title = $tab;
-                    $tabInner->content = $tabContents[$key];
-                    $tabInner->sort = $order++;
-                    $tabInner->save();
-                }
-
+            $tabContents = \Input::get('tabContents', array());
+            $tabs        = array();
+            $tabName = \Input::get('tabName', array());
+            $order = 1;
+            foreach ($tabName as $key => $tab){
+                if (!isset($tabContents[$key]))
+                    continue;
+                else
+                    $tabInner = new \SpaSharesTabs;
+                $tabInner->type = 'shares';
+                $tabInner->item_id = $model->id;
+                $tabInner->title = $tab;
+                $tabInner->content = $tabContents[$key];
+                $tabInner->sort = $order++;
+                $tabInner->save();
+            }
                 return \Redirect::route('spa.admin.share.article.list', array('page'=>1, 'message'=>'success'));
             }catch (Exception $e) {
                 return Redirect::back()->withInput()->withErrors($e->getMessage());
@@ -282,10 +273,10 @@ class ShareController extends \BaseController {
 
 
     /*
-     * handle delete article by specific id
+     * hw_Deleteobject(connection, object_to_delete)elete article by specific id
      * @params (int) $id
      */
-    public function postArticleDelete(){
+    public function postArticleDelete() {
         try{
             $id = \Input::get('id', null);
 
@@ -333,7 +324,7 @@ class ShareController extends \BaseController {
      * handle AJAX request of change sort for category
      * @params (string) $type
      */
-    public function postUpdateSort($type){
+    public function postUpdateSort($type) {
         try{
             if (!isset($_POST) || !isset($_POST['id']) || !isset($_POST['sort']))
                 throw new Exception('Error request [10]');
@@ -343,8 +334,8 @@ class ShareController extends \BaseController {
             $isUpdatedTime = \Input::get('isUpdatedTime', false);
             $lastUpdatedId = \Input::get('lastUpdatedId', false);
 
-            //$model = ($type=='gallery') ? WintnessGallery::find($id) : \SpaShares::find($id);
-            $model = \SpaShares::find($id);
+            $model = ($type=='gallery') ? \SpaSharesGallery::find($id) : \SpaShares::find($id);
+            //$model = \SpaShares::find($id);
 
             if (empty($model))
                 throw new Exception("Error request [11]");
@@ -355,8 +346,8 @@ class ShareController extends \BaseController {
                 throw new Exception("更新排序失敗，請通知工程師");
 
             if ($isUpdatedTime){
-                //$orm = ($type=='gallery') ? 'WintnessGallery' : 'Wintness';
-                $orm = 'SpaShares';
+                $orm = ($type=='gallery') ? 'SpaSharesGallery' : 'SpaShares';
+                //$orm = 'SpaShares';
                 $cmd = $orm::where('id', '<>', $id)
                 ->where('sort', '=', $sort)
                 ->where('id', '>=', $lastUpdatedId)
@@ -384,6 +375,136 @@ class ShareController extends \BaseController {
                 'status' => 'error',
                 'message' => $e->getMessage()
                 ));
+        }
+    }
+
+
+    /*
+     * list all photo in gallery
+     * @params (int) $page
+     */
+    public function getGallery($page=1, $lang=null){
+        $limit = 10;
+        $offset = ($page-1) * $limit;
+
+        $photosCmd = \SpaSharesGallery::orderBy('sort', 'desc');
+        if($lang=='tw')
+            $photosCmd = $photosCmd->where('language', 'tw');
+        if($lang=='cn')
+            $photosCmd = $photosCmd->where('language', 'cn');
+        $photos = $photosCmd->skip($offset)
+                            ->take($limit)
+                            ->orderBy('updated_at', 'desc')
+                            ->get();
+
+        $rowsNum = \SpaSharesGallery::count();
+        $widgetParam = array(
+            'currPage' => $page,
+            'total' => $rowsNum,
+            'perPage' => $limit,
+            'URL' => null,
+            'route' => 'spa.admin.share.gallery',
+        );
+
+        return \View::make('spa_admin.shares.view_gallery', array(
+            'photos' => &$photos,
+            'wp' => &$widgetParam,
+            'lang' => $lang
+        ));
+    }
+
+    /*
+     * display action page of gallery
+     * @params (int) $id
+     */
+    public function getGalleryAction($id=null){
+        $data = array();
+        $isNew = true;
+        if ($id!=null){
+            $model = \SpaSharesGallery::find($id);
+            if (!empty($model)){
+                $data = $model->toArray();
+                $isNew = false;
+            }
+        }
+
+        return \View::make('spa_admin.shares.view_gallery_action', array(
+            'data' => &$data,
+            'isNew' => $isNew
+        ));
+    }
+
+    /*
+     * handle request of gallery action
+     */
+    public function postGalleryAction(){
+        try{
+            $id = \Arr::get($_POST, 'id', null);
+            $imageURL = \Arr::get($_POST, 'imageURL', null);
+            $title = \Arr::get($_POST, 'title', 'unknown');
+            $link = \Arr::get($_POST, 'link', '#');
+            $target = \Arr::get($_POST, 'target', '_self');
+            //$sort = (int) \Arr::get($_POST, 'sort', 1);
+            $status = \Arr::get($_POST, 'status', '1');
+            $language = \Arr::get($_POST, 'language', 'tw');
+            $imgList = \Arr::get($_POST, 'imgList', '');
+
+            if ($imageURL==null)
+                throw new Exception("Error request [10]");
+
+
+            $m = (!empty($id)) ? \SpaSharesGallery::find($id) : new \SpaSharesGallery;
+
+            if ($m==null)
+                throw new Exception("Error request [11]");
+
+            $m->title = $title;
+            $m->imageURL = $imageURL;
+            $m->link = $link;
+            $m->target = $target;
+            $m->sort = \SpaSharesGallery::max('sort') +1;
+            $m->status = $status;
+            $m->language = $language;
+            //$m->updated_at = date('Y-m-d H:i:s');
+            if (!$m->save())
+                throw new Exception("Error request [110]");
+
+            if (!empty($imgList)){
+                $list = explode('=sep=', $imgList);
+                foreach($list as $item)
+                    if (md5($item)!=md5($image)) \fps::getInstance()->delete($item);
+            }
+            return \Redirect::route('spa.admin.share.gallery', array('page'=>1, 'message'=>'success'));
+        }catch(Exceptions $e){
+            return \Redirect::route('spa.admin.share.gallery', array('message'=>$e->getMessage()));
+        }
+
+    }
+
+    /*
+     * handle delete gallery by specific id
+     * @params (int) $id
+     */
+    public function getGalleryDelete(){
+        try{
+            $id = \Arr::get($_GET, 'id', null);
+            if (empty($id))
+                throw new Exception("Error request [10]");
+
+            $m = \SpaSharesGallery::find($id);
+
+            if (empty($m))
+                throw new Exception('Error request [11]');
+
+            $file = $m->imageURL;
+
+            if (!$m->delete())
+                throw new Exception("Error request [110]");
+
+            \fps::getInstance()->delete($file);
+            return \Redirect::route('spa.admin.share.gallery', array('page'=>1, 'message'=>'success'));
+        }catch(Exception $e){
+            return \Redirect::route('spa.admin.share.gallery', array('page'=>1, 'message'=>'error'));
         }
     }
 

@@ -6,9 +6,9 @@
 
 @section('main')
 <div>
-    <a href='{{$action_url}}' type="button" class="btn btn-success pull-right">新增</a>
+    <a href='{{$actionURL}}' type="button" class="btn btn-success pull-right">新增</a>
 </div>
-<table class="table table-bordered table-hover" id="reservationTable" data-detailsAction="{{$details_url}}" data-deleteAction="{{$delete_url}}">
+<table class="table table-bordered table-hover" id="reservationTable" data-detailsAction="{{$detailsURL}}" data-deleteAction="{{$deleteURL}}">
 	<thead>
 		<tr>
 			<th>姓名</th>
@@ -23,25 +23,25 @@
 		</tr>
 	</thead>
 	<tbody>
-		@foreach($reservation_list as $key => $reservation)
+		@foreach($reservations as $key => $reservation)
 		<tr id="{{$reservation->id}}">
 			<td>{{$reservation->name}}</td>
-            <td>{{$sex_array[$reservation->sex]}}</td>
+            <td>{{$sexArray[$reservation->sex]}}</td>
 			<td>{{$reservation->country}}</td>
 			<td>
-            @foreach ($contact_array as $contact)
+            @foreach ($contactArray as $contact)
                 @for ($i = 0; $i < $contact['count']; $i++)
-                    {{$style_array[$i]}}{{$contact['data'][$i]}}<br/>
+                    {{$styleArray[$i]}}{{$contact['data'][$i]}}<br/>
                 @endfor
             @endforeach
             </td>
-            <td>{{$contact_time_array[$reservation->contact_time]}}</td>
+            <td>{{$contactTimeArray[$reservation->contact_time]}}</td>
 			<td>{{$reservation->email}}</td>
             <td>{{$reservation->service_date}}</td>
 			<td>{{$reservation->created_at}}<br/>{{$reservation->updated_at}}</td>
 			<td>
 				<a href="#" type="button" class="btn btn-sm btn-warning btn-details">詳細資料</a>
-                <a href="{{$action_url}}/{{$reservation->id}}" type="button" class="btn btn-sm btn-primary">修改</a>
+                <a href="{{$actionURL}}/{{$reservation->id}}" type="button" class="btn btn-sm btn-primary">修改</a>
                 <a href="#" type="button" class="btn btn-sm btn-danger btn-delete">刪除</a>
 			</td>
 		</tr>
@@ -66,7 +66,7 @@
             <dt>聯絡方式</dt>
             <dd>
                 {% for (var i=0; i<o.data.contact.count; i++) { %}
-                    <div>{%=o.data.style_array[i]%}{%=o.data.contact.data[i]%}</div>
+                    <div>{%=o.data.styleArray[i]%}{%=o.data.contact.data[i]%}</div>
                 {% } %}
             </dd>
 

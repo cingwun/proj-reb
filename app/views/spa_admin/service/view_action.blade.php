@@ -7,16 +7,18 @@
 編輯服務項目
 @endif
 
-@if($ref == '0')
-@elseif($ref_lang != 'tw')
+@if($action == 'edit')
+@if($service->lang == 'tw')
 (繁體)
-@elseif($ref_lang != 'cn')
+@endif
+@if($service->lang == 'cn')
 (簡體)
+@endif
 @endif
 @stop
 
 @section('main')
-<form action='{{$write_url}}@if($list_category != '')?category={{$list_category}}@endif' method="post" enctype="multipart/form-data">
+<form action='{{$writeURL}}@if($articleCat != '')?category={{$articleCat}}@endif' method="post" enctype="multipart/form-data">
 	<div class="form-group">
 		<label>標題</label>
 		<input class="form-control" type="text" name="title" value="@if($action == 'edit'){{$service->title}}@endif"/>
@@ -26,8 +28,8 @@
 	<div class="form-group">
 		<label>所屬分類</label>
 		<select class="form-control" name="cat">
-			@foreach($category_list as $category)
-			<option value="{{$category->id}}" @if($action == 'edit' && $category->id == $service->_parent)selected@endif>{{$category->title}}</option>
+			@foreach($categorys as $category)
+			<option value="{{$category['id']}}" @if($action == 'edit' && $category['id'] == $service->_parent)selected@endif>{{$category['title']}}</option>
 			@endforeach
 		</select>
 	</div>
@@ -44,16 +46,13 @@
 	</div>
 	<div class="form-group">
 		<label>語系</label><br/>
-		@if($ref == '0')
-		<label class="radio-inline">
-			<input type="radio" name="lang" value="tw" @if($action == 'edit')@if($service->lang == 'tw') checked @endif@endif @if($action=='create' && $ref == '0')checked@endif />繁體
-		</label>
-		<label class="radio-inline">
-			<input type="radio" name="lang" value="cn" @if($action == 'edit')@if($service->lang == 'cn') checked @endif@endif />簡體
-		</label>
-		@elseif($ref_lang != 'tw')
+		@if($action == 'create' && $listLang =='tw')
 		繁體<input type='hidden' name="lang" value="tw"/>
-		@elseif($ref_lang != 'cn')
+		@elseif($action == 'create' && $listLang =='cn')
+		簡體<input type='hidden' name="lang" value="cn"/>
+		@elseif($action == 'edit' && $service->lang == 'tw')
+		繁體<input type='hidden' name="lang" value="tw"/>
+		@elseif($action == 'edit' && $service->lang == 'cn')
 		簡體<input type='hidden' name="lang" value="cn"/>
 		@endif
 	</div>
@@ -61,7 +60,7 @@
 	<!-- tabs -->
 	<div class="form-group">
 		<input type="hidden" name="action" value="{{$action}}"/>
-		<input type="hidden" name="ref" value="{{$ref}}"/>
+		<input type="hidden" name="listLang" value="{{$listLang}}"/>
 		<a href='javascript:history.back()' type="button" class="btn btn-danger">取消</a>
 		<button class="btn btn-primary btn-submit">編輯完成</button>
 	</div>
@@ -89,13 +88,13 @@
             el: '#image-main-box',
             imageBoxMeta: {photoFieldName: 'main_image[]', descFieldName: 'main_imageDesc[]', delFieldName: 'main_deleteImages[]'},
             isMultiple: false,
-            files: <?php echo json_encode($service_mian_img) ?>
+            files: <?php echo json_encode($serviceCover) ?>
         });
     	imgUploader = _imageUploader({
     		el: '#image-box',
     		imageBoxMeta:{photoFieldName: 'images[]', descFieldName: 'imageDesc[]', delFieldName: 'deleteImages[]'},
     		isMultiple: true,
-    		files: <?php echo json_encode($service_imgs)?>
+    		files: <?php echo json_encode($serviceImages)?>
     	});
 </script>
 @stop

@@ -12,7 +12,7 @@
     <title>SB Admin - Bootstrap Admin Template</title>
 
     <!-- Bootstrap Core CSS -->
-
+    
     {{ HTML::style(asset('spa_admin/css/admin/bootstrap.min.css'))}}
     <!-- Custom CSS -->
     {{ HTML::style(asset('spa_admin/css/admin/sb-admin.css'))}}
@@ -48,27 +48,9 @@
                     </button>
                     <a class="navbar-brand" href="{{URL::route('switch.to.admin.spa')}}">SPA後台</a>
                 </div>
-
+                
                 <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">
-                    <!-- <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
-                            </li>
-                        </ul>
-                    </li> -->
                     <p class="navbar-text pull-right">{{ Sentry::getUser()->email }} | <a href="{{ URL::route('admin.logout') }}" class="navbar-link">Logout</a>
                 </ul>
             </nav>
@@ -105,8 +87,19 @@
 
                 <!-- 美麗分享 -->
                 <li>
-                    <a href="{{URL::route('spa.admin.share.article.list')}}"><i class="fa fa-fw fa-desktop"></i> 美麗分享</a>
+                    <a href="{{URL::route('spa.admin.share.article.list')}}"><i class="fa fa-fw fa-edit"></i> 美麗分享</a>
                 </li>
+                <!--<li>
+                    <a href="javascript:;" data-toggle="collapse" data-target="#share"><i class="fa fa-fw fa-arrows-v"></i> 美麗分享 <i class="fa fa-fw fa-caret-down"></i></a>
+                    <ul id="share" class="collapse">
+                        <li>
+                            <a href="{{URL::route('spa.admin.share.article.list')}}">文章列表</a>
+                        </li>
+                        <li>
+                            <a href="{{URL::route('spa.admin.share.gallery')}}">圖片列表</a>
+                        </li>
+                    </ul>
+                </li>-->
 
                 <!-- 美麗服務 -->
                 <li>
@@ -135,7 +128,7 @@
                 </li>
 
                 <!-- Banner管理 -->
-                <li>
+                <li> 
                     <a href="javascript:;" data-toggle="collapse" data-target="#banner"><i class="fa fa-fw fa-arrows-v"></i> Banner管理 <i class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="banner" class="collapse">
                         <li>
@@ -191,5 +184,5 @@
         {{ HTML::script(asset('spa_admin/js/plugins/morris/morris-data.js'))}} -->
         @yield('bottom')
     </body>
-</html>
 
+    </html>
