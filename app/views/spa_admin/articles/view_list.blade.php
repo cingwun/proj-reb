@@ -7,17 +7,15 @@
 
 @section('main')
 <div>
-	<a type="button" @if($category==1)class="btn btn-md btn-info" @else class="btn btn-md btn-default" @endif href="{{ URL::route('spa.admin.articles.list')}}/1">關於煥麗</a>
-	<a type="button" @if($category==2)class="btn btn-md btn-info" @else class="btn btn-md btn-default" @endif href="{{ URL::route('spa.admin.articles.list')}}/2">最新消息</a>
-	<a type="button" @if($category==3)class="btn btn-md btn-info" @else class="btn btn-md btn-default" @endif href="{{ URL::route('spa.admin.articles.list')}}/3">海外專區</a>
-	<a href="{{ URL::route('spa.admin.articles.action')}}/0/0/{{$selectedArticles[0]}}" class="btn btn-success" style="float:right;">新增</a>
+	<a type="button" @if($category=='about')class="btn btn-md btn-info" @else class="btn btn-md btn-default" @endif href="{{ URL::route('spa.admin.articles.list')}}/about">關於煥麗</a>
+	<a type="button" @if($category=='news')class="btn btn-md btn-info" @else class="btn btn-md btn-default" @endif href="{{ URL::route('spa.admin.articles.list')}}/news">最新消息</a>
+	<a type="button" @if($category=='oversea')class="btn btn-md btn-info" @else class="btn btn-md btn-default" @endif href="{{ URL::route('spa.admin.articles.list')}}/oversea">海外專區</a>
+	<a href="{{ URL::route('spa.admin.articles.action')}}/0/0/{{$category}}" class="btn btn-success" style="float:right;">新增</a>
 </div>
 <br>
 
-		
-			<?php switch($selectedArticles[0]) {case 1:$cat = "關於煥麗";break; case 2:$cat = "最新消息";break; case 3:$cat = "海外專區";break;} ?>
-					
-		
+		<?php switch($category) {case 'about':$cat = "關於煥麗";break; case 'news':$cat = "最新消息";break; case 'oversea':$cat = "海外專區";break;} ?>
+						
 		<div class="table-responsive">
 			<table class="table table-bordered" id="sortable" data-sortAction="<?php echo URL::route('spa.admin.articles.sort')?>" >
 			
@@ -33,17 +31,18 @@
 					</tr>
 				</thead>
 				<tbody>
-					@foreach($selectedArticles[1] as $articles)
+					@foreach($selectedArticles as $articles)
 					<tr id="{{ $articles->id}}">
 						<td>{{ $articles->title}}</td>
 						<td>{{ $articles->open_at}}</td>
 						<td><?php echo ($articles->status=='1') ?  '<span style="color: #00AA00">顯示</span>' : '隱藏'?></td>
 						<td>{{ "建立:  ".$articles->created_at."<br>"."修改:  ".$articles->updated_at}}</td>
-						<td>{{($articles->lan=='zh') ? '繁體' : '簡體'}}</td>
-						<td><a type="button" href="{{ URL::route('spa.admin.articles.action')}}/{{$articles->id}}" class="btn btn-sm btn-primary">修改</a>
-							<a type="button" href="{{ URL::route('spa.admin.articles.delete')}}/{{$articles->id}}" class="btn btn-sm btn-danger">刪除</a>
+						<td>{{($articles->lang=='tw') ? '繁體' : '簡體'}}</td>
+						<td>
+							<a type="button" href="{{ URL::route('spa.admin.articles.action', array($articles->id))}}" class="btn btn-sm btn-primary">修改</a>
+							<a type="button" href="{{ URL::route('spa.admin.articles.delete', array($articles->id))}}" class="btn btn-sm btn-danger">刪除</a>
 							@if($articles->ref_id==0)
-							<a type="button" href="{{ URL::route('spa.admin.articles.action')}}/{{$articles->id}}/modifyLanguage" class="btn btn-sm btn-warning">新增{{($articles->lan=='zh') ? '簡體' : '繁體'}}語系</a>
+							<a type="button" href="{{ URL::route('spa.admin.articles.action', array($articles->id, 'modifyLanguage'))}}" class="btn btn-sm btn-warning">新增{{(array_get($articles, 'lang')=='tw') ? '簡體' : '繁體'}}語系</a>
 							@endif
 						</td>
 						<td hidden="hidden">{{ $articles->sort}}</td>

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" ng-app="adminApp">
 
@@ -52,24 +51,6 @@
                 
                 <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">
-                    <!-- <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
-                            </li>
-                        </ul>
-                    </li> -->
                     <p class="navbar-text pull-right">{{ Sentry::getUser()->email }} | <a href="{{ URL::route('admin.logout') }}" class="navbar-link">Logout</a>
                 </ul>
             </nav>
@@ -101,23 +82,34 @@
 
                 <!-- 預約管理 -->
                 <li>
-                    <a href="{{URL::route('spa.admin.articles.list')}}"><i class="fa fa-fw fa-edit"></i> 預約管理</a>
+                    <a href="{{URL::route('spa.admin.reservation.list')}}"><i class="fa fa-fw fa-edit"></i> 預約管理</a>
                 </li>
 
                 <!-- 美麗分享 -->
                 <li>
-                    <a href="{{URL::route('spa.admin.share.article.list')}}"><i class="fa fa-fw fa-desktop"></i> 美麗分享</a>
+                    <a href="{{URL::route('spa.admin.share.article.list')}}"><i class="fa fa-fw fa-edit"></i> 美麗分享</a>
                 </li>
+                <!--<li>
+                    <a href="javascript:;" data-toggle="collapse" data-target="#share"><i class="fa fa-fw fa-arrows-v"></i> 美麗分享 <i class="fa fa-fw fa-caret-down"></i></a>
+                    <ul id="share" class="collapse">
+                        <li>
+                            <a href="{{URL::route('spa.admin.share.article.list')}}">文章列表</a>
+                        </li>
+                        <li>
+                            <a href="{{URL::route('spa.admin.share.gallery')}}">圖片列表</a>
+                        </li>
+                    </ul>
+                </li>-->
 
                 <!-- 美麗服務 -->
                 <li>
                     <a href="javascript:;" data-toggle="collapse" data-target="#service"><i class="fa fa-fw fa-arrows-v"></i> 美麗服務 <i class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="service" class="collapse">
                         <li>
-                            <a href="#">類型列表</a>
+                            <a href="{{URL::route('spa.admin.service.category.list')}}">類型列表</a>
                         </li>
                         <li>
-                            <a href="#">文章列表</a>
+                            <a href="{{URL::route('spa.admin.service.article.list')}}">文章列表</a>
                         </li>
                     </ul>
                 </li>
@@ -127,10 +119,10 @@
                     <a href="javascript:;" data-toggle="collapse" data-target="#product"><i class="fa fa-fw fa-arrows-v"></i> 美麗產品 <i class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="product" class="collapse">
                         <li>
-                            <a href="#">類型列表</a>
+                            <a href="{{URL::route('spa.admin.product.category.list')}}">類型列表</a>
                         </li>
                         <li>
-                            <a href="#">文章列表</a>
+                            <a href="{{URL::route('spa.admin.product.article.list')}}">文章列表</a>
                         </li>
                     </ul>
                 </li>

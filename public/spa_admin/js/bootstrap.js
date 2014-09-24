@@ -642,7 +642,6 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
 
   // COLLAPSE DATA-API
   // =================
-
   $(document).on('click.bs.collapse.data-api', '[data-toggle="collapse"]', function (e) {
     var href
     var $this   = $(this)

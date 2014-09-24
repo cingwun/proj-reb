@@ -8,7 +8,7 @@
 <div>
     <div>
         <a href="javascript:window.history.back()" class="btn btn-default pull-left">回上一頁</a>
-        <a href="<?php echo URL::route('spa.admin.share.article.action')?>" class="btn btn-md btn-success" style="float: right;">新增</a>
+        <a href="{{ URL::route('spa.admin.share.article.action')}}" class="btn btn-md btn-success" style="float: right;">新增</a>
     </div>
     <br>
     <br>
@@ -16,7 +16,7 @@
 <br>
 <div class="row">
     <div>
-        <table class="table table-bordered" id="sortable" data-sortAction="<?php echo URL::route('spa.admin.share.sort.update', array('type'=>'article'))?>" data-deleteAction="{{ URL::route('spa.admin.share.article.delete')}}">
+        <table class="table table-bordered" id="sortable" data-sortAction="{{ URL::route('spa.admin.share.sort.update', array('type'=>'article'))}}" data-deleteAction="{{ URL::route('spa.admin.share.article.delete')}}">
             <thead>
                 <tr>
                   <th>封面圖片</th>

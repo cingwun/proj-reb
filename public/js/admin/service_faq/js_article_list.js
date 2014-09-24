@@ -95,7 +95,6 @@ var _sortTable = function(o){
             var $el = $(this);
 
             $el.find('.btn-delete').click(function(e){
-                alert('a');
                 e.stopPropagation();
                 e.preventDefault();
                 var msg = "提醒您:\n\n    刪除該文章時，將連同刪除該文章相關圖片等資料\n\n    請問您是否刪除?";
@@ -169,7 +168,7 @@ var _sortTable = function(o){
 
         if (r.index==0){
             var sort = this.getTd(this.trs[1], self.sortColumn);
-            console.log(sort);
+            
             params.sort = parseInt(sort) + 2 ;
         }else if(r.index==(len-1)){
             var idx = r.index-1,

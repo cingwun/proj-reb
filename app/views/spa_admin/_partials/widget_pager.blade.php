@@ -56,11 +56,9 @@
 
     $pageList = '<ul class="pagination">';
 
-
-   if (($currPage-1)>0){
+   if (($currPage-1)>0)
         $pageList .= sprintf('<li><a href="%s" title="上一頁">«</a></li>', createURL($url, $qs, $route, $params, ($currPage-1)));
 
-    }
     for($i=$st; $i<=$end; $i++){
         $num = str_pad($i, 2, "0", STR_PAD_LEFT);
         if ($i!=$currPage)

@@ -72,6 +72,7 @@ class FpsController extends BaseController {
             $output='<script type="text/javascript">';
             $output.="window.parent.CKEDITOR.tools.callFunction('{$callback}','{$url}','');";
             $output.='</script>';
+
             return $output;
 		}else
 			return Response::json($res);
