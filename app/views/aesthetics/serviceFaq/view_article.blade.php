@@ -50,7 +50,6 @@
             <!-- tags end -->
 
         </div>
-
         @include('aesthetics._partials.widget_rebeauty_slider', array('title'=>$model->title, 'images'=>$images))
 
     </section>
@@ -65,6 +64,13 @@
             <div class="tabBox ckeditor-style <?php echo ($idx===0)?'curr':''?>" id="tab<?php echo $idx?>"><?php echo $tab->content?></div>
         <?php endforeach;?>
         <!-- tabBox end -->
+        <ul class="tabNav">
+                    <li><a href="#tab1" class="a">a_title</a></li>
+                    <li><a href="#tab2" class="b">b_title</a></li>
+                </ul>
+                <div class="tabBox ckeditor-style a" id="tab1">a_content</div>
+                <div class="tabBox ckeditor-style b" id="tab2">b_content</div>
+                <!-- tabBox end -->
     </article>
     <!-- serviceBox end -->
 

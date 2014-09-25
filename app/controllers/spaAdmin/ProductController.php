@@ -229,14 +229,16 @@ class ProductController extends \BaseController {
 			}
 
 			$title = \Input::get('title');
-			$image = \Input::get('images')[0];
+			$image = \Input::get('main_image')[0];
 			$image_desc = \Input::get('main_imageDesc')[0];
+			$content = \Input::get('content');
 			$capacity = \Input::get('capacity');
 			$price = \Input::get('price');
 
 			$product->title = !empty($title) ? $title : "";;
 			$product->image = !empty($image) ? $image : "";
 			$product->image_desc = !empty($image_desc) ? $image_desc : "";
+			$product->content = !empty($content) ? $content : "";;
 			$product->capacity = !empty($capacity) ? $capacity : "";
 			$product->price = !empty($price) ? $price : "";
 			$product->tag = json_encode($tabs);
@@ -285,6 +287,7 @@ class ProductController extends \BaseController {
 				$anotherService->title = !empty($title) ? $title : "";
 				$anotherService->image = "";
 				$anotherService->image_desc = "";
+				$anotherService->content = !empty($content) ? $content : "";;
 				$anotherService->capacity = !empty($capacity) ? $capacity : "";
 				$anotherService->price = !empty($price) ? $price : "";
 				$anotherService->tag = json_encode($tabs);

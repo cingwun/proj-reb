@@ -44,9 +44,55 @@ class ServiceController extends \BaseController{
 		}
 	}
 
+	/*
+	 * Display service derail
+	 * params (int) $id
+	 */
 	public function getServiceDetail($id = null) {
 		try {
-			return \View::make('spa.service.view_service_detail');
+			$service = array();
+			$serviceCmd = \SpaService::find($id)
+									 ->toArray();
+			
+			if($serviceCmd)
+				$service = $serviceCmd;
+
+			$categorysCmd = \SpaService::where('_parent', 'N') 
+									->get(array('id', 'title'))
+									->toArray();
+			$categorys = array();
+			if($categorysCmd){
+				foreach ($categorysCmd as $category) {
+					$servCmd = \SpaService::where('_parent', $category['id'])
+										  ->where('display', 'yes')
+										  ->get(array('id', 'title'))
+			  	 						  ->toArray();
+			  	 	$categorys[] = array(
+			  	 		'cat' => $category,
+			  	 		'serv' => $servCmd
+			  	 	);
+				}
+			}
+			
+			$hotServices = array();
+			$hotServicesCmd = \SpaService::where('_parent', '<>', 'N')
+										 ->where('display', 'yes')
+										 ->orderBy('views', 'DESC')
+										 ->skip(0)
+										 ->take(4)
+										 ->get(array('id', 'title', 'image', 'image_desc'))
+										 ->toArray();
+			if($hotServicesCmd)
+				$hotServices = $hotServicesCmd;
+			
+			$serviceDetailURL = \URL::route('spa.service.detail');
+
+			return \View::make('spa.service.view_service_detail', array(
+				'service' => $service,
+				'categorys' => $categorys,
+				'hotServices' => $hotServices,
+				'serviceDetailURL' => $serviceDetailURL
+			));
 		} catch (Exception $e) {
 			echo $e->getMessage();
 			exit;

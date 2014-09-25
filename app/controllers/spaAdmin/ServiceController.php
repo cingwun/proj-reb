@@ -229,12 +229,14 @@ class ServiceController extends \BaseController {
 			}
 			
 			$title = \Input::get('title');
-			$image = \Input::get('images')[0];
+			$image = \Input::get('main_image')[0];
 			$image_desc = \Input::get('main_imageDesc')[0];
+			$content = \Input::get('content');
 
 			$service->title = !empty($title) ? $title : "";
 			$service->image = !empty($image) ? $image : "";
 			$service->image_desc = !empty($image_desc) ? $image_desc : "";
+			$service->content = !empty($title) ? $content : "";
 			$service->tag = json_encode($tabs);
 			$service->_parent = \Input::get('cat');
 			$service->display = \Input::get('display');
@@ -282,6 +284,7 @@ class ServiceController extends \BaseController {
 				$anotherService->title = !empty($title) ? $title : "";
 				$anotherService->image = "";
 				$anotherService->image_desc = "";
+				$anotherService->content = !empty($title) ? $content : "";
 				$anotherService->tag = json_encode($tabs);
 				$anotherService->_parent = $anotherServiceCat;
 				$anotherService->display = "no";
