@@ -2,25 +2,30 @@
 namespace spa;
 
 class AboutController extends \BaseController {
+    public function getArticle($id = null){
+        try {
+            $articles = array();
+            if($id==null)
+                $article = \SpaArticles::where('category', '=', 'about')
+                                       ->where('status', '1')
+                                       ->orderBy('sort', 'desc')
+                                       ->firstOrFail();
+            else
+                $article = \SpaArticles::find($id);
 
-        public function getArticle($id = null){
+            $articleList = \SpaArticles::where('category', '=', 'about')
+                                       ->where('status', '1')
+                                       ->orderBy('sort', 'desc')
+                                       ->get();
 
-        	try {
-        		$articles = array();
-        		if($id==null)
-        			$article = \SpaArticles::where('category', '=', 'about')
-        								   ->firstOrFail();
-        		else
-        			$article = \SpaArticles::find($id);
-
-        		var_dump($article);
-
-        		if($article)
-        			//return \View::make('spa.about.view_about', array('article'=>$article, 'target'=>$target));
-        	}catch(Exception $e) {
-        		return \View::make('spa.about.view_about');
-        	}
-        	
+            if($article && $articleList)
+                return \View::make('spa.about.view_about', array('article'=>$article,
+                                                                 'articleList'=>$articleList,
+                                                                 'publish'=>array_get($article, 'open_at'),
+                                                                 'views'=>array_get($article, 'views')));
+        }catch(Exception $e) {
+            return \View::make('spa.about.view_about');
         }
+    }
 
 }

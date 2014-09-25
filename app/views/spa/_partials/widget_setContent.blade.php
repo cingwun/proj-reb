@@ -1,23 +1,16 @@
 <aside id="setContent" role="complementary">
 
-	<% if @tmpID == 'spa_about' %>
+	@if($titleType=='about')
 	<h3 class="titleRp about">關於煥麗</h3>
 	<ul class="spaAbout">
+		@foreach($articleList as $list)
 		<li class="aboutSub">
-			<a class="aboutSubTitle" href="#">經營理念</a>
+			<a class="aboutSubTitle" href="{{ URL::route('spa.about', array($list->id))}}">{{array_get($list, 'title')}}</a>
 		</li>
-		<li class="aboutSub">
-			<a class="aboutSubTitle" href="#">會館資訊</a>
-		</li>
-		<li class="aboutSub">
-			<a class="aboutSubTitle" href="#">環境設備</a>
-		</li>
-		<li class="aboutSub">
-			<a class="aboutSubTitle" href="#">專業團隊</a>
-		</li>
+		@endforeach
 	</ul>
 
-	<% elsif @tmpID == 'spa_service_detail' %>
+	@elseif($titleType=='service')
 	<h3 class="titleRp service">服務項目
 	</h3>
 	<ul class="spaService">
@@ -58,7 +51,7 @@
 		<!-- servList -->
 	</ul>
 
-	<% elsif @tmpID == 'spa_products_list' %>
+	@elseif($titleType=='product')
 	<h3 class="titleRp products">專業產品</h3>
 	<ul class="spaProducts">
 		<li class="productsSub">
@@ -78,47 +71,7 @@
 		</li>
 	</ul>
 
-	<% elsif @tmpID == 'spa_products_detail' %>
-	<h3 class="titleRp products">專業產品</h3>
-	<ul class="spaProducts">
-		<li class="productsSub">
-			<a class="productsSubTitle" href="#">欣娜可臉部系列</a>
-		</li>
-		<li class="productsSub">
-			<a class="productsSubTitle" href="#">席薇臉部系列</a>
-		</li>
-		<li class="productsSub">
-			<a class="productsSubTitle" href="#">真尼蒂身體系列</a>
-		</li>
-		<li class="productsSub">
-			<a class="productsSubTitle" href="#">席薇純質精油系列</a>
-		</li>
-		<li class="productsSub">
-			<a class="productsSubTitle" href="#">舒莉泉臉部/美體系列</a>
-		</li>
-	</ul>
-
-	<% elsif @tmpID == 'spa_products' %>
-	<h3 class="titleRp products">專業產品</h3>
-	<ul class="spaProducts">
-		<li class="productsSub">
-			<a class="productsSubTitle" href="#">欣娜可臉部系列</a>
-		</li>
-		<li class="productsSub">
-			<a class="productsSubTitle" href="#">席薇臉部系列</a>
-		</li>
-		<li class="productsSub">
-			<a class="productsSubTitle" href="#">真尼蒂身體系列</a>
-		</li>
-		<li class="productsSub">
-			<a class="productsSubTitle" href="#">席薇純質精油系列</a>
-		</li>
-		<li class="productsSub">
-			<a class="productsSubTitle" href="#">舒莉泉臉部/美體系列</a>
-		</li>
-	</ul>
-
-	<% elsif @tmpID == 'spa_newsPost' %>
+	@elseif($titleType=='news')
 	<div class="setListWrap">
 		<h3 class="titleRp h3_hot hotClass">熱門課程推薦</h3>
 		<ul class="setList hotList classList">
@@ -141,30 +94,7 @@
 		</ul>
 	</div>
 
-	<% elsif @tmpID == 'spa_newsPost_detail' %>
-	<div class="setListWrap">
-		<h3 class="titleRp h3_hot hotClass">熱門課程推薦</h3>
-		<ul class="setList hotList classList">
-			<li class="classSub">
-				<i>1</i>
-				<a class="classSubTitle" href="#">養皮術</a>
-			</li>
-			<li class="classSub">
-				<i>2</i>
-				<a class="classSubTitle" href="#">基因更生療法</a>
-			</li>
-			<li class="classSub">
-				<i>3</i>
-				<a class="classSubTitle" href="#">熱帶雨林體膚療程</a>
-			</li>
-			<li class="classSub">
-				<i>4</i>
-				<a class="classSubTitle" href="#">美胸保健塑形課程</a>
-			</li>
-		</ul>
-	</div>
-
-	<% elsif @tmpID == 'spa_overSea_form' %>
+	@elseif($titleType=='overser')
 	<h3 class="titleRp overSea">海外專區</h3>
 	<ul class="spaOverSea">
 		<li class="overSeaSub">
@@ -175,16 +105,6 @@
 		</li>
 	</ul>
 
-	<% elsif @tmpID == 'spa_overSea' %>
-	<h3 class="titleRp overSea">海外專區</h3>
-	<ul class="spaOverSea">
-		<li class="overSeaSub">
-			<a class="overSeaSubTitle" href="#">海外預約流程</a>
-		</li>
-		<li class="overSeaSub">
-			<a class="overSeaSubTitle" href="#">海外貴賓來檯預約表</a>
-		</li>
-	</ul>
-	<% end %>
+	@endif
 	<!-- ======================== setListWrap end ======================== -->
 </aside>
