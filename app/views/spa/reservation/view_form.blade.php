@@ -96,5 +96,6 @@ $titleType = "oversea";
 </div>
 @stop
 @section('bottom')
+{{ HTML::script(asset('spa_admin/js/jquery-1.11.0.js'))}}
 {{ HTML::script('spa/js/reservation/js_form.js'); }}
 @stop
