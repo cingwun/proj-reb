@@ -86,10 +86,10 @@ if($prodCatsCmd)
 			<li class="navs"><a class="navsTitle" href="/spa/newsPost.html">最新消息</a></li>
 			<li class="navs"><a class="navsTitle" href="/spa/shareCase.html">美麗分享</a></li>
 			<li class="navs">
-				<a class="navsTitle" href="/spa/overSea.html">海外專區</a>
+				<a class="navsTitle" href="{{URL::route('spa.reservation.overSea')}}">海外專區</a>
 				<ul class="subNav lv1">
-					<li class="lv1_list"><a class="lv1_link" href="/spa/overSea.html">海外客戶預約流程</a></li>
-					<li class="lv1_list"><a class="lv1_link" href="#">觀光醫療特惠活動</a></li>
+					<li class="lv1_list"><a class="lv1_link" href="{{URL::route('spa.reservation.overSea')}}">海外客戶預約流程</a></li>
+					<li class="lv1_list"><a class="lv1_link" href="{{URL::route('spa.reservation.form')}}">觀光醫療特惠活動</a></li>
 				</ul>
 			</li>
 			<li class="navs"><a class="navsTitle goAes" class="goAes" href="/aesthetics">煥麗醫美診所</a></li>

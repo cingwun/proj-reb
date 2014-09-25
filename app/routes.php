@@ -426,4 +426,16 @@ Route::group(array('prefix'=>$locale, 'domain'=>'spa.rebeauty.com.tw'), function
      * params (int) $cat
      */
     Route::get('product/list/{cat?}', array('as'=>'spa.product.list', 'uses'=>'spa\\ProductController@getProductList'));
+
+    /*----------reservation----------*/
+
+    /*
+     * Display over sea
+     */
+    Route::get('reservation/overSea', array('as'=>'spa.reservation.overSea', 'uses'=>'spa\\ReservationController@getOverSea'));
+
+    /*
+     * Display over sea form
+     */
+    Route::get('reservation/form', array('as'=>'spa.reservation.form', 'uses'=>'spa\\ReservationController@getForm'));
 });

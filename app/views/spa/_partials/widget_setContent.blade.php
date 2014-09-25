@@ -68,17 +68,16 @@
 		</ul>
 	</div>
 
-	@elseif($titleType=='overser')
+	@elseif($titleType=='oversea')
 	<h3 class="titleRp overSea">海外專區</h3>
 	<ul class="spaOverSea">
 		<li class="overSeaSub">
-			<a class="overSeaSubTitle" href="#">海外預約流程</a>
+			<a class="overSeaSubTitle" href="{{$ovewSeaURL}}">海外預約流程</a>
 		</li>
 		<li class="overSeaSub">
-			<a class="overSeaSubTitle" href="#">海外貴賓來檯預約表</a>
+			<a class="overSeaSubTitle" href="{{$formURL}}">海外貴賓來檯預約表</a>
 		</li>
 	</ul>
-
 	@endif
 	<!-- ======================== setListWrap end ======================== -->
 </aside>
