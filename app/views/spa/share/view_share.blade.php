@@ -18,21 +18,23 @@
 		@foreach($shares as $share)
 		<a href="{{URL::route('spa.share.detail', array($share['share']['id']))}}">
 		<div class="isoItem">
-			<div class="itemTop">
-				<!-- @text for  each shareCase title -->
-				<div class="itemTop_title">{{$share['share']['title']}}</div>
-				<div class="itemTop_pic">
-					<!-- @img for each shareCase imgs-->
-					<?php $cover = json_decode($share['share']['cover']); ?>
-					<img src="{{$cover[0]->image}}?w=209" alt="" class="img-rounded">
+			<div class="itemWrapper" style="background:{{$share['share']['background_color']}}">
+				<div class="itemTop">
+					<!-- @text for  each shareCase title -->
+					<div class="itemTop_title">{{$share['share']['title']}}</div>
+					<div class="itemTop_pic">
+						<!-- @img for each shareCase imgs-->
+						<?php $cover = json_decode($share['share']['cover']); ?>
+						<img src="" data-src="{{$cover[0]->image}}?w=209" alt="" class="img-rounded">
+					</div>
+					<!-- @strings for each shareCase description -->
+					<div class="itemTop_con">{{$share['share']['description']}}</div>
 				</div>
-				<!-- @strings for each shareCase description -->
-				<div class="itemTop_con">{{$share['share']['description']}}</div>
-			</div>
-			<!-- @text for each shareCase class list -->
-			<div class="itemDown">
-				課程項目:@foreach($share['labelProduct'] as $l){{$l['title']." "}}@endforeach
-						 @foreach($share['labelService'] as $l){{$l['title']." "}}@endforeach
+				<!-- @text for each shareCase class list -->
+				<div class="itemDown">
+					課程項目:@foreach($share['labelProduct'] as $l){{$l['title']." "}}@endforeach
+							 @foreach($share['labelService'] as $l){{$l['title']." "}}@endforeach
+				</div>
 			</div>
 		</div>
 		</a>

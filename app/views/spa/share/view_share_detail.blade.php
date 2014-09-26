@@ -16,10 +16,12 @@
 		<a href="{{URL::route('spa.share.detail', array($article->id))}}">{{$article->title}}</a>
 	</div><!-- ======================== breadcrumb end ======================== -->
 	<div class="allTop_con">
-		<div class="shareTop_pic"><img src="http://placehold.it/500x300"></div>
+		<div class="shareTop_pic">
+			<img src="{{$image[0]->image}}?w=500">
+		</div>
 		<div class="shareTop_con">
 			<div class="classList">
-				<div><p>課程項目：</p></div>
+				<div><p>服務項目：</p></div>
 				<!-- @text for shareTag -->
 				<div class="shareTag">
 					@foreach($labelService as $ls)
@@ -51,14 +53,13 @@
 				<!--@images for colorbox
 				    @text for the lightbox title fetch from following <p>
 			    -->
-				<?php $cover = json_decode($article->gallery); ?>
-				@foreach($cover as $cover)
+				@foreach($gallery as $gallery)
 				<li>
-					<a rel="gallery1" href="../img/demo/shareDemo.jpg" title="yo rock">
+					<a rel="gallery1" href="{{$gallery->image}}" title="{{$gallery->text}}">
 					<!--@images for shareDemo slider-->
-					<img src="{{$cover->image}}?w=130">
+					<img src="{{$gallery->image}}?w=130">
 					<!-- @text for the list title-->
-					<p>{{$cover->text}}</p></a>
+					<p>{{$gallery->text}}</p></a>
 				</li>
 				@endforeach
 			</ul>

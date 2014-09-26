@@ -78,7 +78,7 @@ $productParent = \SpaProduct::where('_parent', 'N')
 					@endforeach
 				</ul>
 			</li>
-			<li class="navs"><a class="navsTitle" href="/spa/newsPost.html">最新消息</a></li>
+			<li class="navs"><a class="navsTitle" href="{{URL::route('spa.news')}}">最新消息</a></li>
 			<li class="navs"><a class="navsTitle" href="{{URL::route('spa.share')}}">美麗分享</a></li>
 			<li class="navs">
 				<a class="navsTitle" href="/spa/overSea.html">海外專區</a>

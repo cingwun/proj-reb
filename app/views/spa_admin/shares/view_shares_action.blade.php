@@ -117,6 +117,8 @@
     {{ HTML::style(asset('css/admin/widgets/tabs/css_widget_tabs.css')) }}
     {{ HTML::style(asset('css/admin/widgets/imageUploader/css_widget_imageUploader.css')) }}
     {{ HTML::style(asset('packages/colorPicker/spectrum.css')) }}
+    {{ HTML::style(asset('aesthetics/css/ckeditor.css')) }}
+    {{ HTML::style(asset('css/admin/widgets/tabs/css_widget_tabs.css')) }}
 @stop
 
 @section('bottom')

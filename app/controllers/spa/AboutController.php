@@ -5,13 +5,20 @@ class AboutController extends \BaseController {
     public function getArticle($id = null){
         try {
             $articles = array();
-            if($id==null)
+            if($id==null) {
                 $article = \SpaArticles::where('category', '=', 'about')
                                        ->where('status', '1')
                                        ->orderBy('sort', 'desc')
                                        ->firstOrFail();
+                $id = $article->id;
+            }
             else
                 $article = \SpaArticles::find($id);
+
+            if(\ViewsAdder::views_cookie('about', $id)) {
+              $article->views = $article->views + 1;
+              $article->save();
+            }
 
             $articleList = \SpaArticles::where('category', '=', 'about')
                                        ->where('status', '1')

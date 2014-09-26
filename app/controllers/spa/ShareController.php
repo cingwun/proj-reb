@@ -9,7 +9,7 @@ class ShareController extends \BaseController {
 			$shareArticle = \SpaShares::where('language', 'tw')
 									  ->where('status', '1')
 							   		  ->orderBy('sort', 'desc')
-							   		  ->get(array('id', 'title', 'cover', 'description'))
+							   		  ->get(array('id', 'title', 'cover', 'description', 'background_color'))
 							   		  ->toArray();
 			$shares = array();
 			if($shareArticle) {
@@ -69,6 +69,12 @@ class ShareController extends \BaseController {
 								 ->find($id);
 			if(empty($article))
 				throw new \Exception('Error request [11]');
+			if(\ViewsAdder::views_cookie('share', $id)) {
+              $article->views = $article->views + 1;
+              $article->save();
+            }
+			$image = json_decode($article->image);
+			$gallery = json_decode($article->gallery);
 
 			$prevArticle = \SpaShares::where('status', '1')
 									 ->where('sort', '>=', $article->sort)
@@ -114,6 +120,8 @@ class ShareController extends \BaseController {
 	        }
 	        return \View::make('spa.share.view_share_detail', array(
 	        												  'article'=>$article,
+	        												  'image'=>$image,
+	        												  'gallery'=>$gallery,
 	        												  'prevArticle'=>$prevArticle,
 	        												  'nextArticle'=>$nextArticle,
 	        												  'tabs'=>$tabs,
