@@ -5,69 +5,76 @@
 @stop
 
 @section('main')
-<div class="col-lg-8">
-    <table class="table table-bordered" id="sortable" data-sortAction="{{$updateSortURL}}" data-deleteAction="{{$categoryDeleteURL}}">
-        <thead>
-            <tr>
-                <th>分類標題</th>
-                <th>排序</th>
-                <th>語系</th>
-                <th class="col-lg-4">功能</th>
-            </tr>
-        </thead>
-        <tbody>
-        	@foreach($categorys as $cat)
-        	<tr id='{{$cat->id}}'>
-        		<td>{{$cat->title}}</td>
-        		<td>{{$cat->sort}}</td>
-                <td id='{{$cat->lang}}'>
-                    @if($cat->lang == 'tw')繁體@else簡體@endif
-                </td>
-        		<td>
-        			<a href="{{$serviceListURL}}?lang={{$cat->lang}}&category={{$cat->id}}" title="{{$cat->title}}相關文章" class="btn btn-sm btn-success">文章</a>
-                    <span class="btn btn-sm btn-primary btn-modify">修改</span>
-                    <span href="" class="btn btn-sm btn-danger btn-delete">刪除</span>
-                    @if($cat->ref == '0')
-                    <span class="btn btn-sm btn-warning btn-lang">新增語系</span>
-                    @endif
-        		</td>
-        	</tr>
-        	@endforeach
-        </tbody>
-    </table>
+<div class='col-lg-12'>
+    <a href='{{$actionURL}}' type="button" class="btn btn-success pull-right">新增</a>
 </div>
-<div class="col-lg-4" id="form-panel">
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th class="panel-title">新增分類</th>
-            </tr>
-        </thead>
-        <tbody><tr><td>
-            <form name="form-category" action="{{$categoryActionURL}}" method="post" >
-                <div class="form-group">
-                    <label class="control-label" for="title">類別標題</label>
-                    <input type="text" class="form-control" name="title" size="12" value="" />
-                    <label class="control-label" for="title">排序 (輸入數字)</label>
-                    <input type="text" class="form-control" name="sort" size="12" value="1" onkeyup="value=value.replace(/[^\d]/g,'')"/>
-                    <label>語系</label><br/>
-                    <label class="radio-inline" id="lang_tw">
-                        <input type="radio" name="lang" value="tw"/>繁體
-                    </label>
-                    <label class="radio-inline" id="lang_cn">
-                        <input type="radio" name="lang" value="cn"/>簡體
-                    </label>
-                    <input type="hidden" name="id" value="null" />
-                    <input type="hidden" name="ref" value="null" />
-                </div>
-                <button class="btn-reset btn" type="button">重設</button> <button class="btn btn-inverse btn-submit">新增</button>
-            </form>
-        </td></tr></tbody>
-    </table>
+<div>
+    <div class='col-lg-6'>
+        <div><label>繁體列表</label></div>
+        <table class="table table-bordered" id="sortableTW" data-sortAction="{{$updateSortURL}}" data-deleteAction="{{$categoryDeleteURL}}">
+            <thead>
+                <tr>
+                    <th>分類標題</th>
+                    <th>排序</th>
+                    <th>語系</th>
+                    <th>功能</th>
+                </tr>
+            </thead>
+            <tbody>
+            	@foreach($categorys['tw'] as $cat)
+            	<tr id='{{$cat->id}}'>
+            		<td>{{$cat->title}}</td>
+            		<td>{{$cat->sort}}</td>
+                    <td id='{{$cat->lang}}'>
+                        @if($cat->lang == 'tw')繁體@else簡體@endif
+                    </td>
+            		<td>
+            			<a href="{{$serviceListURL}}?lang={{$cat->lang}}&category={{$cat->id}}" title="{{$cat->title}}相關文章" class="btn btn-sm btn-success">文章</a>
+                        <a href="{{$actionURL}}/{{$cat->id}}" class="btn btn-sm btn-primary">修改</a>
+                        <span class="btn btn-sm btn-danger btn-delete">刪除</span>
+            		</td>
+            	</tr>
+            	@endforeach
+            </tbody>
+        </table>
+    </div>
+    <div class='col-lg-6'>
+        <div><label>簡體列表</label></div>
+        <table class="table table-bordered" id="sortableCN" data-sortAction="{{$updateSortURL}}" data-deleteAction="{{$categoryDeleteURL}}">
+            <thead>
+                <tr>
+                    <th>分類標題</th>
+                    <th>排序</th>
+                    <th>語系</th>
+                    <th>功能</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($categorys['cn'] as $cat)
+                <tr id='{{$cat->id}}'>
+                    <td>{{$cat->title}}</td>
+                    <td>{{$cat->sort}}</td>
+                    <td id='{{$cat->lang}}'>
+                        @if($cat->lang == 'tw')繁體@else簡體@endif
+                    </td>
+                    <td>
+                        <a href="{{$serviceListURL}}?lang={{$cat->lang}}&category={{$cat->id}}" title="{{$cat->title}}相關文章" class="btn btn-sm btn-success">文章</a>
+                        <a href="{{$actionURL}}/{{$cat->id}}" class="btn btn-sm btn-primary">修改</a>
+                        <span class="btn btn-sm btn-danger btn-delete">刪除</span>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 </div>
 @stop
 {{ HTML::style(asset('css/admin/service_faq/css_category_list.css'))}}
 @section('bottom')
 {{ HTML::script(asset('packages/tableDnD/js/jquery.tablednd.0.8.min.js'))}}
 {{ HTML::script(asset('spa_admin/js/service/js_category_list.js'))}}
+<script type="text/javascript">
+    var tableTW = _sortTable({el: '#sortableTW', role: 'category', sortColumn: 2});
+    var tableCN = _sortTable({el: '#sortableCN', role: 'category', sortColumn: 2});
+</script>
 @stop

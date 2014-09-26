@@ -339,94 +339,58 @@ class ServiceController extends \BaseController {
 	 */
 	public function getCategoryList() {
 		try {
-			$categorys = \SpaService::where('_parent', 'N')
-										->orderBy('sort', 'DESC')
-										->get(array('id', 'title', 'sort', 'lang', 'ref'));
-			
+			$categorys = array();
+			$categorys['tw'] = \SpaService::where('_parent', 'N')
+									->where('lang', 'tw')
+									->orderBy('sort', 'DESC')
+									->get(array('id', 'title', 'sort', 'lang', 'ref'));
+			$categorys['cn'] = \SpaService::where('_parent', 'N')
+									->where('lang', 'cn')
+									->orderBy('sort', 'DESC')
+									->get(array('id', 'title', 'sort', 'lang', 'ref'));
+
 			$serviceListURL = \URL::route('spa.admin.service.article.list');
-			$categoryActionURL = \URL::route('spa.admin.service.category.action');
 			$categoryDeleteURL = \URL::route('spa.admin.service.category.delete');
 			$updateSortURL = \URL::route('spa.admin.service.sort.update');
+			$actionURL = \URL::route('spa.admin.service.category.action');
 
 			return \View::make('spa_admin.service.view_category_list', array(
 				"categorys" => &$categorys,
 				"serviceListURL" => $serviceListURL,
-				"categoryActionURL" => $categoryActionURL,
 				"categoryDeleteURL" => $categoryDeleteURL,
-				"updateSortURL" => $updateSortURL
+				"updateSortURL" => $updateSortURL,
+				"actionURL" => $actionURL
 			));
+			
 		} catch (Exception $e) {
 			echo $e->getMessage();
 			exit;
 		}
 	}
 
-	/*
-     * AJAX request for action(create/edit) category
-     */
-    public function postCategoryAction(){
-    	try {
-    		$category_id = \Input::get('id');
-    		$ref_id = \Input::get('ref');
-    		if($category_id == "null"){
-    			$service_category = new \SpaService;
-    		}else{
-    			$service_category = \SpaService::find($category_id);
-    			if(!$service_category)
-    				$service_category = new \SpaService;
-    		}	
-    		$service_category->title = \Input::get('title');
-    		$service_category->sort = \Input::get('sort');
-    		$service_category->lang = \Input::get('lang');
-    		if($ref_id != "null"){
-	    		$service_category->ref = $ref_id;
-	    	}
-    		$service_category->save();
-
-			//set ref
-			if($ref_id != "null"){
-				$inserted_id = $service_category->id;
-				$ref_category = \SpaService::find($ref_id);
-				$ref_category->ref = $inserted_id;
-				$ref_category->save();
-			}
-
-	        return \Response::json(array(
-	            'status' => 'ok',
-	            'message' => '儲存完成!'
-	        ));
-        } catch (Exception $e) {
-    		return Response::json(array(
-	            'status' => 'error',
-	            'message' => $e->getMessage()
-	        ));
-    	}
-    }
-
     /*
      * hadnle AJAX request for delete category
      */
-    public function postDeleteCategory(){
+    public function postDeleteCategory() {
     	try {
     		$category_id = \Input::get('id');
 
-    		\SpaService::find($category_id)->delete();
-
-    		//delete serive article images
-    		$services = \SpaService::where('_parent', $category_id)
-    								 ->get(array('id'));
-    		$servArry = array();
-			if (!empty($services)) {
-	    		foreach ($services as  $service) {
-	    			$servArry[] = $service->id;
-	    		}
-	    		\SpaServiceImages::whereIn('ser_id', $servArry)
-	    					  ->delete();
-    		}
+    		$cateCmd = \SpaService::find($category_id);
+    		$cateRefCmd = \SpaService::find($cateCmd->ref);
     		
     		//delete categroy service article
-    		\SpaService::where('_parent',$category_id)->delete();
-    								 
+    		$servCmd = \SpaService::where('_parent', $category_id);
+    		if(!$servCmd->get()){
+    			$servCmd->delete();
+    		}
+    		$servRefCmd = \SpaService::where('_parent', $cateRefCmd->id);
+    		if(!$servRefCmd->get())
+    			$servRefCmd->delete();
+
+    		//delete category
+			$cateCmd->delete();
+			$cateRefCmd->delete();
+
     		return \Response::json(array(
 	            'status' => 'ok',
 	            'message' => '刪除完成!'
@@ -442,7 +406,7 @@ class ServiceController extends \BaseController {
 	/*
      * handle AJAX request of change sort
      */
-    public function postUpdateSort(){
+    public function postUpdateSort() {
     	try {
     		if (!isset($_POST) || !isset($_POST['id']) || !isset($_POST['sort']) || !isset($_POST['role']))
                 throw new Exception('Error request [10]');
@@ -494,6 +458,94 @@ class ServiceController extends \BaseController {
                 'status' => 'error',
                 'message' => $e->getMessage()
             ));
+    	}
+    }
+
+    /*
+     * Display category action page
+     * params (int) $id
+     */
+    public function getCategoryAction($id = null){
+    	try {
+    		$action = 'create';
+ 			
+    		$writeURL = \URL::route('spa.admin.service.category.write');
+
+    		$category = array();
+    		$cateCover = array();
+    		if(!empty($id)) {
+    			$action = 'edit';
+    			$writeURL .= "/".$id;
+    			$category = \SpaService::where('id', $id)
+    								   ->first(array('id', 'title', 'image', 'image_desc', 'sort'));
+    			if($category->image != '')
+					$cateCover[] = array(
+						'id' => $category->id,
+						'image' => $category->image,
+						'text' => $category->image_desc
+					);
+    		}
+
+    		return \View::make('spa_admin.service.view_category_action', array(
+    			'writeURL' => $writeURL,
+    			'cateId' => $id,
+    			'action' => $action,
+    			'category' => $category,
+    			'cateCover' => $cateCover
+    		));
+    	} catch (Exception $e) {
+    		echo $e->getMessage();
+			exit;
+    	}
+    }
+    
+    /*
+	 * Write(create/edit action) category data.
+	 * @params (int) $id
+	 */
+    public function postWriteCategory($id = null) {
+    	try {
+    		$action = \Input::get('action');
+    		if ($action == 'create')
+    			$categoryCmd = new \SpaService;
+    		else
+    			$categoryCmd = \SpaService::find($id);
+
+    		$categoryCmd->title = \Input::get('title');
+    		$categoryCmd->image = \Input::get('image')[0];
+    		$categoryCmd->image_desc = \Input::get('imageDesc')[0];
+    		$categoryCmd->sort = \Input::get('sort');
+    		if($action == 'create')
+    			$categoryCmd->lang = 'tw';
+
+    		$categoryCmd->save();
+			$inserted_id = $categoryCmd->id;
+
+    		//system automatically generates another language,and the corresponding
+    		if($action == 'create'){
+	    		$refCategoryCmd = new \SpaService;
+
+	    		$refCategoryCmd->title = \Input::get('title');
+	    		$refCategoryCmd->image = "";
+    			$refCategoryCmd->image_desc = "";
+    			$refCategoryCmd->sort = \Input::get('sort');
+				$refCategoryCmd->lang = 'cn';
+				$refCategoryCmd->ref = $inserted_id;
+
+	    		$refCategoryCmd->save();
+	    		$ref_inserted_id = $refCategoryCmd->id;
+
+	    		//set category ref
+	    		$setCategoryCmd = \SpaService::find($inserted_id);
+	    		$setCategoryCmd->ref = $ref_inserted_id;
+
+	    		$setCategoryCmd->save();
+    		}
+
+	        return \Redirect::route("spa.admin.service.category.list");
+        } catch (Exception $e) {
+    		echo $e->getMessage();
+    		exit;
     	}
     }
 }
