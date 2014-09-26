@@ -15,7 +15,7 @@ $titleType = "oversea";
 		<a href="#">海外專區</a><span class="arrow"></span>
 		<a href="#">海外貴賓來台預約表</a>
 	</div><!-- ======================== breadcrumb end ======================== -->
-	<div class="infoList">
+	<div class="infoList overSeaForm">
 		<div class="overTitle"><img src="<?=asset('spa/img/sign/overSea/overSea_form.png');?>" height="20" width="197"></div>
 		<!-- @text for infoList titlePost -->
 		<p>感謝您即將從海外來到台灣造訪煥儷美顏SPA，為了提供您最好的服務品質，需要您協助提供以下資料，我們將盡快與您聯繫並確認您的預約。</p>
@@ -96,9 +96,8 @@ $titleType = "oversea";
 </div>
 @stop
 @section('bottom')
-{{ HTML::script(asset('spa_admin/js/jquery-1.11.0.js'))}}
 {{ HTML::script('spa/js/reservation/js_form.js'); }}
 <script type="text/javascript">
-var form = _reservation({el: '.infoList'});
+var form = _reservation({el: '.overSeaForm', mode: 'page'});
 </script>
 @stop

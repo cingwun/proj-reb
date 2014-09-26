@@ -29,11 +29,13 @@
 	
 	@include('spa._partials.widget_footer')
 	@include('spa._partials.widget_quickReservation')
+
+	{{ HTML::script(asset('spa_admin/js/jquery-1.11.0.js'))}}
+	@yield('bottom')
 	<!--[if IE]>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<![endif]-->
 	<!--[if !IE]>-->
-	@yield('bottom')
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 	<!--<![endif]-->
 	<!-- // <script type="text/javascript" src="../js/share_slider.js"></script> -->
@@ -43,9 +45,5 @@
 	{{ HTML::script('spa/js/jquery.colorbox.js'); }}
 	{{ HTML::script('spa/js/jq_slider.js'); }}
 	<!--<%= livereload_js if ENV["RACK_ENV"] != "production" %>-->
-	{{ HTML::script('spa/js/reservation/js_form.js'); }}
-	<script type="text/javascript">
-		var form = _reservation({el: '.quickReservation'});
-	</script>
 </body>
 </html>

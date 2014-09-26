@@ -36,14 +36,20 @@ class ProductController extends \BaseController{
 			$categorysCmd = \SpaProduct::where('_parent', 'N') 
 									->get(array('id', 'title'))
 									->toArray();
+
 			if($categorysCmd)
 				$categorys = $categorysCmd;
 
 			$product = array();
-			$productCmd = \SpaProduct::find($id)
-									 ->toArray();
+			$productCmd = \SpaProduct::find($id);
+			//set views
+			if(\ViewsAdder::views_cookie('product', $id)) {
+				$productCmd->views += 1; 
+				$productCmd->save();
+			}
+			
 			if($productCmd)
-				$product = $productCmd;
+				$product = $productCmd->toArray();
 
 			$productCat = \SpaProduct::find($product['_parent'])
 									 ->toArray();
@@ -71,10 +77,11 @@ class ProductController extends \BaseController{
 			//setContent categorys
 			$categorys = array();
 			$categorysCmd = \SpaProduct::where('_parent', 'N') 
-									->get(array('id', 'title'))
-									->toArray();
+									   ->get(array('id', 'title'))
+									   ->toArray();
 			if($categorysCmd)
 				$categorys = $categorysCmd;
+			
 			//products
 			$page = \Input::get('page', 1);
 			$limit = 8;
@@ -93,7 +100,7 @@ class ProductController extends \BaseController{
 				$products = $productsCmd;
 			//category
 			$productCat = \SpaProduct::where('id', $cat)
-									 ->first(array('id', 'title'))
+									 ->first(array('id', 'title', 'image'))
 									 ->toArray();
 
 			$productListURL = \URL::route('spa.product.list');

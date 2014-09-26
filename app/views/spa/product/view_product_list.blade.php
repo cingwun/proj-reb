@@ -18,7 +18,7 @@
 
 	<div class="products_list_pic">
 		<!-- @image, for the Products_list Image -->
-		<img src="http://placehold.it/700x450">
+		<img src="{{$productCat['image']}}?w=700&h=450">
 	</div>
 
 	<div class="contentList">

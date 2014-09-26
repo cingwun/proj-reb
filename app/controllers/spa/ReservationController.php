@@ -102,6 +102,14 @@ class ReservationController extends \BaseController{
 			));
 		}
 	}
+	public function getQuick(){
+		try {
+			return \View::make('spa.reservation.view_quick');
+		} catch (Exception $e) {
+			echo $e->getMessage();
+			exit;
+		}
+	}
 }
 
 ?>

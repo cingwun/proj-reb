@@ -36,7 +36,7 @@ var _reservation = function(o){
             }
 
             if (!bool)
-                $input.css('border-color', '#990000');
+                $input.css('border', '1px solid #C00');
 
             isValid &= bool;
         });
@@ -54,7 +54,15 @@ var _reservation = function(o){
             success: function(res, s, xhr){
                 if (res.status=='ok'){
                     alert("預約成功，我們將儘快與您聯絡，謝謝!");
-                    location.reload();
+                    switch(self.mode) {
+                        case 'page':
+                            location.reload();
+                            break;
+                        case 'iframe':
+                            self.$input.val('');
+                            self.$el.hide();
+                            break;
+                    }
                     return true;
                 }
 

@@ -124,7 +124,7 @@ $('#quickReservation').click(function(e){
 	e.stopPropagation();
 	e.preventDefault();
 
-	$('#quickReservationForm').toggle();
+	$('#quickReservationFormIframe').toggle();
 });
 
 /* 服務項目 */

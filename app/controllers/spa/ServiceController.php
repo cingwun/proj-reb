@@ -10,7 +10,7 @@ class ServiceController extends \BaseController{
 		try {
 			$serviceCats = array();
 			$serviceCatsCmd = \SpaService::where('_parent', 'N')
-									  	 ->get(array('id', 'title'))
+									  	 ->get(array('id', 'title', 'image'))
 									  	 ->toArray();
 			$services = array();
 			if ($serviceCatsCmd) {
@@ -32,7 +32,7 @@ class ServiceController extends \BaseController{
 			}
 
 			$detailURL = \URL::route('spa.service.detail');
-
+			
 			return \View::make('spa.service.view_service', array(
 				"serviceCats" => $serviceCats,
 				"services" => $services,
@@ -51,11 +51,16 @@ class ServiceController extends \BaseController{
 	public function getServiceDetail($id = null) {
 		try {
 			$service = array();
-			$serviceCmd = \SpaService::find($id)
-									 ->toArray();
+			$serviceCmd = \SpaService::find($id);
 			
+			//set views
+			if(\ViewsAdder::views_cookie('service', $id)) {
+				$serviceCmd->views += 1; 
+				$serviceCmd->save();
+			}
+
 			if($serviceCmd)
-				$service = $serviceCmd;
+				$service = $serviceCmd->toArray();
 
 			$categorysCmd = \SpaService::where('_parent', 'N') 
 									->get(array('id', 'title'))

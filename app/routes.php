@@ -408,12 +408,12 @@ Route::group(array('prefix'=>$locale, 'domain'=>'spa.rebeauty.com.tw'), function
     /*----------service----------*/
 
     /*
-     * Display service
+     * Display service page
      */
     Route::get('service', array('as'=>'spa.service', 'uses'=>'spa\\ServiceController@getService'));
 
     /*
-     * Display service derail
+     * Display service derail page
      * params (int) $id
      */
     Route::get('service/detail/{id?}', array('as'=>'spa.service.detail', 'uses'=>'spa\\ServiceController@getServiceDetail'))
@@ -422,18 +422,18 @@ Route::group(array('prefix'=>$locale, 'domain'=>'spa.rebeauty.com.tw'), function
     /*----------product----------*/
 
     /*
-     * Display product
+     * Display product page
      */
     Route::get('product', array('as'=>'spa.product', 'uses'=>'spa\\ProductController@getProduct'));
 
     /*
-     * Display product derail
+     * Display product derail page
      * params (int) $id
      */
     Route::get('product/detail/{id?}', array('as'=>'spa.product.detail', 'uses'=>'spa\\ProductController@getProductDetail'));
 
     /*
-     * Display product list
+     * Display product list page
      * params (int) $cat
      */
     Route::get('product/list/{cat?}', array('as'=>'spa.product.list', 'uses'=>'spa\\ProductController@getProductList'));
@@ -441,12 +441,12 @@ Route::group(array('prefix'=>$locale, 'domain'=>'spa.rebeauty.com.tw'), function
     /*----------reservation----------*/
 
     /*
-     * Display over sea
+     * Display over sea page
      */
     Route::get('reservation/overSea', array('as'=>'spa.reservation.overSea', 'uses'=>'spa\\ReservationController@getOverSea'));
 
     /*
-     * Display over sea form
+     * Display over sea form page
      */
     Route::get('reservation/form', array('as'=>'spa.reservation.form', 'uses'=>'spa\\ReservationController@getForm'));
 
@@ -454,4 +454,9 @@ Route::group(array('prefix'=>$locale, 'domain'=>'spa.rebeauty.com.tw'), function
      * AJAX request for reservation form
      */
     Route::post('reservation/form/write', array('as'=>'spa.reservation.form.write', 'uses'=>'spa\\ReservationController@postWriteForm'));
+
+    /*
+     * Display reservation quick page
+     */
+    Route::get('reservation/quick', array('as'=>'spa.reservation.quick', 'uses'=>'spa\\ReservationController@getQuick'));
 });

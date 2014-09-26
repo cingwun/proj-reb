@@ -17,7 +17,7 @@
 			@foreach($serviceCatRow as $serviceCat)
 			<div class="serList">
 				<!-- @image for  serList Image-->
-				<div class="serList_pic"><img src="http://placehold.it/215x140"></div>
+				<div class="serList_pic"><img src="{{$serviceCat['cat']['image']}}?w=215&h=140"></div>
 				<div class="serOpt noOpt">
 					<!-- @text for serList_btn1 title -->
 					<a  href="javascript:void(0)">
