@@ -3,7 +3,7 @@
 /*
  * prototype of reservation
  */
-var reservation = function(o){
+var _reservation = function(o){
     // initialize
     o.init = function(){
         var self = this;
@@ -16,7 +16,6 @@ var reservation = function(o){
         });
 
         self.$input = self.$form.find('input[type=text]');
-
         self.ajaxURL = self.$form.attr('action');
         return self;
     }
@@ -68,4 +67,4 @@ var reservation = function(o){
         });
     }
     return o.init();
-}({el: '.infoList'});
+}

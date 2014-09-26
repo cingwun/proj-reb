@@ -43,5 +43,9 @@
 	{{ HTML::script('spa/js/jquery.colorbox.js'); }}
 	{{ HTML::script('spa/js/jq_slider.js'); }}
 	<!--<%= livereload_js if ENV["RACK_ENV"] != "production" %>-->
+	{{ HTML::script('spa/js/reservation/js_form.js'); }}
+	<script type="text/javascript">
+		var form = _reservation({el: '.quickReservation'});
+	</script>
 </body>
 </html>

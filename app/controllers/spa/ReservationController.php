@@ -29,12 +29,12 @@ class ReservationController extends \BaseController{
 
 			$ovewSeaURL = \URL::route('spa.reservation.overSea');
 			$formURL = \URL::route('spa.reservation.form');
-			$formActionURL = \URL::route('spa.reservation.form.action');
+			$writeURL = \URL::route('spa.reservation.form.write');
 
 			return \View::make('spa.reservation.view_form', array(
 				'ovewSeaURL' => $ovewSeaURL,
 				'formURL' => $formURL,
-				'formActionURL' => $formActionURL
+				'writeURL' => $writeURL
 			));
 		} catch (Exception $e) {
 			echo $e->getMessage();
@@ -45,7 +45,7 @@ class ReservationController extends \BaseController{
 	/*
      * AJAX request for reservation form
      */
-	public function postFormAction(){
+	public function postWriteForm(){
 		try {
 			$reservation = new \SpaReservation;
 			

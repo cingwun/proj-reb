@@ -21,7 +21,7 @@ $titleType = "oversea";
 		<p>感謝您即將從海外來到台灣造訪煥儷美顏SPA，為了提供您最好的服務品質，需要您協助提供以下資料，我們將盡快與您聯繫並確認您的預約。</p>
 		<div class="overTitle2"><img src="<?=asset('spa/img/sign/overSea/overSea_word.png');?>" height="14" width="124"><font>下欄為必填資料</font></div>
 		
-		<form action='{{$formActionURL}}' method='post' enctype='multipart/form-data'>
+		<form action='{{$writeURL}}' method='post' enctype='multipart/form-data'>
 			<label for="name">姓名：</label>
 			<input type="text" name="name"><br/>
 
@@ -98,4 +98,7 @@ $titleType = "oversea";
 @section('bottom')
 {{ HTML::script(asset('spa_admin/js/jquery-1.11.0.js'))}}
 {{ HTML::script('spa/js/reservation/js_form.js'); }}
+<script type="text/javascript">
+var form = _reservation({el: '.infoList'});
+</script>
 @stop

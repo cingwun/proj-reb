@@ -19,10 +19,10 @@
 				<label>性別</label>
 				<div class="radio" class="form-control">
 					<label>
-						<input type="radio" name="sex"  value="male" @if($action == 'edit' && $reservation->sex == 'male') checked @endif @if($action == 'create') checked @endif/>男
+						<input type="radio" name="sex"  value="male" @if($action == 'edit' && $reservation->sex == 'male') checked @endif/>男
 					</label>
 					<label>
-						<input type="radio" name="sex"  value="women" @if($action == 'edit' && $reservation->sex == 'women') checked @endif/>女
+						<input type="radio" name="sex"  value="women" @if($action == 'edit' && $reservation->sex == 'women') checked @endif @if($action == 'create') checked @endif/>女
 					</label>
 				</div>
 			</div>

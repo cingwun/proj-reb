@@ -27,15 +27,13 @@
 		<tr id="{{$reservation->id}}">
 			<td>{{$reservation->name}}</td>
             <td>{{$sexArray[$reservation->sex]}}</td>
-			<td>{{$reservation->country}}</td>
+			<td>@if($reservation->country != ""){{$reservation->country}} @endif</td>
 			<td>
-            @foreach ($contactArray as $contact)
-                @for ($i = 0; $i < $contact['count']; $i++)
-                    {{$styleArray[$i]}}{{$contact['data'][$i]}}<br/>
-                @endfor
-            @endforeach
+            @for ($i = 0; $i < $contactArray[$key]['count']; $i++)
+                {{$styleArray[$i]}}{{$contactArray[$key]['data'][$i]}}a<br/>
+            @endfor
             </td>
-            <td>{{$contactTimeArray[$reservation->contact_time]}}</td>
+            <td>@if($reservation->contact_time != ""){{$contactTimeArray[$reservation->contact_time]}} @endif</td>
 			<td>{{$reservation->email}}</td>
             <td>{{$reservation->service_date}}</td>
 			<td>{{$reservation->created_at}}<br/>{{$reservation->updated_at}}</td>

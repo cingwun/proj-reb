@@ -453,5 +453,5 @@ Route::group(array('prefix'=>$locale, 'domain'=>'spa.rebeauty.com.tw'), function
     /*
      * AJAX request for reservation form
      */
-    Route::post('reservation/form/action', array('as'=>'spa.reservation.form.action', 'uses'=>'spa\\ReservationController@postFormAction'));
+    Route::post('reservation/form/write', array('as'=>'spa.reservation.form.write', 'uses'=>'spa\\ReservationController@postWriteForm'));
 });
