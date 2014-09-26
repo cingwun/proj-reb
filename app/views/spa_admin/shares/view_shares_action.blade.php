@@ -41,7 +41,7 @@
         <div class="form-group">
             <label for="title">背景色</label>
             <div>
-                <input class="form-control colorField " type="text" value="<?php echo \Arr::get($article, 'background_color', '#CCC') ?>" name="colorField" style="display: inline-table; margin: 1px 5px 1px 0px;"/><input class="form-control" id="background-color" name="background_color" value="<?php echo \Arr::get($article, 'background_color', '#CCC') ?>">
+                <input class="form-control colorField " type="text" value="<?php echo \Arr::get($article, 'background_color', '#74a41a') ?>" name="colorField" style="display: inline-table; margin: 1px 5px 1px 0px;"/><input class="form-control" id="background-color" name="background_color" value="<?php echo \Arr::get($article, 'background_color', '#74a41a') ?>">
             </div>
         </div>
 
