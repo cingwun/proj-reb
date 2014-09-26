@@ -104,7 +104,7 @@ class ProductController extends \BaseController{
 									 ->toArray();
 
 			$productListURL = \URL::route('spa.product.list');
-			$pageURL = \URL::route('spa.product.list', array('cat'=>$cat, 'page'=>$page));
+			$pageURL = \URL::route('spa.product.list', array('cat'=>$cat));
 			$productDetailURL = \URL::route('spa.product.detail');
 
 			return \View::make('spa.product.view_product_list',array(
