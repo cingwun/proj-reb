@@ -400,5 +400,6 @@ Route::group(array('prefix'=>$locale, 'domain'=>'spa.rebeauty.com.tw'), function
     Route::get('service', array('as'=>'spa.service', 'uses'=>'spa\\ServiceController@getService'));
 
     /*----------share----------*/
-    Route::get('share', array('as'=>'spa.share', 'uses'=>'spa\\ShareController@getShare'));
+    Route::get('share', array('as'=>'spa.share', 'uses'=>'spa\\ShareController@getShareList'));
+    Route::get('share/{id?}', array('as'=>'spa.share.detail', 'uses'=>'spa\\ShareController@getArticle'));
 });

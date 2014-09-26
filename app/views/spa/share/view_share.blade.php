@@ -16,7 +16,7 @@
 	<!-- isotope start -->
 	<div id="isoCon">
 		@foreach($shares as $share)
-		<a href="{{URL::route('spa.share', array($share['share']['id']))}}">
+		<a href="{{URL::route('spa.share.detail', array($share['share']['id']))}}">
 		<div class="isoItem">
 			<div class="itemTop">
 				<!-- @text for  each shareCase title -->
@@ -31,8 +31,8 @@
 			</div>
 			<!-- @text for each shareCase class list -->
 			<div class="itemDown">
-				課程項目:@foreach($share['labelProduct'] as $l){{$l['title']."/"}}@endforeach
-						 @foreach($share['labelService'] as $l){{$l['title']."/"}}@endforeach
+				課程項目:@foreach($share['labelProduct'] as $l){{$l['title']." "}}@endforeach
+						 @foreach($share['labelService'] as $l){{$l['title']." "}}@endforeach
 			</div>
 		</div>
 		</a>

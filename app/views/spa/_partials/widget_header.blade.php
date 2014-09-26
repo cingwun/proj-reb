@@ -20,7 +20,6 @@ if($serviceParent) {
   	 	);
 	}
 }
-
 $productParent = \SpaProduct::where('_parent', 'N')
 							->orderBy('sort', 'desc')
 							->get(array('id', 'title'))
@@ -48,7 +47,9 @@ $productParent = \SpaProduct::where('_parent', 'N')
 				<a class="navsTitle" href="{{URL::route('spa.about')}}">關於煥儷</a>
 				<ul class="subNav lv1">
 					@foreach($aboutArticle as $list)
-					<li><a href="{{URL::route('spa.about', array($list->id))}}">{{$list->title}}</a></li>
+					<li class="lv1_list">
+						<a href="{{URL::route('spa.about', array($list->id))}}">{{$list->title}}</a>
+					</li>
 					@endforeach
 				</ul>
 			</li>
