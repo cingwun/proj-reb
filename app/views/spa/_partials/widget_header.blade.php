@@ -7,6 +7,7 @@ $aboutArticle = \SpaArticles::where('category', 'about')
 //service 
 $servCatCmd = \SpaService::where('_parent', 'N')
 						 ->where('display', 'yes')
+						 ->where('lang', App::getLocale())
 						 ->orderBy('sort', 'desc')
 						 ->get(array('id', 'title'))
 						 ->toArray();
@@ -28,6 +29,7 @@ if($servCatCmd) {
 $prodCats = array();
 $prodCatsCmd = \SpaProduct::where('_parent', 'N')
 						  ->where('display', 'yes') 
+						  ->where('lang', App::getLocale())
 						  ->orderBy('sort', 'desc')
 						  ->get(array('id', 'title'))
 						  ->toArray();

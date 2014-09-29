@@ -16,7 +16,7 @@
 	<div id="contain_inner">
 		@foreach($products as $product)
 		<!-- @href for the link to product list pages -->
-		<a class="products_categories" href="#">
+		<a class="products_categories" href="{{$detailURL}}/{{$product['id']}}">
 			<!-- @src for the product list images -->
 			<img class="products_img" src="{{$product['image']}}?w=310&h=215"/>
 			<!-- @text for the product names -->

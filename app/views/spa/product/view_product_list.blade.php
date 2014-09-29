@@ -12,7 +12,7 @@
 <div id="mainContent" class="postBox" role="main">
 	<div class="breadcrumb">
 		<a href="#">首頁</a><span class="arrow"></span>
-		<a href="#">專業產品</a><span class="arrow"></span>
+		<a href="{{$productURL}}">專業產品</a><span class="arrow"></span>
 		<a href="#">{{$productCat['title']}}</a>
 	</div><!-- ======================== breadcrumb end ======================== -->
 

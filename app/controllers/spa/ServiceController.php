@@ -66,6 +66,7 @@ class ServiceController extends \BaseController{
 				$service = $serviceCmd->toArray();
 
 			$categorysCmd = \SpaService::where('_parent', 'N') 
+									   ->where('display', 'yes')
 									   ->where('lang', $this->getLocale())
 									   ->get(array('id', 'title'))
 									   ->toArray();
