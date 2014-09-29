@@ -57,7 +57,7 @@ class ServiceController extends \BaseController {
 					}
 				}
 			}
-
+			
 			$actionURL = \URL::route('spa.admin.service.article.action');
 			$deleteURL = \URL::route('spa.admin.service.article.delete');
 			$updateSortURL = \URL::route('spa.admin.service.sort.update');
@@ -340,28 +340,58 @@ class ServiceController extends \BaseController {
 	public function getCategoryList() {
 		try {
 			$categorys = array();
-			$categorys['tw'] = \SpaService::where('_parent', 'N')
+			$catsTW = array();
+			$catsCN = array();
+
+			$catsTWCmd = \SpaService::where('_parent', 'N')
 									->where('lang', 'tw')
 									->orderBy('sort', 'DESC')
 									->get(array('id', 'title', 'sort', 'lang', 'display', 'ref'));
-			$categorys['cn'] = \SpaService::where('_parent', 'N')
+			$catsCNCmd = \SpaService::where('_parent', 'N')
 									->where('lang', 'cn')
 									->orderBy('sort', 'DESC')
 									->get(array('id', 'title', 'sort', 'lang', 'display', 'ref'));
+			if($catsTWCmd)
+				$catsTW = $catsTWCmd;
+			if($catsCNCmd)
+				$catsCN = $catsCNCmd;
 
-			$serviceListURL = \URL::route('spa.admin.service.article.list');
+			$catsTWactionURL = array();
+			$catsTWservListURL = array();
+			foreach ($catsTW as $cat) {
+				$catsTWactionURL[$cat->id] = \URL::route('spa.admin.service.category.action', array('id'=>$cat->id));
+				$catsTWservListURL[$cat->id] = \URL::route('spa.admin.service.article.list', array('lang'=>$cat->lang, 'category'=>$cat->id));
+			}
+			$catsCNactionURL = array();
+			$catsCNservListURL = array();
+			foreach ($catsCN as $cat) {
+				$catsCNactionURL[$cat->id] = \URL::route('spa.admin.service.category.action', array('id'=>$cat->id));
+				$catsCNservListURL[$cat->id] = \URL::route('spa.admin.service.article.list', array('lang'=>$cat->lang, 'category'=>$cat->id));
+			}
+
+			$categorys = array(
+				'tw'=>array(
+					'item' => $catsTW,
+					'actionURL' => $catsTWactionURL,
+					'servListURL' => $catsTWservListURL
+				),
+				'cn'=>array(
+					'item' => $catsCN,
+					'actionURL' => $catsCNactionURL,
+					'servListURL' => $catsCNservListURL
+				)
+			);
+
+			$actionURL = \URL::route('spa.admin.service.category.action');
 			$categoryDeleteURL = \URL::route('spa.admin.service.category.delete');
 			$updateSortURL = \URL::route('spa.admin.service.sort.update');
-			$actionURL = \URL::route('spa.admin.service.category.action');
 
 			return \View::make('spa_admin.service.view_category_list', array(
 				"categorys" => &$categorys,
-				"serviceListURL" => $serviceListURL,
 				"categoryDeleteURL" => $categoryDeleteURL,
 				"updateSortURL" => $updateSortURL,
 				"actionURL" => $actionURL
 			));
-			
 		} catch (Exception $e) {
 			echo $e->getMessage();
 			exit;

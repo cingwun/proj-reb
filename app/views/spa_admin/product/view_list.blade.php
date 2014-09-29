@@ -2,7 +2,7 @@
 
 @section('title')
 
-產品項目<?php echo (!empty($category)) ? sprintf(' ( %s ) ', $category_array[$category]) : ' '?>-文章列表
+產品項目<?php echo (!empty($category)) ? sprintf(' ( %s ) ', \Text::preEllipsize(strip_tags($category_array[$category]), 10)) : ' '?>-文章列表
 
 @stop
 
@@ -24,14 +24,13 @@
 		<tr>
 			<th>產品項目標題</th>
 			<th>分類</th>
-			<th>瀏覽數</th>
+			<th width="60">瀏覽數</th>
 			<th>容量</th>
 			<th>價格</th>
-			<th>顯示狀態</th>
-			<th>發表/更新日期</th>
-			<th>語系</th>
-			<th>排序</th>
-			<th class="col-lg-3">功能</th>
+			<th width="50">狀態</th>
+			<th width="140">發表/更新日期</th>
+			<th width="50">排序</th>
+			<th width="210">功能</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -43,26 +42,19 @@
 				{{$category_array[$product->_parent]}}
 				@endif
 			</td>
-			<td>{{$product->views}}</td>
+			<td width="60">{{$product->views}}</td>
 			<td>{{$product->capacity}}</td>
 			<td>{{$product->price}}</td>
-			<td>
+			<td width="50">
 				@if($product->display === 'yes')
 				<span style="color: #00AA00">顯示</span>
 				@else
 				隱藏
 				@endif
 			</td>
-			<td>{{$product->created_at}}<br/>{{$product->updated_at}}</td>
-			<td>
-				@if($product->lang == 'tw')
-				繁體
-				@else
-				簡體
-				@endif
-			</td>
-			<td>{{$product->sort}}</td>
-			<td>
+			<td width="140">{{$product->created_at}}<br/>{{$product->updated_at}}</td>
+			<td width="50">{{$product->sort}}</td>
+			<td width="210">
 				<a href="{{$actionURL}}/{{$product->id}}" type="button" class="btn btn-sm btn-primary">修改</a>
 				<a href="#" type="button" class="btn btn-sm btn-danger btn-delete">刪除</a>
 				@if($product->ref_display == 'yes')
@@ -83,7 +75,7 @@
 {{ HTML::script(asset('packages/tableDnD/js/jquery.tablednd.0.8.min.js'))}}
 {{ HTML::script(asset('/spa_admin/js/service/js_article_list.js'))}}
 <script type="text/javascript">
-    var sortTable = _sortTable({el: '#sortable', role: 'article', sortColumn: 9, hasCategory: <?php echo (!empty($category))?'true':'false'?>});
+    var sortTable = _sortTable({el: '#sortable', role: 'article', sortColumn: 8, hasCategory: <?php echo (!empty($category))?'true':'false'?>});
     function langList(e) {
     	if(e.value == "tw")
     		document.location.href='{{$twListUrl}}';

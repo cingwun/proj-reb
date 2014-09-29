@@ -10,10 +10,12 @@ class ReservationController extends \BaseController{
 		try {
 			$ovewSeaURL = \URL::route('spa.reservation.overSea');
 			$formURL = \URL::route('spa.reservation.form');
+			$indexURL = \URL::route('spa.index');
 
 			return \View::make('spa.reservation.view_over_sea', array(
 				'ovewSeaURL' => $ovewSeaURL,
-				'formURL' => $formURL
+				'formURL' => $formURL,
+				'indexURL' => $indexURL
 			));
 		} catch (Exception $e) {
 			echo $e->getMessage();
@@ -30,11 +32,13 @@ class ReservationController extends \BaseController{
 			$ovewSeaURL = \URL::route('spa.reservation.overSea');
 			$formURL = \URL::route('spa.reservation.form');
 			$writeURL = \URL::route('spa.reservation.form.write');
+			$indexURL = \URL::route('spa.index');
 
 			return \View::make('spa.reservation.view_form', array(
 				'ovewSeaURL' => $ovewSeaURL,
 				'formURL' => $formURL,
-				'writeURL' => $writeURL
+				'writeURL' => $writeURL,
+				'indexURL' => $indexURL
 			));
 		} catch (Exception $e) {
 			echo $e->getMessage();

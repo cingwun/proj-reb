@@ -11,8 +11,8 @@ $titleType = "oversea";
 @include('spa._partials.widget_setContent')
 <div id="mainContent" class="postBox" role="main">
 	<div class="breadcrumb">
-		<a href="#">首頁</a><span class="arrow"></span>
-		<a href="#">海外專區</a><span class="arrow"></span>
+		<a href="{{$indexURL}}">首頁</a><span class="arrow"></span>
+		<a href="{{$ovewSeaURL}}">海外專區</a><span class="arrow"></span>
 		<a href="#">海外貴賓來台預約表</a>
 	</div><!-- ======================== breadcrumb end ======================== -->
 	<div class="infoList overSeaForm">

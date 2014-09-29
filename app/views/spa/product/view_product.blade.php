@@ -7,7 +7,7 @@
 @section('content')
 <div id="mainContent" class="fullWidth" role="main">
 	<div class="breadcrumb">
-		<a href="#">首頁</a><span class="arrow"></span>
+		<a href="{{$indexURL}}">首頁</a><span class="arrow"></span>
 		<a href="#">專業產品</a>
 	</div><!-- ======================== breadcrumb end ======================== -->
 	<div class="prodTitle">

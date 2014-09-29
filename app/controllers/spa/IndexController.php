@@ -4,8 +4,6 @@ namespace spa;
 class IndexController extends \BaseController{
 
 	public function getIndex() {
-
-		
 		$news = \SpaArticles::where('category', 'news')
 							 ->where('status', '1')
 							 ->orderBy('open_at', 'desc')
@@ -16,7 +14,8 @@ class IndexController extends \BaseController{
 		$newsCount = count($news);
 		$cover = json_decode($news[0]['cover']);
 
-		$service = \SpaService::where('display', 'yes')
+		$service = \SpaService::where('_parent', 'N')
+							  ->where('display', 'yes')
 							  ->orderBy('sort', 'desc')
 							  ->take(4)
 							  ->get();

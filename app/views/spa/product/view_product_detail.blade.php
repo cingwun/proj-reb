@@ -11,9 +11,10 @@
 @include('spa._partials.widget_setContent')
 <div id="mainContent" class="postBox" role="main">
 	<div class="breadcrumb">
-		<a href="#">首頁</a><span class="arrow"></span>
+		<a href="{{$indexURL}}">首頁</a><span class="arrow"></span>
 		<a href="{{$productURL}}">專業產品</a><span class="arrow"></span>
-		<a href="#">{{$productCat['title']}}</a>
+		<a href="{{$productListURL}}">{{\Text::preEllipsize(strip_tags($productCat['title']), 10)}}</a><span class="arrow"></span>
+		<a href="">{{\Text::preEllipsize(strip_tags($product['title']), 10)}}</a>
 	</div><!-- ======================== breadcrumb end ======================== -->
 	<!-- @image, for the Products_detail Image -->
 	<div class="products_detail_pic">

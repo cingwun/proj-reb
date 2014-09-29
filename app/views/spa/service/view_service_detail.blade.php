@@ -13,10 +13,10 @@
 @include('spa._partials.widget_setContent')
 <div id="mainContent" class="postBox" role="main">
 	<div class="breadcrumb">
-		<a href="#">首頁</a><span class="arrow"></span>
-		<a href="#">服務項目</a><span class="arrow"></span>
-		<a href="#">臉部保養</a><span class="arrow"></span>
-		<a href="#">{{$service['title']}}</a>
+		<a href="{{$indexURL}}">首頁</a><span class="arrow"></span>
+		<a href="{{$serviceURL}}">服務項目</a><span class="arrow"></span>
+		<a href="{{$serviceURL}}">臉部保養</a><span class="arrow"></span>
+		<a href="#">{{\Text::preEllipsize(strip_tags($service['title']), 10)}}</a>
 	</div><!-- ======================== breadcrumb end ======================== -->
 	@include('spa._partials.widget_pageTitle')
 	@include('spa._partials.widget_socialIcons')
@@ -40,9 +40,9 @@
 				<!-- @image for Service Hotclass Image -->
 				<div class="pic"><img src="{{$hotService['image']}}?w=160&h=104"></div>
 				<!-- @text, for Service Hotclass Title -->
-				<div class="title"><a href="#">{{$hotService['title']}}</a></div>
+				<div class="title"><a href="#">{{\Text::preEllipsize(strip_tags($service['title']), 10)}}</a></div>
 				<!-- @text, for Service Hotclass Content -->
-				<div class="content">aaaa<a href="#">(more)</a></div>
+				<div class="content"><a href="#">(more)</a></div>
 			</div>
 			@endforeach
 		</div>

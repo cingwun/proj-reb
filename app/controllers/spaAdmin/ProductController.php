@@ -344,23 +344,54 @@ class ProductController extends \BaseController {
 	public function getCategoryList() {
 		try {
 			$categorys = array();
-			$categorys['tw'] = \SpaProduct::where('_parent', 'N')
-										  ->where('lang', 'tw')
-										  ->orderBy('sort', 'DESC')
-										  ->get(array('id', 'title', 'sort', 'lang', 'ref', 'display'));
-			$categorys['cn'] = \SpaProduct::where('_parent', 'N')
-										  ->where('lang', 'cn')
-										  ->orderBy('sort', 'DESC')
-										  ->get(array('id', 'title', 'sort', 'lang', 'ref', 'display'));
+			$catsTW = array();
+			$catsCN = array();
 
-			$productListURL = \URL::route('spa.admin.product.article.list');
+			$catsTWCmd = \SpaProduct::where('_parent', 'N')
+									->where('lang', 'tw')
+									->orderBy('sort', 'DESC')
+									->get(array('id', 'title', 'sort', 'lang', 'display', 'ref'));
+			$catsCNCmd = \SpaProduct::where('_parent', 'N')
+									->where('lang', 'cn')
+									->orderBy('sort', 'DESC')
+									->get(array('id', 'title', 'sort', 'lang', 'display', 'ref'));
+			if($catsTWCmd)
+				$catsTW = $catsTWCmd;
+			if($catsCNCmd)
+				$catsCN = $catsCNCmd;
+
+			$catsTWactionURL = array();
+			$catsTWservListURL = array();
+			foreach ($catsTW as $cat) {
+				$catsTWactionURL[$cat->id] = \URL::route('spa.admin.product.category.action', array('id'=>$cat->id));
+				$catsTWservListURL[$cat->id] = \URL::route('spa.admin.product.article.list', array('lang'=>$cat->lang, 'category'=>$cat->id));
+			}
+			$catsCNactionURL = array();
+			$catsCNservListURL = array();
+			foreach ($catsCN as $cat) {
+				$catsCNactionURL[$cat->id] = \URL::route('spa.admin.product.category.action', array('id'=>$cat->id));
+				$catsCNservListURL[$cat->id] = \URL::route('spa.admin.product.article.list', array('lang'=>$cat->lang, 'category'=>$cat->id));
+			}
+
+			$categorys = array(
+				'tw'=>array(
+					'item' => $catsTW,
+					'actionURL' => $catsTWactionURL,
+					'servListURL' => $catsTWservListURL
+				),
+				'cn'=>array(
+					'item' => $catsCN,
+					'actionURL' => $catsCNactionURL,
+					'servListURL' => $catsCNservListURL
+				)
+			);
+
+			$actionURL = \URL::route('spa.admin.product.category.action');
 			$categoryDeleteURL = \URL::route('spa.admin.product.category.delete');
 			$updateSortURL = \URL::route('spa.admin.product.sort.update');
-			$actionURL = \URL::route('spa.admin.product.category.action');
 
 			return \View::make('spa_admin.product.view_category_list', array(
 				"categorys" => &$categorys,
-				"productListURL" => $productListURL,
 				"categoryDeleteURL" => $categoryDeleteURL,
 				"updateSortURL" => $updateSortURL,
 				"actionURL" => $actionURL
