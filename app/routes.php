@@ -265,7 +265,7 @@ Route::group(array('prefix'=>'admin/spa', 'before'=>'auth.admin'), function()
     /*
      * Display service list page
      */
-    Route::get('service/article/list/', array('as'=>'spa.admin.service.article.list', 'uses'=>'spaAdmin\\ServiceController@getServiceList'));
+    Route::get('service/article/list', array('as'=>'spa.admin.service.article.list', 'uses'=>'spaAdmin\\ServiceController@getServiceList'));
 
     /*
      * Display service create/edit page

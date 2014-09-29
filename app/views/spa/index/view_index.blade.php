@@ -38,11 +38,11 @@
 	<ul>
 		@foreach($service as $s)
 		<li>
-			<a href="{{URL::route('spa.service', array($s->id))}}">
+			<a href="{{URL::route('spa.service')}}">
 			<img src="{{$s->image}}?w=200"/>
 			<h4>{{ \Text::preEllipsize(strip_tags($s->title), 26) }}</h4><!-- 限兩行 -->
-			<p class="servContent">{{ \Text::preEllipsize(strip_tags($s->title), 52) }}</p><!-- 限四行 -->
-			<p class="more" href="{{URL::route('spa.service', array($s->id))">深入了解</p>
+			<p class="servContent">{{ \Text::preEllipsize(strip_tags($s->image_desc), 52) }}</p><!-- 限四行 -->
+			<p class="more">深入了解</p>
 			</a>
 		</li>
 		@endforeach

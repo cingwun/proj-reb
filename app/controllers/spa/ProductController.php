@@ -18,8 +18,13 @@ class ProductController extends \BaseController{
 			if($productsCmd)
 				$products = $productsCmd;
 			
+			$detailURL = \URL::route('spa.product.detail');
+			$indexURL = \URL::route('spa.index');
+
 			return \View::make('spa.product.view_product', array(
-				"products" => $products
+				"products" => $products,
+				"detailURL" => $detailURL,
+				"indexURL" => $indexURL
 			));
 		} catch (Exception $e) {
 			echo $e->getMessage();
@@ -57,13 +62,17 @@ class ProductController extends \BaseController{
 			$productCat = \SpaProduct::find($product['_parent'])
 									 ->toArray();
 			
-			$productListURL = \URL::route('spa.product.list');
+			$productListURL = \URL::route('spa.product.list', array('cat'=>$productCat['id']));
+			$productURL = \URL::route('spa.product');
+			$indexURL = \URL::route('spa.index');
 
 			return \View::make('spa.product.view_product_detail', array(
 				'categorys' => $categorys,
 				'product' => $product,
 				'productCat' => $productCat,
-				'productListURL' => $productListURL
+				'productListURL' => $productListURL,
+				'productURL' => $productURL,
+				'indexURL' => $indexURL
 			));
 		} catch (Exception $e) {
 			echo $e->getMessage();
@@ -112,6 +121,8 @@ class ProductController extends \BaseController{
 			$productListURL = \URL::route('spa.product.list');
 			$pageURL = \URL::route('spa.product.list', array('cat'=>$cat));
 			$productDetailURL = \URL::route('spa.product.detail');
+			$productURL = \URL::route('spa.product');
+			$indexURL = \URL::route('spa.index');
 
 			return \View::make('spa.product.view_product_list',array(
 				'categorys' => $categorys,
@@ -121,7 +132,9 @@ class ProductController extends \BaseController{
 				'page' => $page,
 				'rowsNum' => $rowsNum,
 				'productDetailURL' => $productDetailURL,
-				'productCat' => $productCat
+				'productCat' => $productCat,
+				'productURL' => $productURL,
+				'indexURL' => $indexURL
 			));
 		} catch (Exception $e) {
 			echo $e->getMessage();

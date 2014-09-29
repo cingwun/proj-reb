@@ -16,12 +16,12 @@
 	<ul class="spaService">
 		@foreach($categorys as $category)
 		<li class="servSub">
-			<a class="servSubTitle" href="javascript:void(0)">{{$category['cat']['title']}}</a>
+			<a class="servSubTitle" href="javascript:void(0)">{{\Text::preEllipsize(strip_tags($category['cat']['title']), 10)}}</a>
 			<img class="side_arrow active" src="<?=asset('spa/img/sign/arrow_yellow.png');?>"/>
 			<img class="side_arrow" src="<?=asset('spa/img/sign/arrow_white.png');?>"/>
 			<ul class="servDetail">
 				@foreach($category['serv'] as $service)
-				<li class="servDetailInner"><a class="servDetailLink" href="{{$serviceDetailURL}}/{{$service['id']}}">{{$service['title']}}</a></li>
+				<li class="servDetailInner"><a class="servDetailLink" href="{{$serviceDetailURL}}/{{$service['id']}}">{{\Text::preEllipsize(strip_tags($service['title']), 10)}}</a></li>
 				@endforeach
 			</ul>
 		</li>
@@ -33,7 +33,7 @@
 	<ul class="spaProducts">
 		@foreach($categorys as $category)
 		<li class="productsSub">
-			<a class="productsSubTitle" href="{{$productListURL}}/{{$category['id']}}">{{$category['title']}}</a>
+			<a class="productsSubTitle" href="{{$productListURL}}/{{$category['id']}}">{{\Text::preEllipsize(strip_tags($category['title']), 10)}}</a>
 		</li>
 		@endforeach
 	</ul>

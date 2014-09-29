@@ -9,6 +9,7 @@ $aboutArticle = \SpaArticles::where('category', 'about')
 //service 
 $servCatCmd = \SpaService::where('_parent', 'N')
 						 ->where('display', 'yes')
+						 ->where('lang', App::getLocale())
 						 ->orderBy('sort', 'desc')
 						 ->get(array('id', 'title'))
 						 ->toArray();
@@ -31,6 +32,7 @@ if($servCatCmd) {
 $prodCats = array();
 $prodCatsCmd = \SpaProduct::where('_parent', 'N')
 						  ->where('display', 'yes') 
+						  ->where('lang', App::getLocale())
 						  ->orderBy('sort', 'desc')
 						  ->get(array('id', 'title'))
 						  ->toArray();
@@ -70,10 +72,10 @@ if($prodCatsCmd)
 				<ul class="subNav lv1">
 					@foreach($servCats as $servCat)
 					<li class="lv1_list">
-						<a class="lv1_link" href="{{URL::route('spa.service')}}">{{$servCat['cat']['title']}}</a>
+						<a class="lv1_link" href="{{URL::route('spa.service')}}">{{\Text::preEllipsize(strip_tags($servCat['cat']['title']), 8)}}</a>
 						<ul class="subNav lv2">
 							@foreach($servCat['serv'] as $serv)
-							<li class="lv2_list"><a class="lv2_link" href="{{URL::route('spa.service.detail')}}/{{$serv['id']}}">{{$serv['title']}}</a></li>
+							<li class="lv2_list"><a class="lv2_link" href="{{URL::route('spa.service.detail')}}/{{$serv['id']}}">{{\Text::preEllipsize(strip_tags($serv['title']), 8)}}</a></li>
 							@endforeach
 						</ul>
 					</li>
@@ -85,7 +87,7 @@ if($prodCatsCmd)
 				<ul class="subNav lv1">
 					@foreach($prodCats as $prodCat)
 					<li class="lv1_list">
-						<a class="lv1_link" href="{{URL::route('spa.product.list')}}/{{$prodCat['id']}}">{{$prodCat['title']}}</a>
+						<a class="lv1_link" href="{{URL::route('spa.product.list')}}/{{$prodCat['id']}}">{{\Text::preEllipsize(strip_tags($prodCat['title']), 8)}}</a>
 					</li>
 					@endforeach
 				</ul>

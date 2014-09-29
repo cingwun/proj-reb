@@ -15,30 +15,26 @@
             <thead>
                 <tr>
                     <th>分類標題</th>
-                    <th>排序</th>
-                    <th>語系</th>
-                    <th>顯示狀態</th>
-                    <th>功能</th>
+                    <th width="25">排序</th>
+                    <th width="50">狀態</th>
+                    <th width="163">功能</th>
                 </tr>
             </thead>
             <tbody>
-            	@foreach($categorys['tw'] as $cat)
+            	@foreach($categorys['tw']['item'] as $cat)
             	<tr id='{{$cat->id}}'>
             		<td>{{$cat->title}}</td>
-            		<td>{{$cat->sort}}</td>
-                    <td id='{{$cat->lang}}'>
-                        @if($cat->lang == 'tw')繁體@else簡體@endif
-                    </td>
-                    <td>
+            		<td width="50">{{$cat->sort}}</td>
+                    <td width="50">
                     @if($cat->display === 'yes')
                     <span style="color: #00AA00">顯示</span>
                     @else
                     隱藏
                     @endif
                     </td>
-            		<td>
-            			<a href="{{$serviceListURL}}?lang={{$cat->lang}}&category={{$cat->id}}" title="{{$cat->title}}相關文章" class="btn btn-sm btn-success">文章</a>
-                        <a href="{{$actionURL}}/{{$cat->id}}" class="btn btn-sm btn-primary">修改</a>
+            		<td width="163">
+            			<a href="{{$categorys['tw']['servListURL'][$cat->id]}}" title="{{$cat->title}}相關文章" class="btn btn-sm btn-success">文章</a>
+                        <a href="{{$categorys['tw']['actionURL'][$cat->id]}}" class="btn btn-sm btn-primary">修改</a>
                         <span class="btn btn-sm btn-danger btn-delete">刪除</span>
             		</td>
             	</tr>
@@ -52,30 +48,26 @@
             <thead>
                 <tr>
                     <th>分類標題</th>
-                    <th>排序</th>
-                    <th>語系</th>
-                    <th>顯示狀態</th>
-                    <th>功能</th>
+                    <th width="50">排序</th>
+                    <th width="50">狀態</th>
+                    <th width="163">功能</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($categorys['cn'] as $cat)
+                @foreach($categorys['cn']['item'] as $cat)
                 <tr id='{{$cat->id}}'>
                     <td>{{$cat->title}}</td>
-                    <td>{{$cat->sort}}</td>
-                    <td id='{{$cat->lang}}'>
-                        @if($cat->lang == 'tw')繁體@else簡體@endif
-                    </td>
-                    <td>
+                    <td width="50">{{$cat->sort}}</td>
+                    <td width="50">
                     @if($cat->display === 'yes')
                     <span style="color: #00AA00">顯示</span>
                     @else
                     隱藏
                     @endif
                     </td>
-                    <td>
-                        <a href="{{$serviceListURL}}?lang={{$cat->lang}}&category={{$cat->id}}" title="{{$cat->title}}相關文章" class="btn btn-sm btn-success">文章</a>
-                        <a href="{{$actionURL}}/{{$cat->id}}" class="btn btn-sm btn-primary">修改</a>
+                    <td width="163">
+                        <a href="{{$categorys['cn']['servListURL'][$cat->id]}}" title="{{$cat->title}}相關文章" class="btn btn-sm btn-success">文章</a>
+                        <a href="{{$categorys['cn']['actionURL'][$cat->id]}}" class="btn btn-sm btn-primary">修改</a>
                         <span class="btn btn-sm btn-danger btn-delete">刪除</span>
                     </td>
                 </tr>

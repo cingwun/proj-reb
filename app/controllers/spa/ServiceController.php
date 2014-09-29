@@ -12,6 +12,7 @@ class ServiceController extends \BaseController{
 			$serviceCatsCmd = \SpaService::where('_parent', 'N')
 										 ->where('display', 'yes')
 										 ->where('lang', $this->getLocale())
+										 ->orderBy('sort', 'DESC')
 									  	 ->get(array('id', 'title', 'image'))
 									  	 ->toArray();
 			$services = array();
@@ -35,11 +36,13 @@ class ServiceController extends \BaseController{
 			}
 
 			$detailURL = \URL::route('spa.service.detail');
-			
+			$indexURL = \URL::route('spa.index');
+
 			return \View::make('spa.service.view_service', array(
 				"serviceCats" => $serviceCats,
 				"services" => $services,
-				"detailURL" => $detailURL
+				"detailURL" => $detailURL,
+				"indexURL" => $indexURL
 			));
 		} catch (Exception $e) {
 			echo $e->getMessage();
@@ -66,6 +69,7 @@ class ServiceController extends \BaseController{
 				$service = $serviceCmd->toArray();
 
 			$categorysCmd = \SpaService::where('_parent', 'N') 
+									   ->where('display', 'yes')
 									   ->where('lang', $this->getLocale())
 									   ->get(array('id', 'title'))
 									   ->toArray();
@@ -96,12 +100,16 @@ class ServiceController extends \BaseController{
 				$hotServices = $hotServicesCmd;
 			
 			$serviceDetailURL = \URL::route('spa.service.detail');
+			$indexURL = \URL::route('spa.index');
+			$serviceURL = \URL::route('spa.service');
 
 			return \View::make('spa.service.view_service_detail', array(
 				'service' => $service,
 				'categorys' => $categorys,
 				'hotServices' => $hotServices,
-				'serviceDetailURL' => $serviceDetailURL
+				'serviceDetailURL' => $serviceDetailURL,
+				'indexURL' => $indexURL,
+				'serviceURL' => $serviceURL
 			));
 		} catch (Exception $e) {
 			echo $e->getMessage();
