@@ -1,4 +1,5 @@
 <?php
+
 //article
 $aboutArticle = \SpaArticles::where('category', 'about')
 							->orderBy('sort', 'desc')
@@ -25,6 +26,7 @@ if($servCatCmd) {
   	 	);
 	}
 }
+
 //product
 $prodCats = array();
 $prodCatsCmd = \SpaProduct::where('_parent', 'N')
@@ -39,7 +41,7 @@ if($prodCatsCmd)
 
 <header id="header" role="banner">
 	<div class="innerWrap">
-		<h1><a href="/spa">煥儷美顏SPA</a></h1>
+		<h1><a href="/">煥儷美顏SPA</a></h1>
 		<div class="languageSwitch">
 			<a href="#">繁體中文</a>
 			<a class="last" href="#">简体中文</a>
@@ -89,8 +91,8 @@ if($prodCatsCmd)
 					@endforeach
 				</ul>
 			</li>
-			<li class="navs"><a class="navsTitle" href="/spa/newsPost.html">最新消息</a></li>
-			<li class="navs"><a class="navsTitle" href="/spa/shareCase.html">美麗分享</a></li>
+			<li class="navs"><a class="navsTitle" href="{{URL::route('spa.news')}}">最新消息</a></li>
+			<li class="navs"><a class="navsTitle" href="{{URL::route('spa.share')}}">美麗分享</a></li>
 			<li class="navs">
 				<a class="navsTitle" href="{{URL::route('spa.reservation.overSea')}}">海外專區</a>
 				<ul class="subNav lv1">

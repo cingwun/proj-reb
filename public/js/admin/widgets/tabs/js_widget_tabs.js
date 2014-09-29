@@ -178,7 +178,7 @@ var _tabs = function(o){
      */
     o.addContent = function(tab){
         this.$tabContents.find('.active').removeClass('active');
-        this.$tabContents.append('<div class="tab-pane active" id="' + tab.key + '"></div><textarea name="tabContents[' + tab.key + ']" class="' + tab.key + ' editor"></textarea>');
+        this.$tabContents.append('<div class="tab-pane ckeditor-style active" id="' + tab.key + '"></div><textarea name="tabContents[' + tab.key + ']" class="' + tab.key + ' editor"></textarea>');
     }
 
     /*

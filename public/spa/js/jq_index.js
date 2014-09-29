@@ -95,16 +95,52 @@ $("#spa_products_list .proList").each(function(){
 	}
 });
 
-//isotope
-// $(document).ready(function() {
-// 	var $container = $('#isoCon');
-// 	$container.isotope({
-// 		itemSelector: '.isoItem',
-// 		layoutMode: 'masonry'
-// 	});
-// });
+// isotope
+$(function(){
+	var $container = $('#isoCon'),
+		$imgs = $container.find('.img-rounded'),
+		imgLength = $imgs.size(),
+		loadedCount = 0,
+		urlPrefix = 'http://spa.rebeauty.com.tw:8080',
+		runIsotop = function(){
+			if (loadedCount==imgLength){
+				$container.isotope({
+				  	itemSelector: '.isoItem',
+					layoutMode: 'masonry',
+					masonry: {
+						gutter: 14
+					},
+					sortBy: 'original-order'
+				});
+			}
+		};
+	
+	$imgs.each(function(e){
+		var $this = $(this),
+			src = urlPrefix + $this.attr('data-src'),
+			img = new Image();
+
+		img.src = src;
+
+		img.onload = function(){
+			$this.attr('src', this.src);
+			loadedCount++;
+			runIsotop();
+		}
+
+		img.onerror = function(){
+			imgLength--;
+			runIsotop();
+		}
+
+
+	});
+
+
+});
 
 //isotope
+/*
 $( function() {
 	
 	$('#isoCon').isotope({
@@ -117,7 +153,7 @@ $( function() {
 	});
 
 });
-
+*/
 
 /* 快速預約 */
 $('#quickReservation').click(function(e){

@@ -402,10 +402,21 @@ Route::group(array('prefix'=>$locale, 'domain'=>'spa.rebeauty.com.tw'), function
 
     Route::get('/', array('as'=>'spa.index', 'uses'=>'spa\\IndexController@getIndex'));
 
-    Route::get('about/{id?}', array('as'=>'spa.about', 'uses'=>'spa\\AboutController@getArticle'));
+    /*----------about----------*/
+    Route::get('about/{id?}', array('as'=>'spa.about', 'uses'=>'spa\\AboutController@getArticle'))
+         ->where(array('id'=>'([0-9]+)'));
+
+    /*----------share----------*/
+    Route::get('share', array('as'=>'spa.share', 'uses'=>'spa\\ShareController@getShareList'));
+    Route::get('share/{id?}', array('as'=>'spa.share.detail', 'uses'=>'spa\\ShareController@getArticle'))
+         ->where(array('id'=>'([0-9]+)'));
+
+    /*----------news----------*/
+    Route::get('news', array('as'=>'spa.news', 'uses'=>'spa\\NewsContoller@getNewsList'));
+    Route::get('news/{id?}', array('as'=>'spa.news.detail', 'uses'=>'spa\\NewsContoller@getArticle'))
+         ->where(array('id'=>'([0-9]+)'));
 
     /*----------service----------*/
-
     /*
      * Display service page
      */
