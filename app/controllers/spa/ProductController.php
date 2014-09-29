@@ -12,6 +12,7 @@ class ProductController extends \BaseController{
 
 			$productsCmd = \SpaProduct::where('_parent', '<>', 'N')
 									  ->where('display', 'yes')
+									  ->where('lang', $this->getLocale())
 									  ->get(array('id', 'title', 'image'))
 									  ->toArray();
 			if($productsCmd)
@@ -34,8 +35,10 @@ class ProductController extends \BaseController{
 		try {
 			$categorys = array();
 			$categorysCmd = \SpaProduct::where('_parent', 'N') 
-									->get(array('id', 'title'))
-									->toArray();
+									   ->where('display', 'yes')
+									   ->where('lang', $this->getLocale())
+									   ->get(array('id', 'title'))
+									   ->toArray();
 
 			if($categorysCmd)
 				$categorys = $categorysCmd;
@@ -76,7 +79,9 @@ class ProductController extends \BaseController{
 		try {
 			//setContent categorys
 			$categorys = array();
-			$categorysCmd = \SpaProduct::where('_parent', 'N') 
+			$categorysCmd = \SpaProduct::where('_parent', 'N')
+									   ->where('display', 'yes')
+									   ->where('lang', $this->getLocale())
 									   ->get(array('id', 'title'))
 									   ->toArray();
 			if($categorysCmd)
@@ -90,7 +95,8 @@ class ProductController extends \BaseController{
 			$products = array();
 			$productsCmd = \SpaProduct::where('_parent', '<>', 'N')
 									  ->where('display', 'yes')
-									  ->where('_parent', $cat);
+									  ->where('_parent', $cat)
+									  ->where('lang', $this->getLocale());
 			$rowsNum = $productsCmd->count();
 			$productsCmd = $productsCmd->skip($offset)
                         			   ->take($limit)

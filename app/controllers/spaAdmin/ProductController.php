@@ -283,21 +283,21 @@ class ProductController extends \BaseController {
 				if($anotherProductCatCmd)
 					$anotherProductCat = $anotherProductCatCmd->id;
 
-				$anotherService = new \SpaProduct;
-				$anotherService->title = !empty($title) ? $title : "";
-				$anotherService->image = "";
-				$anotherService->image_desc = "";
-				$anotherService->content = !empty($content) ? $content : "";;
-				$anotherService->capacity = !empty($capacity) ? $capacity : "";
-				$anotherService->price = !empty($price) ? $price : "";
-				$anotherService->tag = json_encode($tabs);
-				$anotherService->_parent = $anotherProductCat;
-				$anotherService->display = "no";
-				$anotherService->lang = $langControlGroup[\Input::get('lang')];
-				$anotherService->ref = $inserted_id;
-				$anotherService->save();
+				$anotherProduct = new \SpaProduct;
+				$anotherProduct->title = !empty($title) ? $title : "";
+				$anotherProduct->image = "";
+				$anotherProduct->image_desc = "";
+				$anotherProduct->content = !empty($content) ? $content : "";;
+				$anotherProduct->capacity = !empty($capacity) ? $capacity : "";
+				$anotherProduct->price = !empty($price) ? $price : "";
+				$anotherProduct->tag = json_encode($tabs);
+				$anotherProduct->_parent = $anotherProductCat;
+				$anotherProduct->display = "no";
+				$anotherProduct->lang = $langControlGroup[\Input::get('lang')];
+				$anotherProduct->ref = $inserted_id;
+				$anotherProduct->save();
 
-				$anotherId = $anotherService->id;
+				$anotherId = $anotherProduct->id;
 
 				$createProduct = \SpaProduct::find($inserted_id);
 				$createProduct->ref = $anotherId;

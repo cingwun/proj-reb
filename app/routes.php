@@ -20,7 +20,6 @@ if (in_array($locale, $languages)) {
     $locale = null;
 }
 
-
 Route::group(array('prefix'=>$locale, 'domain'=>'www.rebeauty.com.tw'), function(){
 
     //首頁
@@ -417,7 +416,7 @@ Route::group(array('prefix'=>$locale, 'domain'=>'spa.rebeauty.com.tw'), function
      * params (int) $id
      */
     Route::get('service/detail/{id?}', array('as'=>'spa.service.detail', 'uses'=>'spa\\ServiceController@getServiceDetail'))
-             ->where(array('id'=>'([0-9]+)'));
+        ->where(array('id'=>'([0-9]+)'));
 
     /*----------product----------*/
 
@@ -430,13 +429,15 @@ Route::group(array('prefix'=>$locale, 'domain'=>'spa.rebeauty.com.tw'), function
      * Display product derail page
      * params (int) $id
      */
-    Route::get('product/detail/{id?}', array('as'=>'spa.product.detail', 'uses'=>'spa\\ProductController@getProductDetail'));
+    Route::get('product/detail/{id?}', array('as'=>'spa.product.detail', 'uses'=>'spa\\ProductController@getProductDetail'))
+         ->where(array('id'=>'([0-9]+)'));
 
     /*
      * Display product list page
      * params (int) $cat
      */
-    Route::get('product/list/{cat?}', array('as'=>'spa.product.list', 'uses'=>'spa\\ProductController@getProductList'));
+    Route::get('product/list/{cat?}', array('as'=>'spa.product.list', 'uses'=>'spa\\ProductController@getProductList'))
+         ->where(array('cat'=>'([0-9]+)'));
 
     /*----------reservation----------*/
 

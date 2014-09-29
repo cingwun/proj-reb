@@ -5,14 +5,17 @@ $aboutArticle = \SpaArticles::where('category', 'about')
 							->get();
 
 //service 
-$servCatCmd = \SpaService::where('_parent', 'N') 
-						    ->get(array('id', 'title'))
-						    ->toArray();
+$servCatCmd = \SpaService::where('_parent', 'N')
+						 ->where('display', 'yes')
+						 ->orderBy('sort', 'desc')
+						 ->get(array('id', 'title'))
+						 ->toArray();
 $servCats = array();
 if($servCatCmd) {
 	foreach ($servCatCmd as $cat) {
 		$servCmd = \SpaService::where('_parent', $cat['id'])
 							  ->where('display', 'yes')
+						 	  ->orderBy('sort', 'desc')
 							  ->get(array('id', 'title'))
   	 						  ->toArray();
   	 	$servCats[] = array(
@@ -24,9 +27,10 @@ if($servCatCmd) {
 //product
 $prodCats = array();
 $prodCatsCmd = \SpaProduct::where('_parent', 'N')
-							->orderBy('sort', 'desc')
-							->get(array('id', 'title'))
-							->toArray();
+						  ->where('display', 'yes') 
+						  ->orderBy('sort', 'desc')
+						  ->get(array('id', 'title'))
+						  ->toArray();
 if($prodCatsCmd)
 	$prodCats = $prodCatsCmd;
 ?>
