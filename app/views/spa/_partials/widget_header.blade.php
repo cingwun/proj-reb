@@ -28,7 +28,7 @@ $productParent = \SpaProduct::where('_parent', 'N')
 
 <header id="header" role="banner">
 	<div class="innerWrap">
-		<h1><a href="/spa">煥儷美顏SPA</a></h1>
+		<h1><a href="/">煥儷美顏SPA</a></h1>
 		<div class="languageSwitch">
 			<a href="#">繁體中文</a>
 			<a class="last" href="#">简体中文</a>

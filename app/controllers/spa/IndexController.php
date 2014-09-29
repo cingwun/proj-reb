@@ -5,8 +5,28 @@ class IndexController extends \BaseController{
 
 	public function getIndex() {
 
-			return \View::make('spa._layouts.default');
+		
+		$news = \SpaArticles::where('category', 'news')
+							 ->where('status', '1')
+							 ->orderBy('open_at', 'desc')
+							 ->orderBy('sort', 'desc')
+							 ->take(5)
+							 ->get()
+							 ->toArray();
+		$newsCount = count($news);
+
+		$service = \SpaService::where('display', 'yes')
+							  ->orderBy('sort', 'desc')
+							  ->take(4)
+							  ->get();
+
+		return \View::make('spa.index.view_index', array(
+			'news'=>$news,
+			'service'=>$service,
+			'newsCount'=>$newsCount
+			));
 		
 	}
 }
+
 ?>
