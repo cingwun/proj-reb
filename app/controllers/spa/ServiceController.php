@@ -57,17 +57,22 @@ class ServiceController extends \BaseController{
 	public function getServiceDetail($id = null) {
 		try {
 			$service = array();
-			$serviceCmd = \SpaService::find($id);
-			
+			$serviceCmd = \SpaService::where('id', $id)
+									 ->where('lang', $this->getLocale());
+
 			//set views
 			if(\ViewsAdder::views_cookie('service', $id)) {
-				$serviceCmd->views += 1; 
-				$serviceCmd->save();
-			}
+				$serviceCmd = $serviceCmd->first();
+            	$serviceCmd->views = $serviceCmd->views + 1;
+              	$serviceCmd->save();
+            }
 
-			if($serviceCmd)
-				$service = $serviceCmd->toArray();
+			if($serviceCmd->first())
+				$service = $serviceCmd->first()
+									  ->toArray();
 
+
+            
 			$categorysCmd = \SpaService::where('_parent', 'N') 
 									   ->where('display', 'yes')
 									   ->where('lang', $this->getLocale())
@@ -91,6 +96,7 @@ class ServiceController extends \BaseController{
 			$hotServicesCmd = \SpaService::where('_parent', '<>', 'N')
 										 ->where('display', 'yes')
 									   	 ->where('lang', $this->getLocale())
+									   	 ->where('id', '<>' , $id)
 										 ->orderBy('views', 'DESC')
 										 ->skip(0)
 										 ->take(4)

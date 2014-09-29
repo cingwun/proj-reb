@@ -56,7 +56,6 @@ class NewsContoller extends \BaseController {
                              		   ->where('updated_at', '<', $article->updated_at)
                              		   ->orderBy('sort', 'desc')
                              		   ->first(array('id', 'title'));
-                             		   var_dump($nextArticle);
 
             $hotService = \SpaService::where('_parent', '!=', 'N')
 									 ->orderBy('views', 'desc')
