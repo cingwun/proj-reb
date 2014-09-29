@@ -20,7 +20,6 @@ if (in_array($locale, $languages)) {
     $locale = null;
 }
 
-
 Route::group(array('prefix'=>$locale, 'domain'=>'www.rebeauty.com.tw'), function(){
 
     //首頁
@@ -266,7 +265,7 @@ Route::group(array('prefix'=>'admin/spa', 'before'=>'auth.admin'), function()
     /*
      * Display service list page
      */
-    Route::get('service/article/list/', array('as'=>'spa.admin.service.article.list', 'uses'=>'spaAdmin\\ServiceController@getServiceList'));
+    Route::get('service/article/list', array('as'=>'spa.admin.service.article.list', 'uses'=>'spaAdmin\\ServiceController@getServiceList'));
 
     /*
      * Display service create/edit page
@@ -285,7 +284,7 @@ Route::group(array('prefix'=>'admin/spa', 'before'=>'auth.admin'), function()
 
     /*
      * Delete Service.
-     * @param (string) $id
+     * @params (string) $id
      */
     Route::post('service/article/delete', array('as'=>'spa.admin.service.article.delete', 'uses'=>'spaAdmin\\ServiceController@postDeleteService'));
 
@@ -293,11 +292,6 @@ Route::group(array('prefix'=>'admin/spa', 'before'=>'auth.admin'), function()
      * Display category list page
      */
     Route::get('service/category/list', array('as'=>'spa.admin.service.category.list', 'uses'=>'spaAdmin\\ServiceController@getCategoryList'));
-
-    /*
-     * handle AJAX request of change category item
-     */
-    Route::post('service/category/action', array('as'=>'spa.admin.service.category.action', 'uses'=>'spaAdmin\\ServiceController@postCategoryAction'));
 
     /*
      * hadnle AJAX request for delete category
@@ -308,6 +302,17 @@ Route::group(array('prefix'=>'admin/spa', 'before'=>'auth.admin'), function()
      * handle AJAX request of change sort
      */
     Route::post('service/sort/update', array('as'=>'spa.admin.service.sort.update', 'uses'=>'spaAdmin\\ServiceController@postUpdateSort'));
+
+    /*
+     * Display category action page
+     */
+    Route::get('service/category/action/{id?}', array('as'=>'spa.admin.service.category.action', 'uses'=>'spaAdmin\\ServiceController@getCategoryAction'));
+
+    /*
+     * Write(create/edit action) category data.
+     * @params (int) $id
+     */
+    Route::post('service/category/write/{id?}', array('as'=>'spa.admin.service.category.write', 'uses'=>'spaAdmin\\ServiceController@postWriteCategory'));
 
     /*----------product----------*/
     /*
@@ -342,11 +347,6 @@ Route::group(array('prefix'=>'admin/spa', 'before'=>'auth.admin'), function()
     Route::get('product/category/list', array('as'=>'spa.admin.product.category.list', 'uses'=>'spaAdmin\\ProductController@getCategoryList'));
 
     /*
-     * handle AJAX request of change category item
-     */
-    Route::post('product/category/action', array('as'=>'spa.admin.product.category.action', 'uses'=>'spaAdmin\\ProductController@postCategoryAction'));
-
-    /*
      * hadnle AJAX request for delete category
      */
     Route::post('product/category/delete', array('as'=>'spa.admin.product.category.delete', 'uses'=>'spaAdmin\\ProductController@postDeleteCategory'));
@@ -356,6 +356,16 @@ Route::group(array('prefix'=>'admin/spa', 'before'=>'auth.admin'), function()
      */
     Route::post('product/sort/update', array('as'=>'spa.admin.product.sort.update', 'uses'=>'spaAdmin\\ProductController@postUpdateSort'));
 
+    /*
+     * Display category action page
+     */
+    Route::get('product/category/action/{id?}', array('as'=>'spa.admin.product.category.action', 'uses'=>'spaAdmin\\ProductController@getCategoryAction'));
+
+    /*
+     * Write(create/edit action) category data.
+     * @params (int) $id
+     */
+    Route::post('product/category/write/{id?}', array('as'=>'spa.admin.product.category.write', 'uses'=>'spaAdmin\\ProductController@postWriteCategory'));
     /*----------reservation----------*/
 
     /*
@@ -392,50 +402,73 @@ Route::group(array('prefix'=>$locale, 'domain'=>'spa.rebeauty.com.tw'), function
 
     Route::get('/', array('as'=>'spa.index', 'uses'=>'spa\\IndexController@getIndex'));
 
-    Route::get('about/{id?}', array('as'=>'spa.about', 'uses'=>'spa\\AboutController@getArticle'));
+    /*----------about----------*/
+    Route::get('about/{id?}', array('as'=>'spa.about', 'uses'=>'spa\\AboutController@getArticle'))
+         ->where(array('id'=>'([0-9]+)'));
+
+    /*----------share----------*/
+    Route::get('share', array('as'=>'spa.share', 'uses'=>'spa\\ShareController@getShareList'));
+    Route::get('share/{id?}', array('as'=>'spa.share.detail', 'uses'=>'spa\\ShareController@getArticle'))
+         ->where(array('id'=>'([0-9]+)'));
+
+    /*----------news----------*/
+    Route::get('news', array('as'=>'spa.news', 'uses'=>'spa\\NewsContoller@getNewsList'));
+    Route::get('news/{id?}', array('as'=>'spa.news.detail', 'uses'=>'spa\\NewsContoller@getArticle'))
+         ->where(array('id'=>'([0-9]+)'));
 
     /*----------service----------*/
-
     /*
-     * Display service
+     * Display service page
      */
     Route::get('service', array('as'=>'spa.service', 'uses'=>'spa\\ServiceController@getService'));
 
     /*
-     * Display service derail
+     * Display service derail page
      * params (int) $id
      */
     Route::get('service/detail/{id?}', array('as'=>'spa.service.detail', 'uses'=>'spa\\ServiceController@getServiceDetail'))
-             ->where(array('id'=>'([0-9]+)'));
+        ->where(array('id'=>'([0-9]+)'));
 
     /*----------product----------*/
 
     /*
-     * Display product
+     * Display product page
      */
     Route::get('product', array('as'=>'spa.product', 'uses'=>'spa\\ProductController@getProduct'));
 
     /*
-     * Display product derail
+     * Display product derail page
      * params (int) $id
      */
-    Route::get('product/detail/{id?}', array('as'=>'spa.product.detail', 'uses'=>'spa\\ProductController@getProductDetail'));
+    Route::get('product/detail/{id?}', array('as'=>'spa.product.detail', 'uses'=>'spa\\ProductController@getProductDetail'))
+         ->where(array('id'=>'([0-9]+)'));
 
     /*
-     * Display product list
+     * Display product list page
      * params (int) $cat
      */
-    Route::get('product/list/{cat?}', array('as'=>'spa.product.list', 'uses'=>'spa\\ProductController@getProductList'));
+    Route::get('product/list/{cat?}', array('as'=>'spa.product.list', 'uses'=>'spa\\ProductController@getProductList'))
+         ->where(array('cat'=>'([0-9]+)'));
 
     /*----------reservation----------*/
 
     /*
-     * Display over sea
+     * Display over sea page
      */
     Route::get('reservation/overSea', array('as'=>'spa.reservation.overSea', 'uses'=>'spa\\ReservationController@getOverSea'));
 
     /*
-     * Display over sea form
+     * Display over sea form page
      */
     Route::get('reservation/form', array('as'=>'spa.reservation.form', 'uses'=>'spa\\ReservationController@getForm'));
+
+    /*
+     * AJAX request for reservation form
+     */
+    Route::post('reservation/form/write', array('as'=>'spa.reservation.form.write', 'uses'=>'spa\\ReservationController@postWriteForm'));
+
+    /*
+     * Display reservation quick page
+     */
+    Route::get('reservation/quick', array('as'=>'spa.reservation.quick', 'uses'=>'spa\\ReservationController@getQuick'));
 });

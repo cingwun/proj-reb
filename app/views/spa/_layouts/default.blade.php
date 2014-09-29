@@ -5,7 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<!-- <meta name="viewport" content="width=device-width, initial-scale=0.7, maximum-scale=3.0, user-scalable=1" /> -->
 	<title>煥儷美顏SPA</title>
-	{{ HTML::style('spa/css/layout_spa.css'); }}
+	{{ HTML::style(asset('spa/css/layout_spa.css'))}}
 	<!--[if lt IE 9]>
 	<script type="text/javascript" src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>		
 	<![endif]-->
@@ -29,11 +29,13 @@
 	
 	@include('spa._partials.widget_footer')
 	@include('spa._partials.widget_quickReservation')
+
+	{{ HTML::script(asset('spa_admin/js/jquery-1.11.0.js'))}}
+	@yield('bottom')
 	<!--[if IE]>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<![endif]-->
 	<!--[if !IE]>-->
-	@yield('bottom')
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 	<!--<![endif]-->
 	<!-- // <script type="text/javascript" src="../js/share_slider.js"></script> -->

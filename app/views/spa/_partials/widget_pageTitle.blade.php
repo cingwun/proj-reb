@@ -5,7 +5,7 @@
 		</div>
 		<div id="title">
 			@if($titleType=='about')
-			<h1 id="about_title">關於煥麗111</h1>
+			<h1 id="about_title">關於煥麗</h1>
 			@elseif($titleType=='service')
 			<h1 id="service_title">服務項目</h1>
 			@elseif($titleType=='product')

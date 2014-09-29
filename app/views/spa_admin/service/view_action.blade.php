@@ -35,7 +35,7 @@
 		<label>所屬分類</label>
 		<select class="form-control" name="cat">
 			@foreach($categorys as $category)
-			<option value="{{$category['id']}}" @if($action == 'edit' && $category['id'] == $service->_parent)selected@endif>{{$category['title']}}</option>
+			<option value="{{$category['id']}}" @if($action == 'edit' && $category['id'] == $service->_parent)selected@endif>{{\Text::preEllipsize(strip_tags($category['title']), 75)}}</option>
 			@endforeach
 		</select>
 	</div>

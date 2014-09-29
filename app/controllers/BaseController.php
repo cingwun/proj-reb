@@ -3,6 +3,23 @@ class BaseController extends Controller
 {
 
     /**
+     * @var locale
+     */
+    public $locale;
+
+    public function __construct(){
+        $this->locale = App::getLocale();
+    }
+    
+    /**
+     * get locale
+     * @return (string) lang
+     */
+    public function getLocale(){
+        return $this->locale;
+    }
+
+    /**
      * Setup the layout used by the controller.
      *
      * @return void

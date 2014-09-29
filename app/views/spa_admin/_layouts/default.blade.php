@@ -32,7 +32,7 @@
         @yield('head')
     </head>
 
-    <body>
+    <body id="admin">
 
         <div id="wrapper">
 

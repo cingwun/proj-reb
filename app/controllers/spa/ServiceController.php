@@ -10,7 +10,10 @@ class ServiceController extends \BaseController{
 		try {
 			$serviceCats = array();
 			$serviceCatsCmd = \SpaService::where('_parent', 'N')
-									  	 ->get(array('id', 'title'))
+										 ->where('display', 'yes')
+										 ->where('lang', $this->getLocale())
+										 ->orderBy('sort', 'DESC')
+									  	 ->get(array('id', 'title', 'image'))
 									  	 ->toArray();
 			$services = array();
 			if ($serviceCatsCmd) {
@@ -19,6 +22,7 @@ class ServiceController extends \BaseController{
 					
 					$servCmd = \SpaService::where('_parent', $serviceCatCmd['id'])
 										  ->where('display', 'yes')
+										  ->where('lang', $this->getLocale())
 										  ->get(array('id', 'title', 'image'))
 			  	 						  ->toArray();
 					$serviceCats[$row][] = array(
@@ -32,11 +36,13 @@ class ServiceController extends \BaseController{
 			}
 
 			$detailURL = \URL::route('spa.service.detail');
+			$indexURL = \URL::route('spa.index');
 
 			return \View::make('spa.service.view_service', array(
 				"serviceCats" => $serviceCats,
 				"services" => $services,
-				"detailURL" => $detailURL
+				"detailURL" => $detailURL,
+				"indexURL" => $indexURL
 			));
 		} catch (Exception $e) {
 			echo $e->getMessage();
@@ -51,15 +57,27 @@ class ServiceController extends \BaseController{
 	public function getServiceDetail($id = null) {
 		try {
 			$service = array();
-			$serviceCmd = \SpaService::find($id)
-									 ->toArray();
-			
-			if($serviceCmd)
-				$service = $serviceCmd;
+			$serviceCmd = \SpaService::where('id', $id)
+									 ->where('lang', $this->getLocale());
 
+			//set views
+			if(\ViewsAdder::views_cookie('service', $id)) {
+				$serviceCmd = $serviceCmd->first();
+            	$serviceCmd->views = $serviceCmd->views + 1;
+              	$serviceCmd->save();
+            }
+
+			if($serviceCmd->first())
+				$service = $serviceCmd->first()
+									  ->toArray();
+
+
+            
 			$categorysCmd = \SpaService::where('_parent', 'N') 
-									->get(array('id', 'title'))
-									->toArray();
+									   ->where('display', 'yes')
+									   ->where('lang', $this->getLocale())
+									   ->get(array('id', 'title'))
+									   ->toArray();
 			$categorys = array();
 			if($categorysCmd){
 				foreach ($categorysCmd as $category) {
@@ -77,6 +95,8 @@ class ServiceController extends \BaseController{
 			$hotServices = array();
 			$hotServicesCmd = \SpaService::where('_parent', '<>', 'N')
 										 ->where('display', 'yes')
+									   	 ->where('lang', $this->getLocale())
+									   	 ->where('id', '<>' , $id)
 										 ->orderBy('views', 'DESC')
 										 ->skip(0)
 										 ->take(4)
@@ -86,12 +106,16 @@ class ServiceController extends \BaseController{
 				$hotServices = $hotServicesCmd;
 			
 			$serviceDetailURL = \URL::route('spa.service.detail');
+			$indexURL = \URL::route('spa.index');
+			$serviceURL = \URL::route('spa.service');
 
 			return \View::make('spa.service.view_service_detail', array(
 				'service' => $service,
 				'categorys' => $categorys,
 				'hotServices' => $hotServices,
-				'serviceDetailURL' => $serviceDetailURL
+				'serviceDetailURL' => $serviceDetailURL,
+				'indexURL' => $indexURL,
+				'serviceURL' => $serviceURL
 			));
 		} catch (Exception $e) {
 			echo $e->getMessage();

@@ -16,7 +16,7 @@ class ProductController extends \BaseController {
 
 			$page = \Input::get('page', 1);
 			$limit = 10;
-       		$offset = ($page-1) * $limit;
+			$offset = ($page-1) * $limit;
 
        		//set product list by category
 			$parent_equality = "!=";
@@ -27,26 +27,26 @@ class ProductController extends \BaseController {
 			}
 			
 			$cmd = \SpaProduct::where('_parent', $parent_equality, $parent_value)
-							  ->where('lang', $listLang);
+			->where('lang', $listLang);
 
 			$rowsNum = $cmd->count();
 
 			$products = $cmd->orderBy('_parent', 'DESC')
-								->orderBy('sort','DESC')
-								->orderBy('updated_at', 'desc')
-								->skip($offset)
-                    			->take($limit)
-								->get();
+			->orderBy('sort','DESC')
+			->orderBy('updated_at', 'desc')
+			->skip($offset)
+			->take($limit)
+			->get();
 
 			if(!empty($products)) {
 				foreach ($products as $key => $service) {
 					$products[$key]['ref_display']=\SpaProduct::where('id', $service->ref)
-					 						       			  ->first(array('display'))
-					 						       			  ->display;
+					->first(array('display'))
+					->display;
 				}
 			}
 			$categorys = \SpaProduct::where('_parent', 'N')
-									->get(array('id', 'title', '_parent'));
+			->get(array('id', 'title', '_parent'));
 
 			$category_array = array();
 			if (!empty($categorys)) {
@@ -63,16 +63,16 @@ class ProductController extends \BaseController {
 			$cnListUrl = \URL::route('spa.admin.product.article.list', array('lang'=>'cn', "category"=>$category));
 
 			$widgetParam = array(
-			    'currPage' => $page,
-			    'total' => $rowsNum,
-			    'perPage' => $limit,
-			    'URL' => null,
-			    'route' => 'spa.admin.product.article.list'
-			);
+				'currPage' => $page,
+				'total' => $rowsNum,
+				'perPage' => $limit,
+				'URL' => null,
+				'route' => 'spa.admin.product.article.list'
+				);
 			$langControlGroup = array(
 				'tw' => 'cn',
 				'cn' => 'tw'
-			);
+				);
 			return \View::make('spa_admin.product.view_list', array(
 				'products'=>&$products,
 				'category_array'=>&$category_array,
@@ -85,7 +85,7 @@ class ProductController extends \BaseController {
 				'cnListUrl' => $cnListUrl,
 				'listLang' => $listLang,
 				'langControlGroup'=>$langControlGroup
-			));
+				));
 		} catch (Exception $e) {
 			echo $e->getMessage();
 			exit;
@@ -124,17 +124,17 @@ class ProductController extends \BaseController {
 						'id' => $product->id,
 						'image' => $product->image,
 						'text' => $product->image_desc
-					);
+						);
 				
 				$serviceImagesList = \SpaProductImages::where('pro_id',$id)
-													  ->get(array('id', 'image_path', 'description'));
+				->get(array('id', 'image_path', 'description'));
 				if (!empty($serviceImagesList)){
 					foreach ($serviceImagesList as $key => $img) {
 						$productImages[] = array(
 							'id' => $img->id,
 							'image' => $img->image_path,
 							'text' => $img->description
-						);
+							);
 					}	
 				}
 				
@@ -142,10 +142,10 @@ class ProductController extends \BaseController {
 				if (!empty($tags)) {
 					foreach ($tags as $tag) {
 						$items[] = array(
-		                    'title' => $tag->title,
-		                    'content' => $tag->content,
-		                    'sort' => $tag->sort
-		                );
+							'title' => $tag->title,
+							'content' => $tag->content,
+							'sort' => $tag->sort
+							);
 					}
 				}
 			}
@@ -160,7 +160,7 @@ class ProductController extends \BaseController {
 						$categorys[] = array(
 							"id"=>'',
 							'title'=>''
-						);
+							);
 					}
 				}
 				foreach ($catCmd->get(array('id', 'title'))->toArray() as $category) {
@@ -176,13 +176,13 @@ class ProductController extends \BaseController {
 				'categorys'=>&$categorys,
 				'writeURL'=>$writeURL,
 				'tab' => array(
-	                'elementId' => 'tab-box',
-	                'formTitle' => 'Tab項目',
-	                'items' => $items
-            	),
-            	'articleCat'=>$articleCat,
-            	'listLang' => $listLang
-			));
+					'elementId' => 'tab-box',
+					'formTitle' => 'Tab項目',
+					'items' => $items
+					),
+				'articleCat'=>$articleCat,
+				'listLang' => $listLang
+				));
 		} catch (Exception $e) {
 			echo $e->getMessage();
 			exit;
@@ -201,20 +201,20 @@ class ProductController extends \BaseController {
 		try {
 			//tags
 			$order = 0;
-            $tabContents = \Input::get('tabContents', array());
-            $tabs = null;
-            $tabName = \Input::get('tabName', array());
-            if(!empty($tabName)){
-	            foreach ($tabName as $key => $tab) {
-	                if (!isset($tabContents[$key]))
-	                    continue;
-	                $tabs[] = array(
-	                    'title' => $tab,
-	                    'content' => $tabContents[$key],
-	                    'sort' => $order
-	                );
-	                $order++;
-	            }
+			$tabContents = \Input::get('tabContents', array());
+			$tabs = null;
+			$tabName = \Input::get('tabName', array());
+			if(!empty($tabName)){
+				foreach ($tabName as $key => $tab) {
+					if (!isset($tabContents[$key]))
+						continue;
+					$tabs[] = array(
+						'title' => $tab,
+						'content' => $tabContents[$key],
+						'sort' => $order
+						);
+					$order++;
+				}
 			}
 
 			$ref = \Input::get('ref');
@@ -277,27 +277,27 @@ class ProductController extends \BaseController {
 				$langControlGroup = array(
 					'tw' => 'cn',
 					'cn' => 'tw'
-				);
+					);
 				$anotherProductCat = "";
 				$anotherProductCatCmd = \SpaProduct::where('ref', \Input::get('cat'))->first(array('id'));
 				if($anotherProductCatCmd)
 					$anotherProductCat = $anotherProductCatCmd->id;
 
-				$anotherService = new \SpaProduct;
-				$anotherService->title = !empty($title) ? $title : "";
-				$anotherService->image = "";
-				$anotherService->image_desc = "";
-				$anotherService->content = !empty($content) ? $content : "";;
-				$anotherService->capacity = !empty($capacity) ? $capacity : "";
-				$anotherService->price = !empty($price) ? $price : "";
-				$anotherService->tag = json_encode($tabs);
-				$anotherService->_parent = $anotherProductCat;
-				$anotherService->display = "no";
-				$anotherService->lang = $langControlGroup[\Input::get('lang')];
-				$anotherService->ref = $inserted_id;
-				$anotherService->save();
+				$anotherProduct = new \SpaProduct;
+				$anotherProduct->title = !empty($title) ? $title : "";
+				$anotherProduct->image = "";
+				$anotherProduct->image_desc = "";
+				$anotherProduct->content = !empty($content) ? $content : "";;
+				$anotherProduct->capacity = !empty($capacity) ? $capacity : "";
+				$anotherProduct->price = !empty($price) ? $price : "";
+				$anotherProduct->tag = json_encode($tabs);
+				$anotherProduct->_parent = $anotherProductCat;
+				$anotherProduct->display = "no";
+				$anotherProduct->lang = $langControlGroup[\Input::get('lang')];
+				$anotherProduct->ref = $inserted_id;
+				$anotherProduct->save();
 
-				$anotherId = $anotherService->id;
+				$anotherId = $anotherProduct->id;
 
 				$createProduct = \SpaProduct::find($inserted_id);
 				$createProduct->ref = $anotherId;
@@ -322,19 +322,19 @@ class ProductController extends \BaseController {
 
 			//delete service image
 			\SpaProductImages::where('pro_id', $id)
-							 ->delete();
+			->delete();
 			//delete ref service
 			\SpaProduct::where('ref', $id)
-					   ->delete();
+			->delete();
 			return \Response::json(array(
-	            'status' => 'ok',
-	            'message' => '刪除完成!'
-	        ));
+				'status' => 'ok',
+				'message' => '刪除完成!'
+			));
 		} catch (Exception $e) {
 			return Response::json(array(
-                'status' => 'error',
-                'message' => $e->getMessage()
-            ));
+				'status' => 'error',
+				'message' => $e->getMessage()
+			));
 		}
 	}
 
@@ -343,67 +343,64 @@ class ProductController extends \BaseController {
 	 */
 	public function getCategoryList() {
 		try {
-			$categorys = \SpaProduct::where('_parent','N')
-										->orderBy('sort','DESC')
-										->get(array('id','title','sort', 'lang', 'ref'));
+			$categorys = array();
+			$catsTW = array();
+			$catsCN = array();
 
-			$serviceListURL = \URL::route('spa.admin.product.article.list');
-			$categoryActionURL = \URL::route('spa.admin.product.category.action');
+			$catsTWCmd = \SpaProduct::where('_parent', 'N')
+									->where('lang', 'tw')
+									->orderBy('sort', 'DESC')
+									->get(array('id', 'title', 'sort', 'lang', 'display', 'ref'));
+			$catsCNCmd = \SpaProduct::where('_parent', 'N')
+									->where('lang', 'cn')
+									->orderBy('sort', 'DESC')
+									->get(array('id', 'title', 'sort', 'lang', 'display', 'ref'));
+			if($catsTWCmd)
+				$catsTW = $catsTWCmd;
+			if($catsCNCmd)
+				$catsCN = $catsCNCmd;
+
+			$catsTWactionURL = array();
+			$catsTWservListURL = array();
+			foreach ($catsTW as $cat) {
+				$catsTWactionURL[$cat->id] = \URL::route('spa.admin.product.category.action', array('id'=>$cat->id));
+				$catsTWservListURL[$cat->id] = \URL::route('spa.admin.product.article.list', array('lang'=>$cat->lang, 'category'=>$cat->id));
+			}
+			$catsCNactionURL = array();
+			$catsCNservListURL = array();
+			foreach ($catsCN as $cat) {
+				$catsCNactionURL[$cat->id] = \URL::route('spa.admin.product.category.action', array('id'=>$cat->id));
+				$catsCNservListURL[$cat->id] = \URL::route('spa.admin.product.article.list', array('lang'=>$cat->lang, 'category'=>$cat->id));
+			}
+
+			$categorys = array(
+				'tw'=>array(
+					'item' => $catsTW,
+					'actionURL' => $catsTWactionURL,
+					'servListURL' => $catsTWservListURL
+				),
+				'cn'=>array(
+					'item' => $catsCN,
+					'actionURL' => $catsCNactionURL,
+					'servListURL' => $catsCNservListURL
+				)
+			);
+
+			$actionURL = \URL::route('spa.admin.product.category.action');
 			$categoryDeleteURL = \URL::route('spa.admin.product.category.delete');
 			$updateSortURL = \URL::route('spa.admin.product.sort.update');
 
 			return \View::make('spa_admin.product.view_category_list', array(
-				"categorys"=>&$categorys,
-				"serviceListURL"=>$serviceListURL,
-				"categoryActionURL"=>$categoryActionURL,
-				"categoryDeleteURL"=>$categoryDeleteURL,
-				"updateSortURL"=>$updateSortURL
+				"categorys" => &$categorys,
+				"categoryDeleteURL" => $categoryDeleteURL,
+				"updateSortURL" => $updateSortURL,
+				"actionURL" => $actionURL
 			));
 		} catch (Exception $e) {
 			echo $e->getMessage();
 			exit;
 		}
 	}
-
-	/*
-     * AJAX request for action(create/edit) category
-     */
-    public function postCategoryAction(){
-    	try {
-    		$category_id = \Input::get('id');
-    		$ref_id = \Input::get('ref');
-    		if($category_id == "null"){
-    			$product_category = new \SpaProduct;
-    		}else{
-    			$product_category = \SpaProduct::find($category_id);
-    		}	
-    		$product_category->title = \Input::get('title');
-    		$product_category->sort = \Input::get('sort');
-    		$product_category->lang = \Input::get('lang');
-    		if($ref_id != "null"){
-	    		$product_category->ref = $ref_id;
-	    	}
-    		$product_category->save();
-
-			//set ref
-			if($ref_id != "null"){
-				$inserted_id = $product_category->id;
-				$ref_category = \SpaProduct::find($ref_id);
-				$ref_category->ref = $inserted_id;
-				$ref_category->save();
-			}
-
-	        return \Response::json(array(
-	            'status' => 'ok',
-	            'message' => '儲存完成!'
-	        ));
-        } catch (Exception $e) {
-    		return Response::json(array(
-	            'status' => 'error',
-	            'message' => $e->getMessage()
-	        ));
-    	}
-    }
 
     /*
      * hadnle AJAX request for delete category
@@ -412,90 +409,179 @@ class ProductController extends \BaseController {
     	try {
     		$category_id = \Input::get('id');
 
-			\SpaProduct::find($category_id)->delete();
-
-    		//delete product article images
-    		$products = \SpaProduct::where('_parent', $category_id)
-    							   ->get(array('id'));
-    		$prodArry = array();
-			if (!empty($products)) {
-	    		foreach ($products as  $product) {
-	    			$prodArry[] = $product->id;
-	    		}
-	    		\SpaProductImages::whereIn('pro_id', $servArry)
-	    					  ->delete();
-    		}
+    		$cateCmd = \SpaProduct::find($category_id);
+    		$cateRefCmd = \SpaProduct::find($cateCmd->ref);
     		
-    		//delete categroy product article
-    		\SpaProduct::where('_parent',$category_id)->delete();
-    			
+    		//delete categroy service article
+    		$servCmd = \SpaProduct::where('_parent', $category_id);
+    		if(!$servCmd->get()){
+    			$servCmd->delete();
+    		}
+    		$servRefCmd = \SpaProduct::where('_parent', $cateRefCmd->id);
+    		if(!$servRefCmd->get())
+    			$servRefCmd->delete();
+
+    		//delete category
+    		$cateCmd->delete();
+    		$cateRefCmd->delete();
+
     		return \Response::json(array(
-	            'status' => 'ok',
-	            'message' => '刪除完成!'
-	        ));
+    			'status' => 'ok',
+    			'message' => '刪除完成!'
+    		));
     	} catch (Exception $e) {
     		return Response::json(array(
-	            'status' => 'error',
-	            'message' => $e->getMessage()
-	        ));
+    			'status' => 'error',
+    			'message' => $e->getMessage()
+    		));
     	}
     }
 
 	/*
      * handle AJAX request of change sort
      */
-    public function postUpdateSort(){
-    	try {
-    		if (!isset($_POST) || !isset($_POST['id']) || !isset($_POST['sort']) || !isset($_POST['role']))
-                throw new Exception('Error request [10]');
+	public function postUpdateSort(){
+		try {
+			if (!isset($_POST) || !isset($_POST['id']) || !isset($_POST['sort']) || !isset($_POST['role']))
+				throw new Exception('Error request [10]');
 
-            $id = \Input::get('id');
-            $role = \Input::get('role');
-            $sort = \Input::get('sort');
-            $isUpdatedTime = \Input::get('isUpdatedTime', false);
-            $lastUpdatedId = \Input::get('lastUpdatedId', false);
-            
-            
-            $model = \SpaProduct::find($id);
-            if (empty($model))
-                throw new Exception("Error request [11]");
+			$id = \Input::get('id');
+			$role = \Input::get('role');
+			$sort = \Input::get('sort');
+			$isUpdatedTime = \Input::get('isUpdatedTime', false);
+			$lastUpdatedId = \Input::get('lastUpdatedId', false);
 
-            $model->sort = $sort;
 
-            if (!$model->save())
-                throw new Exception("更新排序失敗，請通知工程師");
+			$model = \SpaProduct::find($id);
+			if (empty($model))
+				throw new Exception("Error request [11]");
 
-            if ($isUpdatedTime){
-                $cmd = \SpaProduct::where('id', '!=', $id)
-                                 ->where('sort', '=', $sort)
-                                 ->where('id', '>=', $lastUpdatedId)
-                                 ->orderBy('sort', 'desc')
-                                 ->orderBy('updated_at', 'desc');
-                if ($role=='category')
-                    $cmd->where('_parent', '=', 'N');
-                else
-                    $cmd->where('_parent', '=', $model->_parent);
+			$model->sort = $sort;
 
-                $items = $cmd->get();
-                if (sizeof($items)>0){
-                    $t = time();
-                    foreach($items as $key=>$item){
-                        $t = $t+$key;
-                        $item->updated_at = $t;
-                        $item->save();
-                    }
-                }
-            }
-	
-		    return \Response::json(array(
-	            'status' => 'ok',
-	            'message' => '更新排序完成'
-	        ));
+			if (!$model->save())
+				throw new Exception("更新排序失敗，請通知工程師");
+
+			if ($isUpdatedTime){
+				$cmd = \SpaProduct::where('id', '!=', $id)
+				->where('sort', '=', $sort)
+				->where('id', '>=', $lastUpdatedId)
+				->orderBy('sort', 'desc')
+				->orderBy('updated_at', 'desc');
+				if ($role=='category')
+					$cmd->where('_parent', '=', 'N');
+				else
+					$cmd->where('_parent', '=', $model->_parent);
+
+				$items = $cmd->get();
+				if (sizeof($items)>0){
+					$t = time();
+					foreach($items as $key=>$item){
+						$t = $t+$key;
+						$item->updated_at = $t;
+						$item->save();
+					}
+				}
+			}
+
+			return \Response::json(array(
+				'status' => 'ok',
+				'message' => '更新排序完成'
+			));
 		} catch (Exception $e) {
-    		return Response::json(array(
-                'status' => 'error',
-                'message' => $e->getMessage()
-            ));
+			return Response::json(array(
+				'status' => 'error',
+				'message' => $e->getMessage()
+			));
+		}
+	}
+
+
+    /*
+     * Display category action page
+     * params (int) $id
+     */
+    public function getCategoryAction($id = null){
+    	try {
+    		$action = 'create';
+
+    		$writeURL = \URL::route('spa.admin.product.category.write');
+
+    		$category = array();
+    		$cateCover = array();
+    		if(!empty($id)) {
+    			$action = 'edit';
+    			$writeURL .= "/".$id;
+    			$category = \SpaProduct::where('id', $id)
+    								   ->first(array('id', 'title', 'image', 'image_desc', 'sort', 'display'));
+    			if($category->image != '')
+    				$cateCover[] = array(
+    					'id' => $category->id,
+    					'image' => $category->image,
+    					'text' => $category->image_desc
+    				);
+    		}
+
+    		return \View::make('spa_admin.product.view_category_action', array(
+    			'writeURL' => $writeURL,
+    			'cateId' => $id,
+    			'action' => $action,
+    			'category' => $category,
+    			'cateCover' => $cateCover
+    		));
+    	} catch (Exception $e) {
+    		echo $e->getMessage();
+    		exit;
     	}
     }
+
+    /*
+	 * Write(create/edit action) category data.
+	 * @params (int) $id
+	 */
+	public function postWriteCategory($id = null){
+		try {
+			$action = \Input::get('action');
+    		if ($action == 'create')
+    			$categoryCmd = new \SpaProduct;
+    		else
+    			$categoryCmd = \SpaProduct::find($id);
+
+    		$categoryCmd->title = \Input::get('title');
+    		$categoryCmd->image = \Input::get('image')[0];
+    		$categoryCmd->image_desc = \Input::get('imageDesc')[0];
+    		$categoryCmd->sort = \Input::get('sort');
+    		$categoryCmd->display = \Input::get('display');
+    		if($action == 'create')
+    			$categoryCmd->lang = 'tw';
+
+    		$categoryCmd->save();
+			$inserted_id = $categoryCmd->id;
+
+    		//system automatically generates another language,and the corresponding
+    		if($action == 'create'){
+	    		$refCategoryCmd = new \SpaProduct;
+
+	    		$refCategoryCmd->title = \Input::get('title');
+	    		$refCategoryCmd->image = "";
+    			$refCategoryCmd->image_desc = "";
+    			$refCategoryCmd->sort = \Input::get('sort');
+				$refCategoryCmd->lang = 'cn';
+				$refCategoryCmd->ref = $inserted_id;
+				$refCategoryCmd->display = 'no';
+				
+	    		$refCategoryCmd->save();
+	    		$ref_inserted_id = $refCategoryCmd->id;
+
+	    		//set category ref
+	    		$setCategoryCmd = \SpaProduct::find($inserted_id);
+	    		$setCategoryCmd->ref = $ref_inserted_id;
+
+	    		$setCategoryCmd->save();
+    		}
+    		return \Redirect::route("spa.admin.product.category.list");
+		} catch (Exception $e) {
+			echo $e->getMessage();
+    		exit;
+		}
+	}
 }

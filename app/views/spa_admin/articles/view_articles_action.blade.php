@@ -23,7 +23,7 @@
 				<select name="category" class="form-control">
 					<option value='about' @if(array_get($specArticle, 'category')=='about' || $createCategory == 'about') selected @endif>關於煥麗</option>
 					<option value='news' @if(array_get($specArticle, 'category')=='news' || $createCategory == 'news') selected @endif>最新消息</option>
-					<option value='oversea' @if(array_get($specArticle, 'category')=='oversea' || $createCategory == 'oversea') selected @endif>海外專區</option>
+					<!-- <option value='oversea' @if(array_get($specArticle, 'category')=='oversea' || $createCategory == 'oversea') selected @endif>海外專區</option> -->
 				</select>
 		</div>
 
@@ -33,6 +33,11 @@
 				<input type="text" class="form-control" id="title" name="title" size="12" value="{{array_get($specArticle, 'title', '')}}">
 			</div>
 		</div>
+
+		<div>
+            @include('spa_admin._partials.widget_imageUploader', array('options'=>array('elementId'=>'image-box-cover', 'title'=>'封面圖片', 'uploadURL'=>fps::getUploadURL(), 'deleteURL'=>fps::getDeleteURL())))
+            <!-- image uploader -->
+        </div>
 
 		<div class="form-group">
 			<label for="content">內文</label>
@@ -67,7 +72,7 @@
 			<label class="radio-inline">
 				<input type="radio" name="lang" value="cn" id="optionsRadiosInline"> 簡體
 			</label>
-			@elseif(array_get($specArticle, 'id')!=0 && $changeLang==null && array_get($specArticle, 'ref_id')==0)
+			@elseif(array_get($specArticle, 'id')!=0 && $changeLang==null)
 			<label class="radio-inline">
 				<input type="radio" name="lang" value="tw" id="optionsRadiosInline" @if(array_get($specArticle, 'lang')=='tw') {{"checked"}} @endif > 繁體
 			</label>
@@ -91,9 +96,9 @@
 		<button class="btn btn-danger" type="button" onclick="history.back();">取消</button>
 
 		@if(array_get($specArticle, 'id')==0)
-		<button class="btn btn-primary">新增</button>
+		<button class="btn btn-primary btn-submit">新增</button>
 		@else
-		<button class="btn btn-primary">修改</button>
+		<button class="btn btn-primary btn-submit">修改</button>
 		@endif
 	</form>
 </div>
@@ -110,4 +115,37 @@ $(function() {
 {{ HTML::script('packages/ckeditor/ckeditor.js'); }}
 @stop
 
+@section('head')
+{{ HTML::style(asset('css/admin/widgets/imageUploader/css_widget_imageUploader.css')) }}
+@stop
 
+@section('bottom')
+{{ HTML::script(asset('packages/jquery-file-upload/js/vendor/jquery.ui.widget.js')) }}
+{{ HTML::script(asset('packages/jquery-file-upload/js/jquery.iframe-transport.js')) }}
+{{ HTML::script(asset('packages/jquery-file-upload/js/jquery.fileupload.js')) }}
+{{ HTML::script(asset('packages/jquery-file-upload/js/jquery.fileupload-process.js')) }}
+{{ HTML::script(asset('js/admin/widgets/imageUploader/js_widget_imageUploader.js')) }}
+
+<script type="text/javascript">
+        var imgUploaderCover = _imageUploader({
+                el: '#image-box-cover',
+                imageBoxMeta: {photoFieldName: 'cov[]', descFieldName: 'cov_desc[]', delFieldName: 'deleteImages[]'},
+                isMultiple: false,
+                files: <?=json_encode($imgUploaderList['cover']['items'])?>
+            });
+
+        $('.btn-submit').click(function(e){
+            e.preventDefault();
+            var bool = true;
+            bool &= imgUploaderCover.validate();
+
+            if (!bool){
+                alert("提醒您:\n\n   您尚未上傳封面圖片");
+                return false;
+            }
+
+            $('form').submit();
+        });
+    </script>
+
+@stop

@@ -12,13 +12,19 @@ class ProductController extends \BaseController{
 
 			$productsCmd = \SpaProduct::where('_parent', '<>', 'N')
 									  ->where('display', 'yes')
+									  ->where('lang', $this->getLocale())
 									  ->get(array('id', 'title', 'image'))
 									  ->toArray();
 			if($productsCmd)
 				$products = $productsCmd;
 			
+			$detailURL = \URL::route('spa.product.detail');
+			$indexURL = \URL::route('spa.index');
+
 			return \View::make('spa.product.view_product', array(
-				"products" => $products
+				"products" => $products,
+				"detailURL" => $detailURL,
+				"indexURL" => $indexURL
 			));
 		} catch (Exception $e) {
 			echo $e->getMessage();
@@ -34,27 +40,39 @@ class ProductController extends \BaseController{
 		try {
 			$categorys = array();
 			$categorysCmd = \SpaProduct::where('_parent', 'N') 
-									->get(array('id', 'title'))
-									->toArray();
+									   ->where('display', 'yes')
+									   ->where('lang', $this->getLocale())
+									   ->get(array('id', 'title'))
+									   ->toArray();
+
 			if($categorysCmd)
 				$categorys = $categorysCmd;
-
+				
 			$product = array();
-			$productCmd = \SpaProduct::find($id)
-									 ->toArray();
+			$productCmd = \SpaProduct::find($id);
+			//set views
+			if(\ViewsAdder::views_cookie('product', $id)) {
+				$productCmd->views += 1; 
+				$productCmd->save();
+			}
+			
 			if($productCmd)
-				$product = $productCmd;
+				$product = $productCmd->toArray();
 
 			$productCat = \SpaProduct::find($product['_parent'])
 									 ->toArray();
 			
-			$productListURL = \URL::route('spa.product.list');
+			$productListURL = \URL::route('spa.product.list', array('cat'=>$productCat['id']));
+			$productURL = \URL::route('spa.product');
+			$indexURL = \URL::route('spa.index');
 
 			return \View::make('spa.product.view_product_detail', array(
 				'categorys' => $categorys,
 				'product' => $product,
 				'productCat' => $productCat,
-				'productListURL' => $productListURL
+				'productListURL' => $productListURL,
+				'productURL' => $productURL,
+				'indexURL' => $indexURL
 			));
 		} catch (Exception $e) {
 			echo $e->getMessage();
@@ -70,11 +88,14 @@ class ProductController extends \BaseController{
 		try {
 			//setContent categorys
 			$categorys = array();
-			$categorysCmd = \SpaProduct::where('_parent', 'N') 
-									->get(array('id', 'title'))
-									->toArray();
+			$categorysCmd = \SpaProduct::where('_parent', 'N')
+									   ->where('display', 'yes')
+									   ->where('lang', $this->getLocale())
+									   ->get(array('id', 'title'))
+									   ->toArray();
 			if($categorysCmd)
 				$categorys = $categorysCmd;
+			
 			//products
 			$page = \Input::get('page', 1);
 			$limit = 8;
@@ -83,7 +104,8 @@ class ProductController extends \BaseController{
 			$products = array();
 			$productsCmd = \SpaProduct::where('_parent', '<>', 'N')
 									  ->where('display', 'yes')
-									  ->where('_parent', $cat);
+									  ->where('_parent', $cat)
+									  ->where('lang', $this->getLocale());
 			$rowsNum = $productsCmd->count();
 			$productsCmd = $productsCmd->skip($offset)
                         			   ->take($limit)
@@ -93,12 +115,14 @@ class ProductController extends \BaseController{
 				$products = $productsCmd;
 			//category
 			$productCat = \SpaProduct::where('id', $cat)
-									 ->first(array('id', 'title'))
+									 ->first(array('id', 'title', 'image'))
 									 ->toArray();
 
-			$productListURL = \URL::route('spa.product.list');
-			$pageURL = \URL::route('spa.product.list', array('cat'=>$cat, 'page'=>$page));
+			$productListURL = \URL::route('spa.product.list', array('cat'=>$cat));
+			$pageURL = \URL::route('spa.product.list', array('cat'=>$cat));
 			$productDetailURL = \URL::route('spa.product.detail');
+			$productURL = \URL::route('spa.product');
+			$indexURL = \URL::route('spa.index');
 
 			return \View::make('spa.product.view_product_list',array(
 				'categorys' => $categorys,
@@ -108,7 +132,9 @@ class ProductController extends \BaseController{
 				'page' => $page,
 				'rowsNum' => $rowsNum,
 				'productDetailURL' => $productDetailURL,
-				'productCat' => $productCat
+				'productCat' => $productCat,
+				'productURL' => $productURL,
+				'indexURL' => $indexURL
 			));
 		} catch (Exception $e) {
 			echo $e->getMessage();

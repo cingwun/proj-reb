@@ -9,8 +9,8 @@
 <div>
 	<a type="button" @if($category=='about')class="btn btn-md btn-info" @else class="btn btn-md btn-default" @endif href="{{ URL::route('spa.admin.articles.list')}}/about">關於煥麗</a>
 	<a type="button" @if($category=='news')class="btn btn-md btn-info" @else class="btn btn-md btn-default" @endif href="{{ URL::route('spa.admin.articles.list')}}/news">最新消息</a>
-	<a type="button" @if($category=='oversea')class="btn btn-md btn-info" @else class="btn btn-md btn-default" @endif href="{{ URL::route('spa.admin.articles.list')}}/oversea">海外專區</a>
-	<a href="{{ URL::route('spa.admin.articles.action')}}/0/0/{{$category}}" class="btn btn-success" style="float:right;">新增</a>
+	<!-- <a type="button" @if($category=='oversea')class="btn btn-md btn-info" @else class="btn btn-md btn-default" @endif href="{{ URL::route('spa.admin.articles.list')}}/oversea">海外專區</a> -->
+	<a href="{{ URL::route('spa.admin.articles.action', array('0', '0', $category))}}" class="btn btn-success" style="float:right;">新增</a>
 </div>
 <br>
 
