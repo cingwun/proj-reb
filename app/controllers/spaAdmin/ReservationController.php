@@ -40,10 +40,13 @@ class ReservationController extends \BaseController{
 			if (!empty($reservations)) {
 				foreach ($reservations as $key => $reservation) {
 					$data = json_decode($reservation->contact);
-					$contactArray[$key] = array('data'=>$data, 'count'=>count($data));
+					$contactArray[$key] = array(
+						'data'=>$data,
+						'count'=>count($data)
+					);
 				}
 			}
-
+			
 			$detailsURL = \URL::route('spa.admin.reservation.details');
 			$deleteURL = \URL::route('spa.admin.reservation.delete');
 			$actionURL = \URL::route('spa.admin.reservation.action');
@@ -102,22 +105,24 @@ class ReservationController extends \BaseController{
 				$data = json_decode($reservation->contact);
 				$contact = array('data'=>$data, 'count'=>count($data));
 			}
-			
+			$contact_time = "";
+			if(!empty($reservation->contact_time))
+				$contact_time = $contactTimeArray[$reservation->contact_time];
 			$reservationArray = array(
 				"data"=>array(
-					"name"=>$reservation->name,
-					"country"=>$reservation->country,
-					"styleArray"=>$styleArray,
-					"contact"=>$contact,
-					"contact_time"=>$contactTimeArray[$reservation->contact_time],
-					"birthday"=>$reservation->birthday,
-					"email"=>$reservation->email,
-					"stay_start_date"=>$reservation->stay_start_date,
-					"stay_exit_date"=>$reservation->stay_exit_date,
-					"service_date"=>$reservation->service_date,
-					"improve_item"=>$reservation->improve_item,
-					"other_notes"=>$reservation->other_notes,
-					"created_at"=>$reservation->created_at,
+					"name" => $reservation->name,
+					"country" => $reservation->country,
+					"styleArray" => $styleArray,
+					"contact" => $contact,
+					"contact_time" => $contact_time,
+					"birthday" => $reservation->birthday,
+					"email" => $reservation->email,
+					"stay_start_date" => $reservation->stay_start_date,
+					"stay_exit_date" => $reservation->stay_exit_date,
+					"service_date" => $reservation->service_date,
+					"improve_item" => $reservation->improve_item,
+					"other_notes" => $reservation->other_notes,
+					"created_at" => $reservation->created_at,
 				)
 			);
 

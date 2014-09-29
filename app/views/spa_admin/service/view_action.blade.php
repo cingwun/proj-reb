@@ -26,6 +26,12 @@
 	@include('spa_admin._partials.widget_imageUploader', array('options'=>array('elementId'=>'image-main-box', 'title'=>'描述圖片', 'uploadURL'=>fps::getUploadURL(), 'deleteURL'=>fps::getDeleteURL())))
 	<!-- image uploader -->
 	<div class="form-group">
+		<label>服務內容</label>
+		<div>
+			<textarea class="form-control ckeditor" name="content">@if($action == 'edit'){{$service->content}}@endif</textarea>
+		</div>
+	</div>
+	<div class="form-group">
 		<label>所屬分類</label>
 		<select class="form-control" name="cat">
 			@foreach($categorys as $category)
@@ -33,8 +39,6 @@
 			@endforeach
 		</select>
 	</div>
-	@include('spa_admin._partials.widget_imageUploader', array('options'=>array('elementId'=>'image-box', 'title'=>'圖片', 'uploadURL'=>fps::getUploadURL(), 'deleteURL'=>fps::getDeleteURL())))
-	<!-- image uploader -->
 	<div class="form-group">
 		<label>狀態</label><br/>
 		<label class="radio-inline">
@@ -56,8 +60,6 @@
 		簡體<input type='hidden' name="lang" value="cn"/>
 		@endif
 	</div>
-	@include('spa_admin._partials.widget_tabs', array('tabs'=>$tab))
-	<!-- tabs -->
 	<div class="form-group">
 		<input type="hidden" name="action" value="{{$action}}"/>
 		<input type="hidden" name="listLang" value="{{$listLang}}"/>
@@ -90,11 +92,5 @@
             isMultiple: false,
             files: <?php echo json_encode($serviceCover) ?>
         });
-    	imgUploader = _imageUploader({
-    		el: '#image-box',
-    		imageBoxMeta:{photoFieldName: 'images[]', descFieldName: 'imageDesc[]', delFieldName: 'deleteImages[]'},
-    		isMultiple: true,
-    		files: <?php echo json_encode($serviceImages)?>
-    	});
 </script>
 @stop

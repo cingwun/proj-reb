@@ -14,61 +14,28 @@
 	<h3 class="titleRp service">服務項目
 	</h3>
 	<ul class="spaService">
+		@foreach($categorys as $category)
 		<li class="servSub">
-			<a class="servSubTitle" href="javascript:void(0)">臉部保養</a>
-			<img class="side_arrow active" src="../img/sign/arrow_yellow"/>
-			<img class="side_arrow" src="../img/sign/arrow_white"/>
+			<a class="servSubTitle" href="javascript:void(0)">{{$category['cat']['title']}}</a>
+			<img class="side_arrow active" src="<?=asset('spa/img/sign/arrow_yellow.png');?>"/>
+			<img class="side_arrow" src="<?=asset('spa/img/sign/arrow_white.png');?>"/>
 			<ul class="servDetail">
-				<li class="servDetailInner"><a class="servDetailLink" href="#">活養嫩膚護理</a></li>
-				<li class="servDetailInner"><a class="servDetailLink" href="#">養皮術</a></li>
-				<li class="servDetailInner"><a class="servDetailLink" href="#">基因更生療法</a></li>
-				<li class="servDetailInner"><a class="servDetailLink" href="#">保濕水嫩美肌保養</a></li>
-				<li class="servDetailInner"><a class="servDetailLink" href="#">抗老提拉回春理療</a></li>
-				<li class="servDetailInner"><a class="servDetailLink" href="#">活氧特效嫩膚護理</a></li>
-				<li class="servDetailInner"><a class="servDetailLink" href="#">敏若修護強肌保養</a></li>
+				@foreach($category['serv'] as $service)
+				<li class="servDetailInner"><a class="servDetailLink" href="{{$serviceDetailURL}}/{{$service['id']}}">{{$service['title']}}</a></li>
+				@endforeach
 			</ul>
 		</li>
-		<li class="servSub">
-			<a class="servSubTitle" href="javascript:void(0)">美體保養</a>
-			<img class="side_arrow active" src="../img/sign/arrow_yellow"/>
-			<img class="side_arrow" src="../img/sign/arrow_white"/>
-			<ul class="servDetail">
-				<li class="servDetailInner"><a class="servDetailLink" href="#">盆腔活力泉源課程</a></li>
-				<li class="servDetailInner"><a class="servDetailLink" href="#">美胸保健塑形療程</a></li>
-				<li class="servDetailInner"><a class="servDetailLink" href="#">胸腔深層釋放課程</a></li>
-				<li class="servDetailInner"><a class="servDetailLink" href="#">嗅覺香氛能量按摩</a></li>
-				<li class="servDetailInner"><a class="servDetailLink" href="#">曲線纖體調塑療程</a></li>
-				<li class="servDetailInner"><a class="servDetailLink" href="#">熱帶雨林體膚療程</a></li>
-			</ul>
-
-		</li>
-		<li class="servSub noSub">
-			<a class="servSubTitle" href="#">術後保養</a>
-		</li>
-		<li class="servSub noSub">
-			<a class="servSubTitle" href="#">其他保養</a>
-		</li>
-		<!-- servList -->
+		@endforeach
 	</ul>
 
 	@elseif($titleType=='product')
 	<h3 class="titleRp products">專業產品</h3>
 	<ul class="spaProducts">
+		@foreach($categorys as $category)
 		<li class="productsSub">
-			<a class="productsSubTitle" href="#">欣娜可臉部系列</a>
+			<a class="productsSubTitle" href="{{$productListURL}}/{{$category['id']}}">{{$category['title']}}</a>
 		</li>
-		<li class="productsSub">
-			<a class="productsSubTitle" href="#">席薇臉部系列</a>
-		</li>
-		<li class="productsSub">
-			<a class="productsSubTitle" href="#">真尼蒂身體系列</a>
-		</li>
-		<li class="productsSub">
-			<a class="productsSubTitle" href="#">席薇純質精油系列</a>
-		</li>
-		<li class="productsSub">
-			<a class="productsSubTitle" href="#">舒莉泉臉部/美體系列</a>
-		</li>
+		@endforeach
 	</ul>
 
 	@elseif($titleType=='news')
@@ -86,17 +53,17 @@
 		</ul>
 	</div>
 
-	@elseif($titleType=='overser')
+
+	@elseif($titleType=='oversea')
 	<h3 class="titleRp overSea">海外專區</h3>
 	<ul class="spaOverSea">
 		<li class="overSeaSub">
-			<a class="overSeaSubTitle" href="#">海外預約流程</a>
+			<a class="overSeaSubTitle" href="{{$ovewSeaURL}}">海外預約流程</a>
 		</li>
 		<li class="overSeaSub">
-			<a class="overSeaSubTitle" href="#">海外貴賓來檯預約表</a>
+			<a class="overSeaSubTitle" href="{{$formURL}}">海外貴賓來檯預約表</a>
 		</li>
 	</ul>
-
 	@endif
 	<!-- ======================== setListWrap end ======================== -->
 </aside>

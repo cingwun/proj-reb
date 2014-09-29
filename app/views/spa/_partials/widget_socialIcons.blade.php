@@ -1,3 +1,4 @@
+
 <div id="socialIcons">
 	<div id="fb-root"></div>
 	<div id="fb_like" class="icons">
@@ -5,17 +6,17 @@
 	</div>
 	<div id="fb_share" class="icons">
 		<a class="shareButton">
-			<img src="../spa/img/sign/fb_share.png" />
+			<img src="<?=asset('spa/img/sign/fb_share.png');?>" />
 		</a>
 	</div>
 	<div id="google_share" class="icons">
 		<a class="shareButton">
-			<img src="../spa/img/sign/google_share.png" />
+			<img src="<?=asset('spa/img/sign/google_share.png');?>" />
 		</a>
 	</div>
 	<div id="weibo_share" class="icons">
 		<a class="shareButton">
-			<img src="../spa/img/sign/weibo_share.png" />
+			<img src="<?=asset('spa/img/sign/weibo_share.png');?>" />
 		</a>
 	</div>
 </div>

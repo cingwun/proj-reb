@@ -1,29 +1,40 @@
 <?php
 
+//article
 $aboutArticle = \SpaArticles::where('category', 'about')
 							->orderBy('sort', 'desc')
 							->get();
 
-$serviceParent = \SpaService::where('_parent', 'N') 
-						    ->get(array('id', 'title'))
-						    ->toArray();
-$service = array();
-if($serviceParent) {
-	foreach ($serviceParent as $category) {
-		$servCmd = \SpaService::where('_parent', $category['id'])
+//service 
+$servCatCmd = \SpaService::where('_parent', 'N')
+						 ->where('display', 'yes')
+						 ->orderBy('sort', 'desc')
+						 ->get(array('id', 'title'))
+						 ->toArray();
+$servCats = array();
+if($servCatCmd) {
+	foreach ($servCatCmd as $cat) {
+		$servCmd = \SpaService::where('_parent', $cat['id'])
 							  ->where('display', 'yes')
+						 	  ->orderBy('sort', 'desc')
 							  ->get(array('id', 'title'))
   	 						  ->toArray();
-  	 	$service[] = array(
-  	 		'cat' => $category,
+  	 	$servCats[] = array(
+  	 		'cat' => $cat,
   	 		'serv' => $servCmd
   	 	);
 	}
 }
-$productParent = \SpaProduct::where('_parent', 'N')
-							->orderBy('sort', 'desc')
-							->get(array('id', 'title'))
-							->toArray();
+
+//product
+$prodCats = array();
+$prodCatsCmd = \SpaProduct::where('_parent', 'N')
+						  ->where('display', 'yes') 
+						  ->orderBy('sort', 'desc')
+						  ->get(array('id', 'title'))
+						  ->toArray();
+if($prodCatsCmd)
+	$prodCats = $prodCatsCmd;
 ?>
 
 <header id="header" role="banner">
@@ -48,20 +59,20 @@ $productParent = \SpaProduct::where('_parent', 'N')
 				<ul class="subNav lv1">
 					@foreach($aboutArticle as $list)
 					<li class="lv1_list">
-						<a href="{{URL::route('spa.about', array($list->id))}}">{{$list->title}}</a>
+						<a class="lv1_link" href="{{URL::route('spa.about', array($list->id))}}">{{$list->title}}</a>
 					</li>
 					@endforeach
 				</ul>
 			</li>
 			<li class="navs">
-				<a class="navsTitle" href="/spa/service.html">服務項目</a>
+				<a class="navsTitle" href="{{URL::route('spa.service')}}">服務項目</a>
 				<ul class="subNav lv1">
-					@foreach($service as $service)
+					@foreach($servCats as $servCat)
 					<li class="lv1_list">
-						<a class="lv1_link" href="/spa/service.html">{{$service['cat']['title']}}</a>
+						<a class="lv1_link" href="{{URL::route('spa.service')}}">{{$servCat['cat']['title']}}</a>
 						<ul class="subNav lv2">
-							@foreach($service['serv'] as $serv)
-							<li class="lv2_list"><a class="lv2_link" href="/spa/service_detail.html">{{$serv['title']}}</a></li>
+							@foreach($servCat['serv'] as $serv)
+							<li class="lv2_list"><a class="lv2_link" href="{{URL::route('spa.service.detail')}}/{{$serv['id']}}">{{$serv['title']}}</a></li>
 							@endforeach
 						</ul>
 					</li>
@@ -69,11 +80,11 @@ $productParent = \SpaProduct::where('_parent', 'N')
 				</ul>
 			</li>
 			<li class="navs">
-				<a class="navsTitle" href="/spa/products.html">專業產品</a>
+				<a class="navsTitle" href="{{URL::route('spa.product')}}">專業產品</a>
 				<ul class="subNav lv1">
-					@foreach($productParent as $list)
+					@foreach($prodCats as $prodCat)
 					<li class="lv1_list">
-						<a class="lv1_link" href="/spa/service.html">{{$list['title']}}</a>
+						<a class="lv1_link" href="{{URL::route('spa.product.list')}}/{{$prodCat['id']}}">{{$prodCat['title']}}</a>
 					</li>
 					@endforeach
 				</ul>
@@ -81,10 +92,10 @@ $productParent = \SpaProduct::where('_parent', 'N')
 			<li class="navs"><a class="navsTitle" href="{{URL::route('spa.news')}}">最新消息</a></li>
 			<li class="navs"><a class="navsTitle" href="{{URL::route('spa.share')}}">美麗分享</a></li>
 			<li class="navs">
-				<a class="navsTitle" href="/spa/overSea.html">海外專區</a>
+				<a class="navsTitle" href="{{URL::route('spa.reservation.overSea')}}">海外專區</a>
 				<ul class="subNav lv1">
-					<li class="lv1_list"><a class="lv1_link" href="/spa/overSea.html">海外客戶預約流程</a></li>
-					<li class="lv1_list"><a class="lv1_link" href="#">觀光醫療特惠活動</a></li>
+					<li class="lv1_list"><a class="lv1_link" href="{{URL::route('spa.reservation.overSea')}}">海外客戶預約流程</a></li>
+					<li class="lv1_list"><a class="lv1_link" href="{{URL::route('spa.reservation.form')}}">觀光醫療特惠活動</a></li>
 				</ul>
 			</li>
 			<li class="navs"><a class="navsTitle goAes" class="goAes" href="/aesthetics">煥麗醫美診所</a></li>

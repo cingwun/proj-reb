@@ -1,158 +1,9 @@
 'use strict';
 
 /*
- * form object
- * @params (object) o, {el}
- */
-var formCategory = function(o){
-    // initialize
-    o.init = function(){
-        var self = this;
-        self.$el = $(self.el);
-        self.$input = self.$el.find('input');
-        self.$panelTitle = self.$el.find('.panel-title');
-        self.$form = self.$el.find('form');
-
-        self.$el.find('.btn-reset').click(function(e){
-            e.stopPropagation();
-            e.preventDefault();
-
-            if (self.mode=='create')
-                self.reset();
-            if (self.mode=='update')
-                self.setValue();
-            return false;
-        });
-
-        self.$submit = self.$el.find('.btn-submit');
-        self.$submit.click(function(e){
-            e.stopPropagation();
-            e.preventDefault();
-            var params = self.$form.serialize();
-            $.ajax({
-                url: self.ajaxURL,
-                type: 'POST',
-                data: params,
-                dataType: 'json',
-                success: function(res, s, xhr){
-                    if (res.status=='ok'){
-                        alert('更新成功，頁面將立即重新整理!');
-                        window.location.reload();
-                    }
-                    alert("提醒您:\n\n    "+res.message);
-                    return;
-                },
-                error: function(){
-                    alert("系統更新錯誤，請通知工程師!");
-                    return;
-                }
-            })
-        });
-
-        self.ajaxURL = self.$form.attr('action');
-        self.isNew = true;
-        self.mode = 'create'; // create, update
-        self.model = {title: '', sort: 1, id: 'null', lang: 'tw', ref: 'null'};
-        self.reset();
-        return self;
-    }
-
-    /*
-     * input value when update
-     * @params (object) model
-     */
-    o.update = function(model){
-        this.isNew = false;
-        this.mode = 'update';
-        this.setValue(model);
-        this.toggleStatus('update');
-    }
-
-    /*
-     * reset all input field and property
-     */
-    o.reset = function(){
-
-        $("label[id=lang_tw]").show();
-        $("label[id=lang_cn]").show();
-        this.mode = 'create';
-        this.model = {title: '', sort: 1, id: 'null', lang: 'tw', ref: 'null'};
-        this.isNew = true;
-        this.setValue();
-        this.toggleStatus('create');
-    }
-
-    /*
-     * create other lang
-     */
-    o.create_other_lang = function(model){
-        if(model.lang=='tw'){
-            $("label[id=lang_cn]").hide();
-        }else if(model.lang=='cn'){
-            $("label[id=lang_tw]").hide();
-        }
-        this.isNew = true;
-        this.mode = 'create';
-        this.setValue(model);
-        this.toggleStatus('create_lang', model.lang);
-    }
-
-    /*
-     * setValue
-     * @params (object) model,
-     */
-    o.setValue = function(model){
-        if (typeof(model)=='undefined')
-            model = this.model;
-        else
-            this.model = model;
-        this.$input.each(function(idx, input){
-            var value = "null";
-            if (input.name=='title')
-                value = model.title;
-            if (input.name=='sort')
-                value = model.sort;
-            if (input.name=='id')
-                value = model.id;
-            if (input.name=='ref')
-                value = model.ref;
-            if (input.name=='lang'){
-                if (input.value==model.lang)
-                    $(input).prop('checked', 'checked');
-                return;
-            }
-            $(this).val(value);
-        });
-    }
-
-    /*
-     * toggle status
-     * @params (string) action
-     */
-    o.toggleStatus = function(action,lang){
-        if (action=='update'){
-            this.$panelTitle.html('編輯分類');
-            this.$submit.html('編輯完成');
-        }else if(action=='create'){
-            this.$panelTitle.html('新增分類');
-            this.$submit.html('新增');
-        }else if(action=='create_lang'){
-            if(lang=='tw')
-                lang = "繁體";
-            else
-                lang = "簡體";
-            this.$panelTitle.html('新增分類-'+lang);
-            this.$submit.html('新增');
-        }
-    }
-
-    return o.init();
-}({el: '#form-panel'});
-
-/*
  * sort table object
  */
-var sortTable = function(o){
+var _sortTable = function(o){
     // initialize
     o.init = function(){
         var self = this;
@@ -209,54 +60,6 @@ var sortTable = function(o){
     }
 
     /*
-     * handle click event of modify button
-     * @params (int) id, mean: row id
-     */
-    o.onClick_modify = function(id){
-        var r = this.getTr(id),
-            model = {};
-            model.id = id;
-            model.ref = "null";
-        this.resetStatus();
-        this.updateId = id;
-
-        r.tr.$el.find('td').each(function(idx, td){
-            if (idx==0)
-                model.title = td.innerHTML;
-            if (idx==1)
-                model.sort = parseInt(td.innerHTML);
-            if (idx==2)
-                model.lang = td.id;
-        }).end()
-          .toggleClass('onDraging');
-        formCategory.update(model);
-    }
-
-    o.onClick_lang = function(id){
-        var r = this.getTr(id),
-            model = {};
-            model.id = "null";
-            model.ref = id;
-        this.resetStatus();
-        this.updateId = id;
-
-        r.tr.$el.find('td').each(function(idx, td){
-            if (idx==0)
-                model.title = td.innerHTML;
-            if (idx==1)
-                model.sort = parseInt(td.innerHTML);
-            if (idx==2){
-                if(td.id=='tw')
-                    model.lang = 'cn';
-                if(td.id=='cn')
-                    model.lang = 'tw';
-            }
-        }).end()
-          .toggleClass('onDraging');
-        formCategory.create_other_lang(model);
-    }
-
-    /*
      * reset tr collection
      */
     o.resetTrCollection = function(){
@@ -268,11 +71,6 @@ var sortTable = function(o){
 
         self.$el.find('tbody tr').each(function(idx, tr){
             var $el = $(this);
-            $el.find('.btn-modify').click(function(e){
-                e.stopPropagation();
-                e.preventDefault();
-                self.onClick_modify(tr.id);
-            });
 
             $el.find('.btn-delete').click(function(e){
                 e.stopPropagation();
@@ -296,13 +94,6 @@ var sortTable = function(o){
                     }
                 });
             });
-
-            $el.find('.btn-lang').click(function(e){
-                e.stopPropagation();
-                e.preventDefault();
-                self.onClick_lang(tr.id);
-            });
-
             self.trs.push({
                 id: tr.id,
                 $el: $el
@@ -406,4 +197,4 @@ var sortTable = function(o){
 
     return o.init();
 
-}({el: '#sortable', role: 'category', sortColumn: 2});
+};
