@@ -13,7 +13,7 @@
 	<div class="breadcrumb">
 		<a href="{{$indexURL}}">首頁</a><span class="arrow"></span>
 		<a href="{{$productURL}}">專業產品</a><span class="arrow"></span>
-		<a href="">{{$productCat['title']}}</a>
+		<a href="">{{\Text::preEllipsize(strip_tags($productCat['title']), 10)}}</a>
 	</div><!-- ======================== breadcrumb end ======================== -->
 
 	<div class="products_list_pic">
@@ -27,9 +27,9 @@
 			<!-- @image, for the Products_list Image -->
 			<div class="proPic"><img src="{{$product['image']}}?w=165&h=165"></div>
 			<!-- @text, for Products_list Title -->
-			<div class="proTitle"><a href="{{$productDetailURL}}/{{$product['id']}}">{{$product['title']}}</a></div>
+			<div class="proTitle"><a href="{{$productDetailURL}}/{{$product['id']}}">{{\Text::preEllipsize(strip_tags($product['title']), 10)}}</a></div>
 			<!-- @text, for Products_list Content -->
-			<div class="proContent">{{$product['image_desc']}}</div>
+			<div class="proContent">{{\Text::preEllipsize(strip_tags($product['image_desc']), 46)}}</div>
 			<!-- @text, for Products_list  Capacity and Price -->
 			<div class="proPrice">
 				<p>容量：<font>{{$product['capacity']}}</font></p>

@@ -47,7 +47,7 @@ class ProductController extends \BaseController{
 
 			if($categorysCmd)
 				$categorys = $categorysCmd;
-
+				
 			$product = array();
 			$productCmd = \SpaProduct::find($id);
 			//set views
@@ -118,7 +118,7 @@ class ProductController extends \BaseController{
 									 ->first(array('id', 'title', 'image'))
 									 ->toArray();
 
-			$productListURL = \URL::route('spa.product.list');
+			$productListURL = \URL::route('spa.product.list', array('cat'=>$cat));
 			$pageURL = \URL::route('spa.product.list', array('cat'=>$cat));
 			$productDetailURL = \URL::route('spa.product.detail');
 			$productURL = \URL::route('spa.product');
