@@ -6,7 +6,7 @@ class ShareController extends \BaseController {
 	public function getShareList() {
 
 		try {
-			$shareArticle = \SpaShares::where('language', 'tw')
+			$shareArticle = \SpaShares::where('language', $this->getLocale())
 									  ->where('status', '1')
 							   		  ->orderBy('sort', 'desc')
 							   		  ->get(array('id', 'title', 'cover', 'description', 'background_color'))
@@ -20,8 +20,9 @@ class ShareController extends \BaseController {
 					$labels = \SpaSharesLabels::where('share_id', $sh['id'])
 											  ->get(array('share_id', 'label_id'))
 											  ->toArray();
+					$labelService = array();
+			        $labelProduct = array();
 					foreach($labels as $la) {
-						$labelService = array();
 			            $items = \SpaService::where('id', $la['label_id'])
 			                    			->orderBy('_parent', 'desc')
 			                    			->orderBy('sort', 'desc')
@@ -33,7 +34,6 @@ class ShareController extends \BaseController {
 			                	"title"=>$item->title
 			                	);
 			            }
-			            $labelProduct = array();
 			            $items = \SpaProduct::where('id', $la['label_id'])
 			                    			->orderBy('_parent', 'desc')
 			                    			->orderBy('sort', 'desc')

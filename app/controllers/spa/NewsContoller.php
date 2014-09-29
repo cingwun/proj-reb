@@ -7,11 +7,14 @@ class NewsContoller extends \BaseController {
 
 		try {
 			$model = \SpaArticles::where('category', 'news')
+								 ->where('lang', $this->getLocale())
 								 ->where('status', '1')
 								 ->orderBy('open_at', 'desc')
 								 ->orderBy('sort', 'desc')
 								 ->paginate(5);
+
 			$hotService = \SpaService::where('_parent', '!=', 'N')
+									 ->where('lang', $this->getLocale())
 									 ->orderBy('views', 'desc')
 									 ->take(4)
 									 ->get();
@@ -40,15 +43,20 @@ class NewsContoller extends \BaseController {
             }
 
 			$prevArticle = \SpaArticles::where('category', 'news')
+									   ->where('lang', $this->getLocale())
 									   ->where('status', '=', '1')
                              		   ->where('sort', '>=', $article->sort)
                              		   ->where('updated_at', '>', $article->updated_at)
+                             		   ->orderBy('sort', 'asc')
                              		   ->first(array('id', 'title'));
             $nextArticle = \SpaArticles::where('category', 'news')
+            						   ->where('lang', $this->getLocale())
 									   ->where('status', '=', '1')
                              		   ->where('sort', '<=', $article->sort)
                              		   ->where('updated_at', '<', $article->updated_at)
+                             		   ->orderBy('sort', 'desc')
                              		   ->first(array('id', 'title'));
+                             		   var_dump($nextArticle);
 
             $hotService = \SpaService::where('_parent', '!=', 'N')
 									 ->orderBy('views', 'desc')

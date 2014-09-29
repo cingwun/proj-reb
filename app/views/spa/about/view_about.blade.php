@@ -22,6 +22,7 @@
 	<div id="contentInner">
 		<!-- @image, for the Post Image -->
 		<!-- <img src="http://placehold.it/680x430"> -->
+		<img src="{{$cover[0]->image}}?w=680">
 		<div class="contentArticle">
 			<!-- @text, for About Content -->
 			<p>{{ array_get($article, 'content', '對不起，目前沒有內容')}}</p>

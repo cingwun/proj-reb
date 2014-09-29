@@ -38,7 +38,7 @@
 	<!-- pagedetails end -->
 	<div class="postNav">
 		<div>
-			@if(empty($pervarticle))
+			@if(empty($prevArticle))
 			<span class="arrow"></span>
 			<a href="{{URL::route('spa.news')}}">回列表</a>
 			@else

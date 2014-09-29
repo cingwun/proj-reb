@@ -1,0 +1,71 @@
+.rowNav, #mainNav, #newTechBox .tabNav, #servBox .tabNav {
+	overflow: hidden;
+	*zoom: 1
+}
+.rowNav li, #mainNav li, #newTechBox .tabNav li, #servBox .tabNav li {
+	display: inline;
+	float: left
+}
+.rowNav li a, #mainNav li a, #newTechBox .tabNav li a, #servBox .tabNav li a {
+	display: block
+}
+
+#servBox {
+	position: relative;
+	width: 700px
+}
+#servBox .tabNav {
+	margin: 0;
+	height: 37px;
+	border-bottom: 1px solid #cdcdcd;
+	z-index: 1;
+	position: relative;
+	overflow: visible;
+	padding-left: 0
+}
+#servBox .tabNav li {
+	margin: 0 5px;
+	height: 37px
+}
+#servBox .tabNav a {
+	min-width: 150px;
+	text-align: center;
+	letter-spacing: 1px;
+	padding: 0 15px;
+	border: 1px solid #cecece;
+	border-bottom: none;
+	height: 37px;
+	line-height: 37px;
+	color: #4c4c4c;
+	-webkit-border-radius: 5px 5px 0 0;
+	-moz-border-radius: 5px 5px 0 0;
+	-ms-border-radius: 5px 5px 0 0;
+	-o-border-radius: 5px 5px 0 0;
+	border-radius: 5px 5px 0 0
+}
+#servBox .tabNav a:hover {
+	color: #da7a2c
+}
+#servBox .tabNav .curr {
+	background: url(../img/bg/tabNav_bg.png) repeat-x;
+	border-bottom: 1px solid #fff;
+	position: relative;
+	z-index: 2;
+	height: 36px;
+	line-height: 37px;
+	color: #da7a2c
+}
+#servBox .tabBox {
+	margin: 0;
+	width: 680px;
+	line-height: 1.8;
+	padding: 10px;
+	display: none
+}
+#servBox .tabBox.curr {
+	display: block
+}
+
+#casePost #servBox .tabBox {
+	width: 930px
+}

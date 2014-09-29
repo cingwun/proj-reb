@@ -23,7 +23,7 @@
 				<select name="category" class="form-control">
 					<option value='about' @if(array_get($specArticle, 'category')=='about' || $createCategory == 'about') selected @endif>關於煥麗</option>
 					<option value='news' @if(array_get($specArticle, 'category')=='news' || $createCategory == 'news') selected @endif>最新消息</option>
-					<option value='oversea' @if(array_get($specArticle, 'category')=='oversea' || $createCategory == 'oversea') selected @endif>海外專區</option>
+					<!-- <option value='oversea' @if(array_get($specArticle, 'category')=='oversea' || $createCategory == 'oversea') selected @endif>海外專區</option> -->
 				</select>
 		</div>
 
@@ -72,7 +72,7 @@
 			<label class="radio-inline">
 				<input type="radio" name="lang" value="cn" id="optionsRadiosInline"> 簡體
 			</label>
-			@elseif(array_get($specArticle, 'id')!=0 && $changeLang==null && array_get($specArticle, 'ref_id')==0)
+			@elseif(array_get($specArticle, 'id')!=0 && $changeLang==null)
 			<label class="radio-inline">
 				<input type="radio" name="lang" value="tw" id="optionsRadiosInline" @if(array_get($specArticle, 'lang')=='tw') {{"checked"}} @endif > 繁體
 			</label>

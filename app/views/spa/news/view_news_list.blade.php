@@ -15,7 +15,7 @@
 	</div>
 	<!-- breadcrumb end -->
 	<!-- pagedetails -->
-	@foreach($news as $n)
+	@foreach($news as $index=>$n)
 	<article>
 		<h2>
 			<!-- @(string) text,  for Post Title -->

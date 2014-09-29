@@ -2,6 +2,7 @@
 
 //article
 $aboutArticle = \SpaArticles::where('category', 'about')
+							->where('lang', \App::getlocale())
 							->orderBy('sort', 'desc')
 							->get();
 

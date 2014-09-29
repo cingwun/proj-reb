@@ -92,15 +92,45 @@ class ArticleController extends \BaseController {
 
 		try
 		{   
+			$sort = 'do';
 			if(empty($id)){
 				$article = new \SpaArticles;
-				$dosort = 1;
 			}
 			elseif($changeLang=="modifyLanguage"){
 				$refArticle = \SpaArticles::find($id);
 
 				$newArticle = new \SpaArticles;
+
+				$imgUploaderList = array(
+                'cover' => array('fieldName'=>'cov', 'items'=>null),
+                );
+				foreach($imgUploaderList as $key=>$val){
+	                $imgs = json_decode($newArticle->$val['fieldName']);
+	                if (!empty($imgs) && sizeof($imgs)>0){
+	                    foreach($imgs as $img){
+	                        if ($delLength>0 && in_array($img->id, $delImages))
+	                            fps::getInstance()->delete($img->image);
+	                    }
+	                }
+
+	                $list = array();
+	                $descFieldName = $val['fieldName'] . '_desc';
+	                $imagesDesc = \Input::get($descFieldName, array());
+	                $images = \Input::get($val['fieldName'], array());
+
+	                foreach ($images as $idx=>$image){
+	                    $list[] = array(
+	                        'id' => basename($image),
+	                        'image' => $image,
+	                        'text' => $imagesDesc[$idx],
+	                        );
+	                }
+
+	                $imgUploaderList[$key]['items'] = $list;
+	            }
+				
 				$newArticle->title = \Input::get('title');
+				$newArticle->cover = json_encode($imgUploaderList['cover']['items']);
 				$newArticle->content = \Input::get('content');
 				$newArticle->category = \Input::get('category');
 				$newArticle->open_at = \Input::get('open_at');   
@@ -116,13 +146,11 @@ class ArticleController extends \BaseController {
 				return \Redirect::route('spa.admin.articles.list', array('category'=>$newArticle->category));
 			}else{
 				$article = \SpaArticles::find($id);
-				$dosort = 0;
+				$sort = 'doNot';
 			}
 
 			$imgUploaderList = array(
                 'cover' => array('fieldName'=>'cov', 'items'=>null),
-                'image' => array('fieldName'=>'img', 'items'=>null),
-                'gallery' => array('fieldName'=>'galle', 'items'=>null),
                 );
 			foreach($imgUploaderList as $key=>$val){
                 $imgs = json_decode($article->$val['fieldName']);
@@ -132,7 +160,6 @@ class ArticleController extends \BaseController {
                             fps::getInstance()->delete($img->image);
                     }
                 }
-
                 $list = array();
                 $descFieldName = $val['fieldName'] . '_desc';
                 $imagesDesc = \Input::get($descFieldName, array());
@@ -145,7 +172,6 @@ class ArticleController extends \BaseController {
                         'text' => $imagesDesc[$idx],
                         );
                 }
-
                 $imgUploaderList[$key]['items'] = $list;
             }
 
@@ -156,7 +182,8 @@ class ArticleController extends \BaseController {
 			$article->open_at = \Input::get('open_at');
 			$article->status = \Input::get('status');
 			$article->lang = \Input::get('lang');
-			($dosort = 1) ? $article->sort = \SpaArticles::max('sort')+1 : $dosort = 1;
+			if($sort=='do')
+				$article->sort = \SpaArticles::max('sort')+1;
 			$article->save();
 			return \Redirect::route('spa.admin.articles.list', array('category'=>$article->category));
 		}catch(Exception $e)

@@ -7,6 +7,7 @@
 
 
 @section('content')
+{{ HTML::style('spa/css/tabBox.css'); }}
 <div id="mainContent" class="fullWidth" role="main">
 	<div class="breadcrumb">
 		<a href="{{URL::route('spa.index')}}">首頁</a>
@@ -74,14 +75,21 @@
 	</div>
 	<!-- slider end -->
 
-	<div class="shareCon">
-		@foreach($tabs as $t)
-		<div class="exempleTag">{{$t['title']}}</div>
-		<div class="shareWord">
-			{{$t['content']}}
+	<!-- Uses public/spa/css/tabBox.css -->
+	<article id="servBox">
+		<div class="shareCon">
+			 <ul class="tabNav">
+	            @foreach($tabs as $index=>$t)
+	            <li><a href="#tab{{$index}}" class="<?php echo ($index===0)?'curr':''?>"><?php echo $t['title']?></a></li>
+	            @endforeach
+	        </ul>
+
+	        @foreach($tabs as $index=>$t)
+	            <div class="tabBox <?php echo ($index===0)?'curr':''?>" id="tab<?php echo $index?>"><?php echo $t['content']?></div>
+	        @endforeach
+	        <!-- tabBox end -->
 		</div>
-		@endforeach
-	</div>
+	</article>
 
 	<div class="postNav">
 		<div>
