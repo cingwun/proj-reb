@@ -345,13 +345,13 @@ class ProductController extends \BaseController {
 		try {
 			$categorys = array();
 			$categorys['tw'] = \SpaProduct::where('_parent', 'N')
-			->where('lang', 'tw')
-			->orderBy('sort', 'DESC')
-			->get(array('id', 'title', 'sort', 'lang', 'ref'));
+										  ->where('lang', 'tw')
+										  ->orderBy('sort', 'DESC')
+										  ->get(array('id', 'title', 'sort', 'lang', 'ref', 'display'));
 			$categorys['cn'] = \SpaProduct::where('_parent', 'N')
-			->where('lang', 'cn')
-			->orderBy('sort', 'DESC')
-			->get(array('id', 'title', 'sort', 'lang', 'ref'));
+										  ->where('lang', 'cn')
+										  ->orderBy('sort', 'DESC')
+										  ->get(array('id', 'title', 'sort', 'lang', 'ref', 'display'));
 
 			$productListURL = \URL::route('spa.admin.product.article.list');
 			$categoryDeleteURL = \URL::route('spa.admin.product.category.delete');
@@ -481,7 +481,7 @@ class ProductController extends \BaseController {
     			$action = 'edit';
     			$writeURL .= "/".$id;
     			$category = \SpaProduct::where('id', $id)
-    			->first(array('id', 'title', 'image', 'image_desc', 'sort'));
+    								   ->first(array('id', 'title', 'image', 'image_desc', 'sort', 'display'));
     			if($category->image != '')
     				$cateCover[] = array(
     					'id' => $category->id,
@@ -519,6 +519,7 @@ class ProductController extends \BaseController {
     		$categoryCmd->image = \Input::get('image')[0];
     		$categoryCmd->image_desc = \Input::get('imageDesc')[0];
     		$categoryCmd->sort = \Input::get('sort');
+    		$categoryCmd->display = \Input::get('display');
     		if($action == 'create')
     			$categoryCmd->lang = 'tw';
 
@@ -535,7 +536,8 @@ class ProductController extends \BaseController {
     			$refCategoryCmd->sort = \Input::get('sort');
 				$refCategoryCmd->lang = 'cn';
 				$refCategoryCmd->ref = $inserted_id;
-
+				$refCategoryCmd->display = 'no';
+				
 	    		$refCategoryCmd->save();
 	    		$ref_inserted_id = $refCategoryCmd->id;
 

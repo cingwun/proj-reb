@@ -13,6 +13,13 @@
             @include('spa_admin._partials.widget_imageUploader', array('options'=>array('elementId'=>'image-box', 'title'=>'描述圖片', 'uploadURL'=>fps::getUploadURL(), 'deleteURL'=>fps::getDeleteURL())))
             <label class="control-label" for="title">排序 (輸入數字)</label>
             <input type="text" class="form-control" name="sort" size="12" value="@if($action=='edit'){{$category->sort}}@else 1@endif" onkeyup="value=value.replace(/[^\d]/g,'')"/>
+            <label>狀態</label><br/>
+            <label class="radio-inline">
+                <input type="radio" name="display" value="yes" @if($action == 'edit')@if($category->display == 'yes') checked @endif@endif @if($action=='create')checked@endif/>顯示
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="display" value="no" @if($action == 'edit')@if($category->display == 'no') checked @endif@endif/>隱藏
+            </label>
         </div>
         <input type="hidden" name="action" value="{{$action}}"/>
         <a href='javascript:history.back()' type="button" class="btn btn-danger">取消</a>

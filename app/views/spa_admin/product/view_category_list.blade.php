@@ -17,6 +17,7 @@
                     <th>分類標題</th>
                     <th>排序</th>
                     <th>語系</th>
+                    <th>顯示狀態</th>
                     <th>功能</th>
                 </tr>
             </thead>
@@ -27,6 +28,13 @@
                     <td>{{$cat->sort}}</td>
                     <td id='{{$cat->lang}}'>
                         @if($cat->lang == 'tw')繁體@else簡體@endif
+                    </td>
+                    <td>
+                    @if($cat->display === 'yes')
+                    <span style="color: #00AA00">顯示</span>
+                    @else
+                    隱藏
+                    @endif
                     </td>
                     <td>
                         <a href="{{$productListURL}}?lang={{$cat->lang}}&category={{$cat->id}}" title="{{$cat->title}}相關文章" class="btn btn-sm btn-success">文章</a>
@@ -46,6 +54,7 @@
                     <th>分類標題</th>
                     <th>排序</th>
                     <th>語系</th>
+                    <th>顯示狀態</th>
                     <th>功能</th>
                 </tr>
             </thead>
@@ -56,6 +65,13 @@
                     <td>{{$cat->sort}}</td>
                     <td id='{{$cat->lang}}'>
                         @if($cat->lang == 'tw')繁體@else簡體@endif
+                    </td>
+                    <td>
+                    @if($cat->display === 'yes')
+                    <span style="color: #00AA00">顯示</span>
+                    @else
+                    隱藏
+                    @endif
                     </td>
                     <td>
                         <a href="{{$productListURL}}?lang={{$cat->lang}}&category={{$cat->id}}" title="{{$cat->title}}相關文章" class="btn btn-sm btn-success">文章</a>
