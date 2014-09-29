@@ -32,8 +32,8 @@
 				</div>
 				<!-- @text for each shareCase class list -->
 				<div class="itemDown">
-					課程項目:@foreach($share['labelProduct'] as $l){{$l['title']." "}}@endforeach
-							 @foreach($share['labelService'] as $l){{$l['title']." "}}@endforeach
+					課程項目:@foreach($share['labelProduct'] as $l){{$l['title']."、"}}@endforeach
+							 @foreach($share['labelService'] as $l){{$l['title']."、"}}@endforeach
 				</div>
 			</div>
 		</div>

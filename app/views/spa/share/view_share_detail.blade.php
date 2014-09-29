@@ -33,10 +33,12 @@
 			<div class="classPro">
 				<div><p>專業產品：</p></div>
 				<!-- @text for shareTag -->
-				@foreach($labelProduct as $lp)
-					<a href="#"><div class="shareTag_btn">{{$lp['title']}}</div></a>
-				@endforeach
-			</div>
+					<div class="shareTag">
+					@foreach($labelProduct as $lp)
+						<a href="#"><div class="shareTag_btn">{{$lp['title']}}</div></a>
+					@endforeach
+					</div>
+				</div>
 			<div class="classDes">
 				<!-- @text for productDescription -->
 				{{$article->description}}
@@ -45,15 +47,12 @@
 	</div>
 	<!-- sliderBox -->
 	<div class="slider" id="sliderBox">
-		<span class="btn-close" alt="關閉">關閉</span>
+		<!-- <span class="btn-close" alt="關閉">關閉</span>
 		<div class="main-title">小護士靠立塑終結萬年小腹</div>
-		<div class="photo-num">第<span class="no number">1</span>張&nbsp;/&nbsp;共<span class="number">8</span>張</div>
+		<div class="photo-num">第<span class="no number">1</span>張&nbsp;/&nbsp;共<span class="number">8</span>張</div> -->
 		<div class="clear"></div>
 		<div class="wrapper">
 			<ul class="container-images">
-				<!--@images for colorbox
-				    @text for the lightbox title fetch from following <p>
-			    -->
 				@foreach($gallery as $gallery)
 				<li>
 					<a rel="gallery1" href="{{$gallery->image}}" title="{{$gallery->text}}">
@@ -80,12 +79,12 @@
 		<div class="shareCon">
 			 <ul class="tabNav">
 	            @foreach($tabs as $index=>$t)
-	            <li><a href="#tab{{$index}}" class="<?php echo ($index===0)?'curr':''?>"><?php echo $t['title']?></a></li>
+	            <li><a href="#tab{{$index}}" class="{{ ($index===0)?'curr':''}}">{{ $t['title']}}</a></li>
 	            @endforeach
 	        </ul>
 
 	        @foreach($tabs as $index=>$t)
-	            <div class="tabBox <?php echo ($index===0)?'curr':''?>" id="tab<?php echo $index?>"><?php echo $t['content']?></div>
+	            <div class="tabBox {{ ($index===0)?'curr':''}}" id="tab{{ $index}}">{{ $t['content']}}</div>
 	        @endforeach
 	        <!-- tabBox end -->
 		</div>

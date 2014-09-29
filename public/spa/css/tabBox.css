@@ -69,3 +69,81 @@
 #casePost #servBox .tabBox {
 	width: 930px
 }
+
+#newTechBox .tabNav {
+	margin: 0;
+	padding: 3px 0 0 0;
+	border-bottom: 5px solid #cecece;
+	height: 34px
+}
+#newTechBox .tabNav li {
+	margin: 0 1px;
+	height: 34px
+}
+#newTechBox .tabNav a {
+	background: url(../img/bg/tabNav_bg.png) repeat-x;
+	padding: 0 15px;
+	border: 1px solid #cecece;
+	border-bottom: none;
+	height: 34px;
+	line-height: 34px;
+	color: #4c4c4c
+}
+#newTechBox .tabNav a:hover {
+	color: #da7a2c
+}
+#newTechBox .tabNav .curr {
+	margin: -3px 0 0 0;
+	height: 37px;
+	line-height: 37px;
+	color: #da7a2c
+}
+#newTechBox .tabBox {
+	margin: 0;
+	width: 700px;
+	height: auto;
+	overflow: hidden;
+	display: none
+}
+#newTechBox .tabBox.curr {
+	display: block
+}
+
+#faq .tabBox ul {
+	padding: 0;
+	margin: 0
+}
+#faq .tabBox li {
+	margin-bottom: 30px;
+	border-bottom: 1px dotted #ccc;
+	width: 100%
+}
+#faq .tabBox li p {
+	padding-left: 35px;
+	display: block;
+	position: relative;
+	padding-bottom: 15px
+}
+#faq .tabBox li p:before {
+	position: absolute;
+	display: block;
+	width: 29px;
+	height: 30px;
+	left: 0;
+	top: 0;
+	content: "";
+	background: url(../img/sign/faqIcon.png) no-repeat top left
+}
+#faq .tabBox li p.anser:before {
+	background-position: -30px
+}
+#newTechBox .tabBox {
+	margin: 0;
+	width: 700px;
+	height: auto;
+	overflow: hidden;
+	display: none
+}
+#newTechBox .tabBox.curr {
+	display: block
+}

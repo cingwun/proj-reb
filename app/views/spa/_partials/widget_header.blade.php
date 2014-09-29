@@ -44,8 +44,8 @@ if($prodCatsCmd)
 	<div class="innerWrap">
 		<h1><a href="/">煥儷美顏SPA</a></h1>
 		<div class="languageSwitch">
-			<a href="#">繁體中文</a>
-			<a class="last" href="#">简体中文</a>
+			<a href="<?=asset('tw')?>">繁體中文</a>
+			<a class="last" href="<?=asset('cn')?>">简体中文</a>
 			<form class="searchBox" action="/" method="post"><input type="text" placeholder="請輸入關鍵字" /><button type="submit"><span>搜尋</span></button></form>
 		</div>
 		<div class="memberFunc funcBar">
@@ -101,7 +101,7 @@ if($prodCatsCmd)
 					<li class="lv1_list"><a class="lv1_link" href="{{URL::route('spa.reservation.form')}}">觀光醫療特惠活動</a></li>
 				</ul>
 			</li>
-			<li class="navs"><a class="navsTitle goAes" class="goAes" href="/aesthetics">煥麗醫美診所</a></li>
+			<li class="navs"><a class="navsTitle goAes" class="goAes" href="{{URL::route('frontend.index')}}">煥麗醫美診所</a></li>
 			</ul>
 
 		</nav><!-- ======================== mainNav end ======================== -->
