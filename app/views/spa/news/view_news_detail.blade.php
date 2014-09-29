@@ -22,7 +22,7 @@
 	<!-- pagedetails -->
 	<div id="contentInner">
 		<!-- @image, for the Post Image -->
-		<!-- <img src="http://placehold.it/700x430"> -->
+		<img src="{{$cover[0]->image}}?w=700&h=430">
 		<div class="contentArticle">
 			<!-- @text, for Post Content -->
 			<p>

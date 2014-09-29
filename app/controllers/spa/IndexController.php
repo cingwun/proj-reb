@@ -14,6 +14,7 @@ class IndexController extends \BaseController{
 							 ->get()
 							 ->toArray();
 		$newsCount = count($news);
+		$cover = json_decode($news[0]['cover']);
 
 		$service = \SpaService::where('display', 'yes')
 							  ->orderBy('sort', 'desc')
@@ -23,7 +24,8 @@ class IndexController extends \BaseController{
 		return \View::make('spa.index.view_index', array(
 			'news'=>$news,
 			'service'=>$service,
-			'newsCount'=>$newsCount
+			'newsCount'=>$newsCount,
+			'cover'=>$cover
 			));
 		
 	}

@@ -73,24 +73,16 @@
 
 	@elseif($titleType=='news')
 	<div class="setListWrap">
-		<h3 class="titleRp h3_hot hotClass">熱門課程推薦</h3>
+		<h3 class="titleRp h3_hot hotClass">熱門課程推薦</h3> <!-- 熱門課程=熱門服務項目 -->
 		<ul class="setList hotList classList">
+			<?php $i = 0; ?>
+			@foreach($hotService as $s)
+			<?php $i++; ?>
 			<li class="classSub">
-				<i>1</i>
-				<a class="classSubTitle" href="#">養皮術</a>
+				<i>{{$i}}</i>
+				<a class="classSubTitle" href="#">{{$s->title}}</a>
 			</li>
-			<li class="classSub">
-				<i>2</i>
-				<a class="classSubTitle" href="#">基因更生療法</a>
-			</li>
-			<li class="classSub">
-				<i>3</i>
-				<a class="classSubTitle" href="#">熱帶雨林體膚療程</a>
-			</li>
-			<li class="classSub">
-				<i>4</i>
-				<a class="classSubTitle" href="#">美胸保健塑形課程</a>
-			</li>
+			@endforeach
 		</ul>
 	</div>
 

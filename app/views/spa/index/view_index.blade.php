@@ -15,7 +15,7 @@
 		<div class="funcBar"><a href="{{URL::route('spa.news')}}" class="more">more</a></div>
 		<ul class="infoList">
 			<li>
-				<span class="imgWrap"><img src="http://placehold.it/288x343" /></span>
+				<span class="imgWrap"><img src="{{$cover[0]->image}}?w=100" /></span>
 				<div class="newsFirstWrapper">
 					<a class="firstLink" href="{{URL::route('spa.news.detail')}}/{{array_get($news[0], 'id')}}">{{ \Text::preEllipsize(strip_tags(array_get($news[0], 'title')), 87) }}</a>
 					<time class="firstDate" datetime="{{array_get($news[0], 'open_at')}}">{{array_get($news[0], 'open_at')}}</time>
@@ -40,8 +40,8 @@
 		<li>
 			<a href="{{URL::route('spa.service', array($s->id))}}">
 			<img src="{{$s->image}}?w=200"/>
-			<h4>{{$s->title}}</h4><!-- 限兩行 -->
-			<p class="servContent">{{$s->content}}</p><!-- 限四行 -->
+			<h4>{{ \Text::preEllipsize(strip_tags($s->title), 26) }}</h4><!-- 限兩行 -->
+			<p class="servContent">{{ \Text::preEllipsize(strip_tags($s->title), 52) }}</p><!-- 限四行 -->
 			<p class="more" href="{{URL::route('spa.service', array($s->id))">深入了解</p>
 			</a>
 		</li>

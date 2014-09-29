@@ -11,8 +11,12 @@ class NewsContoller extends \BaseController {
 								 ->orderBy('open_at', 'desc')
 								 ->orderBy('sort', 'desc')
 								 ->paginate(5);
+			$hotService = \SpaService::where('_parent', '!=', 'N')
+									 ->orderBy('views', 'desc')
+									 ->take(4)
+									 ->get();
 			if($model)
-            	return \View::make('spa.news.view_news_list', array('news'=>$model));
+            	return \View::make('spa.news.view_news_list', array('news'=>$model, 'hotService'=>$hotService));
 		}catch(Exception $e) {
 			throw new Exception ('Error request [11]');
 		}
@@ -34,19 +38,6 @@ class NewsContoller extends \BaseController {
 				$article->views = $article->views + 1;
                 $article->save();
             }
-			// $prevID = \SpaArticles::where('category', 'news')
-			// 					  ->where('status', '1')
-			// 					  ->where('open_at', '>', $article->open_at)
-			// 					  ->where('sort', '>=', $article->sort)
-			// 					  ->min('id');
-			// $prevArticle = \SpaArticles::find($prevID);
-
-			// $nextID = \SpaArticles::where('category', 'news')
-			// 					  ->where('status', '1')
-			// 					  ->where('open_at', '<', $article->open_at)
-			// 					  ->where('sort', '>=', $article->sort)
-			// 					  ->max('id');
-			// $nextArticle = \SpaArticles::find($nextID);
 
 			$prevArticle = \SpaArticles::where('category', 'news')
 									   ->where('status', '=', '1')
@@ -59,12 +50,21 @@ class NewsContoller extends \BaseController {
                              		   ->where('updated_at', '<', $article->updated_at)
                              		   ->first(array('id', 'title'));
 
+            $hotService = \SpaService::where('_parent', '!=', 'N')
+									 ->orderBy('views', 'desc')
+									 ->take(4)
+									 ->get();
+
+			$cover = json_decode($article->cover);
+
 			return \View::make('spa.news.view_news_detail', array(
 															 'article'=>$article,
 															 'prevArticle'=>$prevArticle,
 															 'nextArticle'=>$nextArticle,
 															 'publish'=>$article->open_at,
-															 'views'=>$article->views
+															 'views'=>$article->views,
+															 'hotService'=>$hotService,
+															 'cover'=>$cover
 															 ));
 		}catch(Exception $e) {
 			throw new Exception ('Error request [11]');
