@@ -26,7 +26,7 @@
 				<!-- @text for shareTag -->
 				<div class="shareTag">
 					@foreach($labelService as $ls)
-					<a href="#"><div class="shareTag_btn">{{$ls['title']}}</div></a>
+					<a href="{{URL::route('spa.service.detail', array($ls['id']))}}"><div class="shareTag_btn">{{$ls['title']}}</div></a>
 					@endforeach
 				</div>
 			</div>
@@ -35,7 +35,7 @@
 				<!-- @text for shareTag -->
 					<div class="shareTag">
 					@foreach($labelProduct as $lp)
-						<a href="#"><div class="shareTag_btn">{{$lp['title']}}</div></a>
+						<a href="{{URL::route('spa.product.detail', array($lp['id']))}}"><div class="shareTag_btn">{{$lp['title']}}</div></a>
 					@endforeach
 					</div>
 				</div>

@@ -15,6 +15,7 @@ class NewsContoller extends \BaseController {
 
 			$hotService = \SpaService::where('_parent', '!=', 'N')
 									 ->where('lang', $this->getLocale())
+									 ->where('display', 'yes')
 									 ->orderBy('views', 'desc')
 									 ->take(4)
 									 ->get();
@@ -58,6 +59,8 @@ class NewsContoller extends \BaseController {
                              		   ->first(array('id', 'title'));
 
             $hotService = \SpaService::where('_parent', '!=', 'N')
+            						 ->where('lang', $this->getLocale())
+            						 ->where('display', 'yes')
 									 ->orderBy('views', 'desc')
 									 ->take(4)
 									 ->get();

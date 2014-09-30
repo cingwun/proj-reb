@@ -47,7 +47,7 @@
 			<?php $i++; ?>
 			<li class="classSub">
 				<i>{{$i}}</i>
-				<a class="classSubTitle" href="#">{{$s->title}}</a>
+				<a class="classSubTitle" href="{{URL::route('spa.service.detail', array($s->id))}}">{{$s->title}}</a>
 			</li>
 			@endforeach
 		</ul>

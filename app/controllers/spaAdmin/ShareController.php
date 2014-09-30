@@ -94,19 +94,37 @@ class ShareController extends \BaseController {
 
             //For Label Using
             $labelItems = array('service'=>array(), 'product'=>array());
-            $items = \SpaService::where('_parent', '<>', 'N')
-                    ->orderBy('_parent', 'desc')
-                    ->orderBy('sort', 'desc')
-                    ->orderBy('updated_at', 'desc')
-                    ->get(array('id', 'title'));
+            if($id) {
+                $items = \SpaService::where('_parent', '<>', 'N')
+                                    ->where('lang', array_get($article, 'language'))
+                                    ->orderBy('_parent', 'desc')
+                                    ->orderBy('sort', 'desc')
+                                    ->orderBy('updated_at', 'desc')
+                                    ->get(array('id', 'title'));
+            }else {
+                $items = \SpaService::where('_parent', '<>', 'N')
+                                    ->orderBy('_parent', 'desc')
+                                    ->orderBy('sort', 'desc')
+                                    ->orderBy('updated_at', 'desc')
+                                    ->get(array('id', 'title'));
+            }
             foreach($items as $item)
                 $labelItems['service'][$item->id] = $item->title;
 
-            $items = \SpaProduct::where('_parent', '<>', 'N')
-                    ->orderBy('_parent', 'desc')
-                    ->orderBy('sort', 'desc')
-                    ->orderBy('updated_at', 'desc')
-                    ->get(array('id', 'title'));
+            if($id) {
+                $items = \SpaProduct::where('_parent', '<>', 'N')
+                                    ->where('lang', array_get($article, 'language'))
+                                    ->orderBy('_parent', 'desc')
+                                    ->orderBy('sort', 'desc')
+                                    ->orderBy('updated_at', 'desc')
+                                    ->get(array('id', 'title'));
+            }else{
+                $items = \SpaProduct::where('_parent', '<>', 'N')
+                                    ->orderBy('_parent', 'desc')
+                                    ->orderBy('sort', 'desc')
+                                    ->orderBy('updated_at', 'desc')
+                                    ->get(array('id', 'title'));
+            }
             foreach($items as $item)
                 $labelItems['product'][$item->id] = $item->title;
 
