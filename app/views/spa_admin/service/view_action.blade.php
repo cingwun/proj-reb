@@ -7,13 +7,10 @@
 編輯服務項目
 @endif
 
-@if($action == 'edit')
-@if($service->lang == 'tw')
-(繁體)
-@endif
-@if($service->lang == 'cn')
-(簡體)
-@endif
+@if($listLang == 'tw')
+( 繁體 )
+@else
+( 簡體 )
 @endif
 @stop
 
@@ -49,16 +46,12 @@
 		</label>
 	</div>
 	<div class="form-group">
-		<label>語系</label><br/>
-		@if($action == 'create' && $listLang =='tw')
-		繁體<input type='hidden' name="lang" value="tw"/>
-		@elseif($action == 'create' && $listLang =='cn')
-		簡體<input type='hidden' name="lang" value="cn"/>
-		@elseif($action == 'edit' && $service->lang == 'tw')
-		繁體<input type='hidden' name="lang" value="tw"/>
-		@elseif($action == 'edit' && $service->lang == 'cn')
-		簡體<input type='hidden' name="lang" value="cn"/>
-		@endif
+		<label>Meta name</label>
+		<input class="form-control" type="text" name="meta_name" value="@if($action == 'edit'){{$service->meta_name}}@endif"/>
+	</div>
+	<div class="form-group">
+		<label>Meta content</label>
+		<input class="form-control" type="text" name="meta_content" value="@if($action == 'edit'){{$service->meta_content}}@endif"/>
 	</div>
 	<div class="form-group">
 		<input type="hidden" name="action" value="{{$action}}"/>

@@ -23,6 +23,7 @@ class ServiceController extends \BaseController{
 					$servCmd = \SpaService::where('_parent', $serviceCatCmd['id'])
 										  ->where('display', 'yes')
 										  ->where('lang', $this->getLocale())
+										  ->orderBy('sort', 'DESC')
 										  ->get(array('id', 'title', 'image'))
 			  	 						  ->toArray();
 					$serviceCats[$row][] = array(
@@ -86,6 +87,7 @@ class ServiceController extends \BaseController{
 				foreach ($categorysCmd as $category) {
 					$servCmd = \SpaService::where('_parent', $category['id'])
 										  ->where('display', 'yes')
+										  ->orderBy('sort', 'DESC')
 										  ->get(array('id', 'title'))
 			  	 						  ->toArray();
 			  	 	$categorys[] = array(

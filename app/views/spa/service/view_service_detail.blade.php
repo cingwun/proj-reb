@@ -51,3 +51,7 @@
 </div>
 </div>
 @stop
+
+@section('head')
+<meta name="{{$service['meta_name']}}" content="{{$service['meta_content']}}">
+@stop

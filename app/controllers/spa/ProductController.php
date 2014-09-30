@@ -13,6 +13,7 @@ class ProductController extends \BaseController{
 			$productsCmd = \SpaProduct::where('_parent', '<>', 'N')
 									  ->where('display', 'yes')
 									  ->where('lang', $this->getLocale())
+									  ->orderBy('sort', 'DESC')
 									  ->get(array('id', 'title', 'image'))
 									  ->toArray();
 			if($productsCmd)
@@ -99,6 +100,7 @@ class ProductController extends \BaseController{
 			$categorysCmd = \SpaProduct::where('_parent', 'N')
 									   ->where('display', 'yes')
 									   ->where('lang', $this->getLocale())
+									   ->orderBy('sort', 'DESC')
 									   ->get(array('id', 'title'))
 									   ->toArray();
 			if($categorysCmd)
@@ -115,7 +117,8 @@ class ProductController extends \BaseController{
 									  ->where('_parent', $cat)
 									  ->where('lang', $this->getLocale());
 			$rowsNum = $productsCmd->count();
-			$productsCmd = $productsCmd->skip($offset)
+			$productsCmd = $productsCmd->orderBy('sort', 'DESC')
+									   ->skip($offset)
                         			   ->take($limit)
 									   ->get()
 									   ->toArray();
@@ -126,7 +129,7 @@ class ProductController extends \BaseController{
 									 ->first(array('id', 'title', 'image'))
 									 ->toArray();
 
-			$productListURL = \URL::route('spa.product.list', array('cat'=>$cat));
+			$productListURL = \URL::route('spa.product.list');
 			$pageURL = \URL::route('spa.product.list', array('cat'=>$cat));
 			$productDetailURL = \URL::route('spa.product.detail');
 			$productURL = \URL::route('spa.product');

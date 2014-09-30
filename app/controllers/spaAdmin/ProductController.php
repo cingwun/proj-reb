@@ -195,7 +195,7 @@ class ProductController extends \BaseController {
 	 * @params (int) $id
 	 */
 	public function postWriteProduct($id = null) {
-		$listLang = \Input::get('lang', "tw");
+		$listLang = \Input::get('listLang', "tw");
 		$articlecat = \Input::get('category', null);
 		$action = \Input::get('action');
 		try {
@@ -234,6 +234,8 @@ class ProductController extends \BaseController {
 			$content = \Input::get('content');
 			$capacity = \Input::get('capacity');
 			$price = \Input::get('price');
+			$meta_name = \Input::get('meta_name');
+			$meta_content = \Input::get('meta_content');
 
 			$product->title = !empty($title) ? $title : "";;
 			$product->image = !empty($image) ? $image : "";
@@ -244,7 +246,9 @@ class ProductController extends \BaseController {
 			$product->tag = json_encode($tabs);
 			$product->_parent = \Input::get('cat');
 			$product->display = \Input::get('display');
-			$product->lang = \Input::get('lang');
+			$product->lang = $listLang;
+			$product->meta_name = !empty($meta_name) ? $meta_name : "";
+			$product->meta_content = !empty($meta_content) ? $meta_content : "";
 			$product->save();
 
 			//create service id
@@ -293,8 +297,10 @@ class ProductController extends \BaseController {
 				$anotherProduct->tag = json_encode($tabs);
 				$anotherProduct->_parent = $anotherProductCat;
 				$anotherProduct->display = "no";
-				$anotherProduct->lang = $langControlGroup[\Input::get('lang')];
+				$anotherProduct->lang = $langControlGroup[$listLang];
 				$anotherProduct->ref = $inserted_id;
+				$anotherProduct->meta_name = !empty($meta_name) ? $meta_name : "";
+				$anotherProduct->meta_content = !empty($meta_content) ? $meta_content : "";
 				$anotherProduct->save();
 
 				$anotherId = $anotherProduct->id;
@@ -303,7 +309,7 @@ class ProductController extends \BaseController {
 				$createProduct->ref = $anotherId;
 				$createProduct->save();
 			}
-			return \Redirect::route("spa.admin.product.article.list", array('category'=>$articlecat));
+			return \Redirect::route("spa.admin.product.article.list", array('category'=>$articlecat, 'lang'=>$listLang));
 		} catch (Exception $e) {
 			echo $e->getMessage();
 			exit;
