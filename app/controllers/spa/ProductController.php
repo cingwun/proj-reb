@@ -49,15 +49,23 @@ class ProductController extends \BaseController{
 				$categorys = $categorysCmd;
 				
 			$product = array();
-			$productCmd = \SpaProduct::find($id);
-			//set views
-			if(\ViewsAdder::views_cookie('product', $id)) {
-				$productCmd->views += 1; 
-				$productCmd->save();
+			$productCmd = \SpaProduct::where('id', $id)
+									 ->where('lang', $this->getLocale());
+			
+			if($productCmd->first()) {
+				$product = $productCmd->first()
+									  ->toArray();
+			}else {
+				throw new \Exception("the product $id data is not exist");
+				exit;
 			}
 			
-			if($productCmd)
-				$product = $productCmd->toArray();
+			//set views
+			if(\ViewsAdder::views_cookie('product', $id)) {
+				$productCmd = $productCmd->first();
+            	$productCmd->views = $productCmd->views + 1;
+              	$productCmd->save();
+			}
 
 			$productCat = \SpaProduct::find($product['_parent'])
 									 ->toArray();

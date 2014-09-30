@@ -356,29 +356,12 @@ class ServiceController extends \BaseController {
 			if($catsCNCmd)
 				$catsCN = $catsCNCmd;
 
-			$catsTWactionURL = array();
-			$catsTWservListURL = array();
-			foreach ($catsTW as $cat) {
-				$catsTWactionURL[$cat->id] = \URL::route('spa.admin.service.category.action', array('id'=>$cat->id));
-				$catsTWservListURL[$cat->id] = \URL::route('spa.admin.service.article.list', array('lang'=>$cat->lang, 'category'=>$cat->id));
-			}
-			$catsCNactionURL = array();
-			$catsCNservListURL = array();
-			foreach ($catsCN as $cat) {
-				$catsCNactionURL[$cat->id] = \URL::route('spa.admin.service.category.action', array('id'=>$cat->id));
-				$catsCNservListURL[$cat->id] = \URL::route('spa.admin.service.article.list', array('lang'=>$cat->lang, 'category'=>$cat->id));
-			}
-
 			$categorys = array(
 				'tw'=>array(
-					'item' => $catsTW,
-					'actionURL' => $catsTWactionURL,
-					'servListURL' => $catsTWservListURL
+					'item' => $catsTW
 				),
 				'cn'=>array(
-					'item' => $catsCN,
-					'actionURL' => $catsCNactionURL,
-					'servListURL' => $catsCNservListURL
+					'item' => $catsCN
 				)
 			);
 
