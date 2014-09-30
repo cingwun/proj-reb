@@ -60,18 +60,21 @@ class ServiceController extends \BaseController{
 			$serviceCmd = \SpaService::where('id', $id)
 									 ->where('lang', $this->getLocale());
 
+
+			if($serviceCmd->first()) {
+				$service = $serviceCmd->first()
+									  ->toArray();
+			}else {
+				throw new \Exception("the service $id data is not exist .");
+				exit;
+			}
+			
 			//set views
 			if(\ViewsAdder::views_cookie('service', $id)) {
 				$serviceCmd = $serviceCmd->first();
             	$serviceCmd->views = $serviceCmd->views + 1;
               	$serviceCmd->save();
             }
-
-			if($serviceCmd->first())
-				$service = $serviceCmd->first()
-									  ->toArray();
-
-
             
 			$categorysCmd = \SpaService::where('_parent', 'N') 
 									   ->where('display', 'yes')
