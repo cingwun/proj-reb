@@ -15,7 +15,7 @@
             <thead>
                 <tr>
                     <th>分類標題</th>
-                    <th width="25">排序</th>
+                    <th width="50">排序</th>
                     <th width="50">狀態</th>
                     <th width="163">功能</th>
                 </tr>
