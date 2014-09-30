@@ -31,3 +31,7 @@
 	<!-- pagedetails end -->
 </article><!--  mainContent end  -->
 @stop
+
+@section('head')
+<meta name="{{array_get($article, 'meta_name')}}" content="{{array_get($article, 'meta_content')}}">
+@stop

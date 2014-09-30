@@ -137,6 +137,8 @@ class ArticleController extends \BaseController {
 				$newArticle->status = \Input::get('status');
 				$newArticle->lang = \Input::get('lang');
 				$newArticle->sort = \SpaArticles::max('sort')+1;
+				$newArticle->meta_name = \Input::get('meta_name');
+				$newArticle->meta_content = \Input::get('meta_content');
 
 				$newArticle->ref_id = $refArticle->id;
 				$newArticle->save();
@@ -182,6 +184,8 @@ class ArticleController extends \BaseController {
 			$article->open_at = \Input::get('open_at');
 			$article->status = \Input::get('status');
 			$article->lang = \Input::get('lang');
+			$article->meta_name = \Input::get('meta_name');
+			$article->meta_content = \Input::get('meta_content');
 			if($sort=='do')
 				$article->sort = \SpaArticles::max('sort')+1;
 			$article->save();

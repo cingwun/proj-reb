@@ -187,8 +187,6 @@ class ShareController extends \BaseController {
                 'gallery' => array('fieldName'=>'galle', 'items'=>null),
                 );
 
-
-
             foreach($imgUploaderList as $key=>$val){
                 $imgs = json_decode($model->$val['fieldName']);
                 if (!empty($imgs) && sizeof($imgs)>0){
@@ -228,6 +226,8 @@ class ShareController extends \BaseController {
             $model->status = $status % 2;
             $model->isInSiderbar = $isInSiderbar % 2;
             ($sort == 'do') ? $model->sort = \SpaShares::max('sort')+1 : $sort = 'doNot';
+            $model->meta_name = \Input::get('meta_name');
+            $model->meta_content = \Input::get('meta_content');
             $model->language = \Input::get('lang');
             $model->save();
 

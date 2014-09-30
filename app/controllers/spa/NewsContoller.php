@@ -9,6 +9,7 @@ class NewsContoller extends \BaseController {
 			$model = \SpaArticles::where('category', 'news')
 								 ->where('lang', $this->getLocale())
 								 ->where('status', '1')
+								 ->where('open_at', '<=', new \DateTime('today'))
 								 ->orderBy('open_at', 'desc')
 								 ->orderBy('sort', 'desc')
 								 ->paginate(5);
@@ -46,6 +47,7 @@ class NewsContoller extends \BaseController {
 			$prevArticle = \SpaArticles::where('category', 'news')
 									   ->where('lang', $this->getLocale())
 									   ->where('status', '=', '1')
+									   ->where('open_at', '<=', new \DateTime('today'))
                              		   ->where('sort', '>=', $article->sort)
                              		   ->where('updated_at', '>', $article->updated_at)
                              		   ->orderBy('sort', 'asc')
@@ -53,6 +55,7 @@ class NewsContoller extends \BaseController {
             $nextArticle = \SpaArticles::where('category', 'news')
             						   ->where('lang', $this->getLocale())
 									   ->where('status', '=', '1')
+									   ->where('open_at', '<=', new \DateTime('today'))
                              		   ->where('sort', '<=', $article->sort)
                              		   ->where('updated_at', '<', $article->updated_at)
                              		   ->orderBy('sort', 'desc')

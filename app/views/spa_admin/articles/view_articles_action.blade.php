@@ -49,7 +49,7 @@
 		<div class="form-group">
 			<label for="open_at">上架日期</label>    
 			<div>
-				<input class="datepicker" data-date-format="mm/dd/yyyy" id="open_at" name="open_at" size="12" value="{{array_get($specArticle, 'open_at', date("Y-m-d"))}}">
+				<input class="datepicker" data-date-format="yyyy/mm/dd" id="open_at" name="open_at" size="12" value="{{array_get($specArticle, 'open_at', date("Y-m-d"))}}">
 			</div>
 		</div>
 
@@ -90,6 +90,17 @@
 			@endif
 		</div>
 
+		<div class="form-group">
+			<label for="meta">Meta Name:</label>
+			<div>
+				<input type="text" class="form-control" id="meta_name" name="meta_name" size="12" value="{{array_get($specArticle, 'meta_name', '')}}">
+			</div>
+			<label for="meta">Meta Content:</label>
+			<div>
+				<input type="text" class="form-control" id="meta_content" name="meta_content" size="12" value="{{array_get($specArticle, 'meta_content', '')}}">
+			</div>
+		</div>
+
 
 		<!--<input type="hidden" name="_method" value="POST" />-->
 		<input type="hidden" name="id" value="{{ array_get($specArticle, 'id')}}" method="post"/>
@@ -116,6 +127,7 @@ $(function() {
 @stop
 
 @section('head')
+{{ HTML::style(asset('packages/timepicker/css/datepicker.css')) }}
 {{ HTML::style(asset('css/admin/widgets/imageUploader/css_widget_imageUploader.css')) }}
 @stop
 
@@ -125,6 +137,8 @@ $(function() {
 {{ HTML::script(asset('packages/jquery-file-upload/js/jquery.fileupload.js')) }}
 {{ HTML::script(asset('packages/jquery-file-upload/js/jquery.fileupload-process.js')) }}
 {{ HTML::script(asset('js/admin/widgets/imageUploader/js_widget_imageUploader.js')) }}
+{{ HTML::script('/packages/timepicker/js/bootstrap-datepicker.js')}}
+
 
 <script type="text/javascript">
         var imgUploaderCover = _imageUploader({

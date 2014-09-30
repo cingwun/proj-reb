@@ -21,7 +21,7 @@
                 <tr>
                   <th>封面圖片</th>
                   <th>標題/背景顏色</th>
-                  <th>狀態/顯示至siderbar</th>
+                  <th>狀態</th>
                   <th>時間</th>
                   <th>瀏覽數</th>
                   <th hidden="hidden">排序</th>
@@ -43,7 +43,7 @@
                         @endif
                     </td>
                     <td>{{ $article->title}}<br /><div style="width: 20px; height: 20px; background-color: {{ $article->background_color}}"></div></td>
-                    <td>{{ ($article->status=='1') ? '<span style="color: #00AA00">顯示</span>' : '隱藏'}} / {{ ($article->isInSiderbar=='1') ? '<span style="color: #00AA00">顯示</span>' : '隱藏'}} </td>
+                    <td>{{ ($article->status=='1') ? '<span style="color: #00AA00">顯示</span>' : '隱藏'}}</td>
                     <td>{{ "建立: ".$article->created_at."<br>更新: ".$article->updated_at}}</td>
                     <td>{{ $article->views}}</td>
                     <td hidden="hidden"><?php echo $article->sort?></td>

@@ -1,7 +1,7 @@
 @extends('admin._layouts.default')
  
 @section('main')
-<h2>使用者列表{{ Session::get('where')}}</h2>
+<h2>使用者列表</h2>
 <div class="pull-right"><a href="{{ URL::to('admin/users/create') }}" class="btn">新增使用者</a></div>
 <table class="table table-bordered" ng-controller="usersCtrl">
 <thead>
