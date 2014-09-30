@@ -6,9 +6,7 @@
 	"require": {
 		"laravel/framework": "4.1.*",
         "cartalyst/sentry": "2.1.*",
-        "intervention/image": "dev-master",
-        "codesleeve/social": "dev-master",
-        "orchestra/imagine": "2.3.*@dev"
+        "codesleeve/social": "dev-master"
 	},
 	"autoload": {
 		"classmap": [

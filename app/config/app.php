@@ -106,7 +106,6 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
         'Cartalyst\Sentry\SentryServiceProvider',
-        'Intervention\Image\ImageServiceProvider', // @see http://intervention.olivervogel.net/image/getting_started/laravel
         'Codesleeve\Social\SocialServiceProvider', // @see https://github.com/CodeSleeve/social
 	),
 
