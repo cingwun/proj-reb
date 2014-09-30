@@ -98,7 +98,7 @@ Route::group(array('prefix'=>'admin', 'before'=>'auth.admin'), function()
         Route::post('fps/delete', array('as'=>'admin.fps.delete', 'uses'=>'FpsController@postDelete'));
 
         //admin module users
-        Route::resource('users','UsersController');
+        Route::get('users/list', array('as'=>'admin.users.list', 'uses'=>'UsersController@getIndex'));
 
         //admin module permission
         Route::resource('permissions','PermissionsController');

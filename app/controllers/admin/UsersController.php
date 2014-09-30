@@ -1,148 +1,130 @@
 <?php
-class UsersController extends \BaseController {
+class UsersController extends \BaseController
+{
 
-	public function __construct(){
+    public function __construct() {
+        $this->beforeFilter(function () {
+            if (!Sentry::getUser()->hasAccess(array('system'))) {
+                return Redirect::route('admin.index');
+            }
+        });
+    }
 
-		$this->beforeFilter(function(){
-			if(!Sentry::getUser()->hasAccess(array('system')))
-			{
-				return Redirect::route('admin.index');
-			}
-		});
+    /**
+     * displaly dashboard
+     */
+    public function getIndex() {
+        $where = Input::get('where', 'rebeauty');
+        $view = (($where=='rebeauty')) ? 'admin.users.view_index' : 'spa_admin.users.index';
+        return View::make('admin.users.view_index', array('users'=>Sentry::findAllUsers(), 'where'));
+    }
 
-	}
+    public function show($id) {
+    }
 
-	public function index()
-	{
-		if((Session::get('where')=='rebeauty'))
-			return View::make('admin.users.index')->with('users', Sentry::findAllUsers());
-		else
-			return View::make('spa_admin.users.index')->with('users', Sentry::findAllUsers());
-	}
+    public function create() {
+        if ((Session::get('where')=='rebeauty')) return View::make('admin.users.create')->with('users', Sentry::findAllUsers());
+        else return View::make('spa_admin.users.create')->with('users', Sentry::findAllUsers());
+    }
 
-	public function show($id)
-	{
-	}
+    public function store() {
+        try {
 
-	public function create()
-	{
-		if((Session::get('where')=='rebeauty'))
-			return View::make('admin.users.create')->with('users', Sentry::findAllUsers());
-		else
-			return View::make('spa_admin.users.create')->with('users', Sentry::findAllUsers());
-	}
+            // Create the user
+            $user = Sentry::createUser(array('email' => Input::get('email'), 'password' => Input::get('password'), 'last_name' => Input::get('last_name'), 'activated' => true,));
 
-	public function store()
-	{
-		try{
-    			// Create the user
-			$user = Sentry::createUser(array(
-				'email'     => Input::get('email'),
-				'password'  => Input::get('password'),
-				'last_name' => Input::get('last_name'),
-				'activated' => true,
-				));
+            if (Input::get('group')) {
+                $group = Sentry::findGroupById(Input::get('group'));
 
-			if(Input::get('group')){
-				$group = Sentry::findGroupById(Input::get('group'));
+                // Assign the group to the user
+                $user->addGroup($group);
+            }
 
-    			  	// Assign the group to the user
-				$user->addGroup($group);
-			}
+            return Redirect::route('admin.users.index');
+        }
+        catch(Cartalyst\Sentry\Users\LoginRequiredException $e) {
 
-			return Redirect::route('admin.users.index');
-		}
-		catch (Cartalyst\Sentry\Users\LoginRequiredException $e)
-		{
-    			//echo 'Login field is required.';
-			return Redirect::back()->withInput()->withErrors('Login field is required.');
-		}
-		catch (Cartalyst\Sentry\Users\PasswordRequiredException $e)
-		{
-			return Redirect::back()->withInput()->withErrors('Password field is required.');
-		}
-		catch (Cartalyst\Sentry\Users\UserExistsException $e)
-		{
-			return Redirect::back()->withInput()->withErrors('User with this login already exists.');
-		}
-		catch (Cartalyst\Sentry\Groups\GroupNotFoundException $e)
-		{
-			return Redirect::back()->withInput()->withErrors('Group was not found.');
-		}
-	}
+            //echo 'Login field is required.';
+            return Redirect::back()->withInput()->withErrors('Login field is required.');
+        }
+        catch(Cartalyst\Sentry\Users\PasswordRequiredException $e) {
+            return Redirect::back()->withInput()->withErrors('Password field is required.');
+        }
+        catch(Cartalyst\Sentry\Users\UserExistsException $e) {
+            return Redirect::back()->withInput()->withErrors('User with this login already exists.');
+        }
+        catch(Cartalyst\Sentry\Groups\GroupNotFoundException $e) {
+            return Redirect::back()->withInput()->withErrors('Group was not found.');
+        }
+    }
 
-	public function edit($id)
-	{
-		if((Session::get('where'))=='rebeauty')
-			return View::make('admin.users.edit')->with('user', Sentry::findUserById($id));
-		else
-			return View::make('spa_admin.users.edit')->with('user', Sentry::findUserById($id));
-	}
+    public function edit($id) {
+        if ((Session::get('where'))=='rebeauty') return View::make('admin.users.edit')->with('user', Sentry::findUserById($id));
+        else return View::make('spa_admin.users.edit')->with('user', Sentry::findUserById($id));
+    }
 
-	public function update($id)
-	{
-		try{
-    			// Find the user using the user id
-			$user = Sentry::findUserById($id);
+    public function update($id) {
+        try {
 
-			$user->last_name = Input::get('last_name');
+            // Find the user using the user id
+            $user = Sentry::findUserById($id);
 
-			$user->activated = Input::get('activated');
+            $user->last_name = Input::get('last_name');
 
-    			// Update the user
-			if ($user->save()){
+            $user->activated = Input::get('activated');
 
-				$userGroups = $user->groups()->lists('group_id');
+            // Update the user
+            if ($user->save()) {
 
-				$selectedGroups = array(Input::get('group'));
+                $userGroups = $user->groups()->lists('group_id');
 
-				$groupsToAdd    = array_diff($selectedGroups, $userGroups);
-				$groupsToRemove = array_diff($userGroups, $selectedGroups);
+                $selectedGroups = array(Input::get('group'));
 
-				foreach ($groupsToAdd as $groupId)
-				{
-					$group = Sentry::findGroupById($groupId);
+                $groupsToAdd = array_diff($selectedGroups, $userGroups);
+                $groupsToRemove = array_diff($userGroups, $selectedGroups);
 
-					$user->addGroup($group);
-				}
+                foreach ($groupsToAdd as $groupId) {
+                    $group = Sentry::findGroupById($groupId);
 
-				foreach ($groupsToRemove as $groupId)
-				{
-					$group = Sentry::findGroupById($groupId);
+                    $user->addGroup($group);
+                }
 
-					$user->removeGroup($group);
-				}
-        			// User information was updated
-			}else{
-        			// User information was not updated
-			}
-			return Redirect::route('admin.users.index');
-		}catch (Cartalyst\Sentry\Users\UserExistsException $e){
+                foreach ($groupsToRemove as $groupId) {
+                    $group = Sentry::findGroupById($groupId);
 
-			return Redirect::back()->withInput()->withErrors('User with this login already exists.');
+                    $user->removeGroup($group);
+                }
 
-		}catch (Cartalyst\Sentry\Users\UserNotFoundException $e){
+                // User information was updated
 
-			return Redirect::back()->withInput()->withErrors('User was not found.');
+            } else {
 
-		}
-	}
+                // User information was not updated
 
-	public function destroy($id)
-	{
-		try
-		{
-    			// Find the user using the user id
-			$user = Sentry::findUserById($id);
+            }
+            return Redirect::route('admin.users.index');
+        }
+        catch(Cartalyst\Sentry\Users\UserExistsException $e) {
 
-    			// Delete the user
-			$user->delete();
-			
-		}
-		catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
-		{
-			echo 'User was not found.';
-		}
-	}
+            return Redirect::back()->withInput()->withErrors('User with this login already exists.');
+        }
+        catch(Cartalyst\Sentry\Users\UserNotFoundException $e) {
 
+            return Redirect::back()->withInput()->withErrors('User was not found.');
+        }
+    }
+
+    public function destroy($id) {
+        try {
+
+            // Find the user using the user id
+            $user = Sentry::findUserById($id);
+
+            // Delete the user
+            $user->delete();
+        }
+        catch(Cartalyst\Sentry\Users\UserNotFoundException $e) {
+            echo 'User was not found.';
+        }
+    }
 }

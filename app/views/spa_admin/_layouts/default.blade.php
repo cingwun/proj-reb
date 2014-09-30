@@ -12,7 +12,7 @@
     <title>SB Admin - Bootstrap Admin Template</title>
 
     <!-- Bootstrap Core CSS -->
-    
+
     {{ HTML::style(asset('spa_admin/css/admin/bootstrap.min.css'))}}
     <!-- Custom CSS -->
     {{ HTML::style(asset('spa_admin/css/admin/sb-admin.css'))}}
@@ -48,7 +48,7 @@
                     </button>
                     <a class="navbar-brand" href="{{URL::route('switch.to.admin.spa')}}">SPA後台</a>
                 </div>
-                
+
                 <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">
                     <p class="navbar-text pull-right">{{ Sentry::getUser()->email }} | <a href="{{ URL::route('admin.logout') }}" class="navbar-link">Logout</a>
@@ -61,7 +61,7 @@
                     <a href="javascript:;" data-toggle="collapse" data-target="#system"><i class="fa fa-fw fa-arrows-v"></i> 系統管理 <i class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="system" class="collapse">
                         <li>
-                            <a href="{{URL::route('admin.users.index')}}">使用者</a>
+                            <a href="{{URL::route('admin.users.list')}}">使用者</a>
                         </li>
                         <li>
                             <a href="{{URL::route('admin.groups.index')}}">群組</a>
@@ -128,7 +128,7 @@
                 </li>
 
                 <!-- Banner管理 -->
-                <li> 
+                <li>
                     <a href="javascript:;" data-toggle="collapse" data-target="#banner"><i class="fa fa-fw fa-arrows-v"></i> Banner管理 <i class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="banner" class="collapse">
                         <li>

@@ -5,18 +5,29 @@ class BaseController extends Controller
     /**
      * @var locale
      */
-    public $locale;
+    private $locale;
 
+    /**
+     * construct
+     */
     public function __construct(){
         $this->locale = App::getLocale();
     }
-    
+
     /**
      * get locale
      * @return (string) lang
      */
     public function getLocale(){
         return $this->locale;
+    }
+
+    /**
+     * get where
+     * @return (string) where
+     */
+    public function getWhere(){
+        return Sessiion::get('where', 'rebeauty');
     }
 
     /**
