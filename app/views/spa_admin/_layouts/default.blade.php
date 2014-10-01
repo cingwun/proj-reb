@@ -58,7 +58,7 @@
             <ul class="nav navbar-nav side-nav">
                 <!-- 系統管理 -->
                 <li>
-                    <a href="javascript:;" data-toggle="collapse" data-target="#system"><i class="glyphicon glyphicon-th-list"></i> 系統管理 <i class="fa fa-fw fa-caret-down"></i></a>
+                    <a href="javascript:;" data-toggle="collapse" data-target="#system"><i class="glyphicon glyphicon-dashboard"></i> 系統管理 <i class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="system" class="collapse">
                         <li>
                             <a href="{{URL::route('admin.users.list')}}">使用者</a>
@@ -77,17 +77,17 @@
 
                 <!-- 文章管理 -->
                 <li class="active">
-                    <a href="{{URL::route('spa.admin.articles.list')}}"><i class="glyphicon glyphicon-th-list"></i> 文章管理</a>
+                    <a href="{{URL::route('spa.admin.articles.list')}}"><i class="glyphicon glyphicon-pencil"></i> 文章管理</a>
                 </li>
 
                 <!-- 預約管理 -->
                 <li>
-                    <a href="{{URL::route('spa.admin.reservation.list')}}"><i class="glyphicon glyphicon-th-list"></i> 預約管理</a>
+                    <a href="{{URL::route('spa.admin.reservation.list')}}"><i class="glyphicon glyphicon-list-alt"></i> 預約管理</a>
                 </li>
 
                 <!-- 美麗分享 -->
                 <li>
-                    <a href="{{URL::route('spa.admin.share.article.list')}}"><i class="glyphicon glyphicon-th-list"></i> 美麗分享</a>
+                    <a href="{{URL::route('spa.admin.share.article.list')}}"><i class="glyphicon glyphicon-camera"></i> 美麗分享</a>
                 </li>
                 <!--<li>
                     <a href="javascript:;" data-toggle="collapse" data-target="#share"><i class="fa fa-fw fa-arrows-v"></i> 美麗分享 <i class="fa fa-fw fa-caret-down"></i></a>
@@ -103,7 +103,7 @@
 
                 <!-- 美麗服務 -->
                 <li>
-                    <a href="javascript:;" data-toggle="collapse" data-target="#service"><i class="glyphicon glyphicon-th-list"></i> 美麗服務 <i class="fa fa-fw fa-caret-down"></i></a>
+                    <a href="javascript:;" data-toggle="collapse" data-target="#service"><i class="glyphicon glyphicon-exclamation-sign"></i> 美麗服務 <i class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="service" class="collapse">
                         <li>
                             <a href="{{URL::route('spa.admin.service.category.list')}}">類型列表</a>
@@ -116,7 +116,7 @@
 
                 <!-- 美麗產品 -->
                 <li>
-                    <a href="javascript:;" data-toggle="collapse" data-target="#product"><i class="glyphicon glyphicon-th-list"></i> 美麗產品 <i class="fa fa-fw fa-caret-down"></i></a>
+                    <a href="javascript:;" data-toggle="collapse" data-target="#product"><i class="glyphicon glyphicon-th"></i> 美麗產品 <i class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="product" class="collapse">
                         <li>
                             <a href="{{URL::route('spa.admin.product.category.list')}}">類型列表</a>
@@ -130,7 +130,7 @@
                 <!-- Banner管理 -->
 
                 <li>
-                    <a href="javascript:;" data-toggle="collapse" data-target="#banner"><i class="glyphicon glyphicon-th-list"></i> Banner管理 <i class="fa fa-fw fa-caret-down"></i></a>
+                    <a href="javascript:;" data-toggle="collapse" data-target="#banner"><i class="glyphicon glyphicon-picture"></i> Banner管理 <i class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="banner" class="collapse">
                         <li>
                             <a href="{{ URL::route('admin.banners.list', array('large', 'where'=>Input::get('where')))}}">尺寸 960x430</a>
@@ -146,7 +146,7 @@
 
                 <!-- 會員管理 -->
                 <li>
-                    <a href="{{URL::route('admin.member.list', array('where'=>Input::get('where')))}}"><i class="glyphicon glyphicon-th-list"></i> 會員管理</a>
+                    <a href="{{URL::route('admin.member.list', array('where'=>Input::get('where')))}}"><i class="glyphicon glyphicon-user"></i> 會員管理</a>
                 </li>
             </ul>
             <!-- /.navbar-collapse -->

@@ -18,6 +18,9 @@ foreach($servicefaq as $item){
     }
     $servicesFaqs[$item->type] = $list;
 }
+
+$spa = str_replace('www.', '', 'http://spa.'. $_SERVER['HTTP_HOST']);
+
 ?>
 <nav id="mainNav" role="navigation">
     <ul class="lv0">
@@ -71,6 +74,6 @@ foreach($servicefaq as $item){
             </ul>
         </li>
     </ul>
-    <a class="goSpa" href="#">前進煥儷美顏SPA</a><!-- ../sap/ -->
+    <a class="goSpa" href="{{ $spa }}">煥儷美顏SPA</a><!-- ../sap/ -->
 </nav>
 <!-- ======================== mainNav end ======================== -->
