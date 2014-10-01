@@ -30,7 +30,7 @@
                             <li class="dropdown @if(Request::is('admin/users*') || Request::is('admin/permissions*') || Request::is('admin/groups*')) active @endif"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">系統管理</a>
                                 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
                                     <li>
-                                        <a tabindex="-1" href="{{ URL::route('admin.users.list') }}">使用者</a>
+                                        <a tabindex="-1" href="{{ URL::route('admin.users.index') }}">使用者</a>
                                     </li>
                                     <li>
                                         <a tabindex="-1" href="{{ URL::route('admin.groups.index') }}">群組</a>
