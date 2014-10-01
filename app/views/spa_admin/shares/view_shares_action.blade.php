@@ -94,10 +94,10 @@
             </div>
         </div>
 
-        @include('spa_admin._partials.widget_labels', array('label'=>array('elementId'=>'label-service', 'formTitle'=>'美麗服務', 'fieldName'=>'label_service[]', 'selected'=>$labelSelected, 'items'=>$labelItems['service'])))
+        @include('spa_admin._partials.widget_labels', array('label'=>array('elementId'=>'label-service', 'formTitle'=>'美麗服務', 'fieldName'=>'label_service[]', 'selected'=>$labelSelected['serv'], 'items'=>$labelItems['service'])))
         <!-- label for service -->
 
-        @include('spa_admin._partials.widget_labels', array('label'=>array('elementId'=>'label-product', 'formTitle'=>'美麗產品', 'fieldName'=>'label_product[]', 'selected'=>$labelSelected, 'items'=>$labelItems['product'])))
+        @include('spa_admin._partials.widget_labels', array('label'=>array('elementId'=>'label-product', 'formTitle'=>'美麗產品', 'fieldName'=>'label_product[]', 'selected'=>$labelSelected['prod'], 'items'=>$labelItems['product'])))
         <!-- label for service -->
 
         @include('spa_admin._partials.widget_tabs', array('tab'=>array('elementId'=>'tab-box', 'formTitle'=>'Tab項目', 'items'=>$tabItems)))

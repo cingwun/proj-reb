@@ -106,6 +106,7 @@ class ShareController extends \BaseController {
                                     ->get(array('id', 'title'));
             }else {
                 $items = \SpaService::where('_parent', '<>', 'N')
+                                    ->where('display', 'yes')
                                     ->orderBy('_parent', 'desc')
                                     ->orderBy('sort', 'desc')
                                     ->orderBy('updated_at', 'desc')
@@ -123,6 +124,7 @@ class ShareController extends \BaseController {
                                     ->get(array('id', 'title'));
             }else{
                 $items = \SpaProduct::where('_parent', '<>', 'N')
+                                    ->where('display', 'yes')
                                     ->orderBy('_parent', 'desc')
                                     ->orderBy('sort', 'desc')
                                     ->orderBy('updated_at', 'desc')
@@ -131,9 +133,19 @@ class ShareController extends \BaseController {
             foreach($items as $item)
                 $labelItems['product'][$item->id] = $item->title;
 
-            $labelSelected = \SpaSharesLabels::where('share_id', '=', $article['id'])
-                                             ->lists('label_id');
-
+            // $labelSelected = \SpaSharesLabels::where('share_id', '=', $article['id'])
+            // ->lists('label_id');
+            $labelSelected = array(
+                'serv' => array(),
+                'prod' => array()
+            );
+            if($id){                                 
+                $labelCmd = \SpaShares::find($id, array('label_service', 'label_product'));
+                $labelSelected = array(
+                    'serv' => json_decode($labelCmd->label_service),
+                    'prod' => json_decode($labelCmd->label_product)
+                );
+            }
             return \View::make('spa_admin.shares.view_shares_action', array(
                 'article'=>$article,
                 'labelItems' => &$labelItems,
@@ -232,7 +244,6 @@ class ShareController extends \BaseController {
             $model->meta_name = \Input::get('meta_name');
             $model->meta_content = \Input::get('meta_content');
             $model->language = \Input::get('lang');
-            $model->save();
 
             if(isset($refmodel)){
                 $model->reference = $id;
@@ -248,12 +259,13 @@ class ShareController extends \BaseController {
             foreach($types as $type){
                 $fieldName = 'label_' . $type;
                 $labels  = \Input::get($fieldName, array());
-                foreach ($labels as $label){
-                    \SpaSharesLabels::create(array('share_id'=>(int) $model->id, 'label_id'=>((int) $label)));
-                    $insertShare[] = $label;
-                }
+                $model->$fieldName = json_encode($labels);
+                // foreach ($labels as $label){
+                //     \SpaSharesLabels::create(array('share_id'=>(int) $model->id, 'label_id'=>((int) $label)));
+                //     $insertShare[] = $label;
+                // }
             }
-
+            $model->save();
 
             /*WintnessLabels::where('wid', '=', $model->id)
                           ->delete();
@@ -335,7 +347,7 @@ class ShareController extends \BaseController {
 
             foreach($images as $img)
                 \fps::getInstance()->delete($img);
-            return \Response::json(array('status'=>'ok'));
+            return \Response::json(array('status'=>'ok', 'message'=>'刪除完成'));
         }catch(Exception $e){
             return \Response::json(array('status'=>'ok', 'message'=>$e->getMessage()));
         }
