@@ -23,9 +23,8 @@ if (in_array($locale, $languages)) {
 /**
  * using multi domains for development enviroment
  */
-$domain = Host::get('domain');
-$www = str_replace('spa.', '', $domain);
-$spa = str_replace('www.', '', $domain);
+$www = Host::get('rebeauty', false);
+$spa = Host::get('spa', false);
 
 //for admin login/logout
 Route::get('admin/logout', array('as'=>'admin.logout', 'uses'=>'AuthController@getLogout'));
