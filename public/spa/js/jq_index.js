@@ -101,7 +101,7 @@ $(function(){
 		$imgs = $container.find('.img-rounded'),
 		imgLength = $imgs.size(),
 		loadedCount = 0,
-		urlPrefix = window.location.protocol + window.location.host,
+		urlPrefix = 'http://' + window.location.host,
 		runIsotop = function(){
 			if (loadedCount==imgLength){
 				$container.isotope({
@@ -114,8 +114,6 @@ $(function(){
 				});
 			}
 		};
-
-
 
 	$imgs.each(function(e){
 		var $this = $(this),
