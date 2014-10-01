@@ -41,7 +41,7 @@
 
 <article class="serviceList">
 	<h2 class="titleRp title_spa-service">美麗服務</h2>
-	<div class="funcBar"><a href="services.html" class="more">所有服務</a></div>
+	<div class="funcBar"><a href="{{URL::route('spa.service')}}" class="more">所有服務</a></div>
 	<ul>
 		@if($service)
 		@foreach($service as $s)
