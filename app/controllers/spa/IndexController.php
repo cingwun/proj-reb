@@ -9,7 +9,7 @@ class IndexController extends \BaseController{
 							->where('status', '1')
 							->orderBy('open_at', 'desc')
 							->orderBy('sort', 'desc')
-							->take(5)
+							->take(6)
 							->get()
 							->toArray();
 		$newsCount = count($news);
@@ -31,7 +31,7 @@ class IndexController extends \BaseController{
 			'newsCount'=>$newsCount,
 			'cover'=>$cover
 			));
-		
+
 	}
 }
 

@@ -14,6 +14,20 @@ class UsersController extends \BaseController
      * displaly dashboard
      */
     public function getIndex() {
+        /*
+        $user = Sentry::createUser(array(
+            'email'     => 'kettanwu@talk2yam.com',
+            'password'  => 'kettan_wu',
+            'activated' => true,
+        ));
+
+        $user = Sentry::createUser(array(
+            'email'     => 'leowang@talk2yam.com',
+            'password'  => 'leo_wang',
+            'activated' => true,
+        ));*/
+
+
         $where = Input::get('where', 'rebeauty');
         $view = (($where=='rebeauty')) ? 'admin.users.view_index' : 'spa_admin.users.index';
         return View::make('admin.users.view_index', array('users'=>Sentry::findAllUsers(), 'where'));

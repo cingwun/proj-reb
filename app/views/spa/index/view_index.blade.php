@@ -7,8 +7,8 @@
 @section('content')
 <aside id="indexSetContent" class="hotEv">
 	<h2 class="titleRp title_spa-hotEv">熱門推薦</h2>
-	
-	<img src="@if($cover){{asset($service[0]->image)}}?w=288&h=343@endif" alt=""/>  
+
+	<img src="@if($cover){{asset($cover[0]->image)}}?w=288&h=343@endif" alt=""/>
 </aside><!-- ======================== regBox end ======================== -->
 <div id="mainContent" role="main">
 	<article class="newsList">
@@ -37,7 +37,7 @@
 		<h1>目前沒有資料</h1>
 		@endif
 	</article><!-- ======================== newsList end ======================== -->
-</div><!-- ======================== mainContent end ======================== -->	
+</div><!-- ======================== mainContent end ======================== -->
 
 <article class="serviceList">
 	<h2 class="titleRp title_spa-service">美麗服務</h2>
@@ -46,10 +46,10 @@
 		@if($service)
 		@foreach($service as $s)
 		<li>
-			<a href="{{URL::route('spa.service.detail', array($s->id))}}">
-			<img src="{{$s->image}}?w=200"/>
-			<h4>{{ \Text::preEllipsize(strip_tags($s->title), 26) }}</h4><!-- 限兩行 -->
-			<p class="servContent">{{ \Text::preEllipsize(strip_tags($s->image_desc), 52) }}</p><!-- 限四行 -->
+			<a href="{{URL::route('spa.service.detail', array($s['id']))}}">
+			<img src="{{$s['image'] }}?w=200"/>
+			<h4>{{ \Text::preEllipsize(strip_tags($s['title']), 26) }}</h4><!-- 限兩行 -->
+			<p class="servContent">{{ \Text::preEllipsize(strip_tags($s['image_desc']), 52) }}</p><!-- 限四行 -->
 			<p class="more">深入了解</p>
 			</a>
 		</li>

@@ -26,6 +26,22 @@ if (in_array($locale, $languages)) {
 $www = str_replace('spa.', '', $_SERVER['HTTP_HOST']);
 $spa = str_replace('www.', '', 'spa.'. $www);
 
+//for admin login/logout
+Route::get('admin/logout', array('as'=>'admin.logout', 'uses'=>'AuthController@getLogout'));
+Route::get('admin/login', array('as'=>'admin.login', 'uses'=>'AuthController@getLogin'));
+Route::post('admin/login', array('as'=>'admin.login.post', 'uses'=>'AuthController@postLogin'));
+
+// for fps image
+Route::get('image/{filename}', array('as'=>'imageUrl', 'uses'=>'FpsController@getFile'));
+// for fps file
+Route::get('file/{filename}', array('as'=>'fileUrl', 'uses'=>'FpsController@getFile'));
+// for captcha
+Route::get('captcha', array('as'=>'captcha.get', 'uses'=>'CaptchaController@getCaptcha'));
+// for social login
+Route::get('login/{social}', array('as'=>'frontend.login', 'uses'=>'aesthetics\\MemberController@getLogin'))
+     ->where(array('social'=>'(facebook|google)'));
+Route::post('login', array('as'=>'frontend.login.post', 'uses'=>'aesthetics\\MemberController@postLogin'));
+
 Route::group(array('prefix'=>$locale, 'domain'=>$www), function(){
 
     //首頁
@@ -74,22 +90,6 @@ Route::group(array('prefix'=>$locale, 'domain'=>$www), function(){
     // garbage collect
     Route::get('gc', array('uses'=>'aesthetics\\TestController@getGarbageCollect'));
 });
-
-//for admin login/logout
-Route::get('admin/logout', array('as'=>'admin.logout', 'uses'=>'AuthController@getLogout'));
-Route::get('admin/login', array('as'=>'admin.login', 'uses'=>'AuthController@getLogin'));
-Route::post('admin/login', array('as'=>'admin.login.post', 'uses'=>'AuthController@postLogin'));
-
-// for fps image
-Route::get('image/{filename}', array('as'=>'imageUrl', 'uses'=>'FpsController@getFile'));
-// for fps file
-Route::get('file/{filename}', array('as'=>'fileUrl', 'uses'=>'FpsController@getFile'));
-// for captcha
-Route::get('captcha', array('as'=>'captcha.get', 'uses'=>'CaptchaController@getCaptcha'));
-// for social login
-Route::get('login/{social}', array('as'=>'frontend.login', 'uses'=>'aesthetics\\MemberController@getLogin'))
-     ->where(array('social'=>'(facebook|google)'));
-Route::post('login', array('as'=>'frontend.login.post', 'uses'=>'aesthetics\\MemberController@postLogin'));
 
 //admin
 Route::group(array('prefix'=>'admin', 'before'=>'auth.admin'), function()
