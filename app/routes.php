@@ -20,7 +20,13 @@ if (in_array($locale, $languages)) {
     $locale = null;
 }
 
-Route::group(array('prefix'=>$locale, 'domain'=>'www.rebeauty.com.tw'), function(){
+/**
+ * using multi domains for development enviroment
+ */
+$www = str_replace('spa.', '', $_SERVER['HTTP_HOST']);
+$spa = str_replace('www.', '', 'spa.'. $www);
+
+Route::group(array('prefix'=>$locale, 'domain'=>$www), function(){
 
     //首頁
     Route::get('/', array('uses'=>'aesthetics\\IndexController@getIndex', 'as'=>'frontend.index'));
@@ -398,7 +404,7 @@ Route::group(array('prefix'=>'admin/spa', 'before'=>'auth.admin'), function()
              ->where(array('id'=>'([0-9]+)'));
 });
 
-Route::group(array('prefix'=>$locale, 'domain'=>'spa.rebeauty.com.tw'), function() {
+Route::group(array('prefix'=>$locale, 'domain'=>$spa), function() {
 
     Route::get('/', array('as'=>'spa.index', 'uses'=>'spa\\IndexController@getIndex'));
 

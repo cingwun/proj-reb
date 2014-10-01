@@ -10,24 +10,24 @@ $servBox = $('#servBox');
 $(function(){
 
 	/* 首頁 Banner slider */
-	$('.bannerSlider').cycle({ 
-		fx:   				'fade', 
-		slides:				'> .slide', 
-    //pager:  			'#mainBannerNav', 
-    next:   			'> .bannerNext', 
+	$('.bannerSlider').cycle({
+		fx:   				'fade',
+		slides:				'> .slide',
+    //pager:  			'#mainBannerNav',
+    next:   			'> .bannerNext',
     prev:   			'> .bannerPrev',
     pauseOnHover:		true,
-    speed:				750, 
+    speed:				750,
     timeout:			6000
 });
 
 
 	/* 美麗新技術 */
 /*
-$newTechBox.cycle({ 
-    timeout: 		0, 
-    slide:			'> .tabBox', 
-    speed:   		300, 
+$newTechBox.cycle({
+    timeout: 		0,
+    slide:			'> .tabBox',
+    speed:   		300,
     startingSlide: 	0
 	});
 */
@@ -42,7 +42,7 @@ $newTechBox.cycle({
 	fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 
-$newTechBox.find('.tabNav li').click(function(e) { 
+$newTechBox.find('.tabNav li').click(function(e) {
 	e.stopPropagation();
 	e.preventDefault();
 	$newTechBox.find('.curr').removeClass('curr').end().find('.tabBox').eq($(this).index()).addClass('curr');
@@ -101,7 +101,7 @@ $(function(){
 		$imgs = $container.find('.img-rounded'),
 		imgLength = $imgs.size(),
 		loadedCount = 0,
-		urlPrefix = 'http://spa.rebeauty.com.tw:8080',
+		urlPrefix = window.location.protocol + window.location.host,
 		runIsotop = function(){
 			if (loadedCount==imgLength){
 				$container.isotope({
@@ -114,7 +114,9 @@ $(function(){
 				});
 			}
 		};
-	
+
+
+
 	$imgs.each(function(e){
 		var $this = $(this),
 			src = urlPrefix + $this.attr('data-src'),
@@ -139,21 +141,6 @@ $(function(){
 
 });
 
-//isotope
-/*
-$( function() {
-	
-	$('#isoCon').isotope({
-		itemSelector: '.isoItem',
-		layoutMode: 'masonry',
-		masonry: {
-			gutter: 14
-		},
-		sortBy: 'original-order'
-	});
-
-});
-*/
 
 /* 快速預約 */
 $('#quickReservation').click(function(e){
@@ -164,7 +151,7 @@ $('#quickReservation').click(function(e){
 });
 
 /* 服務項目 */
-$servBox.find('.tabNav a').click(function(e) { 
+$servBox.find('.tabNav a').click(function(e) {
 	e.stopPropagation();
 	e.preventDefault();
 
@@ -178,7 +165,7 @@ $("ul.spaService > li").each(function() {
 	$(this).click(function() {
 		if($(this).hasClass("noSub")) {
 			$(this).siblings().removeClass("active");
-		} 
+		}
 		else {
 			$(this).siblings().removeClass("active");
 			$(this).toggleClass("active");
