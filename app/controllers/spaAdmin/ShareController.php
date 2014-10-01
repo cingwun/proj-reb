@@ -10,13 +10,15 @@ class ShareController extends \BaseController {
      * Get share articles' list
      * @params (int) $page
      */
-    public function getArticleList($page=1) {
+    public function getArticleList($page=1, $lang='all') {
 
         $limit = 10;
         $offset = ($page-1) * $limit;
 
         $cmd = new \SpaShares;
         $rowsNum = $cmd->count();
+        if($lang!='all')
+            $cmd = $cmd->where('language', $lang);
         $articles = $cmd->orderBy('sort', 'desc')
                         ->orderBy('updated_at', 'desc')
                         ->skip($offset)
@@ -34,7 +36,8 @@ class ShareController extends \BaseController {
 
         return \View::make('spa_admin.shares.view_shares_list', array(
             'articles' => &$articles,
-            'pagerParam' => &$widgetParam
+            'pagerParam' => &$widgetParam,
+            'lang'=>$lang
             ));
     }
 

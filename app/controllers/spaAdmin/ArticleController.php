@@ -16,15 +16,22 @@ class ArticleController extends \BaseController {
 	 * @params (string) $category about / news / oversea
 	 * 
 	 */
-	public function getList($category = 'about') {
+	public function getList($category = 'about', $lang = 'all') {
 		try{
+			$cmd = new \SpaArticles;
 			$Articles = array();
-			$Articles = \SpaArticles::where('category', $category)
-									->orderBy('sort', 'desc')
-									->get();
+			if($lang!='all')
+				$cmd = \SpaArticles::where('lang', $lang);
+			$Articles = $cmd->where('category', $category)
+							->orderBy('sort', 'desc')
+							->get();
 
 			if($Articles)
-				return \View::make('spa_admin.articles.view_list', array('category'=>$category, 'selectedArticles'=>$Articles));
+				return \View::make('spa_admin.articles.view_list', array(
+					'category'=>$category,
+					'selectedArticles'=>$Articles,
+					'lang'=>$lang
+					));
 		}catch(Exception $e){
 			return Redirect::route('spa.admin.articles.list', array('errorMessage'=>$e->getMessage()));
 		}catch (Exception $e) {
