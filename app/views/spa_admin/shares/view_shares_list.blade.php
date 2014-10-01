@@ -8,6 +8,13 @@
 <div>
     <div>
         <a href="javascript:window.history.back()" class="btn btn-default pull-left">回上一頁</a>
+        <div class="col-md-2">
+            <select class="form-control" name="forma" onchange="location = this.options[this.selectedIndex].value;">
+                <option value="{{URL::route('spa.admin.share.article.list', array('1', 'tw'))}}" <?php echo($lang=='tw')?'selected':''?>>顯示繁體</a></option>
+                <option value="{{URL::route('spa.admin.share.article.list', array('1', 'cn'))}}" <?php echo($lang=='cn')?'selected':''?>>顯示簡體</a></option>
+                <option value="{{URL::route('spa.admin.share.article.list', array('1'))}}" <?php echo($lang=='all')?'selected':''?>>顯示全部</a></option>
+            </select>
+        </div>
         <a href="{{ URL::route('spa.admin.share.article.action')}}" class="btn btn-md btn-success" style="float: right;">新增</a>
     </div>
     <br>
@@ -21,7 +28,7 @@
                 <tr>
                   <th>封面圖片</th>
                   <th>標題/背景顏色</th>
-                  <th>狀態/顯示至siderbar</th>
+                  <th>狀態</th>
                   <th>時間</th>
                   <th>瀏覽數</th>
                   <th hidden="hidden">排序</th>
@@ -43,7 +50,7 @@
                         @endif
                     </td>
                     <td>{{ $article->title}}<br /><div style="width: 20px; height: 20px; background-color: {{ $article->background_color}}"></div></td>
-                    <td>{{ ($article->status=='1') ? '<span style="color: #00AA00">顯示</span>' : '隱藏'}} / {{ ($article->isInSiderbar=='1') ? '<span style="color: #00AA00">顯示</span>' : '隱藏'}} </td>
+                    <td>{{ ($article->status=='1') ? '<span style="color: #00AA00">顯示</span>' : '隱藏'}}</td>
                     <td>{{ "建立: ".$article->created_at."<br>更新: ".$article->updated_at}}</td>
                     <td>{{ $article->views}}</td>
                     <td hidden="hidden"><?php echo $article->sort?></td>

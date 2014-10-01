@@ -71,7 +71,6 @@ var _sortTable = function(o){
 
         self.$el.find('tbody tr').each(function(idx, tr){
             var $el = $(this);
-
             $el.find('.btn-delete').click(function(e){
                 e.stopPropagation();
                 e.preventDefault();
@@ -186,6 +185,7 @@ var _sortTable = function(o){
                 alert(res.message);
                 if (res.status=='ok')
                     r.tr.$el.find('td:nth-child('+self.sortColumn+')').html(params.sort);
+                window.location.reload();
                 return;
             },
             error: function(){

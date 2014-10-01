@@ -7,16 +7,23 @@
 
 @section('main')
 <div>
-	<a type="button" @if($category=='about')class="btn btn-md btn-info" @else class="btn btn-md btn-default" @endif href="{{ URL::route('spa.admin.articles.list')}}/about">關於煥麗</a>
-	<a type="button" @if($category=='news')class="btn btn-md btn-info" @else class="btn btn-md btn-default" @endif href="{{ URL::route('spa.admin.articles.list')}}/news">最新消息</a>
+	<a type="button" @if($category=='about')class="btn btn-md btn-info" @else class="btn btn-md btn-default" @endif href="{{ URL::route('spa.admin.articles.list')}}/about" style="float: left; margin-right: 5px">關於煥麗</a>
+	<a type="button" @if($category=='news')class="btn btn-md btn-info" @else class="btn btn-md btn-default" @endif href="{{ URL::route('spa.admin.articles.list')}}/news" style="float: left">最新消息</a>
 	<!-- <a type="button" @if($category=='oversea')class="btn btn-md btn-info" @else class="btn btn-md btn-default" @endif href="{{ URL::route('spa.admin.articles.list')}}/oversea">海外專區</a> -->
+	<div class="col-md-2">
+		<select class="form-control" name="forma" onchange="location = this.options[this.selectedIndex].value;">
+			<option value="{{URL::route('spa.admin.articles.list', array($category, 'tw'))}}" <?php echo($lang!=null&&$lang=='tw')?'selected':''?>>顯示繁體</a></option>
+			<option value="{{URL::route('spa.admin.articles.list', array($category, 'cn'))}}" <?php echo($lang!=null&&$lang=='cn')?'selected':''?>>顯示簡體</a></option>
+			<option value="{{URL::route('spa.admin.articles.list', array($category))}}" <?php echo($lang!=null&&$lang=='all')?'selected':''?>>顯示全部</a></option>
+		</select>
+	</div>
 	<a href="{{ URL::route('spa.admin.articles.action', array('0', '0', $category))}}" class="btn btn-success" style="float:right;">新增</a>
 </div>
 <br>
 
 		<?php switch($category) {case 'about':$cat = "關於煥麗";break; case 'news':$cat = "最新消息";break; case 'oversea':$cat = "海外專區";break;} ?>
 						
-		<div class="table-responsive">
+		<div class="table-responsive" style="margin-top: 25px">
 			<table class="table table-bordered" id="sortable" data-sortAction="<?php echo URL::route('spa.admin.articles.sort')?>" >
 			
 				<thead>

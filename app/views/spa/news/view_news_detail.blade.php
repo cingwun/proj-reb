@@ -59,3 +59,7 @@
 </article>
 <!--  mainContent end  -->
 @stop
+
+@section('head')
+<meta name="{{$article->meta_name}}" content="{{$article->meta_content}}">
+@stop

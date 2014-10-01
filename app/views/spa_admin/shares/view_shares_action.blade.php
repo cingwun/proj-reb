@@ -84,13 +84,14 @@
         </div>
 
         <div class="form-group">
-            <label for="link">顯示至Siderbar</label>
-            <label class="radio-inline">
-                <input type="radio" name="isInSiderbar" value="1" <?php echo ($article['isInSiderbar']=='1') ? 'checked' : '' ?> />顯示
-            </label>
-            <label class="radio-inline">
-                <input type="radio" name="isInSiderbar" value="0" <?php echo ($article['isInSiderbar']=='0') ? 'checked' : '' ?> />不顯示
-            </label>
+            <label for="meta">Meta Name:</label>
+            <div>
+                <input type="text" class="form-control" id="meta_name" name="meta_name" size="12" value="{{array_get($article, 'meta_name', '')}}">
+            </div>
+            <label for="meta">Meta Content:</label>
+            <div>
+                <input type="text" class="form-control" id="meta_content" name="meta_content" size="12" value="{{array_get($article, 'meta_content', '')}}">
+            </div>
         </div>
 
         @include('spa_admin._partials.widget_labels', array('label'=>array('elementId'=>'label-service', 'formTitle'=>'美麗服務', 'fieldName'=>'label_service[]', 'selected'=>$labelSelected, 'items'=>$labelItems['service'])))

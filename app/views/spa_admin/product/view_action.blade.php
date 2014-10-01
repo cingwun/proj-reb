@@ -7,13 +7,10 @@
 編輯產品項目
 @endif
 
-@if($action == 'edit')
-@if($product->lang == 'tw')
-(繁體)
-@endif
-@if($product->lang == 'cn')
-(簡體)
-@endif
+@if($listLang == 'tw')
+( 繁體 )
+@else
+( 簡體 )
 @endif
 @stop
 
@@ -57,19 +54,16 @@
 		</label>
 	</div>
 	<div class="form-group">
-		<label>語系</label><br/>
-		@if($action == 'create' && $listLang =='tw')
-		繁體<input type='hidden' name="lang" value="tw"/>
-		@elseif($action == 'create' && $listLang =='cn')
-		簡體<input type='hidden' name="lang" value="cn"/>
-		@elseif($action == 'edit' && $product->lang == 'tw')
-		繁體<input type='hidden' name="lang" value="tw"/>
-		@elseif($action == 'edit' && $product->lang == 'cn')
-		簡體<input type='hidden' name="lang" value="cn"/>
-		@endif
+		<label>Meta name</label>
+		<input class="form-control" type="text" name="meta_name" value="@if($action == 'edit'){{$product->meta_name}}@endif"/>
+	</div>
+	<div class="form-group">
+		<label>Meta content</label>
+		<input class="form-control" type="text" name="meta_content" value="@if($action == 'edit'){{$product->meta_content}}@endif"/>
 	</div>
 	<div class="form-group">
 		<input type="hidden" name="action" value="{{$action}}"/>
+		<input type="hidden" name="listLang" value="{{$listLang}}"/>
 		<a href='javascript:history.back()' type="button" class="btn btn-danger">取消</a>
 		<button class="btn btn-primary btn-submit">編輯完成</button>
 	</div>

@@ -10,13 +10,15 @@ class ShareController extends \BaseController {
      * Get share articles' list
      * @params (int) $page
      */
-    public function getArticleList($page=1) {
+    public function getArticleList($page=1, $lang='all') {
 
         $limit = 10;
         $offset = ($page-1) * $limit;
 
         $cmd = new \SpaShares;
         $rowsNum = $cmd->count();
+        if($lang!='all')
+            $cmd = $cmd->where('language', $lang);
         $articles = $cmd->orderBy('sort', 'desc')
                         ->orderBy('updated_at', 'desc')
                         ->skip($offset)
@@ -34,7 +36,8 @@ class ShareController extends \BaseController {
 
         return \View::make('spa_admin.shares.view_shares_list', array(
             'articles' => &$articles,
-            'pagerParam' => &$widgetParam
+            'pagerParam' => &$widgetParam,
+            'lang'=>$lang
             ));
     }
 
@@ -94,19 +97,37 @@ class ShareController extends \BaseController {
 
             //For Label Using
             $labelItems = array('service'=>array(), 'product'=>array());
-            $items = \SpaService::where('_parent', '<>', 'N')
-                    ->orderBy('_parent', 'desc')
-                    ->orderBy('sort', 'desc')
-                    ->orderBy('updated_at', 'desc')
-                    ->get(array('id', 'title'));
+            if($id) {
+                $items = \SpaService::where('_parent', '<>', 'N')
+                                    ->where('lang', array_get($article, 'language'))
+                                    ->orderBy('_parent', 'desc')
+                                    ->orderBy('sort', 'desc')
+                                    ->orderBy('updated_at', 'desc')
+                                    ->get(array('id', 'title'));
+            }else {
+                $items = \SpaService::where('_parent', '<>', 'N')
+                                    ->orderBy('_parent', 'desc')
+                                    ->orderBy('sort', 'desc')
+                                    ->orderBy('updated_at', 'desc')
+                                    ->get(array('id', 'title'));
+            }
             foreach($items as $item)
                 $labelItems['service'][$item->id] = $item->title;
 
-            $items = \SpaProduct::where('_parent', '<>', 'N')
-                    ->orderBy('_parent', 'desc')
-                    ->orderBy('sort', 'desc')
-                    ->orderBy('updated_at', 'desc')
-                    ->get(array('id', 'title'));
+            if($id) {
+                $items = \SpaProduct::where('_parent', '<>', 'N')
+                                    ->where('lang', array_get($article, 'language'))
+                                    ->orderBy('_parent', 'desc')
+                                    ->orderBy('sort', 'desc')
+                                    ->orderBy('updated_at', 'desc')
+                                    ->get(array('id', 'title'));
+            }else{
+                $items = \SpaProduct::where('_parent', '<>', 'N')
+                                    ->orderBy('_parent', 'desc')
+                                    ->orderBy('sort', 'desc')
+                                    ->orderBy('updated_at', 'desc')
+                                    ->get(array('id', 'title'));
+            }
             foreach($items as $item)
                 $labelItems['product'][$item->id] = $item->title;
 
@@ -169,8 +190,6 @@ class ShareController extends \BaseController {
                 'gallery' => array('fieldName'=>'galle', 'items'=>null),
                 );
 
-
-
             foreach($imgUploaderList as $key=>$val){
                 $imgs = json_decode($model->$val['fieldName']);
                 if (!empty($imgs) && sizeof($imgs)>0){
@@ -210,6 +229,8 @@ class ShareController extends \BaseController {
             $model->status = $status % 2;
             $model->isInSiderbar = $isInSiderbar % 2;
             ($sort == 'do') ? $model->sort = \SpaShares::max('sort')+1 : $sort = 'doNot';
+            $model->meta_name = \Input::get('meta_name');
+            $model->meta_content = \Input::get('meta_content');
             $model->language = \Input::get('lang');
             $model->save();
 
