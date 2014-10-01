@@ -8,7 +8,7 @@
 <aside id="indexSetContent" class="hotEv">
 	<h2 class="titleRp title_spa-hotEv">熱門推薦</h2>
 	
-	<img src="{{asset($service[0]->image)}}?w=288&h=343" alt=""/>  
+	<img src="@if($cover){{asset($service[0]->image)}}?w=288&h=343@endif" alt=""/>  
 </aside><!-- ======================== regBox end ======================== -->
 <div id="mainContent" role="main">
 	<article class="newsList">
@@ -43,6 +43,7 @@
 	<h2 class="titleRp title_spa-service">美麗服務</h2>
 	<div class="funcBar"><a href="services.html" class="more">所有服務</a></div>
 	<ul>
+		@if($service)
 		@foreach($service as $s)
 		<li>
 			<a href="{{URL::route('spa.service.detail', array($s->id))}}">
@@ -53,6 +54,7 @@
 			</a>
 		</li>
 		@endforeach
+		@endif
 	</ul>
 
 </article><!-- ======================== serviceList end ======================== -->

@@ -10,15 +10,19 @@ class AboutController extends \BaseController {
                                        ->where('lang', $this->getLocale())
                                        ->where('status', '1')
                                        ->orderBy('sort', 'desc')
-                                       ->firstOrFail();
-                $id = $article->id;
-                $cover = json_decode($article->cover);
+                                       ->first();
+                $cover = '';
+                if($article){
+                  $id = $article->id;
+                  $cover = json_decode($article->cover);
+                }
             }
             else
                 $article = \SpaArticles::find($id);
-                $cover = json_decode($article->cover);
+                if($article)
+                  $cover = json_decode($article->cover);
 
-            if(\ViewsAdder::views_cookie('about', $id)) {
+            if($article&&\ViewsAdder::views_cookie('about', $id)) {
               $article->views = $article->views + 1;
               $article->save();
             }
@@ -29,12 +33,11 @@ class AboutController extends \BaseController {
                                        ->orderBy('sort', 'desc')
                                        ->get();
 
-            if($article && $articleList)
-                return \View::make('spa.about.view_about', array('article'=>$article,
-                                                                 'articleList'=>$articleList,
-                                                                 'publish'=>array_get($article, 'open_at'),
-                                                                 'views'=>array_get($article, 'views'),
-                                                                 'cover'=>$cover));
+            return \View::make('spa.about.view_about', array('article'=>$article,
+                                                             'articleList'=>$articleList,
+                                                             'publish'=>array_get($article, 'open_at'),
+                                                             'views'=>array_get($article, 'views'),
+                                                             'cover'=>$cover));
         }catch(Exception $e) {
             return \View::make('spa.about.view_about');
         }
