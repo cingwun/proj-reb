@@ -22,7 +22,8 @@ class IndexController extends \BaseController{
 							  ->where('display', 'yes')
 							  ->orderBy('sort', 'desc')
 							  ->take(4)
-							  ->get();
+							  ->get()
+							  ->toArray();
 
 		return \View::make('spa.index.view_index', array(
 			'news'=>$news,
