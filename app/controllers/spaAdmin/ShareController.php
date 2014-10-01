@@ -286,7 +286,7 @@ class ShareController extends \BaseController {
                 $tabInner->sort = $order++;
                 $tabInner->save();
             }
-                return \Redirect::route('spa.admin.share.article.list', array('page'=>1, 'message'=>'success'));
+                return \Redirect::route('spa.admin.share.article.list', array('page'=>1));
             }catch (Exception $e) {
                 return Redirect::back()->withInput()->withErrors($e->getMessage());
             }
@@ -335,7 +335,7 @@ class ShareController extends \BaseController {
 
             foreach($images as $img)
                 \fps::getInstance()->delete($img);
-            return \Response::json(array('status'=>'ok', 'message'=>'success'));
+            return \Response::json(array('status'=>'ok'));
         }catch(Exception $e){
             return \Response::json(array('status'=>'ok', 'message'=>$e->getMessage()));
         }
