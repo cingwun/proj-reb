@@ -7,7 +7,7 @@ $aboutArticle = \SpaArticles::where('category', 'about')
 							->orderBy('sort', 'desc')
 							->get();
 
-//service 
+//service
 $servCatCmd = \SpaService::where('_parent', 'N')
 						 ->where('display', 'yes')
 						 ->where('lang', App::getLocale())
@@ -32,7 +32,7 @@ if($servCatCmd) {
 //product
 $prodCats = array();
 $prodCatsCmd = \SpaProduct::where('_parent', 'N')
-						  ->where('display', 'yes') 
+						  ->where('display', 'yes')
 						  ->where('lang', App::getLocale())
 						  ->orderBy('sort', 'desc')
 						  ->get(array('id', 'title'))
@@ -40,7 +40,9 @@ $prodCatsCmd = \SpaProduct::where('_parent', 'N')
 if($prodCatsCmd)
 	$prodCats = $prodCatsCmd;
 
-$www = str_replace('spa.', '', 'http://www.'. $_SERVER['HTTP_HOST']);
+
+
+$www = 'http://' . Host::get('rebeauty');
 ?>
 
 <header id="header" role="banner">

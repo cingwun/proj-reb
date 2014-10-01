@@ -19,7 +19,7 @@ foreach($servicefaq as $item){
     $servicesFaqs[$item->type] = $list;
 }
 
-$spa = str_replace('www.', '', 'http://spa.'. $_SERVER['HTTP_HOST']);
+$spa = 'http://' . Host::get('spa');
 
 ?>
 <nav id="mainNav" role="navigation">
