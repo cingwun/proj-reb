@@ -61,7 +61,7 @@
                     <a href="javascript:;" data-toggle="collapse" data-target="#system"><i class="glyphicon glyphicon-dashboard"></i> 系統管理 <i class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="system" class="collapse">
                         <li>
-                            <a href="{{URL::route('admin.users.list')}}">使用者</a>
+                            <a href="{{URL::route('admin.users.index')}}">使用者</a>
                         </li>
                         <li>
                             <a href="{{URL::route('admin.groups.index')}}">群組</a>
