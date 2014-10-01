@@ -9,12 +9,14 @@
 @section('main')
 
 <div>
-	<a href='javascript:history.back()' type="button" class="btn btn-default pull-lift">回上一頁</a>
+	<a href='javascript:history.back()' type="button" class="btn btn-default pull-left">回上一頁</a>
 	@if($category == '')
-	<select onchange = "langList(this)">
-		<option value="tw" @if($listLang == 'tw') selected @endif>繁體</option>
-		<option value="cn" @if($listLang == 'cn') selected @endif>簡體</option>
-	</select>
+	<div class="col-md-2">
+		<select class="form-control" onchange="langList(this)">
+			<option value="tw" @if($listLang == 'tw') selected @endif>繁體</option>
+			<option value="cn" @if($listLang == 'cn') selected @endif>簡體</option>
+		</select>
+	</div>
 	@endif
 	<a href='{{$acrionURL}}?lang={{$listLang}}@if($category != '')&category={{$category}}@endif' type="button" class="btn btn-success pull-right">新增</a>
 </div>
