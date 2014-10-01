@@ -9,52 +9,46 @@ class AuthController extends BaseController
     public function index() {
         return View::make('admin.index');
     }
-        /**
-         * Display the login page
-         * @return View
-         */
-        public function getLogin()
-        {
 
-            if(Sentry::check()){
-                //return Redirect::route('admin.index');
-                return View::make('admin.auth.login');
-            }
+    /**
+     * Display the login page
+     * @return View
+     */
+    public function getLogin() {
 
+        if (Sentry::check()) {
 
+            //return Redirect::route('admin.index');
             return View::make('admin.auth.login');
         }
 
-        /**
-         * Login action
-         * @return Redirect
-         */
-        public function postLogin()
-        {
-            $credentials = array(
-                'email' => Input::get('email'),
-                'password' => Input::get('password')
-                );
+        return View::make('admin.auth.login');
+    }
 
-            try
-            {
-                $user = Sentry::authenticate($credentials, false);
+    /**
+     * Login action
+     * @return Redirect
+     */
+    public function postLogin() {
+        $credentials = array('email' => Input::get('email'), 'password' => Input::get('password'));
 
-                if ($user && Input::get('where')=='rebeauty') {
-                    Session::put('where', 'rebeauty');
-                    return Redirect::route('admin.index', array('where'=>Input::get('where')));
-                }
+        try {
+            $user = Sentry::authenticate($credentials, false);
 
-                if ($user && Input::get('where')=='spa') {
-                    Session::put('where', 'spa');
-                    return Redirect::route('spa.admin.index', array('where'=>Input::get('where')));
-                }
+            if ($user && Input::get('where') == 'rebeauty') {
+                Session::put('where', 'rebeauty');
+                return Redirect::route('admin.index');
             }
-            catch(\Exception $e)
-            {
-                return Redirect::route('admin.login')->withErrors(array('login' => $e->getMessage()));
+
+            if ($user && Input::get('where') == 'spa') {
+                Session::put('where', 'spa');
+                return Redirect::route('spa.admin.index');
             }
         }
+        catch(\Exception $e) {
+            return Redirect::route('admin.login')->withErrors(array('login' => $e->getMessage()));
+        }
+    }
 
     /**
      * Logout action
@@ -62,7 +56,6 @@ class AuthController extends BaseController
      */
     public function getLogout() {
         Sentry::logout();
-
         return Redirect::route('admin.login');
     }
 }

@@ -20,7 +20,7 @@
     <body id="admin">
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-inner">
-                <div class="container-fluid"> 
+                <div class="container-fluid">
                     <!-- <a class="brand" href="/admin">rebeauty</a> -->
                     <a class="brand" href="{{URL::route('switch.to.admin.rebeauty')}}">Rebeauty</a>
                     <div class="nav-collapse collapse">
@@ -30,7 +30,7 @@
                             <li class="dropdown @if(Request::is('admin/users*') || Request::is('admin/permissions*') || Request::is('admin/groups*')) active @endif"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">系統管理</a>
                                 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
                                     <li>
-                                        <a tabindex="-1" href="{{ URL::route('admin.users.index', array('where'=>Input::get('where'))) }}">使用者</a>
+                                        <a tabindex="-1" href="{{ URL::route('admin.users.list') }}">使用者</a>
                                     </li>
                                     <li>
                                         <a tabindex="-1" href="{{ URL::route('admin.groups.index') }}">群組</a>
