@@ -23,7 +23,8 @@ if (in_array($locale, $languages)) {
 /**
  * using multi domains for development enviroment
  */
-$www = str_replace('spa.', '', $_SERVER['HTTP_HOST']);
+list($sn, $port) = explode(':', $_SERVER['HTTP_HOST']);
+$www = str_replace('spa.', '', $sn);
 $spa = str_replace('www.', '', 'spa.'. $www);
 
 //for admin login/logout

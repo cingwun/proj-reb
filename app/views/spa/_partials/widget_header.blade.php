@@ -39,6 +39,8 @@ $prodCatsCmd = \SpaProduct::where('_parent', 'N')
 						  ->toArray();
 if($prodCatsCmd)
 	$prodCats = $prodCatsCmd;
+
+$www = str_replace('spa.', '', 'http://www.'. $_SERVER['HTTP_HOST']);
 ?>
 
 <header id="header" role="banner">
@@ -102,7 +104,7 @@ if($prodCatsCmd)
 					<li class="lv1_list"><a class="lv1_link" href="{{URL::route('spa.reservation.form')}}">觀光醫療特惠活動</a></li>
 				</ul>
 			</li>
-			<li class="navs"><a class="navsTitle goAes" class="goAes" href="{{URL::route('frontend.index')}}">煥麗醫美診所</a></li>
+			<li class="navs"><a class="navsTitle goAes" class="goAes" href="{{ $www }}">煥麗醫美診所</a></li>
 			</ul>
 
 		</nav><!-- ======================== mainNav end ======================== -->
