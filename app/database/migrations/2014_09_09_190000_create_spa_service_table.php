@@ -25,6 +25,8 @@ class CreateSpaServiceTable extends Migration {
 				$table->enum('display', array('yes', 'no'))->default('yes');
 				$table->enum('lang', array('tw', 'cn'));
 				$table->integer('ref')->unsigned(); //service reference id
+				$table->text('meta_name');
+				$table->text('meta_content');
 				$table->timestamps();
 			});
 		}

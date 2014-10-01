@@ -16,15 +16,22 @@ class ArticleController extends \BaseController {
 	 * @params (string) $category about / news / oversea
 	 * 
 	 */
-	public function getList($category = 'about') {
+	public function getList($category = 'about', $lang = 'all') {
 		try{
+			$cmd = new \SpaArticles;
 			$Articles = array();
-			$Articles = \SpaArticles::where('category', $category)
-									->orderBy('sort', 'desc')
-									->get();
+			if($lang!='all')
+				$cmd = \SpaArticles::where('lang', $lang);
+			$Articles = $cmd->where('category', $category)
+							->orderBy('sort', 'desc')
+							->get();
 
 			if($Articles)
-				return \View::make('spa_admin.articles.view_list', array('category'=>$category, 'selectedArticles'=>$Articles));
+				return \View::make('spa_admin.articles.view_list', array(
+					'category'=>$category,
+					'selectedArticles'=>$Articles,
+					'lang'=>$lang
+					));
 		}catch(Exception $e){
 			return Redirect::route('spa.admin.articles.list', array('errorMessage'=>$e->getMessage()));
 		}catch (Exception $e) {
@@ -137,6 +144,8 @@ class ArticleController extends \BaseController {
 				$newArticle->status = \Input::get('status');
 				$newArticle->lang = \Input::get('lang');
 				$newArticle->sort = \SpaArticles::max('sort')+1;
+				$newArticle->meta_name = \Input::get('meta_name');
+				$newArticle->meta_content = \Input::get('meta_content');
 
 				$newArticle->ref_id = $refArticle->id;
 				$newArticle->save();
@@ -182,6 +191,8 @@ class ArticleController extends \BaseController {
 			$article->open_at = \Input::get('open_at');
 			$article->status = \Input::get('status');
 			$article->lang = \Input::get('lang');
+			$article->meta_name = \Input::get('meta_name');
+			$article->meta_content = \Input::get('meta_content');
 			if($sort=='do')
 				$article->sort = \SpaArticles::max('sort')+1;
 			$article->save();

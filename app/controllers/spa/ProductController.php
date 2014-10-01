@@ -13,6 +13,7 @@ class ProductController extends \BaseController{
 			$productsCmd = \SpaProduct::where('_parent', '<>', 'N')
 									  ->where('display', 'yes')
 									  ->where('lang', $this->getLocale())
+									  ->orderBy('sort', 'DESC')
 									  ->get(array('id', 'title', 'image'))
 									  ->toArray();
 			if($productsCmd)
@@ -49,15 +50,23 @@ class ProductController extends \BaseController{
 				$categorys = $categorysCmd;
 				
 			$product = array();
-			$productCmd = \SpaProduct::find($id);
-			//set views
-			if(\ViewsAdder::views_cookie('product', $id)) {
-				$productCmd->views += 1; 
-				$productCmd->save();
+			$productCmd = \SpaProduct::where('id', $id)
+									 ->where('lang', $this->getLocale());
+			
+			if($productCmd->first()) {
+				$product = $productCmd->first()
+									  ->toArray();
+			}else {
+				throw new \Exception("the product $id data is not exist");
+				exit;
 			}
 			
-			if($productCmd)
-				$product = $productCmd->toArray();
+			//set views
+			if(\ViewsAdder::views_cookie('product', $id)) {
+				$productCmd = $productCmd->first();
+            	$productCmd->views = $productCmd->views + 1;
+              	$productCmd->save();
+			}
 
 			$productCat = \SpaProduct::find($product['_parent'])
 									 ->toArray();
@@ -91,6 +100,7 @@ class ProductController extends \BaseController{
 			$categorysCmd = \SpaProduct::where('_parent', 'N')
 									   ->where('display', 'yes')
 									   ->where('lang', $this->getLocale())
+									   ->orderBy('sort', 'DESC')
 									   ->get(array('id', 'title'))
 									   ->toArray();
 			if($categorysCmd)
@@ -107,7 +117,8 @@ class ProductController extends \BaseController{
 									  ->where('_parent', $cat)
 									  ->where('lang', $this->getLocale());
 			$rowsNum = $productsCmd->count();
-			$productsCmd = $productsCmd->skip($offset)
+			$productsCmd = $productsCmd->orderBy('sort', 'DESC')
+									   ->skip($offset)
                         			   ->take($limit)
 									   ->get()
 									   ->toArray();
@@ -118,7 +129,7 @@ class ProductController extends \BaseController{
 									 ->first(array('id', 'title', 'image'))
 									 ->toArray();
 
-			$productListURL = \URL::route('spa.product.list', array('cat'=>$cat));
+			$productListURL = \URL::route('spa.product.list');
 			$pageURL = \URL::route('spa.product.list', array('cat'=>$cat));
 			$productDetailURL = \URL::route('spa.product.detail');
 			$productURL = \URL::route('spa.product');

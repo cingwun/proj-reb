@@ -25,8 +25,8 @@
 				<div><p>服務項目：</p></div>
 				<!-- @text for shareTag -->
 				<div class="shareTag">
-					@foreach($labelService as $ls)
-					<a href="#"><div class="shareTag_btn">{{$ls['title']}}</div></a>
+					@foreach($labelService as $ls)                                  
+					<a href="{{URL::route('spa.service.detail', array($ls['id']))}}"><div class="shareTag_btn">{{ \Text::preEllipsize(strip_tags($ls['title']), 5) }}</div></a>
 					@endforeach
 				</div>
 			</div>
@@ -35,7 +35,7 @@
 				<!-- @text for shareTag -->
 					<div class="shareTag">
 					@foreach($labelProduct as $lp)
-						<a href="#"><div class="shareTag_btn">{{$lp['title']}}</div></a>
+						<a href="{{URL::route('spa.product.detail', array($lp['id']))}}"><div class="shareTag_btn">{{ \Text::preEllipsize(strip_tags($lp['title']), 5) }}</div></a>
 					@endforeach
 					</div>
 				</div>
@@ -109,4 +109,8 @@
 		</div>
 	</div>
 </div>
+@stop
+
+@section('head')
+<meta name="{{$article->meta_name}}" content="{{$article->meta_content}}">
 @stop

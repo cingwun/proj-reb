@@ -26,3 +26,7 @@
 	</div>
 </div>
 @stop
+
+@section('head')
+<meta name="{{$product['meta_name']}}" content="{{$product['meta_content']}}">
+@stop

@@ -225,8 +225,8 @@ Route::group(array('prefix'=>'admin/spa', 'before'=>'auth.admin'), function()
     }));
 
     // Spa Articles
-    Route::get('articles/list/{category?}', array('as'=>'spa.admin.articles.list', 'uses'=>'spaAdmin\\ArticleController@getList'))
-         ->where(array('category'=>'(about|news|oversea)'));
+    Route::get('articles/list/{category?}/{lang?}', array('as'=>'spa.admin.articles.list', 'uses'=>'spaAdmin\\ArticleController@getList'))
+         ->where(array('category'=>'(about|news)'));
 
     Route::get('articles/action/{id?}/{changeLan?}/{category?}', array('as'=>'spa.admin.articles.action', 'uses'=>'spaAdmin\\ArticleController@getAction'))
          ->where(array('id'=>'([0-9]+)', 'changeLan'=>'(modifyLanguage|0)', 'category'=>'(about|news|oversea)'));
@@ -241,7 +241,7 @@ Route::group(array('prefix'=>'admin/spa', 'before'=>'auth.admin'), function()
 
     // Spa Shares
     // Article
-    Route::get('share/article/list/{page?}', array('as'=>'spa.admin.share.article.list', 'uses'=>'spaAdmin\\ShareController@getArticleList'))
+    Route::get('share/article/list/{page?}/{lang?}', array('as'=>'spa.admin.share.article.list', 'uses'=>'spaAdmin\\ShareController@getArticleList'))
          ->where(array('page'=>'([0-9]+)'));
 
     Route::get('share/article/action/{id?}/{changeLang?}', array('as'=>'spa.admin.share.article.action', 'uses'=>'spaAdmin\\ShareController@getArticleAction'))
@@ -265,7 +265,7 @@ Route::group(array('prefix'=>'admin/spa', 'before'=>'auth.admin'), function()
     /*
      * Display service list page
      */
-    Route::get('service/article/list', array('as'=>'spa.admin.service.article.list', 'uses'=>'spaAdmin\\ServiceController@getServiceList'));
+    Route::get('service/article/list/', array('as'=>'spa.admin.service.article.list', 'uses'=>'spaAdmin\\ServiceController@getServiceList'));
 
     /*
      * Display service create/edit page

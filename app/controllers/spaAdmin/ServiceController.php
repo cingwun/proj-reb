@@ -197,7 +197,7 @@ class ServiceController extends \BaseController {
 	 * @params (int) $id
 	 */
 	public function postWriteService($id = null) {
-		$listLang = \Input::get('lang', "tw");
+		$listLang = \Input::get('listLang', "tw");
 		$articlecat = \Input::get('category', null);
 		$action = \Input::get('action');
 		try {
@@ -232,6 +232,8 @@ class ServiceController extends \BaseController {
 			$image = \Input::get('main_image')[0];
 			$image_desc = \Input::get('main_imageDesc')[0];
 			$content = \Input::get('content');
+			$meta_name = \Input::get('meta_name');
+			$meta_content = \Input::get('meta_content');
 
 			$service->title = !empty($title) ? $title : "";
 			$service->image = !empty($image) ? $image : "";
@@ -240,7 +242,9 @@ class ServiceController extends \BaseController {
 			$service->tag = json_encode($tabs);
 			$service->_parent = \Input::get('cat');
 			$service->display = \Input::get('display');
-			$service->lang = \Input::get('lang');
+			$service->lang = $listLang;
+			$service->meta_name = !empty($meta_name) ? $meta_name : "";
+			$service->meta_content = !empty($meta_content) ? $meta_content : "";
 			$service->save();
 
 			//create service id
@@ -288,8 +292,10 @@ class ServiceController extends \BaseController {
 				$anotherService->tag = json_encode($tabs);
 				$anotherService->_parent = $anotherServiceCat;
 				$anotherService->display = "no";
-				$anotherService->lang = $langControlGroup[\Input::get('lang')];
+				$anotherService->lang = $langControlGroup[$listLang];
 				$anotherService->ref = $inserted_id;
+				$anotherService->meta_name = !empty($meta_name) ? $meta_name : "";
+				$anotherService->meta_content = !empty($meta_content) ? $meta_content : "";
 				$anotherService->save();
 
 				$anotherId = $anotherService->id;
@@ -298,7 +304,7 @@ class ServiceController extends \BaseController {
 				$createService->ref = $anotherId;
 				$createService->save();
 			}
-			return \Redirect::route("spa.admin.service.article.list", array('category'=>$articlecat, 'listLang'=>$listLang));
+			return \Redirect::route("spa.admin.service.article.list", array('category'=>$articlecat, 'lang'=>$listLang));
 		} catch (Exception $e) {
 			echo $e->getMessage();
 			exit;
@@ -356,29 +362,12 @@ class ServiceController extends \BaseController {
 			if($catsCNCmd)
 				$catsCN = $catsCNCmd;
 
-			$catsTWactionURL = array();
-			$catsTWservListURL = array();
-			foreach ($catsTW as $cat) {
-				$catsTWactionURL[$cat->id] = \URL::route('spa.admin.service.category.action', array('id'=>$cat->id));
-				$catsTWservListURL[$cat->id] = \URL::route('spa.admin.service.article.list', array('lang'=>$cat->lang, 'category'=>$cat->id));
-			}
-			$catsCNactionURL = array();
-			$catsCNservListURL = array();
-			foreach ($catsCN as $cat) {
-				$catsCNactionURL[$cat->id] = \URL::route('spa.admin.service.category.action', array('id'=>$cat->id));
-				$catsCNservListURL[$cat->id] = \URL::route('spa.admin.service.article.list', array('lang'=>$cat->lang, 'category'=>$cat->id));
-			}
-
 			$categorys = array(
 				'tw'=>array(
-					'item' => $catsTW,
-					'actionURL' => $catsTWactionURL,
-					'servListURL' => $catsTWservListURL
+					'item' => $catsTW
 				),
 				'cn'=>array(
-					'item' => $catsCN,
-					'actionURL' => $catsCNactionURL,
-					'servListURL' => $catsCNservListURL
+					'item' => $catsCN
 				)
 			);
 

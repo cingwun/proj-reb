@@ -86,8 +86,8 @@ class ShareController extends \BaseController {
 									 ->first(array('id', 'title'));
 
 			$tabs = \SpaSharesTabs::where('item_id', $id)
-								 ->get(array('title', 'content'))
-								 ->toArray();
+								  ->get(array('title', 'content'))
+								  ->toArray();
 
 			$labels = \SpaSharesLabels::where('share_id', $id)
 									  ->get(array('share_id', 'label_id'))
