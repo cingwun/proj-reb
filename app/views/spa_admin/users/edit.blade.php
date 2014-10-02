@@ -8,16 +8,23 @@
 
 @include('admin._partials.notifications')
 
-<form action="/admin/users/{{ $user->id }}" method="post">
+<form action="/admin/users/{{ $user->id }}" method="post" class="col-lg-6">
 
-	<div class="form-group col-lg-5">
+	<div class="form-group">
 		<label>姓名</label>
 		<div>
 			<input type="text" class="form-control" id="last_name" name="last_name" size="12" value="{{ $user->last_name }}">
 		</div>
 	</div>
 
-	<div class="form-group col-lg-8">
+	<div class="form-group">
+		<label>密碼</label>
+		<div>
+			<input class="form-control" id="password" name="password" size="12">
+		</div>
+	</div>
+
+	<div class="form-group">
 		<label>身份</label>
 		@foreach(Sentry::findAllGroups() as $group)
 		<label class="radio-inline">
@@ -27,7 +34,7 @@
 		@endforeach
 	</div>
 
-	<div class="form-group col-lg-5">
+	<div class="form-group">
 		<label>狀態</label>
 		<label class="radio-inline">
 			<input type="radio" name="activated" value="1" @if($user->activated) checked="checked" @endif > ON
@@ -37,7 +44,7 @@
 		</label>
 	</div>
 
-	<div class="col-lg-8">
+	<div>
 		<input type="hidden" name="_method" value="PUT" />
 		<button class="btn btn-danger" type="button" onclick="history.back();">取消</button> <button class="btn btn-primary">更改</button>
 	</div>
