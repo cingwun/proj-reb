@@ -8,7 +8,7 @@
 
 @section('main')
 
-<div>
+<div class="col-lg-12">
 	<a href='javascript:history.back()' type="button" class="btn btn-default pull-left">回上一頁</a>
 	@if($category == '')
 	<div class="col-md-2">
@@ -21,53 +21,55 @@
 	<a href='{{$actionURL}}?lang={{$listLang}}@if($category != '')&category={{$category}}@endif' type="button" class="btn btn-success pull-right">新增</a>
 </div>
 <br/>
-<table class="table table-bordered table-hover" id="sortable" data-sortAction="{{$updateSortURL}}" data-deleteAction="{{$deleteURL}}">
-	<thead>
-		<tr>
-			<th>產品項目標題</th>
-			<th>分類</th>
-			<th width="60">瀏覽數</th>
-			<th>容量</th>
-			<th>價格</th>
-			<th width="50">狀態</th>
-			<th width="140">發表/更新日期</th>
-			<th width="50">排序</th>
-			<th width="210">功能</th>
-		</tr>
-	</thead>
-	<tbody>
-		@foreach($products as $product)
-		<tr id='{{$product->id}}'>
-			<td>{{$product->title}}</td>
-			<td>
-				@if($product->_parent != "")
-				{{$category_array[$product->_parent]}}
-				@endif
-			</td>
-			<td width="60">{{$product->views}}</td>
-			<td>{{$product->capacity}}</td>
-			<td>{{$product->price}}</td>
-			<td width="50">
-				@if($product->display === 'yes')
-				<span style="color: #00AA00">顯示</span>
-				@else
-				隱藏
-				@endif
-			</td>
-			<td width="140">{{$product->created_at}}<br/>{{$product->updated_at}}</td>
-			<td width="50">{{$product->sort}}</td>
-			<td width="210">
-				<a href="{{$actionURL}}/{{$product->id}}" type="button" class="btn btn-sm btn-primary">修改</a>
-				<a href="#" type="button" class="btn btn-sm btn-danger btn-delete">刪除</a>
-				@if($product->ref_display == 'yes')
-				<a href="{{$actionURL}}/{{$product->ref}}?lang={{$langControlGroup[$listLang]}}&category={{$category}}" type="button" class="btn btn-sm btn-warning">編輯@if($product->lang == 'tw')簡體@else繁體@endif語系</a>
-				@endif
-			</td>
-		</tr>
-		@endforeach
-	</tbody>
-</table>
-<input type="hidden" value='{{$category}}' id='category'/>
+<div id="clearTop" class="col-lg-12">
+	<table class="table table-bordered table-hover" id="sortable" data-sortAction="{{$updateSortURL}}" data-deleteAction="{{$deleteURL}}">
+		<thead>
+			<tr>
+				<th>產品項目標題</th>
+				<th>分類</th>
+				<th width="60">瀏覽數</th>
+				<th>容量</th>
+				<th>價格</th>
+				<th width="50">狀態</th>
+				<th width="140">發表/更新日期</th>
+				<th width="50">排序</th>
+				<th width="210">功能</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach($products as $product)
+			<tr id='{{$product->id}}'>
+				<td>{{$product->title}}</td>
+				<td>
+					@if($product->_parent != "")
+					{{$category_array[$product->_parent]}}
+					@endif
+				</td>
+				<td width="60">{{$product->views}}</td>
+				<td>{{$product->capacity}}</td>
+				<td>{{$product->price}}</td>
+				<td width="50">
+					@if($product->display === 'yes')
+					<span style="color: #00AA00">顯示</span>
+					@else
+					隱藏
+					@endif
+				</td>
+				<td width="140">{{$product->created_at}}<br/>{{$product->updated_at}}</td>
+				<td width="50">{{$product->sort}}</td>
+				<td width="210">
+					<a href="{{$actionURL}}/{{$product->id}}" type="button" class="btn btn-sm btn-primary">修改</a>
+					<a href="#" type="button" class="btn btn-sm btn-danger btn-delete">刪除</a>
+					@if($product->ref_display == 'yes')
+					<a href="{{$actionURL}}/{{$product->ref}}?lang={{$langControlGroup[$listLang]}}&category={{$category}}" type="button" class="btn btn-sm btn-warning">編輯@if($product->lang == 'tw')簡體@else繁體@endif語系</a>
+					@endif
+				</td>
+			</tr>
+			@endforeach
+		</tbody>
+	</table>
+	<input type="hidden" value='{{$category}}' id='category'/>
+</div>
 @include('spa_admin._partials.widget_pager', array('wp'=>$pagerParam))
 @stop
 @section('head')

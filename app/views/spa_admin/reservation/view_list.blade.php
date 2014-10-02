@@ -7,8 +7,8 @@
 @section('main')
 <div class="col-lg-12">
     <a href='{{$actionURL}}' type="button" class="btn btn-success pull-right">新增</a>
-
-<div class="col-lg-12">
+</div>
+<div class="col-lg-12" id="clearTop">
     <table class="table table-bordered table-hover" id="reservationTable" data-detailsAction="{{$detailsURL}}" data-deleteAction="{{$deleteURL}}">
     	<thead>
     		<tr>

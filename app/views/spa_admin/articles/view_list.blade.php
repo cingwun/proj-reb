@@ -6,7 +6,7 @@
 @stop
 
 @section('main')
-<div>
+<div class="col-lg-12">
 	<a type="button" @if($category=='about')class="btn btn-md btn-info" @else class="btn btn-md btn-default" @endif href="{{ URL::route('spa.admin.articles.list')}}/about" style="float: left; margin-right: 5px">關於煥麗</a>
 	<a type="button" @if($category=='news')class="btn btn-md btn-info" @else class="btn btn-md btn-default" @endif href="{{ URL::route('spa.admin.articles.list')}}/news" style="float: left">最新消息</a>
 	<!-- <a type="button" @if($category=='oversea')class="btn btn-md btn-info" @else class="btn btn-md btn-default" @endif href="{{ URL::route('spa.admin.articles.list')}}/oversea">海外專區</a> -->
@@ -22,8 +22,8 @@
 <br>
 
 		<?php switch($category) {case 'about':$cat = "關於煥麗";break; case 'news':$cat = "最新消息";break; case 'oversea':$cat = "海外專區";break;} ?>
-						
-		<div class="table-responsive" style="margin-top: 25px">
+	<div  class="col-lg-12">				
+		<div class="table-responsive" id="clearTop">
 			<table class="table table-bordered" id="sortable" data-sortAction="<?php echo URL::route('spa.admin.articles.sort')?>" >
 			
 				<thead>
@@ -58,6 +58,7 @@
 				</tbody>
 			</table>
 		</div>
+	</div>
 
 
 <!--{{ HTML::style(asset('css/admin/service_faq/css_category_list.css'))}}
@@ -68,7 +69,9 @@
 
 @stop
 
+@section('head')
 
+@stop
 
 @section('bottom')
 

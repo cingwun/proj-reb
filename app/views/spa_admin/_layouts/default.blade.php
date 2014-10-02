@@ -11,6 +11,12 @@
 
     <title>SB Admin - Bootstrap Admin Template</title>
 
+    <style type="text/css">
+        #clearTop {
+            margin-top: 10px;
+        }
+    </style>
+
     <!-- Bootstrap Core CSS -->
 
     {{ HTML::style(asset('spa_admin/css/admin/bootstrap.min.css'))}}

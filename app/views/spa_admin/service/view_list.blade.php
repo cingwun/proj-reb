@@ -21,7 +21,7 @@
 	<a href='{{$acrionURL}}?lang={{$listLang}}@if($category != '')&category={{$category}}@endif' type="button" class="btn btn-success pull-right">新增</a>
 </div>
 <br/>
-<div class='col-lg-12' style="margin-top:10px;">
+<div class='col-lg-12' id="clearTop">
 	<table class="table table-bordered table-hover" id="sortable" data-sortAction="{{$updateSortURL}}" data-deleteAction="{{$deleteURL}}">
 		<thead>
 			<tr>
