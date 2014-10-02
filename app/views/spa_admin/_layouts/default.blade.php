@@ -152,9 +152,8 @@
             <!-- /.navbar-collapse -->
             <div id="page-wrapper">
                 <div class="container-fluid">
-
                     <!-- Page Heading -->
-                    <div class="row">
+                    <div>
                         <div class="col-lg-12">
                             <h1 class="page-header">
                                 @yield('title')
@@ -162,7 +161,7 @@
                         </div>
                     </div>
                     <!-- /.row -->
-                    <div class='container'>
+                    <div>
                         @yield('main')
                     </div>
                     <!-- /.row -->
