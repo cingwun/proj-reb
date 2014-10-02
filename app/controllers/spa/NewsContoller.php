@@ -35,9 +35,10 @@ class NewsContoller extends \BaseController {
 				return Redirect::route('spa.news');
 
 			$article = \SpaArticles::where('status', '1')
+								   ->where('lang', $this->getLocale())
 								   ->find($id);
 			if(empty($article))
-				throw new \Exception('Error request [11]');
+				return \Redirect::route('spa.news');
 
 			if(\ViewsAdder::views_cookie('news', $id)) {
 				$article->views = $article->views + 1;
