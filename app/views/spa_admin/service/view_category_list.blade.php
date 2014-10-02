@@ -8,7 +8,7 @@
 <div class='col-lg-12'>
     <a href='{{$actionURL}}' type="button" class="btn btn-success pull-right">新增</a>
 </div>
-<div>
+<div class='col-lg-12' id="clearTop">
     <div class='col-lg-6'>
         <div><label>繁體列表</label></div>
         <table class="table table-bordered" id="sortableTW" data-sortAction="{{$updateSortURL}}" data-deleteAction="{{$categoryDeleteURL}}">

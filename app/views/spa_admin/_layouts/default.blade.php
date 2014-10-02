@@ -11,6 +11,12 @@
 
     <title>SB Admin - Bootstrap Admin Template</title>
 
+    <style type="text/css">
+        #clearTop {
+            margin-top: 10px;
+        }
+    </style>
+
     <!-- Bootstrap Core CSS -->
 
     {{ HTML::style(asset('spa_admin/css/admin/bootstrap.min.css'))}}
@@ -152,9 +158,8 @@
             <!-- /.navbar-collapse -->
             <div id="page-wrapper">
                 <div class="container-fluid">
-
                     <!-- Page Heading -->
-                    <div class="row">
+                    <div>
                         <div class="col-lg-12">
                             <h1 class="page-header">
                                 @yield('title')
@@ -162,7 +167,7 @@
                         </div>
                     </div>
                     <!-- /.row -->
-                    <div class='container'>
+                    <div>
                         @yield('main')
                     </div>
                     <!-- /.row -->
