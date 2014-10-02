@@ -162,7 +162,7 @@
                         </div>
                     </div>
                     <!-- /.row -->
-                    <div class='container'>
+                    <div>
                         @yield('main')
                     </div>
                     <!-- /.row -->
