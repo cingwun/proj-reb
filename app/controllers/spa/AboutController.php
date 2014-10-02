@@ -18,7 +18,8 @@ class AboutController extends \BaseController {
                 }
             }
             else
-                $article = \SpaArticles::find($id);
+                $article = \SpaArticles::where('status', '1')
+                                       ->find($id);
                 if($article)
                   $cover = json_decode($article->cover);
 

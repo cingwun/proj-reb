@@ -32,5 +32,20 @@ class Host {
                 break;
         }
     }
+
+    public static function getLangURL($target='tw'){
+        //http://spa.rebeauty.com.tw:8080/tw/news/9
+        //REQUEST_URI=>/tw/news/9
+        //SERVER_NAME=>rebeauty.com.tw
+        //HTTP_HOST=>spa.rebeauty.com.tw:8080
+        //HTTP_REFERER=>http://spa.rebeauty.com.tw:8080/tw/news
+        //$_SERVER
+        $after = str_replace(array('tw/', 'cn/'), '', $_SERVER['REQUEST_URI']);
+        $theURL = asset('').$target.$after;
+        // $uu = array(
+        //     'r'=>$_SERVER
+        //     );
+        return $theURL;
+    }
 }
 ?>
