@@ -1,13 +1,16 @@
-@extends('admin._layouts.default')
+@extends('spa_admin._layouts.default')
+
+@section('title')
+會員管理
+@stop
 
 @section('main')
-    <h2>會員&nbsp;管理&nbsp;</h2>
     <div class="pull-left" style="margin: 0px 0px 10px;">
         <form action="<?=route('admin.member.list')?>" method="get" class="form-inline" role="form" id="search-form">
             <div class="form-group">
-                <label class="sr-only" for="exampleInputEmail2">搜尋會員</label>
-                <input type="text" name="keyword" class="form-control" placeholder="輸入姓名關鍵字，至少兩個字" value="<?=Input::get('keyword', '')?>">
-                <button type="submit" class="btn btn-default btn-search">搜尋</button>
+                <label>搜尋會員</label>
+                <input type="text" name="keyword" class="form-control" placeholder="輸入關鍵字，至少兩個字" value="<?=Input::get('keyword', '')?>">
+                <button type="submit" class="btn btn-success btn-search">搜尋</button>
             </div>
         </form>
     </div>
@@ -39,7 +42,7 @@
         </tbody>
     </table>
 
-    @include('admin._partials.widget_pager', array('wp'=>$wp))
+    @include('spa_admin._partials.widget_pager', array('wp'=>$wp))
 @stop
 
 @section('bottom')

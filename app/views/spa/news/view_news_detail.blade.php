@@ -2,7 +2,7 @@
 
 @section('bodyId')
 {{ 'spa_newsPost_detail'}}
-<?php $titleType = 'news'; ?>
+<?php $titleType = 'news';?>
 @stop
 
 @section('content')

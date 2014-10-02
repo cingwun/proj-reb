@@ -16,7 +16,7 @@ class UsersController extends \BaseController
     public function index() {
         $where = Input::get('where', 'rebeauty');
         $view = (($where=='rebeauty')) ? 'admin.users.view_index' : 'spa_admin.users.index';
-        return View::make('admin.users.view_index', array('users'=>Sentry::findAllUsers(), 'where'));
+        return View::make($view, array('users'=>Sentry::findAllUsers(), 'where'));
     }
 
     public function show($id) {
