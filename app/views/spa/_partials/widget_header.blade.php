@@ -37,8 +37,6 @@ $prodCatsCmd = \SpaProduct::where('_parent', 'N')
 						  ->orderBy('sort', 'desc')
 						  ->get(array('id', 'title'))
 						  ->toArray();
-if($prodCatsCmd)
-	$prodCats = $prodCatsCmd;
 
 $www = 'http://' . Host::get('rebeauty');
 ?>

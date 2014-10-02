@@ -20,8 +20,8 @@ class AboutController extends \BaseController {
             else
                 $article = \SpaArticles::where('status', '1')
                                        ->find($id);
-                if($article)
-                  $cover = json_decode($article->cover);
+            if($article)
+              $cover = json_decode($article->cover);
 
             if($article&&\ViewsAdder::views_cookie('about', $id)) {
               $article->views = $article->views + 1;
