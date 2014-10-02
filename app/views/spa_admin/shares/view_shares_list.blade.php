@@ -5,7 +5,7 @@
 @stop
 
 @section('main')
-<div>
+<div class="col-lg-12">
     <div>
         <a href="javascript:window.history.back()" class="btn btn-default pull-left">回上一頁</a>
         <div class="col-md-2">
@@ -15,13 +15,11 @@
                 <option value="{{URL::route('spa.admin.share.article.list', array('1'))}}" <?php echo($lang=='all')?'selected':''?>>顯示全部</a></option>
             </select>
         </div>
-        <a href="{{ URL::route('spa.admin.share.article.action')}}" class="btn btn-md btn-success" style="float: right;">新增</a>
+        <a href="{{ URL::route('spa.admin.share.article.action')}}" class="btn btn-md btn-success pull-right">新增</a>
     </div>
-    <br>
-    <br>
 </div>
 <br>
-<div class="row">
+<div class="col-lg-12" id="clearTop">
     <div>
         <table class="table table-bordered" id="sortable" data-sortAction="{{ URL::route('spa.admin.share.sort.update', array('type'=>'article'))}}" data-deleteAction="{{ URL::route('spa.admin.share.article.delete')}}">
             <thead>
