@@ -68,7 +68,7 @@
     }
 
     if (($currPage+1)<=$totalPage)
-        $pageList .= sprintf('<li><a href="%s" title="上一頁">»</a></li>', createURL($url, $qs, $route, $params, ($currPage+1)));
+        $pageList .= sprintf('<li><a href="%s" title="下一頁">»</a></li>', createURL($url, $qs, $route, $params, ($currPage+1)));
 
 	echo $pageList .= '</ul>';
 ?>

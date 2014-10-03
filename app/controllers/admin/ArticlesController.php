@@ -35,13 +35,11 @@ class ArticlesController extends \BaseController
             'URL' => URL::route('admin.articles.index'),
             'category' => $category
         );
-        $data = Article::take($limit)->skip($offset)->where('category', '=', $category)->get();
 
         return View::make('admin.articles.index', array(
             'articles'=>$model,
             'wp'=>$widgetParam
             ));
-        // return View::make('admin.articles.index')->with('articles', ($category == 1 || $category == 2) ? $model->orderBy('sort', 'asc')->get() : $model->orderBy('open_at', 'desc')->paginate(5));
     }
 
     /**
