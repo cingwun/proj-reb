@@ -61,7 +61,10 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{ Sentry::getUser()->email }} <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href=""><i class="fa fa-fw fa-gear"></i> 設定密碼</a>
+                                <a href="{{URL::route('admin.user.modify')}}"><i class="fa fa-fw fa-gear"></i> 設定密碼</a>
+                            </li>
+                            <li>
+                                <a href="{{URL::route('switch.to.admin.rebeauty')}}"><i class="glyphicon glyphicon-home"></i>&nbsp; Rebeauty</a>
                             </li>
                             <li class="divider"></li>
                             <li>
@@ -85,9 +88,6 @@
                         </li>
                         <li>
                             <a href="{{URL::route('admin.permissions.index')}}">權限</a>
-                        </li>
-                        <li>
-                            <a href="{{URL::route('switch.to.admin.rebeauty')}}">Rebeauty後台</a>
                         </li>
                     </ul>
                 </li>
