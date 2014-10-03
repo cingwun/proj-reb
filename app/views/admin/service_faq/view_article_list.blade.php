@@ -18,6 +18,12 @@
         }
     ?>
     <a href="<?php echo $backLink?>" class="btn btn-default pull-left"><?php echo $backLinkTitle?></a>
+    <div class="col-md-2">
+        <select class="form-control" onchange="langList(this)">
+            <option value="tw" @if($articleLang == 'tw') selected @endif>繁體</option>
+            <option value="cn" @if($articleLang == 'cn') selected @endif>簡體</option>
+        </select>
+    </div>
     <a href="<?php echo URL::route('admin.service_faq.article.action', array('type'=>$type))?>" class="btn btn-success pull-right">新增</a>
 </div>
 <div class="col-lg-12">
@@ -63,5 +69,11 @@
     {{ HTML::script(asset('js/admin/service_faq/js_article_list.js'))}}
     <script type="text/javascript">
         var sortTable = _sortTable({el: '#sortable', role: 'article', sortColumn: 6, hasCategory: <?php echo (!empty($category))?'true':'false'?>});
+        function langList(e) {
+            if(e.value == "tw")
+                document.location.href="{{URL::route('admin.service_faq.article.list', array('type'=>'service','langList'=>'tw'))}}";
+            else
+                document.location.href="{{URL::route('admin.service_faq.article.list', array('type'=>'service','langList'=>'cn'))}}";
+        }
     </script>
 @stop

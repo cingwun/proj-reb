@@ -103,6 +103,9 @@ class ServiceFaqController extends BaseController{
         $cmd = ServiceFaq::where('type', '=', $type);
         $route = 'admin.service_faq.article.list';
         $params = array('type'=>$type);
+
+        $articleLang = Input::get('langList', 'tw');
+
         if (!empty($category)){
             $category = (int) $category;
             $cmd = $cmd->where("_parent", "=", $category);
@@ -113,7 +116,8 @@ class ServiceFaqController extends BaseController{
 
         $rowsNum = $cmd->count();
 
-        $articles = $cmd->orderBy('sort', 'desc')
+        $articles = $cmd->where('lang', $articleLang)
+                        ->orderBy('sort', 'desc')
                         ->orderBy('updated_at', 'desc')
                         ->skip($offset)
                         ->take($limit)
@@ -143,7 +147,8 @@ class ServiceFaqController extends BaseController{
             'articles' => &$articles,
             'category' => $category,
             'categories' => &$categories,
-            'pagerParam' => &$widgetParam
+            'pagerParam' => &$widgetParam,
+            'articleLang' => $articleLang
         ));
     }
 
