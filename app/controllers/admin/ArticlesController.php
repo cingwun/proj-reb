@@ -22,8 +22,26 @@ class ArticlesController extends \BaseController
         }
         $model = new Article;
         $model = $model->ofCategory($category);
+        $model = ($category == 1 || $category == 2) ? $model->orderBy('sort', 'asc')->get() : $model->orderBy('open_at', 'desc')->paginate(5);
 
-        return View::make('admin.articles.index')->with('articles', ($category == 1 || $category == 2) ? $model->orderBy('sort', 'asc')->get() : $model->orderBy('open_at', 'desc')->paginate(5));
+        $page = Input::get('page', 1);
+        $limit = 5;
+        $offset = ((int)($page-1)) * $limit;
+        $rowsNum = Article::where('category', '=', $category)->count();
+        $widgetParam = array(
+            'currPage' => $page,
+            'total' => $rowsNum,
+            'perPage' => $limit,
+            'URL' => URL::route('admin.articles.index'),
+            'category' => $category
+        );
+        $data = Article::take($limit)->skip($offset)->where('category', '=', $category)->get();
+
+        return View::make('admin.articles.index', array(
+            'articles'=>$model,
+            'wp'=>$widgetParam
+            ));
+        // return View::make('admin.articles.index')->with('articles', ($category == 1 || $category == 2) ? $model->orderBy('sort', 'asc')->get() : $model->orderBy('open_at', 'desc')->paginate(5));
     }
 
     /**

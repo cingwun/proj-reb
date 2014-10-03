@@ -34,9 +34,7 @@
 @endforeach
 </tbody>
 </table>
-@if(!Input::get('category') || Input::get('category')==3)
-{{ $articles->appends(array('category' => Input::get('category')))->links() }}
-@endif
+@include('spa_admin._partials.widget_Rarticle_pager', array('wp'=>$wp))
 @stop
 
 @section('bottom')
