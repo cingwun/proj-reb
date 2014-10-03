@@ -1,34 +1,33 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="adminApp">
 
-<head>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+        <title>SB Admin - Bootstrap Admin Template</title>
 
-    <title>SB Admin - Bootstrap Admin Template</title>
+        <style type="text/css">
+            #clearTop {
+                margin-top: 10px;
+            }
+        </style>
 
-    <style type="text/css">
-        #clearTop {
-            margin-top: 10px;
-        }
-    </style>
+        <!-- Bootstrap Core CSS -->
 
-    <!-- Bootstrap Core CSS -->
-
-    {{ HTML::style(asset('spa_admin/css/admin/bootstrap.min.css'))}}
-    <!-- Custom CSS -->
-    {{ HTML::style(asset('spa_admin/css/admin/sb-admin.css'))}}
-    <!-- Morris Charts CSS -->
-    {{ HTML::style(asset('spa_admin/css/admin/plugins/morris.css'))}}
-    <!-- Custom Fonts -->
-    {{ HTML::style(asset('spa_admin/font-awesome-4.1.0/css/font-awesome.min.css'))}}
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
+        {{ HTML::style(asset('spa_admin/css/admin/bootstrap.min.css'))}}
+        <!-- Custom CSS -->
+        {{ HTML::style(asset('spa_admin/css/admin/sb-admin.css'))}}
+        <!-- Morris Charts CSS -->
+        {{ HTML::style(asset('spa_admin/css/admin/plugins/morris.css'))}}
+        <!-- Custom Fonts -->
+        {{ HTML::style(asset('spa_admin/font-awesome-4.1.0/css/font-awesome.min.css'))}}
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>   
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
