@@ -57,7 +57,21 @@
 
                 <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">
-                    <p class="navbar-text pull-right">{{ Sentry::getUser()->email }} | <a href="{{ URL::route('admin.logout') }}" class="navbar-link">Logout</a>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{ Sentry::getUser()->email }} <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="{{URL::route('admin.user.modify', array('where'=>'spa'))}}"><i class="fa fa-fw fa-gear"></i> 設定密碼</a>
+                            </li>
+                            <li>
+                                <a href="{{URL::route('switch.to.admin.rebeauty')}}"><i class="glyphicon glyphicon-home"></i>&nbsp; rebeauty</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="{{ URL::route('admin.logout') }}"><i class="fa fa-fw fa-power-off"></i> 登出</a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </nav>
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
