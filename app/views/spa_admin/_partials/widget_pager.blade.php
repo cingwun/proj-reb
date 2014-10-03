@@ -52,7 +52,7 @@
     }
 
     $qs .= (!empty($qs)) ? '&' : '';
-    $url .= '?' . $qs . 'page=';
+    //$url .= '?' . $qs . 'page=';
 
     $pageList = '<ul class="pagination">';
 

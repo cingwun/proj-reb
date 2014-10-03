@@ -29,7 +29,7 @@
     @endforeach
   </tbody>
 </table>
-@include('spa_admin._partials.widget_pager', array('wp'=>$pagerParam))
+@include('spa_admin._partials.widget_pager', array('wp'=>$widgetParam))
 @stop
 
 @section('bottom')
