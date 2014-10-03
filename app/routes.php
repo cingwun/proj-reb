@@ -217,17 +217,17 @@ Route::group(array('prefix'=>'admin', 'before'=>'auth.admin'), function()
 
         //   sort
         Route::post('beautynews/sort/update', array('as'=>'admin.beautynews.sort.update', 'uses'=>'BeautyNewsController@postUpdateSort'));
-        
+
         /*
          * Display modify user page
          */
-        Route::get('user/modify/{id?}', array('as'=>'admin.user.modify', 'uses'=>'UsersModifyController@getModify'))
+        Route::get('user/modify', array('as'=>'admin.user.modify', 'uses'=>'UsersModifyController@getModify'))
              ->where(array('id'=>'([0-9]+)'));
 
         /*
          * write modify user
          */
-        Route::post('user/write/{id?}', array('as'=>'admin.user.write', 'uses'=>'UsersModifyController@postWrite'));
+        Route::post('user/write', array('as'=>'admin.user.write', 'uses'=>'UsersModifyController@postWrite'));
 });
 
 /*

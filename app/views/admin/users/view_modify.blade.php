@@ -1,7 +1,7 @@
 @extends('spa_admin._layouts.default')
 
 @section('title')
-修改個人資料
+修改個人資料( {{$user->email}} )
 @stop
 
 @section('main')

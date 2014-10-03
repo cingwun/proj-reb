@@ -7,13 +7,12 @@ class UsersModifyController extends \BaseController {
 
     /*
      * Display modify user page
-     * params (int) $id
      */
-    public function getModify($id = null) {
+    public function getModify() {
         try {
-            $user = Sentry::findUserById($id);
+            $user = Sentry::findUserById(Sentry::getUser()->id);
 
-            $writeURL = URL::route('admin.user.write', array('id'=>$id));
+            $writeURL = URL::route('admin.user.write');
             return View::make('admin.users.view_modify',array(
                 'user' => $user,
                 'writeURL' => $writeURL
@@ -27,11 +26,11 @@ class UsersModifyController extends \BaseController {
     /*
      * write modify user
      */
-    public function postWrite($id = null) {
+    public function postWrite() {
         try {
             $password = Input::get('password');
             // Find the user using the user id
-            $user = Sentry::findUserById($id);
+            $user = Sentry::findUserById(Sentry::getUser()->id);
             
             $user->last_name = Input::get('last_name');
             
