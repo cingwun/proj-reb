@@ -99,7 +99,7 @@
 
                 <!-- 文章管理 -->
                 @if (helper::nav_show('articles'))
-                    <li {{ (Request::is( 'admin/articles*') ? ' class="active"' : '') }}><a href="{{ URL::route('admin.articles.index') }}"><i class="glyphicon glyphicon-pencil"></i> 文章管理</a></li>
+                    <li {{ (Request::is( 'admin/articles*') ? ' class="active"' : '') }}><a href="{{ URL::route('admin.articles.index') }}?category=1&lang=all"><i class="glyphicon glyphicon-pencil"></i> 文章管理</a></li>
                 @endif
 
                 @if (helper::nav_show('technologies'))

@@ -17,26 +17,30 @@ class ArticlesController extends \BaseController
 
         //
         $category = Input::get('category');
+        $lang = Input::get('lang'); //where('lang', $lang)->
         if (!$category) {
             return Redirect::to('admin/articles?category=1');
         }
         $model = new Article;
         $model = $model->ofCategory($category);
-        $model = ($category == 1 || $category == 2) ? $model->orderBy('sort', 'asc')->get() : $model->orderBy('open_at', 'desc')->paginate(5);
 
+        $model = ($lang!='all') ? $model->orderBy('open_at', 'desc')->where('lang', $lang)->paginate(6) : $model = $model->orderBy('open_at', 'desc')->paginate(6);
+            
         $page = Input::get('page', 1);
-        $limit = 5;
+        $limit = 6;
         $offset = ((int)($page-1)) * $limit;
-        $rowsNum = Article::where('category', '=', $category)->count();
+        $rowsNum = ($lang!='all')?Article::where('category', '=', $category)->where('lang', $lang)->count() : Article::where('category', '=', $category)->count();
         $widgetParam = array(
             'currPage' => $page,
             'total' => $rowsNum,
             'perPage' => $limit,
             'URL' => URL::route('admin.articles.index'),
-            'category' => $category
+            'category' => $category,
+            'lang' => $lang
         );
-
+        
         return View::make('admin.articles.index', array(
+            'category'=>$category,
             'articles'=>$model,
             'wp'=>$widgetParam
             ));
@@ -69,6 +73,8 @@ class ArticlesController extends \BaseController
             $article->open_at = Input::get('open_at');
             $article->status = Input::get('status');
             $article->lang = Input::get('lang');
+            $article->meta_name = Input::get('meta_name');
+            $article->meta_content = Input::get('meta_content');
             $article->save();
             //create a corresponding tw/cn article at same time.
             $refLang = (Input::get('lang')=='tw') ? 'cn' : 'tw';
@@ -78,6 +84,8 @@ class ArticlesController extends \BaseController
             $refArticle->category = Input::get('category');
             $refArticle->status = 0;
             $refArticle->lang = $refLang;
+            $article->meta_name = Input::get('meta_name');
+            $article->meta_content = Input::get('meta_content');
             $refArticle->save();
 
             $refArticle->langRef = $article->id;
@@ -133,6 +141,8 @@ class ArticlesController extends \BaseController
             $article->category = Input::get('category');
             $article->open_at = Input::get('open_at');
             $article->status = Input::get('status');
+            $article->meta_name = Input::get('meta_name');
+            $article->meta_content = Input::get('meta_content');
 
             $article->save();
 
@@ -153,7 +163,10 @@ class ArticlesController extends \BaseController
     public function destroy($id) {
 
         //
+        $model = Article::find($id);
+        $refArticle = $model->langRef;
         Article::destroy($id);
+        Article::destroy($refArticle);
     }
 
     /**

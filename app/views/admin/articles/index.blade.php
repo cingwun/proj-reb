@@ -1,16 +1,36 @@
 @extends('admin._layouts.default')
 
+@section('title')
+文章管理
+@stop
+
+
 @section('main')
-<h2>文章管理</h2>
-<ul class="nav nav-pills">
-  @foreach ( helper::article_category() as $key=>$category )
-  <li @if (Input::get('category')==$key)class="active" @endif>
-    <a href="{{ URL::to('admin/articles?category='.$key) }}">{{ $category }}</a>
-  </li>
-  @endforeach
-</ul>
-<div class="pull-right"><a href="{{ URL::to('admin/articles/create?category='.Input::get('category')) }}" class="btn">新增</a></div>
-<table class="table table-bordered" ng-controller="articlesCtrl">
+
+<?php 
+
+$cc = $category;
+
+?>
+
+<div class="col-lg-12">
+  <ul class="nav nav-pills" style="float: left">
+    @foreach ( helper::article_category() as $key=>$category )
+    <li @if (Input::get('category')==$key)class="active" @endif>
+      <a href="{{ URL::to('admin/articles?category='.$key.'&lang=all') }}">{{ $category }}</a>
+    </li>
+    @endforeach
+  </ul>
+  <div class="col-md-2" style="float: left">
+      <select class="form-control" name="forma" onchange="location = this.options[this.selectedIndex].value;">
+        <option value="{{ 'articles?category='.$cc.'&lang=tw' }}" <?php echo (Input::get('lang')=='tw')?'selected':''; ?>>顯示繁體</a></option>
+        <option value="{{ 'articles?category='.$cc.'&lang=cn' }}" <?php echo (Input::get('lang')=='cn')?'selected':''; ?>>顯示簡體</a></option>
+        <option value="{{ 'articles?category='.$cc.'&lang=all' }}" <?php echo (Input::get('lang')=='all')?'selected':''; ?>>顯示全部</a></option>
+      </select>
+    </div>
+  <div class="pull-right"><a href="{{ URL::to('admin/articles/create?category='.Input::get('category')) }}" class="btn btn-success">新增</a></div>
+</div>
+<table class="table table-bordered" ng-controller="articlesCtrl" id="clearTop">
 <thead>
                 <tr>
                   <th>標題</th>
@@ -18,6 +38,7 @@
                   <th>上架日期</th>
                   <th>狀態</th>
                   <th>瀏覽數</th>
+                  <th>語言</th>
                   <th>功能</th>
                 </tr>
               </thead>
@@ -29,6 +50,7 @@
                   <td>{{ $article->open_at }}</td>
                   <td>{{ ($article->status=='1')?'<span style="color: #00AA00">顯示</span>':'隱藏' }}</td>
                   <td>{{ $article->views }}</td>
+                  <td>{{ ($article->lang=='tw') ? '繁體' : '簡體' }}</td>
                   <td><a href="{{ URL::to('admin/articles/'.$article->id.'/edit') }}" class="btn btn-primary">修改</a> <a href ng-click="deleteArticle({{ $article->id }})" class="btn btn-danger">刪除</a></td>
                 </tr>
 @endforeach

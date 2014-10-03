@@ -35,8 +35,6 @@ Route::post('admin/login', array('as'=>'admin.login.post', 'uses'=>'AuthControll
 Route::get('image/{filename}', array('as'=>'imageUrl', 'uses'=>'FpsController@getFile'));
 // for fps file
 Route::get('file/{filename}', array('as'=>'fileUrl', 'uses'=>'FpsController@getFile'));
-// for fps file upload
-Route::post('file/upload/{type}', array('as'=>'fileUploadUrl', 'uses'=>'FpsController@postUpload'))->where('type', '^(ajax|editor)$');
 // for captcha
 Route::get('captcha', array('as'=>'captcha.get', 'uses'=>'CaptchaController@getCaptcha'));
 // for social login
@@ -121,8 +119,10 @@ Route::group(array('prefix'=>'admin', 'before'=>'auth.admin'), function()
 
         //admin module Technology (美麗新技術)
         Route::resource('technologies','TechnologiesController');
-        Route::post('technologies/update/{id?}',array('as'=>'admin.technologies.update', 'uses'=>'TechnologiesController@update'));
         Route::post('technologies/sort',array('as'=>'admin.technologies.sort', 'uses'=>'TechnologiesController@sort'));
+
+        // file upload
+        Route::post('file/upload/{type}', array('as'=>'fileUploadUrl', 'uses'=>'FpsController@postUpload'))->where('type', '^(ajax|editor)$');
 
         //文章
         Route::resource('articles','ArticlesController');

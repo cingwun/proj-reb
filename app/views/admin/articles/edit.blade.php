@@ -43,11 +43,18 @@
 	<div class="form-group">
 		<label for="status">語言</label>
 		<label class="radio-inline">
-			<input type="radio" name="lang" value="tw" checked="checked"> 繁體
+			<input type="radio" checked="checked"> <?php echo ($article->lang=='tw') ? '繁體' : '簡體' ; ?>
 		</label>
-		<label class="radio-inline">
-			<input type="radio" name="lang" value="cn"> 簡體
-		</label>
+	</div>
+
+	<div class="form-group">
+		<label for="meta_name">Meta Name: </label>
+		<input type="text" class="form-control" id="meta_name" name="meta_name" size="12" value="{{ $article->meta_name }}">
+	</div>
+
+	<div class="form-group">
+		<label for="meta_content">Meta Content: </label>
+		<input type="text" class="form-control" id="meta_content" name="meta_content" size="12" value="{{ $article->meta_content }}">
 	</div>
 
 	<input type="hidden" name="_method" value="PUT" />
