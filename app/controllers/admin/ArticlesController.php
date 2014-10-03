@@ -35,13 +35,11 @@ class ArticlesController extends \BaseController
             'URL' => URL::route('admin.articles.index'),
             'category' => $category
         );
-        $data = Article::take($limit)->skip($offset)->where('category', '=', $category)->get();
 
         return View::make('admin.articles.index', array(
             'articles'=>$model,
             'wp'=>$widgetParam
             ));
-        // return View::make('admin.articles.index')->with('articles', ($category == 1 || $category == 2) ? $model->orderBy('sort', 'asc')->get() : $model->orderBy('open_at', 'desc')->paginate(5));
     }
 
     /**
@@ -70,7 +68,21 @@ class ArticlesController extends \BaseController
             $article->category = Input::get('category');
             $article->open_at = Input::get('open_at');
             $article->status = Input::get('status');
+            $article->lang = Input::get('lang');
+            $article->save();
+            //create a corresponding tw/cn article at same time.
+            $refLang = (Input::get('lang')=='tw') ? 'cn' : 'tw';
+            $refArticle = new Article;
+            $refArticle->title = Input::get('title');
+            $refArticle->description = Input::get('description');
+            $refArticle->category = Input::get('category');
+            $refArticle->status = 0;
+            $refArticle->lang = $refLang;
+            $refArticle->save();
 
+            $refArticle->langRef = $article->id;
+            $article->langRef = $refArticle->id;
+            $refArticle->save();
             $article->save();
 
             return Redirect::to('admin/articles?category=' . Input::get('category'));

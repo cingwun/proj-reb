@@ -34,6 +34,11 @@
 @endforeach
 </tbody>
 </table>
+<?php
+//Here is the acient method to set pager.
+// if(!Input::get('category') || Input::get('category')==3)
+//   echo $articles->appends(array('category' => Input::get('category')))->links() ;
+?>
 @include('spa_admin._partials.widget_Rarticle_pager', array('wp'=>$wp))
 @stop
 

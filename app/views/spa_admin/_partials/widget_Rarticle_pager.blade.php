@@ -1,8 +1,7 @@
 <?php
     function createURL($url, $qs, $route, &$params, $page, $category){
         if (empty($route)){
-            $qs .= (!empty($qs)) ? '&' : '';
-            return $url .= '?' . 'page=' . $page . '&category=' . $category;
+            return $url .= '?page=' . $page . '&category=' . $category;
         }
 
         $params['page'] = $page;
@@ -69,7 +68,7 @@
     }
 
     if (($currPage+1)<=$totalPage)
-        $pageList .= sprintf('<li><a href="%s" title="上一頁">»</a></li>', createURL($url, $qs, $route, $params, ($currPage+1), $category));
+        $pageList .= sprintf('<li><a href="%s" title="下一頁">»</a></li>', createURL($url, $qs, $route, $params, ($currPage+1), $category));
 
 	echo $pageList .= '</ul>';
 ?>
