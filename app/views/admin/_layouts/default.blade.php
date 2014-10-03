@@ -61,7 +61,10 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{ Sentry::getUser()->email }} <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href=""><i class="fa fa-fw fa-gear"></i> 設定密碼</a>
+                                <a href="{{URL::route('admin.user.modify', array('id'=>Sentry::getUser()->id))}}"><i class="fa fa-fw fa-gear"></i> 設定密碼</a>
+                            </li>
+                            <li>
+                                <a href="{{URL::route('switch.to.admin.spa')}}"><i class="glyphicon glyphicon-home"></i>&nbsp; Spa</a>
                             </li>
                             <li class="divider"></li>
                             <li>
@@ -78,7 +81,6 @@
                 <li>
                     <a href="javascript:;" data-toggle="collapse" data-target="#system"><i class="glyphicon glyphicon-dashboard"></i> 系統管理 <i class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="system" class="collapse">
-                        
                         <li>
                             <a href="{{URL::route('admin.users.index')}}">使用者</a>
                         </li>
@@ -88,9 +90,6 @@
                         </li>
                         <li>
                             <a href="{{URL::route('admin.permissions.index')}}">權限</a>
-                        </li>
-                        <li>
-                            <a href="{{URL::route('switch.to.admin.spa')}}">Spa後台</a>
                         </li>
                     </ul>
                 </li>
