@@ -176,22 +176,28 @@ class WintnessController extends BaseController{
                 throw new Exception("Error request [10]");
 
             $m = Wintness::find($id);
+            $refM = Wintness::find($m->ref);
 
-            if (empty($m))
+            if (empty($m)||empty($refM))
                 throw new Exception('Error request [11]');
 
             $fields = array('cover', 'img_before', 'img_after', 'gallery');
             $images = array();
             foreach($fields as $field){
                 $imgs = json_decode($m->$field);
+                $refImgs = json_decode($refM->$field);
                 if (empty($imgs))
                     continue;
 
                 foreach($imgs as $img)
                     $images[] = $img->image;
+                foreach($refImgs as $img)
+                    $images[] = $img->image;
             }
 
             if (!$m->delete())
+                throw new Exception("Error request [110]");
+            if (!$refM->delete())
                 throw new Exception("Error request [110]");
 
             foreach($images as $img)
@@ -339,8 +345,10 @@ class WintnessController extends BaseController{
                 throw new Exception("Error Processing Request [10]");
 
             $id = (int) Arr::get($_POST, 'id', null);
-            if (empty($id))
+            if (empty($id)) {
                 $model = new Wintness;
+                $refModel = new Wintness;
+            }
             else{
                 $model = Wintness::find($id);
                 if ($model==null)
@@ -398,7 +406,7 @@ class WintnessController extends BaseController{
             $status = (int) Arr::get($_POST, 'status', 0);
             $isInSiderbar = (int) Arr::get($_POST, 'isInSiderbar', 0);
 
-            $model->lang = Input::get('tw', 'tw');
+            $model->lang = Input::get('lang', 'tw');
             $model->title = Input::get('title');
             $model->background_color = Input::get('background_color', '#ccc');
             $model->cover = json_encode($imgUploaderList['cover']['items']);
@@ -414,6 +422,23 @@ class WintnessController extends BaseController{
             $model->updated_at = time();
             $model->save();
 
+            if(empty($id)){
+                $refModel->lang = ($model->lang=='tw') ? 'cn' : 'tw';
+                $refModel->title = Input::get('title');
+                $refModel->background_color = Input::get('background_color', '#ccc');
+                $refModel->description = Input::get('description', '');
+                $refModel->status = 0;
+                $refModel->isInSiderbar = 0;
+                $refModel->meta_name = Input::get('meta_name', '');
+                $refModel->meta_content = Input::get('meta_content', '');
+                $refModel->created_at = time();
+                $refModel->updated_at = time();
+                $refModel->ref = $model->id;
+                $refModel->save();
+
+                $model->ref = $refModel->id;
+                $model->save();
+            }
 
             WintnessLabels::where('wid', '=', $model->id)
                           ->delete();
@@ -422,8 +447,11 @@ class WintnessController extends BaseController{
             foreach($types as $type){
                 $fieldName = 'label_' . $type;
                 $labels  = Input::get($fieldName, array());
-                foreach ($labels as $label)
+                foreach ($labels as $label){
                     WintnessLabels::create(array('wid'=>(int) $model->id, 'label_id'=>((int) $label)));
+                    if(empty($id))
+                        WintnessLabels::create(array('wid'=>(int) $refModel->id, 'label_id'=>((int) $label)));
+                }
             }
 
             Tabs::where('type', '=', 'wintness')
@@ -437,8 +465,11 @@ class WintnessController extends BaseController{
             foreach ($tabName as $key => $tab){
                 if (!isset($tabContents[$key]))
                     continue;
-                else
+                else{
                     Tabs::create(array('type'=>'wintness', 'item_id'=>$model->id, 'title'=>$tab, 'content'=>$tabContents[$key], 'sort'=>($order++)));
+                    if(empty($id))
+                        Tabs::create(array('type'=>'wintness', 'item_id'=>$refModel->id, 'title'=>$tab, 'content'=>$tabContents[$key], 'sort'=>($order+2)));
+                }
             }
 
             return Redirect::route('admin.wintness.article.list', array('page'=>1, 'message'=>'success'));
