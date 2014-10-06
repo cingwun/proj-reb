@@ -69,7 +69,7 @@ class ServiceFaqController extends BaseController{
                 ));
             foreach($list as $item)
                 $labelItmes[$item->id] = $item->title;
-
+            
             // detect is the request has labels
             return View::make('admin.service_faq.view_article_action', array(
                 'type' => $type,
@@ -184,33 +184,42 @@ class ServiceFaqController extends BaseController{
      */
     public function getCategoryList($type, $page=1){
         $this->beforeAction($type);
-        $limit = 10;
-        $offset = ($page-1) * $limit;
-        $rowsNum = ServiceFaq::where("type", "=", $type)
-                             ->where("_parent", "=", "N")
-                             ->count();
+        //$limit = 10;
+        //$offset = ($page-1) * $limit;
+        //$rowsNum = ServiceFaq::where("type", "=", $type)
+        //                     ->where("_parent", "=", "N")
+        //                     ->count();
 
-        $cats = ServiceFaq::where("type", "=", $type)
+        $catsTW = ServiceFaq::where("type", "=", $type)
                           ->where("_parent", "=", "N")
+                          ->where("lang",'tw')
                           ->orderBy('sort', 'desc')
                           ->orderBy('updated_at', 'desc')
-                          ->skip($offset)
-                          ->take($limit)
                           ->get();
+        $catsCN = ServiceFaq::where("type", "=", $type)
+                          ->where("_parent", "=", "N")
+                          ->where("lang",'cn')
+                          ->orderBy('sort', 'desc')
+                          ->orderBy('updated_at', 'desc')
+                          ->get();
+        
+        $cats = array(
+            'twList' => $catsTW,
+            'cnList' => $catsCN
+        );
 
-        $widgetParam = array(
+        /*$widgetParam = array(
             'currPage' => $page,
             'total' => $rowsNum,
             'perPage' => $limit,
             'URL' => null,
             'route' => 'admin.service_faq.category.list',
             'params' => array('type'=>$type)
-        );
+        );*/
 
         return View::make('admin.service_faq.view_category_list', array(
             'type' => $type,
-            'cats' => &$cats,
-            'pagerParam' => &$widgetParam
+            'cats' => &$cats
         ));
     }
 
@@ -293,6 +302,7 @@ class ServiceFaqController extends BaseController{
             $meta = array(
                 array('key'=>'id', 'isRequire'=>false, 'isPrimaryKey'=>true, 'defaultValue'=>false),
                 array('key'=>'title', 'isRequire'=>true, 'defaultValue'=>null),
+                array('key'=>'status', 'isRequire'=>true, 'defaultValue'=>'Y'),
                 array('key'=>'sort', 'isRequire'=>true, 'defaultValue'=>1, 'pattern'=>'/\d+/', 'message'=>'排序格式錯誤，Ex: 10, 99')
             );
 
@@ -320,19 +330,28 @@ class ServiceFaqController extends BaseController{
             }
 
             $model->type = $type;
-
             if (!$model->save())
                 throw new Exception("儲存失敗，請重試一次或通知工程師!");
+            //system automatically generates another language,and the corresponding
+            $id = Input::get('id',null);
+            if(empty($id)){
+                $refCmd = new ServiceFaq;
+                $refCmd->type = $type;
+                $refCmd->title = Input::get('title');
+                $refCmd->status = 'N';
+                $refCmd->sort = Input::get('sort');
+                $refCmd->lang = 'cn';
+                $refCmd->ref = $model->id;
+                $refCmd->save();
 
-            return Response::json(array(
-                    'status' => 'ok',
-                    'message' => '儲存完成!'
-                ));
+                $cmd = ServiceFaq::find($model->id);
+                $cmd->ref = $refCmd->id;
+                $cmd->save();
+            }
+            return Redirect::route('admin.service_faq.category.list', array('type'=>$type));
         }catch(Exception $e){
-            return Response::json(array(
-                    'status' => 'error',
-                    'message' => $e->getMessage()
-                ));
+            echo $e->getMessage();
+            exit;
         }
     }
 
@@ -503,6 +522,34 @@ class ServiceFaqController extends BaseController{
             return Redirect::route('admin.service_faq.article.list', array('type'=>$model->type, 'category'=>$model->_parent, 'afterAction'=>1));
         }catch (Exception $e) {
             return Redirect::back()->withInput()->withErrors($e->getMessage());
+        }
+    }
+
+    /*
+     * Display category action page
+     * params (int) $id
+     */
+    public function getCategoryAction($type,$id = null){
+        $this->beforeAction($type);
+        try {
+            $action = 'create';
+
+            $writeURL = URL::route('admin.service_faq.category.update',array('type'=>$type));
+            $category = array();
+            if(!empty($id)) {
+                $action = 'edit';
+                $category = ServiceFaq::find($id);
+            }
+
+            return View::make('admin.service_faq.view_category_action', array(
+                'action' => $action,
+                'type' => $type,
+                'category' => $category,
+                'writeURL' => $writeURL
+            ));
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            exit;
         }
     }
 }
