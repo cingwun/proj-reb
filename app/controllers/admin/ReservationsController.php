@@ -14,9 +14,29 @@ class ReservationsController extends \BaseController
      * @return Response
      */
     public function index() {
+        $page = \Input::get( 'page',1);
+        $limit = 10;
+        $offset = ($page-1) * $limit;
 
-        //
-        return View::make('admin.reservations.index')->with('reservations', Reservation::paginate(5));
+        $reseCmd = Reservation::orderBy('updated_at','DESC');
+
+        $rowsNum = $reseCmd->count();
+
+        $reservations = $reseCmd->skip($offset)
+                                ->take($limit)
+                                ->get();
+
+        $widgetParam = array(
+            'currPage' => $page,
+            'total' => $rowsNum,
+            'perPage' => $limit,
+            'URL' => URL::route('admin.reservations.index')
+        );
+
+        return View::make('admin.reservations.index', array(
+            'reservations' => $reservations,
+            'widgetParam' => $widgetParam
+        ));
     }
 
     /**

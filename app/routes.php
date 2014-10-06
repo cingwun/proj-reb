@@ -151,6 +151,9 @@ Route::group(array('prefix'=>'admin', 'before'=>'auth.admin'), function()
         Route::get('{type}/category/list/{page?}', array('as'=>'admin.service_faq.category.list', 'uses'=>'ServiceFaqController@getCategoryList'))
              ->where(array('type'=>'(service|faq)', 'page'=>'([0-9]+)'));
 
+        Route::get('{type}/category/action/{id?}', array('as'=>'admin.service_faq.category.action', 'uses'=>'ServiceFaqController@getCategoryAction'))
+             ->where(array('type'=>'(service|faq)', 'id'=>'([0-9]+)'));
+
         Route::post('{type}/category/update', array('as'=>'admin.service_faq.category.update', 'uses'=>'ServiceFaqController@postUpdateCategory'))
              ->where(array('type'=>'(service|faq)'));
 
@@ -227,7 +230,7 @@ Route::group(array('prefix'=>'admin', 'before'=>'auth.admin'), function()
         /*
          * write modify user
          */
-        Route::post('user/write', array('as'=>'admin.user.write', 'uses'=>'UsersModifyController@postWrite'));
+        Route::post('user/write/{id?}', array('as'=>'admin.user.write', 'uses'=>'UsersModifyController@postWrite'));
 });
 
 /*

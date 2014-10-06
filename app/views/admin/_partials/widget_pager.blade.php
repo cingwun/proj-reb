@@ -52,10 +52,9 @@
     }
 
     $qs .= (!empty($qs)) ? '&' : '';
-    $url .= '?' . $qs . 'page=';
+    //$url .= '?' . $qs . 'page=';
 
     $pageList = '<div class="pagination"><ul>';
-
 
     if (($currPage-1)>0){
     	$pageList .= sprintf('<li><a href="%s" title="上一頁">«</a></li>', createURL($url, $qs, $route, $params, ($currPage-1)));
