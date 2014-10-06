@@ -7,7 +7,7 @@
 <div class='col-lg-12'>
   <a href="{{ URL::to('admin/ranks/create') }}" class="btn pull-right btn-success">新增</a>
 </div>
-<div class='col-lg-12'>
+<div class='col-lg-12' id="clearTop">
   @foreach ($ranksLang as $ranks)
   <div class='col-lg-6'>
     {{$ranks['title']}}

@@ -26,7 +26,7 @@
     </div>
     <a href="<?php echo URL::route('admin.service_faq.article.action', array('type'=>$type))?>?langList=<?php echo $articleLang?>" class="btn btn-success pull-right">新增</a>
 </div>
-<div class="col-lg-12">
+<div class="col-lg-12" id="clearTop">
     <table class="table table-bordered" id="sortable" data-sortAction="<?php echo URL::route('admin.service_faq.sort.update', array('type'=>$type))?>" data-deleteAction="<?php echo URL::route('admin.service_faq.delete', array('type'=>$type))?>">
         <thead>
             <tr>

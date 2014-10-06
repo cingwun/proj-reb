@@ -98,6 +98,8 @@ class BeautyNewsController extends BaseController{
                 foreach($imgs as $img)
                     $images[] = $img->image;
             }
+            //delete ref
+            BeautyNews::find($m->ref)->delete();
 
             if (!$m->delete())
                 throw new Exception("Error request [110]");

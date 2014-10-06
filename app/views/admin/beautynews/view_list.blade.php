@@ -16,7 +16,7 @@
     <a href="<?php echo URL::route('admin.beautynews.action')?>?lang={{$lang}}" type="button" class="btn btn-success pull-right">新增</a>
 </div>
 
-<div class="col-lg-12">
+<div class="col-lg-12" id="clearTop">
     <table class="table table-bordered" id="sortable" data-sortAction="<?php echo URL::route('admin.beautynews.sort.update')?>" data-deleteAction="<?php echo URL::route('admin.beautynews.delete')?>">
         <thead>
             <tr>
