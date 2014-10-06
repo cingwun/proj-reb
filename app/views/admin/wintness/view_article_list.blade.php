@@ -30,6 +30,7 @@
                   <th>狀態/顯示至siderbar</th>
                   <th>更新時間</th>
                   <th>排序</th>
+                  <th>語系</th>
                   <th>功能</th>
                 </tr>
             </thead>
@@ -51,6 +52,7 @@
                     <td><?php echo ($article->status=='1') ? '<span style="color: #00AA00">顯示</span>' : '隱藏'?> / <?php echo ($article->isInSiderbar=='1') ? '<span style="color: #00AA00">顯示</span>' : '隱藏'?> </td>
                     <td><?php echo $article->updated_at?></td>
                     <td><?php echo $article->sort?></td>
+                    <td>{{ ($article->lang=='tw')? '繁體':'簡體' }}</td>
                     <td>
                         <a href="<?php echo URL::route('admin.wintness.article.action', array('id'=>$article->id))?>" class="btn btn-primary btn-modify">修改</a>
                         <a href="#" class="btn btn-danger btn-delete">刪除</a>
