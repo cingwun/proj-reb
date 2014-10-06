@@ -54,13 +54,15 @@ class WintnessController extends BaseController{
                 }
             }
 
+            $listCmd = ServiceFaq::where("status", "=", 'Y')
+                                 ->where('_parent', '<>', 'N');
+            if($id!=null)
+                $listCmd = $listCmd->where('lang', Arr::get($article, 'lang'));
             $labelItmes = array('service'=>array(), 'faq'=>array());
-            $list = ServiceFaq::where("status", "=", 'Y')
-                              ->where('_parent', '<>', 'N')
-                              ->orderBy('_parent', 'desc')
-                              ->orderBy('sort', 'desc')
-                              ->orderBy('updated_at', 'desc')
-                              ->get(array('id', 'title', 'type'));
+            $list = $listCmd->orderBy('_parent', 'desc')
+                            ->orderBy('sort', 'desc')
+                            ->orderBy('updated_at', 'desc')
+                            ->get(array('id', 'title', 'type'));
             foreach($list as $item)
                 $labelItmes[$item->type][$item->id] = $item->title;
 
@@ -186,13 +188,14 @@ class WintnessController extends BaseController{
             foreach($fields as $field){
                 $imgs = json_decode($m->$field);
                 $refImgs = json_decode($refM->$field);
-                if (empty($imgs))
-                    continue;
-
-                foreach($imgs as $img)
-                    $images[] = $img->image;
-                foreach($refImgs as $img)
-                    $images[] = $img->image;
+                if (!empty($imgs)){
+                    foreach($imgs as $img)
+                        $images[] = $img->image;
+                }
+                if(!empty($refImgs)){
+                    foreach($refImgs as $img)
+                        $images[] = $img->image;
+                }
             }
 
             if (!$m->delete())
@@ -448,9 +451,9 @@ class WintnessController extends BaseController{
                 $fieldName = 'label_' . $type;
                 $labels  = Input::get($fieldName, array());
                 foreach ($labels as $label){
-                    WintnessLabels::create(array('wid'=>(int) $model->id, 'label_id'=>((int) $label)));
-                    if(empty($id))
-                        WintnessLabels::create(array('wid'=>(int) $refModel->id, 'label_id'=>((int) $label)));
+                    $target = ServiceFaq::find($label);
+                    if($target->lang==$model->lang)
+                        WintnessLabels::create(array('wid'=>(int) $model->id, 'label_id'=>((int) $label)));
                 }
             }
 
@@ -472,7 +475,7 @@ class WintnessController extends BaseController{
                 }
             }
 
-            return Redirect::route('admin.wintness.article.list', array('page'=>1, 'message'=>'success'));
+            return Redirect::route('admin.wintness.article.list', array('page'=>1, 'lang'=>$model->lang, 'message'=>'success'));
         }catch (Exception $e) {
             return Redirect::back()->withInput()->withErrors($e->getMessage());
         }

@@ -1,4 +1,4 @@
-@extends('spa_admin._layouts.default')
+@extends('admin._layouts.default')
 
 @section('title')
 編輯會員
