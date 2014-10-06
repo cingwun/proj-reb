@@ -28,7 +28,7 @@ $cc = $category;
         <option value="{{ 'articles?category='.$cc.'&lang=all' }}" <?php echo (Input::get('lang')=='all')?'selected':''; ?>>顯示全部</a></option>
       </select>
     </div>
-  <div class="pull-right"><a href="{{ URL::to('admin/articles/create?category='.Input::get('category')) }}" class="btn btn-success">新增</a></div>
+  <div class="pull-right"><a href="{{ URL::to('admin/articles/create?category='.Input::get('category').'&lang='.Input::get('lang')) }}" class="btn btn-success">新增</a></div>
 </div>
 <table class="table table-bordered" ng-controller="articlesCtrl" id="clearTop">
 <thead>
@@ -51,7 +51,7 @@ $cc = $category;
                   <td>{{ ($article->status=='1')?'<span style="color: #00AA00">顯示</span>':'隱藏' }}</td>
                   <td>{{ $article->views }}</td>
                   <td>{{ ($article->lang=='tw') ? '繁體' : '簡體' }}</td>
-                  <td><a href="{{ URL::to('admin/articles/'.$article->id.'/edit') }}" class="btn btn-primary">修改</a> <a href ng-click="deleteArticle({{ $article->id }})" class="btn btn-danger">刪除</a></td>
+                  <td><a href="{{ URL::to('admin/articles/'.$article->id.'/edit?category='.Input::get('category').'&lang='.Input::get('lang')) }}" class="btn btn-primary">修改</a> <a href ng-click="deleteArticle({{ $article->id }})" class="btn btn-danger">刪除</a></td>
                 </tr>
 @endforeach
 </tbody>

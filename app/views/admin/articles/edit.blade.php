@@ -3,7 +3,7 @@
 @section('main')
 <h2>修改文章</h2>
 @include('admin._partials.notifications')
-<form action="/admin/articles/{{ $article->id }}" method="post">
+<form action=" {{ URL::to('admin/articles/'.$article->id.'?category='.Input::get('category').'&lang='.Input::get('lang')) }} " method="post">
 
 	<div class="form-group">
 		<label for="category">分類</label>

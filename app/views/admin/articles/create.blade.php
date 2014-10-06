@@ -6,7 +6,7 @@
 
 @section('main')
 @include('admin._partials.notifications')
-<form action="/admin/articles" method="post" role="form">
+<form action="{{ URL::to('admin/articles?category='.Input::get('category').'&lang='.Input::get('lang')) }}" method="post" role="form">
 
 	<div class="form-group">
 		<label for="category">分類</label>

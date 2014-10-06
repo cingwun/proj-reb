@@ -93,7 +93,7 @@ class ArticlesController extends \BaseController
             $refArticle->save();
             $article->save();
 
-            return Redirect::to('admin/articles?category=' . Input::get('category'));
+            return Redirect::to('admin/articles?category=' . Input::get('category') . '&lang=' . Input::get('lang'));
         }
         catch(Exception $e) {
             return Redirect::back()->withInput()->withErrors('新增失敗');
@@ -146,10 +146,9 @@ class ArticlesController extends \BaseController
 
             $article->save();
 
-            return Redirect::to('admin/articles?category=' . Input::get('category'));
+            return Redirect::to('admin/articles?category=' . Input::get('category') . '&lang=' . Input::get('lang'));
         }
         catch(Exception $e) {
-
             return Redirect::back()->withInput()->withErrors('修改失敗');
         }
     }
