@@ -175,7 +175,7 @@
                             <a href="{{ URL::route('admin.wintness.gallery')}}">圖片集</a>
                         </li>
                         <li>
-                            <a href="{{ URL::route('admin.wintness.article.list')}}">文章列表</a>
+                            <a href="{{ URL::route('admin.wintness.article.list', array('page'=>1, 'lang'=>'all'))}}">文章列表</a>
                         </li>
                     </ul>
                 </li>

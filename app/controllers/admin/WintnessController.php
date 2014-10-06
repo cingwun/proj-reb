@@ -84,12 +84,14 @@ class WintnessController extends BaseController{
      * list all article by specific category or non-category
      * @params (int) $page
      */
-    public function getArticleList($page=1){
+    public function getArticleList($page=1, $lang='all'){
 
         $limit = 10;
         $offset = ($page-1) * $limit;
 
         $cmd = new Wintness;
+        if($lang!='all')
+            $cmd = $cmd->where('lang', $lang);
         $rowsNum = $cmd->count();
         $articles = $cmd->orderBy('sort', 'desc')
                         ->orderBy('updated_at', 'desc')
@@ -108,7 +110,8 @@ class WintnessController extends BaseController{
 
         return View::make('admin.wintness.view_article_list', array(
             'articles' => &$articles,
-            'pagerParam' => &$widgetParam
+            'pagerParam' => &$widgetParam,
+            'lang' => $lang
         ));
     }
 
@@ -395,6 +398,7 @@ class WintnessController extends BaseController{
             $status = (int) Arr::get($_POST, 'status', 0);
             $isInSiderbar = (int) Arr::get($_POST, 'isInSiderbar', 0);
 
+            $model->lang = Input::get('tw', 'tw');
             $model->title = Input::get('title');
             $model->background_color = Input::get('background_color', '#ccc');
             $model->cover = json_encode($imgUploaderList['cover']['items']);
@@ -404,6 +408,8 @@ class WintnessController extends BaseController{
             $model->gallery = json_encode($imgUploaderList['gallery']['items']);
             $model->status = $status % 2;
             $model->isInSiderbar = $isInSiderbar % 2;
+            $model->meta_name = Input::get('meta_name', '');
+            $model->meta_content = Input::get('meta_content', '');
             $model->created_at = time();
             $model->updated_at = time();
             $model->save();

@@ -195,7 +195,7 @@ Route::group(array('prefix'=>'admin', 'before'=>'auth.admin'), function()
         Route::post('wintness/gallery/write', array('as'=>'admin.wintness.gallery.write', 'uses'=>'WintnessController@postGalleryAction'));
 
         //   article
-        Route::get('wintness/article/list/{page?}', array('as'=>'admin.wintness.article.list', 'uses'=>'WintnessController@getArticleList'))
+        Route::get('wintness/article/list/{page?}/{lang}', array('as'=>'admin.wintness.article.list', 'uses'=>'WintnessController@getArticleList'))
              ->where(array('page'=>'([0-9]+)'));
         Route::get('wintness/article/action/{id?}', array('as'=>'admin.wintness.article.action', 'uses'=>'WintnessController@getArticleAction'))
              ->where(array('id'=>'([0-9]+)'));

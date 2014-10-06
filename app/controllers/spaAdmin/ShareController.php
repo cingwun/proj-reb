@@ -16,9 +16,9 @@ class ShareController extends \BaseController {
         $offset = ($page-1) * $limit;
 
         $cmd = new \SpaShares;
-        $rowsNum = $cmd->count();
         if($lang!='all')
             $cmd = $cmd->where('language', $lang);
+        $rowsNum = $cmd->count();
         $articles = $cmd->orderBy('sort', 'desc')
                         ->orderBy('updated_at', 'desc')
                         ->skip($offset)
