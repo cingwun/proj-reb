@@ -1,7 +1,11 @@
 @extends('admin._layouts.default')
 
+@section('title')
+修改文章
+@stop
+
 @section('main')
-<h2>修改文章</h2>
+
 @include('admin._partials.notifications')
 <form action=" {{ URL::to('admin/articles/'.$article->id.'?category='.Input::get('category').'&lang='.Input::get('lang')) }} " method="post">
 
@@ -58,8 +62,8 @@
 	</div>
 
 	<input type="hidden" name="_method" value="PUT" />
-	<button class="btn" type="button" onclick="history.back();">取消</button>
-	<button class="btn btn-inverse">更改</button>
+	<button class="btn btn-danger" type="button" onclick="history.back();">取消</button>
+	<button class="btn btn-primary">編輯完成</button>
 </form>
 @stop
 

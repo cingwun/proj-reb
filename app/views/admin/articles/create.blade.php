@@ -63,8 +63,8 @@
 	</div>
 
 	<input type="hidden" name="_method" value="POST" />
-	<button class="btn" type="button" onclick="history.back();">取消</button>
-	<button class="btn btn-inverse">新增</button>
+	<button class="btn btn-danger" type="button" onclick="history.back();">取消</button>
+	<button class="btn btn-primary">編輯完成</button>
 </form>
 @stop
 

@@ -14,7 +14,7 @@ $cc = $category;
 ?>
 
 <div class="col-lg-12">
-  <ul class="nav nav-pills" style="float: left">
+  <ul class="nav nav-pills" style="float: left; margin-bottom: 5px">
     @foreach ( helper::article_category() as $key=>$category )
     <li @if (Input::get('category')==$key)class="active" @endif>
       <a href="{{ URL::to('admin/articles?category='.$key.'&lang=all') }}">{{ $category }}</a>
