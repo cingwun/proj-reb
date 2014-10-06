@@ -59,7 +59,7 @@ echo $title;
   <!-- tabs -->
 
   <input type="hidden" name="id" value="<?php echo Arr::get($article, 'id', null)?>" />
-
+  <input type="hidden" name="articleLang" value="{{$articleLang}}"/>
   <a href='javascript:history.back()' type="button" class="btn btn-danger">取消</a>
   <button class="btn btn-primary btn-submit">編輯完成</button>
 </form>

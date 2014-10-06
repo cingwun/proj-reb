@@ -24,7 +24,7 @@
             <option value="cn" @if($articleLang == 'cn') selected @endif>簡體</option>
         </select>
     </div>
-    <a href="<?php echo URL::route('admin.service_faq.article.action', array('type'=>$type))?>" class="btn btn-success pull-right">新增</a>
+    <a href="<?php echo URL::route('admin.service_faq.article.action', array('type'=>$type))?>?langList=<?php echo $articleLang?>" class="btn btn-success pull-right">新增</a>
 </div>
 <div class="col-lg-12">
     <table class="table table-bordered" id="sortable" data-sortAction="<?php echo URL::route('admin.service_faq.sort.update', array('type'=>$type))?>" data-deleteAction="<?php echo URL::route('admin.service_faq.delete', array('type'=>$type))?>">
@@ -36,7 +36,7 @@
               <th width="50">狀態</th>
               <th width="140">發表/更新日期</th>
               <th width="50">排序</th>
-              <th width="150">功能</th>
+              <th width="230">功能</th>
             </tr>
         </thead>
         <tbody>
@@ -49,8 +49,11 @@
                 <td><?php echo $article->created_at . '<br />' . $article->updated_at?></td>
                 <td><?php echo $article->sort?></td>
                 <td>
-                    <a href="<?php echo URL::route('admin.service_faq.article.action', array('type'=>$type, 'id'=>$article->id))?>" class="btn btn-primary btn-modify">修改</a>
+                    <a href="<?php echo URL::route('admin.service_faq.article.action', array('type'=>$type, 'id'=>$article->id))?>?langList=<?php echo $articleLang?>" class="btn btn-primary btn-modify">修改</a>
                     <span href="#" class="btn btn-danger btn-delete">刪除</span>
+                    @if($article->ref_display == 'Y')
+                    <a href='<?php echo URL::route('admin.service_faq.article.action', array('type'=>$type, 'id'=>$article->ref))?>?langList=<?php echo $langControlGroup[$articleLang]?>' type="button" class="btn btn-sm btn-warning">編輯@if($article->lang == 'tw')簡體@else繁體@endif</a>
+                    @endif
                 </td>
             </tr>
             <?php endforeach; ?>
@@ -71,9 +74,9 @@
         var sortTable = _sortTable({el: '#sortable', role: 'article', sortColumn: 6, hasCategory: <?php echo (!empty($category))?'true':'false'?>});
         function langList(e) {
             if(e.value == "tw")
-                document.location.href="{{URL::route('admin.service_faq.article.list', array('type'=>'service','langList'=>'tw'))}}";
+                document.location.href = '{{$twListUrl}}';
             else
-                document.location.href="{{URL::route('admin.service_faq.article.list', array('type'=>'service','langList'=>'cn'))}}";
+                document.location.href = '{{$cnListUrl}}';
         }
     </script>
 @stop

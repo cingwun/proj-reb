@@ -19,75 +19,81 @@ class ServiceFaqController extends BaseController{
      */
     public function getArticleAction($type, $id=null){
         $this->beforeAction($type);
-        $article = array();
-        $images = array();
-        if ($id!=null){
-            $article = ServiceFaq::find($id)->toArray();
-            $imgList = ServiceFaqImage::where("sid", "=", $id)->get();
-            if (sizeof($imgList)>0){
-                foreach($imgList as $img)
-                    $images[] = array('id'=>$img->id, 'image'=>$img->image, 'text'=>$img->text);
+        try {
+            $articleLang = Input::get('langList', 'tw');
+            $article = array();
+            $images = array();
+            if ($id!=null){
+                $article = ServiceFaq::find($id)->toArray();
+                $imgList = ServiceFaqImage::where("sid", "=", $id)->get();
+                if (sizeof($imgList)>0){
+                    foreach($imgList as $img)
+                        $images[] = array('id'=>$img->id, 'image'=>$img->image, 'text'=>$img->text);
+                }
             }
-        }
 
-        $article['status'] = Arr::get($article, 'status', 'Y');
+            $article['status'] = Arr::get($article, 'status', 'Y');
 
-        $labels = null;
-        $tabs = array();
+            $labels = null;
+            $tabs = array();
 
-        if (isset($article['labels']))
-            $labels = json_decode($article['labels'], true);
+            if (isset($article['labels']))
+                $labels = json_decode($article['labels'], true);
 
-        if (isset($article['tabs']))
-            $tabs = json_decode($article['tabs'], true);
+            if (isset($article['tabs']))
+                $tabs = json_decode($article['tabs'], true);
 
-        // detect is the request has tabs
-        $items = array();
-        if ((($tabNames = Input::old('tabName', null)) !== null) && (($tabContents = Input::old('tabContents', null)) !== null)) {
-            $order = 0;
-            foreach ($tabNames as $key => $tab) {
-                if (!isset($tabContents[$key]))
-                    continue;
-                $items[] = array(
-                    'title' => $tab,
-                    'content' => $tabContents[$key],
-                    'sort' => $order
-                );
+            // detect is the request has tabs
+            $items = array();
+            if ((($tabNames = Input::old('tabName', null)) !== null) && (($tabContents = Input::old('tabContents', null)) !== null)) {
+                $order = 0;
+                foreach ($tabNames as $key => $tab) {
+                    if (!isset($tabContents[$key]))
+                        continue;
+                    $items[] = array(
+                        'title' => $tab,
+                        'content' => $tabContents[$key],
+                        'sort' => $order
+                    );
+                }
             }
-        }
 
-        if (sizeof($items)==0)
-            $items = $tabs;
+            if (sizeof($items)==0)
+                $items = $tabs;
 
-        $labelItmes = array();
-        $lblType = ($type=='service') ? 'faq' : 'service';
-        $list = ServiceFaq::where("type", "=", $lblType)->where('_parent', '<>', 'N')->get(array(
-                'id',
-                'title'
+            $labelItmes = array();
+            $lblType = ($type=='service') ? 'faq' : 'service';
+            $list = ServiceFaq::where("type", "=", $lblType)->where('lang', $articleLang)->where('_parent', '<>', 'N')->get(array(
+                    'id',
+                    'title'
+                ));
+            foreach($list as $item)
+                $labelItmes[$item->id] = $item->title;
+
+            // detect is the request has labels
+            return View::make('admin.service_faq.view_article_action', array(
+                'type' => $type,
+                'article' => &$article,
+                'categories' => ServiceFaq::where("type", "=", $type)->where("_parent", "=", "N")->where("lang", $articleLang)->get(),
+                'images' => &$images,
+                'label' => array(
+                    'elementId' => 'label-box',
+                    'fieldName' => 'labels[]',
+                    'formTitle' => '標籤',
+                    'items' => &$labelItmes,
+                    'selected' => $labels
+                ),
+                'tab' => array(
+                    'elementId' => 'tab-box',
+                    'formTitle' => 'Tab項目',
+                    'items' => $items
+                ),
+                'articleLang' => $articleLang
             ));
-        foreach($list as $item)
-            $labelItmes[$item->id] = $item->title;
-
-
-        // detect is the request has labels
-        return View::make('admin.service_faq.view_article_action', array(
-            'type' => $type,
-            'article' => &$article,
-            'categories' => ServiceFaq::where("type", "=", $type)->where("_parent", "=", "N")->get(),
-            'images' => &$images,
-            'label' => array(
-                'elementId' => 'label-box',
-                'fieldName' => 'labels[]',
-                'formTitle' => '標籤',
-                'items' => &$labelItmes,
-                'selected' => $labels
-            ),
-            'tab' => array(
-                'elementId' => 'tab-box',
-                'formTitle' => 'Tab項目',
-                'items' => $items
-            )
-        ));
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            exit;
+        }
     }
 
 
@@ -105,16 +111,20 @@ class ServiceFaqController extends BaseController{
         $params = array('type'=>$type);
 
         $articleLang = Input::get('langList', 'tw');
+        $params['langList'] = $articleLang;
 
         if (!empty($category)){
             $category = (int) $category;
-            $cmd = $cmd->where("_parent", "=", $category);
+            $cateCmd = ServiceFaq::find($category);
+            if($cateCmd->lang != $articleLang)
+                $category = $cateCmd->ref;
+            $cmd = $cmd->where("_parent", "=", $category); 
             $params['category'] = $category;
         }else
             $cmd = $cmd->where('_parent', '<>', 'N');
 
-
-        $rowsNum = $cmd->count();
+        $rowsNum = $cmd->where('lang', $articleLang)
+                       ->count();
 
         $articles = $cmd->where('lang', $articleLang)
                         ->orderBy('sort', 'desc')
@@ -122,7 +132,14 @@ class ServiceFaqController extends BaseController{
                         ->skip($offset)
                         ->take($limit)
                         ->get();
-
+        if(!empty($articles)) {
+            foreach ($articles as $key => $article) {
+                $articles[$key]['ref_display'] = ServiceFaq::where('id', $article->ref)
+                                                          ->first(array('status'))
+                                                          ->status;
+            }
+        }
+        
         $cats = ServiceFaq::where('type', '=', $type)
                           ->where('_parent', '=', 'N')
                           ->get();
@@ -140,7 +157,14 @@ class ServiceFaqController extends BaseController{
             'params' => &$params
         );
 
+        $twListUrl = URL::route('admin.service_faq.article.list', array('type'=>'service', 'langList'=>'tw', 'category'=>$category));
+        $cnListUrl = URL::route('admin.service_faq.article.list', array('type'=>'service', 'langList'=>'cn', 'category'=>$category));
         $category = Arr::get($categories, $category, '');
+
+        $langControlGroup = array(
+            'tw' => 'cn',
+            'cn' => 'tw'
+        );
 
         return View::make('admin.service_faq.view_article_list', array(
             'type' => $type,
@@ -148,7 +172,10 @@ class ServiceFaqController extends BaseController{
             'category' => $category,
             'categories' => &$categories,
             'pagerParam' => &$widgetParam,
-            'articleLang' => $articleLang
+            'articleLang' => $articleLang,
+            'twListUrl' => $twListUrl,
+            'cnListUrl' => $cnListUrl,
+            'langControlGroup' => $langControlGroup
         ));
     }
 
@@ -192,56 +219,55 @@ class ServiceFaqController extends BaseController{
      * @params (string) $type
      */
     public function postDelete($type){
-        var_dump($this->beforeAction($type));
+        $this->beforeAction($type);
         try{
             if (!isset($_POST) || !isset($_POST['id']))
                 throw new Exception('Error request [10]');
 
             $catId = (int) $_POST['id'];
-            $cat = ServiceFaq::find($catId);
-            if (empty($cat))
+            $catCmd = ServiceFaq::find($catId);
+            if (empty($catCmd))
                 throw new Exception("Error request");
-
-            $articles = ServiceFaq::where('_parent', '=', $catId)
-                                  ->get();
-
-            $imgs = array();
-            if (sizeof($articles)>0){
-                foreach($articles as $article){
-                    $tabs = json_decode($article->tabs, true);
-                    if (sizeof($tabs)>0){
-                        foreach($tabs as $tab){
-                            preg_match_all('/<img [^>]*src=["|\']([^"|\']+)/i', $tab['content'], $matches);
-                            if (isset($matches[1])){
-                                foreach($matches[1] as $key=>$img)
-                                    $imgs[] = $img;
+            $catCmdArray = array($catCmd->id, $catCmd->ref);
+            foreach ($catCmdArray as $cat) {
+                $articles = ServiceFaq::where('_parent', '=', $cat)
+                                      ->get();
+                $imgs = array();
+                if (sizeof($articles)>0){
+                    foreach($articles as $article){
+                        $tabs = json_decode($article->tabs, true);
+                        if (sizeof($tabs)>0){
+                            foreach($tabs as $tab){
+                                preg_match_all('/<img [^>]*src=["|\']([^"|\']+)/i', $tab['content'], $matches);
+                                if (isset($matches[1])){
+                                    foreach($matches[1] as $key=>$img)
+                                        $imgs[] = $img;
+                                }
                             }
                         }
-                    }
 
-                    $images = ServiceFaqImage::where('sid', '=', $article->id);
-                    if (sizeof($images)>0){
-                        foreach($images as $img){
-                            $imgs[] = $img->image;
-                            $img->delete();
+                        $images = ServiceFaqImage::where('sid', '=', $article->id);
+                        if (sizeof($images)>0){
+                            foreach($images as $img){
+                                $imgs[] = $img->image;
+                                $img->delete();
+                            }
                         }
+
+                        if (!empty($article->image))
+                            $imgs[] = $article->image;
+
+                        $article->delete();
                     }
+                }
 
-                    if (!empty($article->image))
-                        $imgs[] = $article->image;
-
-                    $article->delete();
+                if (sizeof($imgs)>0){
+                    $fps = new fps;
+                    while($img=array_pop($imgs))
+                        $fps->delete($img);
                 }
             }
-
-            if (sizeof($imgs)>0){
-                $fps = new fps;
-                while($img=array_pop($imgs))
-                    $fps->delete($img);
-            }
-
-            $cat->delete();
-
+            ServiceFaq::whereIn('id', $catCmdArray)->delete();
             return Response::json(array(
                     'status' => 'ok',
                     'message' => '刪除完成!',
@@ -388,7 +414,7 @@ class ServiceFaqController extends BaseController{
                 if ($model==null)
                     throw new Exception("Error Processing Request [11]");
             }
-
+            $articleLang = Input::get('articleLang', 'tw');
             $labels  = Input::get('labels', array());
             $lblList = array();
             foreach ($labels as $label)
@@ -415,6 +441,7 @@ class ServiceFaqController extends BaseController{
             $model->tabs       = json_encode($tabs);
             $model->status     = Input::get('status');
             $model->_parent    = Input::get('category');
+            $model->lang = $articleLang;
             //$model->created_at = time();
             $model->updated_at = time();
             $model->save();
@@ -441,6 +468,36 @@ class ServiceFaqController extends BaseController{
                     'sort' => $order
                 ));
                 $order++;
+            }
+            //system automatically generates another language,and the corresponding
+            if(empty($id)) {
+                $langControlGroup = array(
+                    'tw' => 'cn',
+                    'cn' => 'tw'
+                );
+                $refModel = new ServiceFaq;
+
+                $cateCmd = ServiceFaq::find(Input::get('category'));
+
+                $refModel->type = $type;
+                $refModel->title = Input::get('title');
+                $refModel->image = "";
+                $refModel->content = Input::get('content');
+                $refModel->labels = json_encode($lblList);
+                $refModel->tabs = json_encode($tabs);
+                $refModel->status = Input::get('status');
+                $refModel->_parent = $cateCmd->ref;
+                $refModel->lang = $langControlGroup[$articleLang];
+                $refModel->status = 'N';
+                $refModel->ref = $model->id;
+                //$refModel->created_at = time();
+                $refModel->updated_at = time();
+                $refModel->save();
+
+                //set ref
+                $ModelCmd = ServiceFaq::find($model->id);
+                $ModelCmd->ref = $refModel->id;
+                $ModelCmd->save();
             }
 
             return Redirect::route('admin.service_faq.article.list', array('type'=>$model->type, 'category'=>$model->_parent, 'afterAction'=>1));

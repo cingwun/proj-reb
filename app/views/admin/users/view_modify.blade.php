@@ -1,7 +1,7 @@
 @extends('spa_admin._layouts.default')
 
 @section('title')
-修改個人資料( {{$user->email}} )
+重設密碼( {{$user->email}} )
 @stop
 
 @section('main')
@@ -22,8 +22,8 @@
 		</div>
 	</div>
 	<div>
-		<button class="btn btn-danger" type="button" onclick="history.back();">取消</button>
-		<button class="btn btn-primary">更改</button>
+		<button class="btn btn-primary" type="reset">重設</button>
+		<button class="btn btn-danger" type="button" onclick="history.back();">編輯</button>
 	</div>
 </form>
 @stop
