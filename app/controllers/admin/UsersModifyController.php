@@ -16,11 +16,12 @@ class UsersModifyController extends \BaseController {
 
             $writeURL = URL::route('admin.user.write', array('id'=>$id,'where'=>Input::get('where', 'rebeauty')));
 
-            $views =  (Input::get('where')=='spa') ? "spa_admin.users.view_modify" : "admin.users.view_modify";
-
-            return View::make($views,array(
+            $layout =  (Session::get('where')=='spa') ? "spa_admin._layouts.default" : "admin._layouts.default";
+            
+            return View::make('admin.users.view_modify', array(
                 'user' => $user,
-                'writeURL' => $writeURL
+                'writeURL' => $writeURL,
+                'layout' => $layout
             ));
         } catch (Exception $e) {
             echo $e->getMessage();

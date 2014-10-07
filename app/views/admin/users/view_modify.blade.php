@@ -1,4 +1,4 @@
-@extends('admin._layouts.default')
+@extends($layout)
 
 @section('title')
 重設密碼( {{$user->email}} )
