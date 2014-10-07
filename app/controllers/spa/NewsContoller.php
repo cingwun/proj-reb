@@ -35,8 +35,13 @@ class NewsContoller extends \BaseController {
 				return Redirect::route('spa.news');
 
 			$article = \SpaArticles::where('status', '1')
-								   ->where('lang', $this->getLocale())
 								   ->find($id);
+
+			if($this->getLocale()!=$article->lang){
+				$refId = $article->ref_id;
+				$article = \SpaArticles::find($refId);
+			}
+
 			if(empty($article))
 				return \Redirect::route('spa.news');
 

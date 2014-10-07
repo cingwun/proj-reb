@@ -20,6 +20,11 @@ class AboutController extends \BaseController {
             else
                 $article = \SpaArticles::where('status', '1')
                                        ->find($id);
+            if($this->getLocale()!=$article->lang){
+              $refId = $article->ref_id;
+              $article = \SpaArticles::find($refId);
+            }
+
             if($article)
               $cover = json_decode($article->cover);
 

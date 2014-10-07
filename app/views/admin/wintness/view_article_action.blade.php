@@ -86,11 +86,11 @@
         </div>
 
         <div class="form-group">
-            <label for="meta">Meta Name:</label>
+            <label for="meta">Meta keyword:</label>
             <div>
                 <input type="text" class="form-control" id="meta_name" name="meta_name" size="12" value="{{Arr::get($article, 'meta_name', '')}}">
             </div>
-            <label for="meta">Meta Content:</label>
+            <label for="meta">Meta description:</label>
             <div>
                 <input type="text" class="form-control" id="meta_content" name="meta_content" size="12" value="{{Arr::get($article, 'meta_content', '')}}">
             </div>

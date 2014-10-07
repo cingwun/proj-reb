@@ -196,11 +196,18 @@ class ArticlesController extends \BaseController
         try {
             $article = Article::open()
                               ->where('id', '=', $id)
+                              ->where('status', '1')
                               ->first();
+
+            if($this->getLocale()!=$article->lang){
+                $refId = $article->langRef;
+                $article = Article::find($refId);
+            }
+
             if ($article) {
 
                 //瀏覽數
-                if (helper::views_cookie('article', $id)) {
+                if (ViewsAdder::views_cookie($article->category, $id)) {
                     $article->views = $article->views + 1;
                     $article->save();
                 }
@@ -213,6 +220,8 @@ class ArticlesController extends \BaseController
                      //海外專區
                     return View::make('aesthetics.overseas.index')->with('article', $article);
                 } elseif ($article->category == '3') {
+                    var_dump($article);
+                    exit;
                      //最新消息
                     //上一篇 ID
                     $previousId = Article::ofCategory('3')->where('id', '<', $article->id)->orderBy('id', 'DESC')->max('id');
@@ -252,8 +261,10 @@ class ArticlesController extends \BaseController
             $model = new Article;
             $model = $model->ofCategory('3')
                            ->where('lang', App::getLOcale())
+                           ->where('status', '1')
                            ->open()
                            ->orderBy('open_at', 'DESC');
+
             return View::make('aesthetics.news.index')->with('articles', $model->paginate(5));
         }
         catch(Exception $e) {

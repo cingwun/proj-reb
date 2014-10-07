@@ -33,5 +33,6 @@
 @stop
 
 @section('head')
-<meta name="{{array_get($article, 'meta_name')}}" content="{{array_get($article, 'meta_content')}}">
+<meta name="keyword" content="{{array_get($article, 'meta_name')}}">
+<meta name="description" content="{{array_get($article, 'meta_content')}}">
 @stop
