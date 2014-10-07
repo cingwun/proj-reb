@@ -173,13 +173,17 @@ class ArticlesController extends \BaseController
      *
      */
     public static function getNav($category) {
-        $key = 'nav_article_' . $category;
-        $data = Cache::get($key);
+        // $key = 'nav_article_' . $category;
+        // $data = Cache::get($key);
 
-        if (!$data) {
-            $data = Article::ofCategory($category)->open()->get();
-            Cache::put($key, $data, 2);
-        }
+        // if (!$data) {
+        //     $data = Article::ofCategory($category)->open()->get();
+        //     Cache::put($key, $data, 2);
+        // }
+        $data = Article::where('category', $category)
+                       ->where('lang', App::getLocale())
+                       ->where('status', '1')
+                       ->get();
 
         return $data;
     }
@@ -190,7 +194,9 @@ class ArticlesController extends \BaseController
      */
     public function article($id) {
         try {
-            $article = Article::open()->where('id', '=', $id)->first();
+            $article = Article::open()
+                              ->where('id', '=', $id)
+                              ->first();
             if ($article) {
 
                 //瀏覽數
@@ -244,7 +250,10 @@ class ArticlesController extends \BaseController
     public function news() {
         try {
             $model = new Article;
-            $model = $model->ofCategory('3')->open()->orderBy('open_at', 'DESC');
+            $model = $model->ofCategory('3')
+                           ->where('lang', App::getLOcale())
+                           ->open()
+                           ->orderBy('open_at', 'DESC');
             return View::make('aesthetics.news.index')->with('articles', $model->paginate(5));
         }
         catch(Exception $e) {

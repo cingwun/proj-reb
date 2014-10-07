@@ -17,6 +17,7 @@ class IndexController extends \BaseController {
             $boards = array();
 
         $newses = \Article::where('status', '=', '1')
+                          ->where('lang', $this->getLocale())
                           ->where('category', '=', '3')
                           ->where('open_at', '<=', date('Y-m-d'))
                           ->orderBy('sort', 'desc')
@@ -30,9 +31,10 @@ class IndexController extends \BaseController {
             $newses = array();
 
         $techs = \Technology::where('status', '=', 'Y')
-                           ->take(5)
-                           ->orderBy('sort')
-                           ->get();
+                            ->where('lang', $this->getLocale())
+                            ->take(5)
+                            ->orderBy('sort')
+                            ->get();
 
         return \View::make('aesthetics.index.index', array(
             'boards' => &$boards,
