@@ -1,20 +1,24 @@
 <?php
 $servicefaq = ServiceFaq::where('status', '=', 'Y')
+                        ->where('lang', '=', App::getLocale())
                         ->orderBy('type', 'asc')
                         ->orderBy('_parent', 'desc')
                         ->orderBy('sort', 'desc')
                         ->orderBy('updated_at', 'desc')
                         ->get();
+
 $servicesFaqs = array('service'=>array(), 'faq'=>array());
 foreach($servicefaq as $item){
     $key = $item->id;
+
     $parent = $item->_parent;
     $list = $servicesFaqs[$item->type];
     if ($parent=='N'){
         if (!isset($list[$key]))
             $list[$key] = array('title'=>$item->title, 'subItems'=>array());
     }else{
-        $list[$parent]['subItems'][] = $item;
+        if (isset($list[$parent]))
+            $list[$parent]['subItems'][] = $item;
     }
     $servicesFaqs[$item->type] = $list;
 }
@@ -52,9 +56,9 @@ $spa = 'http://' . Host::get('spa');
         <li>
             <a href="#">常見問題</a>
             <ul class="subNav lv1">
-                @foreach ($servicesFaqs['faq'] as $category)
+                @foreach ($servicesFaqs['faq'] as $idx=>$category)
                 <li>
-                    <a href="#">{{$category['title']}}</a>
+                    <a href="#">{{ isset($category['title']) ? $category['title'] : ''}}</a>
                     <ul class="subNav lv2">
                         @foreach ($category['subItems'] as $faq)
                         <li><a href="{{ URL::route('frontend.service_faq.article', array('type'=>'faq', 'id'=>$faq->id)) }}">{{$faq->title}}</a></li>
