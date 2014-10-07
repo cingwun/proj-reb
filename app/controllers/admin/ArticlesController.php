@@ -198,8 +198,8 @@ class ArticlesController extends \BaseController
                               ->where('id', '=', $id)
                               ->where('status', '1')
                               ->first();
-
-            if($this->getLocale()!=$article->lang){
+                              
+            if(App::getLocale()!=$article->lang){
                 $refId = $article->langRef;
                 $article = Article::find($refId);
             }
@@ -220,8 +220,6 @@ class ArticlesController extends \BaseController
                      //海外專區
                     return View::make('aesthetics.overseas.index')->with('article', $article);
                 } elseif ($article->category == '3') {
-                    var_dump($article);
-                    exit;
                      //最新消息
                     //上一篇 ID
                     $previousId = Article::ofCategory('3')->where('id', '<', $article->id)->orderBy('id', 'DESC')->max('id');
