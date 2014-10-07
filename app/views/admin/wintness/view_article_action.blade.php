@@ -14,12 +14,18 @@
         
         <div class="form-group">
             <label for="lang">語系</label>
+            @if(empty($article))
             <label class="radio-inline">
                 <input type="radio" name="lang" value="tw" id="optionsRadiosInline" checked> 繁體
             </label>
             <label class="radio-inline">
-                <input type="radio" name="lang" value="cn" id="optionsRadiosInline" <?= (Arr::get($article, 'lang')=='cn')?"checked":"" ?>> 簡體
+                <input type="radio" name="lang" value="cn" id="optionsRadiosInline"> 簡體
             </label>
+            @else
+            <label class="radio-inline">
+                <input type="radio" name="lang" value="<?=(Arr::get($article, 'lang')=='tw')?'tw':'cn'; ?>" id="optionsRadiosInline" checked> <?=(Arr::get($article, 'lang')=='tw')?'繁體':'簡體'; ?>
+            </label>
+            @endif
         </div>
 
         <div class="form-group">
@@ -80,11 +86,11 @@
         </div>
 
         <div class="form-group">
-            <label for="meta">Meta Name:</label>
+            <label for="meta">Meta keyword:</label>
             <div>
                 <input type="text" class="form-control" id="meta_name" name="meta_name" size="12" value="{{Arr::get($article, 'meta_name', '')}}">
             </div>
-            <label for="meta">Meta Content:</label>
+            <label for="meta">Meta description:</label>
             <div>
                 <input type="text" class="form-control" id="meta_content" name="meta_content" size="12" value="{{Arr::get($article, 'meta_content', '')}}">
             </div>

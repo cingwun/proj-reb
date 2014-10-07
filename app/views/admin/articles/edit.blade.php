@@ -52,12 +52,12 @@
 	</div>
 
 	<div class="form-group">
-		<label for="meta_name">Meta Name: </label>
+		<label for="meta_name">Meta keyword: </label>
 		<input type="text" class="form-control" id="meta_name" name="meta_name" size="12" value="{{ $article->meta_name }}">
 	</div>
 
 	<div class="form-group">
-		<label for="meta_content">Meta Content: </label>
+		<label for="meta_content">Meta description: </label>
 		<input type="text" class="form-control" id="meta_content" name="meta_content" size="12" value="{{ $article->meta_content }}">
 	</div>
 

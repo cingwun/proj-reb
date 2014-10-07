@@ -44,8 +44,12 @@ class ShareController extends \BaseController {
 		try{
 
 			$article = \SpaShares::where('status', '1')
-								 ->where('language', $this->getLocale())
 								 ->find($id);
+			if($this->getLocale()!=$article->language){
+				$refId = $article->reference;
+				$article = \SpaShares::find($refId);
+			}
+
 			if(empty($article))
 				return \Redirect::route('spa.share');
 			if(\ViewsAdder::views_cookie('share', $id)) {

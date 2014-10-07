@@ -178,13 +178,17 @@ class RanksController extends \BaseController {
      * fot 側欄套版
      */
     public static function sidebarData ($limit=10){
-    	$key = 'sidebar_rank';
-    	$data = Cache::get($key);
+    	// $key = 'sidebar_rank';
+    	// $data = Cache::get($key);
 
-    	if(!$data){
-    		$data = Rank::all()->sortBy('sort')->take(10);
-    		Cache::put($key, $data, 2);
-    	}
+    	$locale = App::getLocale();
+    	// if(!$data){
+		$data = Rank::where('lang', $locale)
+					->orderBy('sort', 'asc')
+					->take(10)
+					->get();
+    	// 	Cache::put($key, $data, 2);
+    	// }
 
     	return $data;
     }
