@@ -47,6 +47,8 @@ class Host {
         //HTTP_REFERER=>http://spa.rebeauty.com.tw:8080/tw/news
         //$_SERVER
         $after = str_replace(array('tw/', 'cn/'), '', $_SERVER['REQUEST_URI']);
+        if(!strpos($_SERVER['REQUEST_URI'], 'wintness/article'))
+            $after = str_replace('wintness', 'wintness#/list', $after);
         $theURL = asset('').$target.$after;
         return $theURL;
     }

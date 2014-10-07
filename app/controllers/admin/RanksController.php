@@ -32,7 +32,7 @@ class RanksController extends \BaseController {
 					),
 				'cn' => array(
 					'data' => $rankCNCmd,
-					'title' => '繁體列表'
+					'title' => '簡體列表'
 					),
 				);
 		}
