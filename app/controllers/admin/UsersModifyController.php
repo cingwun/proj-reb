@@ -7,13 +7,18 @@ class UsersModifyController extends \BaseController {
 
     /*
      * Display modify user page
+     * params (int) $id
      */
     public function getModify() {
         try {
-            $user = Sentry::findUserById(Sentry::getUser()->id);
+            $id = Sentry::getUser()->id;
+            $user = Sentry::findUserById($id);
 
-            $writeURL = URL::route('admin.user.write');
-            return View::make('admin.users.view_modify',array(
+            $writeURL = URL::route('admin.user.write', array('id'=>$id,'where'=>Input::get('where', 'rebeauty')));
+
+            $views =  (Input::get('where')=='spa') ? "spa_admin.users.view_modify" : "admin.users.view_modify";
+
+            return View::make($views,array(
                 'user' => $user,
                 'writeURL' => $writeURL
             ));
@@ -26,11 +31,11 @@ class UsersModifyController extends \BaseController {
     /*
      * write modify user
      */
-    public function postWrite() {
+    public function postWrite($id = null) {
         try {
             $password = Input::get('password');
             // Find the user using the user id
-            $user = Sentry::findUserById(Sentry::getUser()->id);
+            $user = Sentry::findUserById($id);
             
             $user->last_name = Input::get('last_name');
             
@@ -39,7 +44,9 @@ class UsersModifyController extends \BaseController {
 
             $user->save();
 
-            return Redirect::route('admin.index');
+            $views =  (Input::get('where')=='spa') ? "spa.admin.index" : "admin.index";
+
+            return Redirect::route($views);
         } catch (Exception $e) {
             echo $e->getMessage();
             exit;

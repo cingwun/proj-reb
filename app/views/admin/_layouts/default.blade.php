@@ -38,7 +38,6 @@
     </head>
 
     <body id="admin">
-
         <div id="wrapper">
 
             <!-- Navigation -->
@@ -61,6 +60,7 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="{{URL::route('admin.user.modify')}}"><i class="fa fa-fw fa-gear"></i> 設定密碼</a>
+
                             </li>
                             <li>
                                 <a href="{{URL::route('switch.to.admin.spa')}}"><i class="glyphicon glyphicon-home"></i>&nbsp; Spa</a>

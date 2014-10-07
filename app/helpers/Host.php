@@ -4,7 +4,9 @@
  */
 class Host {
     /**
-     * get
+     * get host data
+     * @params (string) $target, default: rebeauty
+     * @params (bool) $includePort, default: true
      */
     public static function get($target='rebeauty', $includePort=true){
         $port = (int) $_SERVER['SERVER_PORT'];
