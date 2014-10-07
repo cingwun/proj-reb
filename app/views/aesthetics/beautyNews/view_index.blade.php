@@ -38,7 +38,7 @@
                 if ($article->style=='1'):
         ?>
         <li><a href="<?php echo $link?>" target="<?php echo $article->target?>" title="<?php echo $article->title?>">
-            <h3><?php echo $article->title?></h3>
+            <h3><?php echo $article->title?>aaaaa</h3>
             <img src="<?php echo $cover[0]->image . '?w=650&h=150'?>" width="650" height="150" alt="<?php echo $cover[0]->text?>" class="cover"/>
             <p class="context"><?php echo strip_tags($article->description)?></p></a>
             <div class="funBar" data-shareURL="<?php echo $shareLink?>" data-shareTitle="<?php echo $fb[0]->text?>" data-shareImage="<?php echo 'http://'.$_SERVER['HTTP_HOST'] . $fb[0]->image?>">

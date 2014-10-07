@@ -108,3 +108,8 @@
     </script>
     @parent
 @stop
+
+@section('head')
+<meta name="keywords" content="<?php echo $model->meta_keywords?>">
+<meta name="description" content="<?php echo $model->meta_desc?>">
+@stop

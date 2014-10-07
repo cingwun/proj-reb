@@ -76,7 +76,6 @@ if (!isset($article['id']) || $article['id']==null){
             <textarea class="form-control" name="description" style="min-width: 400px; height: 150px;"><?php echo strip_tags(Arr::get($article, 'description', ''))?></textarea>
         </div>
         <!-- description -->
-
         <input type="hidden" name="id" value="<?php echo Arr::get($article, 'id', null) ?>" />
         <input type="hidden" name="lang" value="{{$lang}}"/>
         <a href='javascript:history.back()' type="button" class="btn btn-danger">取消</a>
