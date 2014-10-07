@@ -12,7 +12,7 @@ class Host {
         $domain = str_replace(array('www.', 'spa.'), '', $domain);
         $host = $domain;
         if ($port!=80)
-            $host = ':' . $port;
+            $host .= ':' . $port;
 
         switch($target){
             case 'domain':
