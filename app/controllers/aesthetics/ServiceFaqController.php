@@ -69,6 +69,7 @@ class ServiceFaqController extends \BaseController {
     private function getNavigation($type){
         $rows = \ServiceFaq::where('type', '=', $type)
                           ->where('status', '=', 'Y')
+                          ->where('lang', $this->getLocale())
                           ->orderBy('_parent', 'desc')
                           ->orderBy('sort', 'desc')
                           ->orderBy('updated_at', 'desc')
