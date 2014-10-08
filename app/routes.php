@@ -56,7 +56,7 @@ Route::group(array('prefix'=>$locale, 'domain'=>$www), function(){
     Route::get('articles/{id}',array('uses'=>'ArticlesController@article', 'as'=>'frontend.article'))->where('id', '[0-9]+'); //單文
 
     //最新消息列表
-    Route::get('news',array('uses'=>'ArticlesController@news')); //列表
+    Route::get('news',array('uses'=>'ArticlesController@news', 'as'=>'frontend.news')); //列表
 
     // wintness
     Route::get('wintness', array('uses'=>'aesthetics\\WintnessController@getIndex', 'as'=>'frontend.wintness.index'));

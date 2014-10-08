@@ -61,7 +61,6 @@ class ServiceController extends \BaseController{
 			$serviceCmd = \SpaService::where('id', $id)
 									 ->where('lang', $this->getLocale());
 
-
 			if($serviceCmd->first()) {
 				$service = $serviceCmd->first()
 									  ->toArray();

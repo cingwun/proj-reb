@@ -14,7 +14,8 @@ class BeautyNewsController extends \BaseController {
 
         $limit = 5;
         $offset = ($page-1) * $limit;
-        $cmd = \BeautyNews::where('status', '=', '1');
+        $cmd = \BeautyNews::where('status', '=', '1')
+                          ->where('lang', $this->getLocale());
         $total = $cmd->count();
         $articles = $cmd->skip($offset)
                         ->take($limit)

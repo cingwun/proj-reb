@@ -463,6 +463,8 @@ class ServiceFaqController extends BaseController{
             $model->lang = $articleLang;
             //$model->created_at = time();
             $model->updated_at = time();
+            $model->meta_keywords = Input::get('meta_keywords');
+            $model->meta_desc = Input::get('meta_desc');
             $model->save();
 
             # Handling Images
@@ -511,6 +513,8 @@ class ServiceFaqController extends BaseController{
                 $refModel->ref = $model->id;
                 //$refModel->created_at = time();
                 $refModel->updated_at = time();
+                $refModel->meta_keywords = Input::get('meta_keywords');
+                $refModel->meta_desc = Input::get('meta_desc');
                 $refModel->save();
 
                 //set ref

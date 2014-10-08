@@ -16,7 +16,7 @@ class UsersModifyController extends \BaseController {
 
             $writeURL = URL::route('admin.user.write', array('id'=>$id,'where'=>Input::get('where', 'rebeauty')));
 
-            $layout =  (Session::get('where')=='spa') ? "spa_admin._layouts.default" : "admin._layouts.default";
+            $layout =  ($this->getWhere()=='spa') ? "spa_admin._layouts.default" : "admin._layouts.default";
             
             return View::make('admin.users.view_modify', array(
                 'user' => $user,
