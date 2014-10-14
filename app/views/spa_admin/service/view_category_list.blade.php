@@ -14,6 +14,7 @@
         <table class="table table-bordered" id="sortableTW" data-sortAction="{{$updateSortURL}}" data-deleteAction="{{$categoryDeleteURL}}">
             <thead>
                 <tr>
+                    <th width="108">圖示</th>
                     <th>分類標題</th>
                     <th width="50">排序</th>
                     <th width="50">狀態</th>
@@ -23,16 +24,19 @@
             <tbody>
             	@foreach($categorys['tw']['item'] as $cat)
             	<tr id='{{$cat->id}}'>
+                    <td>
+                        <img src="{{ $cat->image}}?w=90" alt="" class="img-rounded">
+                    </td>
             		<td>{{$cat->title}}</td>
-            		<td width="50">{{$cat->sort}}</td>
-                    <td width="50">
+            		<td>{{$cat->sort}}</td>
+                    <td>
                     @if($cat->display === 'yes')
                     <span style="color: #00AA00">顯示</span>
                     @else
                     隱藏
                     @endif
                     </td>
-            		<td width="163">
+            		<td>
             			<a href="{{\URL::route('spa.admin.service.article.list', array('lang'=>$cat->lang, 'category'=>$cat->id))}}" title="{{$cat->title}}相關文章" class="btn btn-sm btn-success">文章</a>
                         <a href="{{\URL::route('spa.admin.service.category.action', array('id'=>$cat->id))}}" class="btn btn-sm btn-primary">修改</a>
                         <span class="btn btn-sm btn-danger btn-delete">刪除</span>
@@ -47,6 +51,7 @@
         <table class="table table-bordered" id="sortableCN" data-sortAction="{{$updateSortURL}}" data-deleteAction="{{$categoryDeleteURL}}">
             <thead>
                 <tr>
+                    <th width="108">圖示</th>
                     <th>分類標題</th>
                     <th width="50">排序</th>
                     <th width="50">狀態</th>
@@ -56,6 +61,9 @@
             <tbody>
                 @foreach($categorys['cn']['item'] as $cat)
                 <tr id='{{$cat->id}}'>
+                    <td>
+                        <img src="{{ $cat->image}}?w=90" alt="" class="img-rounded">
+                    </td>
                     <td>{{$cat->title}}</td>
                     <td width="50">{{$cat->sort}}</td>
                     <td width="50">

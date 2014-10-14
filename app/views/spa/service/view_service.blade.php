@@ -3,6 +3,7 @@
 @section('bodyId')
 {{'spa_services'}}
 @stop
+
 @section('content')
 <div id="mainContent" class="fullWidth" role="main">
 	<div class="breadcrumb">

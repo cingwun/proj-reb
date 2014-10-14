@@ -3,7 +3,9 @@
 @section('bodyId')
 {{'index'}}
 @stop
-
+<?php
+$size = "large";
+?>
 @section('content')
 <aside id="indexSetContent" class="hotEv">
 	<h2 class="titleRp title_spa-hotEv">熱門推薦</h2>

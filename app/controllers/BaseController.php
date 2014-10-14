@@ -27,7 +27,7 @@ class BaseController extends Controller
      * @return (string) where
      */
     public function getWhere(){
-        return Sessiion::get('where', 'rebeauty');
+        return Session::get('where', 'rebeauty');
     }
 
     /**

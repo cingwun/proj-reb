@@ -356,11 +356,11 @@ class ProductController extends \BaseController {
 			$catsTWCmd = \SpaProduct::where('_parent', 'N')
 									->where('lang', 'tw')
 									->orderBy('sort', 'DESC')
-									->get(array('id', 'title', 'sort', 'lang', 'display', 'ref'));
+									->get(array('id', 'title', 'sort', 'lang', 'display', 'ref', 'image'));
 			$catsCNCmd = \SpaProduct::where('_parent', 'N')
 									->where('lang', 'cn')
 									->orderBy('sort', 'DESC')
-									->get(array('id', 'title', 'sort', 'lang', 'display', 'ref'));
+									->get(array('id', 'title', 'sort', 'lang', 'display', 'ref', 'image'));
 			if($catsTWCmd)
 				$catsTW = $catsTWCmd;
 			if($catsCNCmd)

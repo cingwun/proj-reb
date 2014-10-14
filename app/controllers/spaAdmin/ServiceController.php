@@ -352,11 +352,11 @@ class ServiceController extends \BaseController {
 			$catsTWCmd = \SpaService::where('_parent', 'N')
 									->where('lang', 'tw')
 									->orderBy('sort', 'DESC')
-									->get(array('id', 'title', 'sort', 'lang', 'display', 'ref'));
+									->get(array('id', 'title', 'sort', 'lang', 'display', 'ref', 'image'));
 			$catsCNCmd = \SpaService::where('_parent', 'N')
 									->where('lang', 'cn')
 									->orderBy('sort', 'DESC')
-									->get(array('id', 'title', 'sort', 'lang', 'display', 'ref'));
+									->get(array('id', 'title', 'sort', 'lang', 'display', 'ref', 'image'));
 			if($catsTWCmd)
 				$catsTW = $catsTWCmd;
 			if($catsCNCmd)

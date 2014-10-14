@@ -77,7 +77,7 @@
 	<div class="form-group col-lg-7">
 		<button class="btn btn-danger" type="button" onclick="history.back();">取消</button> <button class="btn btn-primary btn-submit">編輯完成</button>
 	</div>
-
+	<input type="hidden" name="where" value="{{$where}}"/>
 	<input type="hidden" name="size" value="<?=$size['value']?>" />
 	<input type="hidden" name="bid" value="<?=Arr::get($data, 'bid', 'null')?>" />
 	<input type="hidden" name="imglist" value=""/>

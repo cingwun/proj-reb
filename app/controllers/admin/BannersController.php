@@ -23,13 +23,13 @@ class BannersController extends BaseController {
      * @params (string) $size
      * @return (array) $banners;
      */
-	public static function bannerShow($size){
+	public static function bannerShow($size, $type='rebeauty'){
 		$sql = 'select image, link, target, title from banners ' .
-			   'where size = ? and status = ? and ' .
+			   'where size = ? and status = ? and type = ? and' .
 			         '(on_time = 0 or on_time <= ?) and (off_time = 0 or off_time >= ?)' .
 			   'order by updated_at desc';
 		$t = time();
-		$rows = \DB::select($sql, array($size, 1, $t, $t));
+		$rows = \DB::select($sql, array($size, 1, $type, $t, $t));
 		return $rows;
     }
 
@@ -43,7 +43,7 @@ class BannersController extends BaseController {
 		$limit = 10;
 		$offset = ((int)($page-1)) * $limit;
 		$rowsNum = Banners::where('size', '=', $size)->count();
-		$data = Banners::take($limit)->skip($offset)->where('size', '=', $size)->get();
+		$data = Banners::take($limit)->skip($offset)->where('size', '=', $size)->where('type',$this->getWhere())->get();
 		$widgetParam = array(
 			'currPage' => $page,
 			'total' => $rowsNum,
@@ -78,12 +78,14 @@ class BannersController extends BaseController {
 		if(Session::get('where')=='rebeauty'){
 			return View::make('admin.banners.view_action', array(
 				'size' => $this->_getSize($size),
-				'data' => $data
+				'data' => $data,
+				'where'=> $this->getWhere()
 				));
 		}else{
 			return View::make('spa_admin.banners.view_action', array(
 				'size' => $this->_getSize($size),
-				'data' => $data
+				'data' => $data,
+				'where'=> $this->getWhere()
 				));
 		}
 	}
@@ -114,7 +116,8 @@ class BannersController extends BaseController {
 		$start = Arr::get($_POST, 'on_time', 0);
 		$end = Arr::get($_POST, 'off_time', 0);
 		$status = Arr::get($_POST, 'status', '1');
-
+		$where = Arr::get($_POST, 'where', 'rebeauty');
+		
 		if ($image==null)
 			return Redirect::route('admin.banners.list', array($size, 'message'=>'error'));
 
@@ -137,6 +140,7 @@ class BannersController extends BaseController {
 		$m->off_time = $end;
 		$m->status = $status;
 		$m->updated_at = date('Y-m-d H:i:s');
+		$m->type = $where;
 		$bool = $m->save();
 
 		$list = explode($imgList, '=sep=');
