@@ -17,41 +17,13 @@ class ShareController extends \BaseController {
 					$tabs = \SpaSharesTabs::where('item_id', $sh['id'])
 										  ->get(array('item_id', 'title', 'content'))
 										  ->toArray();
-					// $labels = \SpaSharesLabels::where('share_id', $sh['id'])
-					// 						  ->get(array('share_id', 'label_id'))
-					// 						  ->toArray();
-					// $labelService = array();
-			  //       $labelProduct = array();
-					// foreach($labels as $la) {
-			  //           $items = \SpaService::where('id', $la['label_id'])
-			  //                   			->orderBy('_parent', 'desc')
-			  //                   			->orderBy('sort', 'desc')
-			  //                   			->orderBy('updated_at', 'desc')
-			  //                   			->get(array('id', 'title'));
-			  //           foreach($items as $index=>$item) {
-			  //           	$labelService[] = array(
-			  //               	"id"=>$item->id,
-			  //               	"title"=>$item->title
-			  //               	);
-			  //           }
-			  //           $items = \SpaProduct::where('id', $la['label_id'])
-			  //                   			->orderBy('_parent', 'desc')
-			  //                   			->orderBy('sort', 'desc')
-			  //                   			->orderBy('updated_at', 'desc')
-			  //                   			->get(array('id', 'title'));
-			  //           foreach($items as $item) {
-			  //           	$labelProduct[] = array(
-			  //               	"id"=>$item->id,
-			  //               	"title"=>$item->title
-			  //               	);
-					// 	}
-		   //          }
+
 		            $labelCmd = \SpaShares::find($sh['id'], array('label_service', 'label_product'));
 					$labelService = json_decode($labelCmd->label_service);
 					$labelProduct = json_decode($labelCmd->label_product);
 
-					$labelServiceCmd = \SpaService::whereIn('id', $labelService)->get(array('id', 'title'))->toArray();
-					$labelProductCmd = \SpaProduct::whereIn('id', $labelProduct)->get(array('id', 'title'))->toArray();
+					$labelServiceCmd = ($labelService) ? \SpaService::whereIn('id', $labelService)->get(array('id', 'title'))->toArray() : array();
+					$labelProductCmd = ($labelProduct) ? \SpaProduct::whereIn('id', $labelProduct)->get(array('id', 'title'))->toArray() : array();
 		            $shares[] = array(
 		            	'share'=>$sh,
 		            	'tab'=>$tabs,
@@ -73,8 +45,13 @@ class ShareController extends \BaseController {
 
 			$article = \SpaShares::where('status', '1')
 								 ->find($id);
+			if($this->getLocale()!=$article->language){
+				$refId = $article->reference;
+				$article = \SpaShares::find($refId);
+			}
+
 			if(empty($article))
-				throw new \Exception('Error request [11]');
+				return \Redirect::route('spa.share');
 			if(\ViewsAdder::views_cookie('share', $id)) {
               $article->views = $article->views + 1;
               $article->save();
@@ -95,42 +72,12 @@ class ShareController extends \BaseController {
 								  ->get(array('title', 'content'))
 								  ->toArray();
 
-			// $labels = \SpaSharesLabels::where('share_id', $id)
-			// 						  ->get(array('share_id', 'label_id'))
-			// 						  ->toArray();
-			// $labelService = array();
-	  //       $labelProduct = array();
-			// foreach($labels as $labels) {
-	  //           $items = \SpaService::where('id', $labels['label_id'])
-	  //                   			->orderBy('_parent', 'desc')
-	  //                   			->orderBy('sort', 'desc')
-	  //                   			->orderBy('updated_at', 'desc')
-	  //                   			->get(array('id', 'title'));
-	  //           foreach($items as $index=>$item) {
-	  //           	$labelService[] = array(
-	  //               	"id"=>$item->id,
-	  //               	"title"=>$item->title
-	  //               	);
-	  //           }
-	  //           $items = \SpaProduct::where('id', $labels['label_id'])
-	  //                   			->orderBy('_parent', 'desc')
-	  //                   			->orderBy('sort', 'desc')
-	  //                   			->orderBy('updated_at', 'desc')
-	  //                   			->get(array('id', 'title'));
-	  //           foreach($items as $index=>$item) {
-	  //           	$labelProduct[] = array(
-	  //               	"id"=>$item->id,
-	  //               	"title"=>$item->title
-	  //               	);
-	  //           }
-	  //       }
-
 			$labelCmd = \SpaShares::find($id, array('label_service', 'label_product'));
 			$labelService = json_decode($labelCmd->label_service);
 			$labelProduct = json_decode($labelCmd->label_product);
 
-			$labelServiceCmd = \SpaService::whereIn('id', $labelService)->get(array('id', 'title'))->toArray();
-			$labelProductCmd = \SpaProduct::whereIn('id', $labelProduct)->get(array('id', 'title'))->toArray();
+			$labelServiceCmd = ($labelService) ? \SpaService::whereIn('id', $labelService)->get(array('id', 'title'))->toArray() : array();
+			$labelProductCmd = ($labelProduct) ? \SpaProduct::whereIn('id', $labelProduct)->get(array('id', 'title'))->toArray() : array();
 
 	        return \View::make('spa.share.view_share_detail', array(
 	        												  'article'=>$article,
