@@ -5,15 +5,15 @@
 		</div>
 		<div id="title">
 			@if($titleType=='about')
-			<h1 id="about_title">關於煥麗</h1>
+			<h1 id="about_title">{{ array_get($article, 'title')}}</h1>
 			@elseif($titleType=='service')
-			<h1 id="service_title">服務項目</h1>
+			<h1 id="service_title">{{$service['title']}}</h1>
 			@elseif($titleType=='product')
-			<h1 id="service_title">專業產品</h1>
+			<h1 id="service_title">{{$product['title']}}</h1>
 			@elseif($titleType=='news')
-			<h1 id="service_title">最新消息</h1>
+			<h1 id="service_title">{{$article->title}}</h1>
 			@elseif($titleType=='case')
-			<h1 id="service_title">美麗分享</h1>
+			<h1 id="service_title">{{$article->title}}</h1>
 			@endif
 		</div>
 	</div>

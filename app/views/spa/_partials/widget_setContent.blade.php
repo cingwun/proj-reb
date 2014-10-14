@@ -33,7 +33,7 @@
 	<ul class="spaProducts">
 		@foreach($categorys as $category)
 		<li class="productsSub">
-			<a class="productsSubTitle" href="{{$productListURL}}/{{$category['id']}}">{{\Text::preEllipsize(strip_tags($category['title']), 10)}}</a>
+			<a class="productsSubTitle" href="{{URL::route(('spa.product.list'), array($category['id']))}}">{{\Text::preEllipsize(strip_tags($category['title']), 10)}}</a>
 		</li>
 		@endforeach
 	</ul>
