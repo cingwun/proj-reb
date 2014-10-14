@@ -20,7 +20,7 @@
 
 		<div class="form-group">
 			<label for="category">分類</label>
-				<select name="category" class="form-control">
+				<select name="category" class="form-control" onchange="chooseCover(this)">
 					<option value='about' @if(array_get($specArticle, 'category')=='about' || $createCategory == 'about') selected @endif>關於煥麗</option>
 					<option value='news' @if(array_get($specArticle, 'category')=='news' || $createCategory == 'news') selected @endif>最新消息</option>
 					<!-- <option value='oversea' @if(array_get($specArticle, 'category')=='oversea' || $createCategory == 'oversea') selected @endif>海外專區</option> -->
@@ -34,7 +34,7 @@
 			</div>
 		</div>
 
-		<div>
+		<div id='coverDIV'>
             @include('spa_admin._partials.widget_imageUploader', array('options'=>array('elementId'=>'image-box-cover', 'title'=>'封面圖片', 'uploadURL'=>fps::getUploadURL(), 'deleteURL'=>fps::getDeleteURL())))
             <!-- image uploader -->
         </div>
@@ -141,6 +141,13 @@ $(function() {
 
 
 <script type="text/javascript">
+
+	var category = "news";
+	if($('div [name=category]').val() == 'about') {
+		category = "about";
+		$('#coverDIV').hide(true);
+	}
+
         var imgUploaderCover = _imageUploader({
                 el: '#image-box-cover',
                 imageBoxMeta: {photoFieldName: 'cov[]', descFieldName: 'cov_desc[]', delFieldName: 'deleteImages[]'},
@@ -151,15 +158,23 @@ $(function() {
         $('.btn-submit').click(function(e){
             e.preventDefault();
             var bool = true;
-            bool &= imgUploaderCover.validate();
-
-            if (!bool){
-                alert("提醒您:\n\n   您尚未上傳封面圖片");
-                return false;
-            }
-
+            if(category=='news') {
+	            bool &= imgUploaderCover.validate();
+	            if (!bool){
+	                alert("提醒您:\n\n   您尚未上傳封面圖片");
+	                return false;
+	            }
+			}
             $('form').submit();
         });
-    </script>
+        
+    function chooseCover(e){
+    	category = e.value;
+    	if(e.value == 'about')
+    		$('#coverDIV').hide(true);
+    	else
+    		$('#coverDIV').show(true);
+    }
+</script>
 
 @stop
