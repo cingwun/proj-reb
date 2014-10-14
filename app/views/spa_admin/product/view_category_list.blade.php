@@ -90,7 +90,7 @@
 {{ HTML::script(asset('packages/tableDnD/js/jquery.tablednd.0.8.min.js'))}}
 {{ HTML::script(asset('spa_admin/js/service/js_category_list.js'))}}
 <script type="text/javascript">
-    var tableTW = _sortTable({el: '#sortableTW', role: 'category', sortColumn: 2});
-    var tableCN = _sortTable({el: '#sortableCN', role: 'category', sortColumn: 2});
+    var tableTW = _sortTable({el: '#sortableTW', role: 'category', sortColumn: 3});
+    var tableCN = _sortTable({el: '#sortableCN', role: 'category', sortColumn: 3});
 </script>
 @stop
