@@ -5,6 +5,7 @@
 @stop
 
 @section('main')
+<div class="col-lg-12">
     <div class="pull-right" style="margin: 0px 0px 10px;"><a href="<?=URL::route('admin.wintness.gallery.action')?>" class="btn btn-success">新增</a></div>
     <table class="table table-bordered" id="sortable" data-sortAction="<?php echo URL::route('admin.wintness.sort.update', array('type'=>'gallery'))?>">
         <thead>
@@ -37,6 +38,7 @@
             ?>
         </tbody>
     </table>
+</div>
     @include('spa_admin._partials.widget_pager', array('wp'=>$wp))
 @stop
 
