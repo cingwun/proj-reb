@@ -14,9 +14,8 @@ class UsersController extends \BaseController
      * displaly dashboard
      */
     public function index() {
-        $where = Input::get('where', 'rebeauty');
-        $view = (($where=='rebeauty')) ? 'admin.users.view_index' : 'spa_admin.users.index';
-        return View::make($view, array('users'=>Sentry::findAllUsers(), 'where'));
+        $layouts = (($this->getWhere()=='rebeauty')) ? 'admin._layouts.default' : 'spa_admin._layouts.default';
+        return View::make('admin.users.view_index', array('users'=>Sentry::findAllUsers(), 'layouts'=>$layouts));
     }
 
     public function show($id) {
