@@ -1,7 +1,6 @@
 'use strict';
 
 var app = function(o){
-
     // initialize
     o.init = function(){
         var self = this;
@@ -49,7 +48,6 @@ var app = function(o){
                            .isotope(self.isotopeOptions);
             self.totalImages = 0;
         }
-
         $.ajax({
             url: self.$container.attr('data-loadURL'),
             type: 'GET',
@@ -106,7 +104,6 @@ var app = function(o){
             }
 
         });
-
     }
 
     // set info text of null status

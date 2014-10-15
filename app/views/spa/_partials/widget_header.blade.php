@@ -37,10 +37,6 @@ $prodCatsCmd = \SpaProduct::where('_parent', 'N')
 						  ->orderBy('sort', 'desc')
 						  ->get(array('id', 'title'))
 						  ->toArray();
-if($prodCatsCmd)
-	$prodCats = $prodCatsCmd;
-
-
 
 $www = 'http://' . Host::get('rebeauty');
 ?>
@@ -49,8 +45,8 @@ $www = 'http://' . Host::get('rebeauty');
 	<div class="innerWrap">
 		<h1><a href="/">煥儷美顏SPA</a></h1>
 		<div class="languageSwitch">
-			<a href="<?=asset('tw')?>">繁體中文</a>
-			<a class="last" href="<?=asset('cn')?>">简体中文</a>
+			<a href="{{Host::getLangURL('tw')}}">繁體中文</a>
+			<a class="last" href="{{Host::getLangURL('cn')}}">简体中文</a>
 			<form class="searchBox" action="/" method="post"><input type="text" placeholder="請輸入關鍵字" /><button type="submit"><span>搜尋</span></button></form>
 		</div>
 		<div class="memberFunc funcBar">

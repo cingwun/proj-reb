@@ -17,13 +17,33 @@ class ArticlesController extends \BaseController
 
         //
         $category = Input::get('category');
+        $lang = Input::get('lang'); //where('lang', $lang)->
         if (!$category) {
             return Redirect::to('admin/articles?category=1');
         }
         $model = new Article;
         $model = $model->ofCategory($category);
 
-        return View::make('admin.articles.index')->with('articles', ($category == 1 || $category == 2) ? $model->orderBy('sort', 'asc')->get() : $model->orderBy('open_at', 'desc')->paginate(5));
+        $model = ($lang!='all') ? $model->orderBy('open_at', 'desc')->where('lang', $lang)->paginate(6) : $model = $model->orderBy('open_at', 'desc')->paginate(6);
+            
+        $page = Input::get('page', 1);
+        $limit = 6;
+        $offset = ((int)($page-1)) * $limit;
+        $rowsNum = ($lang!='all')?Article::where('category', '=', $category)->where('lang', $lang)->count() : Article::where('category', '=', $category)->count();
+        $widgetParam = array(
+            'currPage' => $page,
+            'total' => $rowsNum,
+            'perPage' => $limit,
+            'URL' => URL::route('admin.articles.index'),
+            'category' => $category,
+            'lang' => $lang
+        );
+        
+        return View::make('admin.articles.index', array(
+            'category'=>$category,
+            'articles'=>$model,
+            'wp'=>$widgetParam
+            ));
     }
 
     /**
@@ -52,10 +72,28 @@ class ArticlesController extends \BaseController
             $article->category = Input::get('category');
             $article->open_at = Input::get('open_at');
             $article->status = Input::get('status');
+            $article->lang = Input::get('lang');
+            $article->meta_name = Input::get('meta_name');
+            $article->meta_content = Input::get('meta_content');
+            $article->save();
+            //create a corresponding tw/cn article at same time.
+            $refLang = (Input::get('lang')=='tw') ? 'cn' : 'tw';
+            $refArticle = new Article;
+            $refArticle->title = Input::get('title');
+            $refArticle->description = Input::get('description');
+            $refArticle->category = Input::get('category');
+            $refArticle->status = 0;
+            $refArticle->lang = $refLang;
+            $article->meta_name = Input::get('meta_name');
+            $article->meta_content = Input::get('meta_content');
+            $refArticle->save();
 
+            $refArticle->langRef = $article->id;
+            $article->langRef = $refArticle->id;
+            $refArticle->save();
             $article->save();
 
-            return Redirect::to('admin/articles?category=' . Input::get('category'));
+            return Redirect::to('admin/articles?category=' . Input::get('category') . '&lang=' . Input::get('lang'));
         }
         catch(Exception $e) {
             return Redirect::back()->withInput()->withErrors('新增失敗');
@@ -103,13 +141,14 @@ class ArticlesController extends \BaseController
             $article->category = Input::get('category');
             $article->open_at = Input::get('open_at');
             $article->status = Input::get('status');
+            $article->meta_name = Input::get('meta_name');
+            $article->meta_content = Input::get('meta_content');
 
             $article->save();
 
-            return Redirect::to('admin/articles?category=' . Input::get('category'));
+            return Redirect::to('admin/articles?category=' . Input::get('category') . '&lang=' . Input::get('lang'));
         }
         catch(Exception $e) {
-
             return Redirect::back()->withInput()->withErrors('修改失敗');
         }
     }
@@ -123,7 +162,10 @@ class ArticlesController extends \BaseController
     public function destroy($id) {
 
         //
+        $model = Article::find($id);
+        $refArticle = $model->langRef;
         Article::destroy($id);
+        Article::destroy($refArticle);
     }
 
     /**
@@ -131,13 +173,17 @@ class ArticlesController extends \BaseController
      *
      */
     public static function getNav($category) {
-        $key = 'nav_article_' . $category;
-        $data = Cache::get($key);
+        // $key = 'nav_article_' . $category;
+        // $data = Cache::get($key);
 
-        if (!$data) {
-            $data = Article::ofCategory($category)->open()->get();
-            Cache::put($key, $data, 2);
-        }
+        // if (!$data) {
+        //     $data = Article::ofCategory($category)->open()->get();
+        //     Cache::put($key, $data, 2);
+        // }
+        $data = Article::where('category', $category)
+                       ->where('lang', App::getLocale())
+                       ->where('status', '1')
+                       ->get();
 
         return $data;
     }
@@ -148,11 +194,20 @@ class ArticlesController extends \BaseController
      */
     public function article($id) {
         try {
-            $article = Article::open()->where('id', '=', $id)->first();
+            $article = Article::open()
+                              ->where('id', '=', $id)
+                              ->where('status', '1')
+                              ->first();
+                              
+            if(App::getLocale()!=$article->lang){
+                $refId = $article->langRef;
+                $article = Article::find($refId);
+            }
+
             if ($article) {
 
                 //瀏覽數
-                if (helper::views_cookie('article', $id)) {
+                if (ViewsAdder::views_cookie($article->category, $id)) {
                     $article->views = $article->views + 1;
                     $article->save();
                 }
@@ -202,7 +257,12 @@ class ArticlesController extends \BaseController
     public function news() {
         try {
             $model = new Article;
-            $model = $model->ofCategory('3')->open()->orderBy('open_at', 'DESC');
+            $model = $model->ofCategory('3')
+                           ->where('lang', App::getLOcale())
+                           ->where('status', '1')
+                           ->open()
+                           ->orderBy('open_at', 'DESC');
+
             return View::make('aesthetics.news.index')->with('articles', $model->paginate(5));
         }
         catch(Exception $e) {

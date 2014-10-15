@@ -8,7 +8,32 @@ class TechnologiesController extends \BaseController
      * @return Response
      */
     public function index() {
-        return View::make('admin.technologies.index')->with('technologies', Technology::all()->sortBy('sort'));
+        $techsLang = array(
+            'tw' => array(),
+            'cn' => array()
+        );
+
+        $techTWCmd = Technology::where('lang', 'tw')
+                               ->orderBy('sort')
+                               ->get();
+        $techCNCmd = Technology::where('lang', 'cn')
+                               ->orderBy('sort')
+                               ->get();
+        if($techTWCmd && $techCNCmd)
+            $techsLang = array(
+                'tw' => array(
+                    'data' => $techTWCmd,
+                    'title' => '繁體列表'
+                ),
+                'cn' => array(
+                    'data' => $techCNCmd,
+                    'title' => '簡體列表'
+                )
+            );
+
+        return View::make('admin.technologies.index', array(
+            'techsLang' => $techsLang
+        ));
     }
 
     // Index Technologies Showing
@@ -48,15 +73,43 @@ class TechnologiesController extends \BaseController
      */
     public function store() {
         try {
-            $tech = new Technology;
-            $tech->title = Input::get('title');
-            $tech->image = Input::get('image_path');
-            $tech->link = Input::get('link');
-            $tech->target = Input::get('target');
-            $tech->sort = Technology::max('sort') + 1;
-            $tech->status = Input::get('status');
+            $image = Input::get('image');
 
-            $tech->save();
+            //create tw
+            $techTW = new Technology;
+            $techTW->title = Input::get('title');
+            $techTW->image = Input::get('image_path');
+            $techTW->link = Input::get('link');
+            $techTW->target = Input::get('target');
+            $techTW->sort = Technology::max('sort') + 1;
+            $techTW->status = Input::get('status');
+            $techTW->image = $image[0];
+            $techTW->lang = 'tw';
+
+            $techTW->save();
+
+            $insertTWId = $techTW->id;
+
+            //create cn
+            $techCN = new Technology;
+            $techCN->title = Input::get('title');
+            $techCN->image = Input::get('image_path');
+            $techCN->link = Input::get('link');
+            $techCN->target = Input::get('target');
+            $techCN->sort = Technology::max('sort') + 1;
+            $techCN->status = Input::get('status');
+            $techCN->image = $image[0];
+            $techCN->lang = 'cn';
+            $techCN->ref = $insertTWId;
+
+            $techCN->save();
+
+            $insertCNId = $techCN->id;
+
+            //set tw ref
+            $techCmd = Technology::find($insertTWId);
+            $techCmd->ref = $insertCNId;
+            $techCmd->save();
 
             return Redirect::route('admin.technologies.index');
         }
@@ -85,8 +138,18 @@ class TechnologiesController extends \BaseController
      * @param  int  $id
      * @return Response
      */
-    public function edit($id) {
-        return View::make('admin.technologies.edit')->with('technology', Technology::find($id));
+    public function edit($id = null) {
+        $tech = Technology::find($id);
+        $techImage = array();
+        $techImage[] = array(
+            'id' => $tech->id,
+            'image' => $tech->image,
+            'text' => ""
+        );
+        return View::make('admin.technologies.edit', array(
+            'technology' => $tech,
+            'techImage' => $techImage
+        ));
     }
 
     /**
@@ -97,21 +160,22 @@ class TechnologiesController extends \BaseController
      */
     public function update($id) {
         try {
+            $image = Input::get('image');
+
             $tech = Technology::find($id);
             $tech->title = Input::get('title');
             $tech->link = Input::get('link');
             $tech->target = Input::get('target');
             $tech->status = Input::get('status');
-
-            if (Input::get('image_path') != NULL) $tech->image = Input::get('image_path');
-
+            $tech->image = $image[0];
+            
             $tech->save();
 
             return Redirect::route('admin.technologies.index');
         }
         catch(Exception $e) {
-
-            return Redirect::back()->withInput()->withErrors('修改失敗');
+            echo $e->getMessage();
+            exit;
         }
     }
 
@@ -122,7 +186,14 @@ class TechnologiesController extends \BaseController
      * @return Response
      */
     public function destroy($id) {
-        Technology::destroy($id);
+        try {
+            $techCmd = Technology::find($id);
+            $techCmd->delete();
+            Technology::destroy($techCmd->ref);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            exit;
+        }
     }
 
     public function sort() {

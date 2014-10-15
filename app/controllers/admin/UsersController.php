@@ -16,7 +16,7 @@ class UsersController extends \BaseController
     public function index() {
         $where = Input::get('where', 'rebeauty');
         $view = (($where=='rebeauty')) ? 'admin.users.view_index' : 'spa_admin.users.index';
-        return View::make('admin.users.view_index', array('users'=>Sentry::findAllUsers(), 'where'));
+        return View::make($view, array('users'=>Sentry::findAllUsers(), 'where'));
     }
 
     public function show($id) {
@@ -29,7 +29,6 @@ class UsersController extends \BaseController
 
     public function store() {
         try {
-
             // Create the user
             $user = Sentry::createUser(array('email' => Input::get('email'), 'password' => Input::get('password'), 'last_name' => Input::get('last_name'), 'activated' => true,));
 
@@ -59,19 +58,23 @@ class UsersController extends \BaseController
     }
 
     public function edit($id) {
-        if ((Session::get('where'))=='rebeauty') return View::make('admin.users.edit')->with('user', Sentry::findUserById($id));
-        else return View::make('spa_admin.users.edit')->with('user', Sentry::findUserById($id));
+        $user = Sentry::findUserById($id);
+
+        return View::make('admin.users.edit')->with('user', Sentry::findUserById($id));
     }
 
     public function update($id) {
         try {
-
+            $password = Input::get('password');
             // Find the user using the user id
             $user = Sentry::findUserById($id);
-
+            
             $user->last_name = Input::get('last_name');
 
             $user->activated = Input::get('activated');
+            
+            if(!empty($password))
+                 $user->password = Input::get('password');
 
             // Update the user
             if ($user->save()) {

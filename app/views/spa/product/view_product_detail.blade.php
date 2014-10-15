@@ -28,5 +28,6 @@
 @stop
 
 @section('head')
-<meta name="{{$product['meta_name']}}" content="{{$product['meta_content']}}">
+<meta name="keywords" content="{{$product['meta_name']}}">
+<meta name="description" content="{{$product['meta_content']}}">
 @stop

@@ -1,6 +1,7 @@
 <?php
     $cases = \Wintness::where('status', '=', '1')
                       ->where('isInSiderbar', '=', '1')
+                      ->where('lang', App::getLocale())
                       ->orderBy('sort', 'desc')
                       ->orderBy('updated_at', 'desc')
                       ->take(5)

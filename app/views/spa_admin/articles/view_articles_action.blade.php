@@ -47,7 +47,7 @@
 		</div>
 
 		<div class="form-group">
-			<label for="open_at">上架日期</label>    
+			<label for="open_at">上架日期</label>
 			<div>
 				<input class="datepicker" data-date-format="yyyy/mm/dd" id="open_at" name="open_at" size="12" value="{{array_get($specArticle, 'open_at', date("Y-m-d"))}}">
 			</div>
@@ -167,7 +167,7 @@ $(function() {
 			}
             $('form').submit();
         });
-        
+
     function chooseCover(e){
     	category = e.value;
     	if(e.value == 'about')
@@ -176,5 +176,4 @@ $(function() {
     		$('#coverDIV').show(true);
     }
 </script>
-
 @stop

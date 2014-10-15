@@ -1,8 +1,8 @@
 <?php
-    function createURL($url, $qs, $route, &$params, $page){
+    function createURL($url, $qs, $route, &$params, $page, $category, $lang){
+
         if (empty($route)){
-            $qs .= (!empty($qs)) ? '&' : '';
-            return $url .= '?' . $qs . 'page=' . $page;
+            return $url .= '?page=' . $page . '&category=' . $category . '&lang=' . $lang;
         }
 
         $params['page'] = $page;
@@ -29,7 +29,9 @@
     $route = Arr::get($wp, 'route', null);
     $params = Arr::get($wp, 'params', array());
     $qs = Arr::get($wp, 'qs', '');
-    $size = Arr::get($wp, 'size', 5);
+    $category = Arr::get($wp, 'category', 1);
+    $size = 5;
+    $lang = Arr::get($wp, 'lang', 'all');
 
 	$totalPage = ceil($total/$perPage);
     $mod = $currPage % $size;
@@ -52,24 +54,23 @@
     }
 
     $qs .= (!empty($qs)) ? '&' : '';
-    //$url .= '?' . $qs . 'page=';
+    // $url .= '?' . 'page=';
 
-    $pageList = '<div class="pagination"><ul>';
+    $pageList = '<ul class="pagination">';
 
-    if (($currPage-1)>0){
-    	$pageList .= sprintf('<li><a href="%s" title="上一頁">«</a></li>', createURL($url, $qs, $route, $params, ($currPage-1)));
+   if (($currPage-1)>0)
+        $pageList .= sprintf('<li><a href="%s" title="上一頁">«</a></li>', createURL($url, $qs, $route, $params, ($currPage-1), $category, $lang));
 
-    }
-	for($i=$st; $i<=$end; $i++){
+    for($i=$st; $i<=$end; $i++){
         $num = str_pad($i, 2, "0", STR_PAD_LEFT);
-		if ($i!=$currPage)
-            $pageList .= sprintf('<li><a href="%s">%s</a></li>', createURL($url, $qs, $route, $params, $i), $num);
+        if ($i!=$currPage)
+            $pageList .= sprintf('<li><a href="%s">%s</a></li>', createURL($url, $qs, $route, $params, $i, $category, $lang), $num);
         else
-            $pageList .= sprintf('<li class="active"><a href="%s">%s</a></li>', createURL($url, $qs, $route, $params, $i), $num);
-	}
+            $pageList .= sprintf('<li class="active"><a href="%s">%s</a></li>', createURL($url, $qs, $route, $params, $i, $category, $lang), $num);
+    }
 
-	if (($currPage+1)<=$totalPage)
-		$pageList .= sprintf('<li><a href="%s" title="下一頁">»</a></li>', createURL($url, $qs, $route, $params, ($currPage+1)));
+    if (($currPage+1)<=$totalPage)
+        $pageList .= sprintf('<li><a href="%s" title="下一頁">»</a></li>', createURL($url, $qs, $route, $params, ($currPage+1), $category, $lang));
 
-	echo $pageList .= '</ul></div>';
+	echo $pageList .= '</ul>';
 ?>

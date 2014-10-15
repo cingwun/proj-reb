@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		@yield('head')
 		<!-- <meta name="viewport" content="width=device-width, initial-scale=0.7, maximum-scale=3.0, user-scalable=1" /> -->
 		<title>煥儷美形診所</title>
 
@@ -25,8 +26,8 @@
 				<div class="innerWrap">
 					<h1><a href="/">煥儷美形診所</a></h1>
 					<div class="languageSwitch">
-						<a href="#">繁體中文</a>
-						<a class="last" href="#">简体中文</a>
+						<a href="{{Host::getLangURL('tw')}}">繁體中文</a>
+						<a class="last" href="{{Host::getLangURL('cn')}}">简体中文</a>
 						<form class="searchBox" action="{{URL::to('/')}}/search" method="get"><input type="text" name="q" placeholder="請輸入關鍵字" /><button type="submit"><span>搜尋</span></button></form>
 					</div>
 					<div class="memberFunc funcBar">

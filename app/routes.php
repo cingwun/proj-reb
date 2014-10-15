@@ -56,7 +56,7 @@ Route::group(array('prefix'=>$locale, 'domain'=>$www), function(){
     Route::get('articles/{id}',array('uses'=>'ArticlesController@article', 'as'=>'frontend.article'))->where('id', '[0-9]+'); //單文
 
     //最新消息列表
-    Route::get('news',array('uses'=>'ArticlesController@news')); //列表
+    Route::get('news',array('uses'=>'ArticlesController@news', 'as'=>'frontend.news')); //列表
 
     // wintness
     Route::get('wintness', array('uses'=>'aesthetics\\WintnessController@getIndex', 'as'=>'frontend.wintness.index'));
@@ -151,6 +151,9 @@ Route::group(array('prefix'=>'admin', 'before'=>'auth.admin'), function()
         Route::get('{type}/category/list/{page?}', array('as'=>'admin.service_faq.category.list', 'uses'=>'ServiceFaqController@getCategoryList'))
              ->where(array('type'=>'(service|faq)', 'page'=>'([0-9]+)'));
 
+        Route::get('{type}/category/action/{id?}', array('as'=>'admin.service_faq.category.action', 'uses'=>'ServiceFaqController@getCategoryAction'))
+             ->where(array('type'=>'(service|faq)', 'id'=>'([0-9]+)'));
+
         Route::post('{type}/category/update', array('as'=>'admin.service_faq.category.update', 'uses'=>'ServiceFaqController@postUpdateCategory'))
              ->where(array('type'=>'(service|faq)'));
 
@@ -195,7 +198,7 @@ Route::group(array('prefix'=>'admin', 'before'=>'auth.admin'), function()
         Route::post('wintness/gallery/write', array('as'=>'admin.wintness.gallery.write', 'uses'=>'WintnessController@postGalleryAction'));
 
         //   article
-        Route::get('wintness/article/list/{page?}', array('as'=>'admin.wintness.article.list', 'uses'=>'WintnessController@getArticleList'))
+        Route::get('wintness/article/list/{page?}/{lang?}', array('as'=>'admin.wintness.article.list', 'uses'=>'WintnessController@getArticleList'))
              ->where(array('page'=>'([0-9]+)'));
         Route::get('wintness/article/action/{id?}', array('as'=>'admin.wintness.article.action', 'uses'=>'WintnessController@getArticleAction'))
              ->where(array('id'=>'([0-9]+)'));

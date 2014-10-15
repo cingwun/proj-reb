@@ -1,8 +1,11 @@
 @extends('admin._layouts.default')
 
+@section('title')
+美麗見證&nbsp;-&nbsp;圖片集
+@stop
+
 @section('main')
-    <h2>美麗見證&nbsp;-&nbsp;圖片集</h2>
-    <div class="pull-right" style="margin: 0px 0px 10px;"><a href="<?=URL::route('admin.wintness.gallery.action')?>" class="btn">新增</a></div>
+    <div class="pull-right" style="margin: 0px 0px 10px;"><a href="<?=URL::route('admin.wintness.gallery.action')?>" class="btn btn-success">新增</a></div>
     <table class="table table-bordered" id="sortable" data-sortAction="<?php echo URL::route('admin.wintness.sort.update', array('type'=>'gallery'))?>">
         <thead>
             <tr>
@@ -34,7 +37,7 @@
             ?>
         </tbody>
     </table>
-    @include('admin._partials.widget_pager', array('wp'=>$wp))
+    @include('spa_admin._partials.widget_pager', array('wp'=>$wp))
 @stop
 
 

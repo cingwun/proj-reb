@@ -2,7 +2,7 @@
 
 @section('bodyId')
 {{ 'spa_newsPost_detail'}}
-<?php $titleType = 'news'; ?>
+<?php $titleType = 'news';?>
 @stop
 
 @section('content')
@@ -22,7 +22,7 @@
 	<!-- pagedetails -->
 	<div id="contentInner">
 		<!-- @image, for the Post Image -->
-		<!-- <img src="{{$cover[0]->image}}?w=700&h=430"> -->
+		<img src="{{$cover[0]->image}}?w=700&h=430">
 		<div class="contentArticle">
 			<!-- @text, for Post Content -->
 			<p>
@@ -42,7 +42,7 @@
 			<span class="arrow"></span>
 			<a href="{{URL::route('spa.news')}}">回列表</a>
 			@else
-			上一篇	
+			上一篇
 			<span class="arrow"></span>
 			<a href="{{URL::route('spa.news.detail', array($prevArticle->id))}}">{{$prevArticle->title}}</a>
 			@endif
@@ -61,5 +61,6 @@
 @stop
 
 @section('head')
-<meta name="{{$article->meta_name}}" content="{{$article->meta_content}}">
+<meta name="keyword" content="{{$article->meta_name}}">
+<meta name="description" content="{{$article->meta_content}}">
 @stop

@@ -16,9 +16,9 @@ class ShareController extends \BaseController {
         $offset = ($page-1) * $limit;
 
         $cmd = new \SpaShares;
-        $rowsNum = $cmd->count();
         if($lang!='all')
             $cmd = $cmd->where('language', $lang);
+        $rowsNum = $cmd->count();
         $articles = $cmd->orderBy('sort', 'desc')
                         ->orderBy('updated_at', 'desc')
                         ->skip($offset)
@@ -252,31 +252,21 @@ class ShareController extends \BaseController {
                 $refmodel->save();
             }
 
-            \SpaSharesLabels::where('share_id', '=', $model->id)
-            ->delete();
+            // \SpaSharesLabels::where('share_id', '=', $model->id)
+            // ->delete();
 
             $types = array('service', 'product');
             foreach($types as $type){
                 $fieldName = 'label_' . $type;
                 $labels  = \Input::get($fieldName, array());
-                $model->$fieldName = json_encode($labels);
-                // foreach ($labels as $label){
-                //     \SpaSharesLabels::create(array('share_id'=>(int) $model->id, 'label_id'=>((int) $label)));
-                //     $insertShare[] = $label;
-                // }
+                $refmodel = \SpaService::find($labels);
+                foreach($refmodel as $ref){
+                    if($ref->lang!=$model->language)
+                        continue;
+                    $model->$fieldName = json_encode($labels);
+                }
             }
             $model->save();
-
-            /*WintnessLabels::where('wid', '=', $model->id)
-                          ->delete();
-
-            $types = array('shares');
-            foreach($types as $type){
-                $fieldName = 'label_' . $type;
-                $labels  = \Input::get($fieldName, array());
-                foreach ($labels as $label)
-                    WintnessLabels::create(array('wid'=>(int) $model->id, 'label_id'=>((int) $label)));
-                }*/
 
             \SpaSharesTabs::where('type', '=', 'shares')
             ->where('item_id', '=', $model->id)

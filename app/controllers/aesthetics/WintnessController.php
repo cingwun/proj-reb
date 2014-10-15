@@ -19,11 +19,13 @@ class WintnessController extends \BaseController {
 
         // read service
         $servicefaq = \ServiceFaq::where('status', '=', 'Y')
-                        ->orderBy('type', 'asc')
-                        ->orderBy('_parent', 'desc')
-                        ->orderBy('sort', 'desc')
-                        ->orderBy('updated_at', 'desc')
-                        ->get(array('id', 'title', '_parent', 'type'));
+                                 ->where('lang', $this->getLocale())
+                                 ->orderBy('type', 'asc')
+                                 ->orderBy('_parent', 'desc')
+                                 ->orderBy('sort', 'desc')
+                                 ->orderBy('updated_at', 'desc')
+                                 ->get(array('id', 'title', '_parent', 'type'));
+        
         $servicesFaqs = array('service'=>array(), 'faq'=>array());
         foreach($servicefaq as $item){
             $key = $item->id;
@@ -55,6 +57,7 @@ class WintnessController extends \BaseController {
                 throw new \Exception("Error request [10]");
 
             $model = \Wintness::where('status', '=', '1')
+                              ->where('lang', $this->getLocale())
                               ->find($id);
             if (empty($model))
                 throw new \Exception('Error request [11]');
@@ -160,6 +163,7 @@ class WintnessController extends \BaseController {
             $offset = ($page-1)*$limit;
             $cmd = \DB::table('wintness')->select('wintness.id', 'wintness.title', 'wintness.cover', 'wintness.background_color', 'wintness.description')
                                          ->where('wintness.status', '=', '1')
+                                         ->where('lang', $this->getLocale())
                                          ->orderBy('wintness.sort', 'desc')
                                          ->orderBy('wintness.updated_at', 'desc')
                                          ->skip($offset)

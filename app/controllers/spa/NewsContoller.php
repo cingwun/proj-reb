@@ -36,8 +36,14 @@ class NewsContoller extends \BaseController {
 
 			$article = \SpaArticles::where('status', '1')
 								   ->find($id);
+
+			if($this->getLocale()!=$article->lang){
+				$refId = $article->ref_id;
+				$article = \SpaArticles::find($refId);
+			}
+
 			if(empty($article))
-				throw new \Exception('Error request [11]');
+				return \Redirect::route('spa.news');
 
 			if(\ViewsAdder::views_cookie('news', $id)) {
 				$article->views = $article->views + 1;

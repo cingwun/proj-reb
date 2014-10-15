@@ -29,7 +29,8 @@ class BeautyNewsController extends BaseController{
 
             return View::make('admin.beautynews.view_action', array(
                 'article' => $article,
-                'imgUploaderList' => &$imgUploaderList
+                'imgUploaderList' => &$imgUploaderList,
+                'lang' => Input::get('lang','tw')
             ));
 
         }catch(Exception $e){
@@ -42,13 +43,14 @@ class BeautyNewsController extends BaseController{
      * @params (int) $page
      */
     public function getList($page=1){
-
+        $lang = Input::get('lang','tw');
         $limit = 10;
         $offset = ($page-1) * $limit;
 
         $cmd = new BeautyNews;
         $rowsNum = $cmd->count();
-        $articles = $cmd->orderBy('sort', 'desc')
+        $articles = $cmd->where('lang', $lang)
+                        ->orderBy('sort', 'desc')
                         ->orderBy('updated_at', 'desc')
                         ->skip($offset)
                         ->take($limit)
@@ -65,7 +67,8 @@ class BeautyNewsController extends BaseController{
 
         return View::make('admin.beautynews.view_list', array(
             'articles' => &$articles,
-            'pagerParam' => &$widgetParam
+            'pagerParam' => &$widgetParam,
+            'lang' => $lang
         ));
     }
 
@@ -95,6 +98,8 @@ class BeautyNewsController extends BaseController{
                 foreach($imgs as $img)
                     $images[] = $img->image;
             }
+            //delete ref
+            BeautyNews::find($m->ref)->delete();
 
             if (!$m->delete())
                 throw new Exception("Error request [110]");
@@ -223,6 +228,7 @@ class BeautyNewsController extends BaseController{
             }
 
             $status = (int) Arr::get($_POST, 'status', 0);
+            $lang = Input::get('lang', 'tw');
 
             $model->title = Input::get('title');
             $model->style = Arr::get($_POST, 'style', 1);
@@ -233,10 +239,37 @@ class BeautyNewsController extends BaseController{
             $model->description = Arr::get($_POST, 'description', '');
             $model->status = $status % 2;
             $model->sort = (int) Arr::get($_POST, 'sort', 1);
+            $model->lang = $lang;
             $model->created_at = time();
             $model->updated_at = time();
             $model->save();
+            //system auto create other language
+            if(empty($id)){
+                $langContrast = array(
+                    'tw'=>'cn',
+                    'cn'=>'tw',
+                );
+                $refModel = new BeautyNews;
 
+                $refModel->title = Input::get('title');
+                $refModel->style = Arr::get($_POST, 'style', 1);
+                $refModel->cover = "";
+                $refModel->fb = "";
+                $refModel->link = Arr::get($_POST, 'link', '#');
+                $refModel->target = Arr::get($_POST, 'target', '_self');
+                $refModel->description = Arr::get($_POST, 'description', '');
+                $refModel->status = 0;
+                $refModel->sort = (int) Arr::get($_POST, 'sort', 1);
+                $refModel->lang = $langContrast[$lang];
+                $refModel->ref = $model->id;
+                $refModel->created_at = time();
+                $refModel->updated_at = time();
+                $refModel->save();
+
+                $cmd = BeautyNews::find($model->id);
+                $cmd->ref = $refModel->id;
+                $cmd->save();
+            }
             return Redirect::route('admin.beautynews.list', array('page'=>1, 'message'=>'success'));
         }catch (Exception $e) {
             return Redirect::back()->withInput()->withErrors($e->getMessage());

@@ -32,7 +32,7 @@
 		<label>所屬分類</label>
 		<select class="form-control" name="cat">
 			@foreach($categorys as $category)
-			<option value="{{$category['id']}}" @if($action == 'edit' && $category['id'] == $product->_parent)selected@endif>{{\Text::preEllipsize(strip_tags($category['title']), 75)}}</option>
+			<option value="{{$category['id']}}" @if($action == 'edit' && $category['id'] == $product->_parent)selected@endif @if($articleCat != ''  && $category['id'] == $articleCat)selected@endif>{{\Text::preEllipsize(strip_tags($category['title']), 75)}}</option>
 			@endforeach
 		</select>
 	</div>
@@ -54,12 +54,12 @@
 		</label>
 	</div>
 	<div class="form-group">
-		<label>Meta name</label>
+		<label>Keywords</label>
 		<input class="form-control" type="text" name="meta_name" value="@if($action == 'edit'){{$product->meta_name}}@endif"/>
 	</div>
 	<div class="form-group">
-		<label>Meta content</label>
-		<input class="form-control" type="text" name="meta_content" value="@if($action == 'edit'){{$product->meta_content}}@endif"/>
+		<label>Description</label>
+		<textarea class="form-control" rows="6" name="meta_content">@if($action == 'edit'){{$product->meta_content}}@endif</textarea>
 	</div>
 	<div class="form-group">
 		<input type="hidden" name="action" value="{{$action}}"/>

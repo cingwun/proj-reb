@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace spa;
 
 class ShareController extends \BaseController {
@@ -93,7 +93,4 @@ class ShareController extends \BaseController {
 			return Redirect::route('spa.index');
 		}
 	}
-
-
-
 }

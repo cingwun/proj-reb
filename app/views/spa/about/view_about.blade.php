@@ -20,6 +20,9 @@
 	@include('spa._partials.widget_pageTitle')
 	<!-- pagedetails -->
 	<div id="contentInner">
+		<!-- @image, for the Post Image -->
+		<!-- <img src="http://placehold.it/680x430"> -->
+		<img src="@if($cover){{$cover[0]->image}}?w=680@endif">
 		<div class="contentArticle">
 			<!-- @text, for About Content -->
 			<p>{{ array_get($article, 'content', '對不起，目前沒有內容')}}</p>
@@ -30,5 +33,6 @@
 @stop
 
 @section('head')
-<meta name="{{array_get($article, 'meta_name')}}" content="{{array_get($article, 'meta_content')}}">
+<meta name="keyword" content="{{array_get($article, 'meta_name')}}">
+<meta name="description" content="{{array_get($article, 'meta_content')}}">
 @stop

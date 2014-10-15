@@ -18,9 +18,15 @@ class AboutController extends \BaseController {
                 }
             }
             else
-                $article = \SpaArticles::find($id);
-                if($article)
-                  $cover = json_decode($article->cover);
+                $article = \SpaArticles::where('status', '1')
+                                       ->find($id);
+            if($this->getLocale()!=$article->lang){
+              $refId = $article->ref_id;
+              $article = \SpaArticles::find($refId);
+            }
+
+            if($article)
+              $cover = json_decode($article->cover);
 
             if($article&&\ViewsAdder::views_cookie('about', $id)) {
               $article->views = $article->views + 1;

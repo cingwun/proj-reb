@@ -1,7 +1,7 @@
 @extends('spa_admin._layouts.default')
 
 @section('title')
-會員&nbsp;管理&nbsp;
+會員管理
 @stop
 
 @section('main')

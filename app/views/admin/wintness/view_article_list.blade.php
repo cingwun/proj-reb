@@ -1,14 +1,25 @@
 @extends('admin._layouts.default')
 
+@section('title')
+美麗見證 - 文章列表
+@stop
+
 @section('main')
-<h2>美麗見證 - 文章列表</h2>
-<div class="row" style="margin-bottom: 5px;">
+<div style="margin-bottom: 5px;">
     <div class="span12">
-        <a href="javascript:window.history.back()" class="btn btn-inverse pull-right" style="float: left;">回上一頁</a>
-        <a href="<?php echo URL::route('admin.wintness.article.action')?>" class="btn" style="float: right;">新增</a>
+        <a href="javascript:window.history.back()" class="btn btn-default" style="float: left;">回上一頁</a>
+        <div class="col-md-2">
+            <select class="form-control" name="forma" onchange="location = this.options[this.selectedIndex].value;">
+                <option value="{{URL::route('admin.wintness.article.list', array('1', 'tw'))}}" <?php echo($lang=='tw')?'selected':''?> >顯示繁體</a></option>
+                <option value="{{URL::route('admin.wintness.article.list', array('1', 'cn'))}}" <?php echo($lang=='cn')?'selected':''?> >顯示簡體</a></option>
+                <option value="{{URL::route('admin.wintness.article.list', array('1', 'all'))}}" <?php echo($lang=='all')?'selected':''?> >顯示全部</a></option>
+            </select>
+        </div>
+        <a href="<?php echo URL::route('admin.wintness.article.action')?>" class="btn btn-success pull-right">新增</a>
     </div>
 </div>
-<div class="row">
+<br>
+<div style="margin-top: 125px">
     <div class="span12">
         <table class="table table-bordered" id="sortable" data-sortAction="<?php echo URL::route('admin.wintness.sort.update', array('type'=>'article'))?>" data-deleteAction="<?php echo URL::route('admin.wintness.article.delete')?>">
             <thead>
@@ -19,6 +30,7 @@
                   <th>狀態/顯示至siderbar</th>
                   <th>更新時間</th>
                   <th>排序</th>
+                  <th>語系</th>
                   <th>功能</th>
                 </tr>
             </thead>
@@ -40,6 +52,7 @@
                     <td><?php echo ($article->status=='1') ? '<span style="color: #00AA00">顯示</span>' : '隱藏'?> / <?php echo ($article->isInSiderbar=='1') ? '<span style="color: #00AA00">顯示</span>' : '隱藏'?> </td>
                     <td><?php echo $article->updated_at?></td>
                     <td><?php echo $article->sort?></td>
+                    <td>{{ ($article->lang=='tw')? '繁體':'簡體' }}</td>
                     <td>
                         <a href="<?php echo URL::route('admin.wintness.article.action', array('id'=>$article->id))?>" class="btn btn-primary btn-modify">修改</a>
                         <a href="#" class="btn btn-danger btn-delete">刪除</a>
@@ -49,7 +62,7 @@
                       endif;?>
             </tbody>
         </table>
-        @include('admin._partials.widget_pager', array('wp'=>$pagerParam))
+        @include('spa_admin._partials.widget_pager', array('wp'=>$pagerParam))
     </div>
 </div>
 @stop

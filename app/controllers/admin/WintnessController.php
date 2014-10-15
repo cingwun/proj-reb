@@ -54,13 +54,15 @@ class WintnessController extends BaseController{
                 }
             }
 
+            $listCmd = ServiceFaq::where("status", "=", 'Y')
+                                 ->where('_parent', '<>', 'N');
+            if($id!=null)
+                $listCmd = $listCmd->where('lang', Arr::get($article, 'lang'));
             $labelItmes = array('service'=>array(), 'faq'=>array());
-            $list = ServiceFaq::where("status", "=", 'Y')
-                              ->where('_parent', '<>', 'N')
-                              ->orderBy('_parent', 'desc')
-                              ->orderBy('sort', 'desc')
-                              ->orderBy('updated_at', 'desc')
-                              ->get(array('id', 'title', 'type'));
+            $list = $listCmd->orderBy('_parent', 'desc')
+                            ->orderBy('sort', 'desc')
+                            ->orderBy('updated_at', 'desc')
+                            ->get(array('id', 'title', 'type'));
             foreach($list as $item)
                 $labelItmes[$item->type][$item->id] = $item->title;
 
@@ -84,12 +86,14 @@ class WintnessController extends BaseController{
      * list all article by specific category or non-category
      * @params (int) $page
      */
-    public function getArticleList($page=1){
+    public function getArticleList($page=1, $lang='all'){
 
         $limit = 10;
         $offset = ($page-1) * $limit;
 
         $cmd = new Wintness;
+        if($lang!='all')
+            $cmd = $cmd->where('lang', $lang);
         $rowsNum = $cmd->count();
         $articles = $cmd->orderBy('sort', 'desc')
                         ->orderBy('updated_at', 'desc')
@@ -108,7 +112,8 @@ class WintnessController extends BaseController{
 
         return View::make('admin.wintness.view_article_list', array(
             'articles' => &$articles,
-            'pagerParam' => &$widgetParam
+            'pagerParam' => &$widgetParam,
+            'lang' => $lang
         ));
     }
 
@@ -173,22 +178,29 @@ class WintnessController extends BaseController{
                 throw new Exception("Error request [10]");
 
             $m = Wintness::find($id);
+            $refM = Wintness::find($m->ref);
 
-            if (empty($m))
+            if (empty($m)||empty($refM))
                 throw new Exception('Error request [11]');
 
             $fields = array('cover', 'img_before', 'img_after', 'gallery');
             $images = array();
             foreach($fields as $field){
                 $imgs = json_decode($m->$field);
-                if (empty($imgs))
-                    continue;
-
-                foreach($imgs as $img)
-                    $images[] = $img->image;
+                $refImgs = json_decode($refM->$field);
+                if (!empty($imgs)){
+                    foreach($imgs as $img)
+                        $images[] = $img->image;
+                }
+                if(!empty($refImgs)){
+                    foreach($refImgs as $img)
+                        $images[] = $img->image;
+                }
             }
 
             if (!$m->delete())
+                throw new Exception("Error request [110]");
+            if (!$refM->delete())
                 throw new Exception("Error request [110]");
 
             foreach($images as $img)
@@ -336,8 +348,10 @@ class WintnessController extends BaseController{
                 throw new Exception("Error Processing Request [10]");
 
             $id = (int) Arr::get($_POST, 'id', null);
-            if (empty($id))
+            if (empty($id)) {
                 $model = new Wintness;
+                $refModel = new Wintness;
+            }
             else{
                 $model = Wintness::find($id);
                 if ($model==null)
@@ -395,6 +409,7 @@ class WintnessController extends BaseController{
             $status = (int) Arr::get($_POST, 'status', 0);
             $isInSiderbar = (int) Arr::get($_POST, 'isInSiderbar', 0);
 
+            $model->lang = Input::get('lang', 'tw');
             $model->title = Input::get('title');
             $model->background_color = Input::get('background_color', '#ccc');
             $model->cover = json_encode($imgUploaderList['cover']['items']);
@@ -404,10 +419,29 @@ class WintnessController extends BaseController{
             $model->gallery = json_encode($imgUploaderList['gallery']['items']);
             $model->status = $status % 2;
             $model->isInSiderbar = $isInSiderbar % 2;
+            $model->meta_name = Input::get('meta_name', '');
+            $model->meta_content = Input::get('meta_content', '');
             $model->created_at = time();
             $model->updated_at = time();
             $model->save();
 
+            if(empty($id)){
+                $refModel->lang = ($model->lang=='tw') ? 'cn' : 'tw';
+                $refModel->title = Input::get('title');
+                $refModel->background_color = Input::get('background_color', '#ccc');
+                $refModel->description = Input::get('description', '');
+                $refModel->status = 0;
+                $refModel->isInSiderbar = 0;
+                $refModel->meta_name = Input::get('meta_name', '');
+                $refModel->meta_content = Input::get('meta_content', '');
+                $refModel->created_at = time();
+                $refModel->updated_at = time();
+                $refModel->ref = $model->id;
+                $refModel->save();
+
+                $model->ref = $refModel->id;
+                $model->save();
+            }
 
             WintnessLabels::where('wid', '=', $model->id)
                           ->delete();
@@ -416,8 +450,11 @@ class WintnessController extends BaseController{
             foreach($types as $type){
                 $fieldName = 'label_' . $type;
                 $labels  = Input::get($fieldName, array());
-                foreach ($labels as $label)
-                    WintnessLabels::create(array('wid'=>(int) $model->id, 'label_id'=>((int) $label)));
+                foreach ($labels as $label){
+                    $target = ServiceFaq::find($label);
+                    if($target->lang==$model->lang)
+                        WintnessLabels::create(array('wid'=>(int) $model->id, 'label_id'=>((int) $label)));
+                }
             }
 
             Tabs::where('type', '=', 'wintness')
@@ -431,11 +468,14 @@ class WintnessController extends BaseController{
             foreach ($tabName as $key => $tab){
                 if (!isset($tabContents[$key]))
                     continue;
-                else
+                else{
                     Tabs::create(array('type'=>'wintness', 'item_id'=>$model->id, 'title'=>$tab, 'content'=>$tabContents[$key], 'sort'=>($order++)));
+                    if(empty($id))
+                        Tabs::create(array('type'=>'wintness', 'item_id'=>$refModel->id, 'title'=>$tab, 'content'=>$tabContents[$key], 'sort'=>($order+2)));
+                }
             }
 
-            return Redirect::route('admin.wintness.article.list', array('page'=>1, 'message'=>'success'));
+            return Redirect::route('admin.wintness.article.list', array('page'=>1, 'lang'=>$model->lang, 'message'=>'success'));
         }catch (Exception $e) {
             return Redirect::back()->withInput()->withErrors($e->getMessage());
         }

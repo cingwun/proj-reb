@@ -51,8 +51,9 @@ $spa = 'http://' . Host::get('spa');
                 @endforeach
             </ul>
         </li>
-        <li><a href="/wintness#/list">美麗見證</a></li>
-        <li><a href="/news">最新消息</a></li>
+        <!-- <li><a href="{{ URL::route('frontend.wintness.index')}}#/list">美麗見證</a></li> -->
+        <li><a href="{{ URL::route('frontend.wintness.index') }}#/list" >美麗見證</a></li>
+        <li><a href="{{ URL::route('frontend.news')}}">最新消息</a></li>
         <li>
             <a href="#">常見問題</a>
             <ul class="subNav lv1">
@@ -68,7 +69,7 @@ $spa = 'http://' . Host::get('spa');
                 @endforeach
             </ul>
         </li>
-        <li><a href="/beautynews">美麗新知</a></li>
+        <li><a href="{{ URL::route('frontend.beautynews.index')}}">美麗新知</a></li>
         <li>
             <a href="#">海外專區</a>
             <ul class="subNav lv1">
