@@ -18,6 +18,7 @@ class CreateSpaProductTable extends Migration {
 				$table->string('title');
 				$table->string('image');
 				$table->string('image_desc');
+				$table->text('content');
 				$table->string('capacity');
 				$table->integer('price');
 				$table->text('tag');
