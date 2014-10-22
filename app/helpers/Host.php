@@ -9,6 +9,7 @@ class Host {
      * @params (bool) $includePort, default: true
      */
     public static function get($target='rebeauty', $includePort=true){
+        
         try {
             $port = (int) $_SERVER['SERVER_PORT'];
             $domain = str_replace(':'.$port, '', $_SERVER['HTTP_HOST']);

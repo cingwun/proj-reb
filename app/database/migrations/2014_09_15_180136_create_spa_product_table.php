@@ -30,6 +30,7 @@ class CreateSpaProductTable extends Migration {
 				$table->integer('ref')->unsigned(); //service reference id
 				$table->text('meta_name');
 				$table->text('meta_content');
+				$table->text('meta_title');
 				$table->timestamps();
 			});
 		}

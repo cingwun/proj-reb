@@ -35,4 +35,6 @@
 @section('head')
 <meta name="keyword" content="{{array_get($article, 'meta_name')}}">
 <meta name="description" content="{{array_get($article, 'meta_content')}}">
+<meta name="title" content="{{array_get($article, 'meta_title')}}">
+
 @stop

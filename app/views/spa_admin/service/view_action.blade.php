@@ -54,6 +54,10 @@
 		<textarea class="form-control" rows="6" name="meta_content">@if($action == 'edit'){{$service->meta_content}}@endif</textarea>
 	</div>
 	<div class="form-group">
+		<label>Title</label>
+		<textarea class="form-control" rows="1" name="meta_title">@if($action == 'edit'){{$service->meta_tltle}}@endif</textarea>
+	</div>
+	<div class="form-group">
 		<input type="hidden" name="action" value="{{$action}}"/>
 		<input type="hidden" name="listLang" value="{{$listLang}}"/>
 		<a href='javascript:history.back()' type="button" class="btn btn-danger">取消</a>
