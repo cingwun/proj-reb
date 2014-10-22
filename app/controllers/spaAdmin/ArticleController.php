@@ -146,13 +146,14 @@ class ArticleController extends \BaseController {
 				$newArticle->sort = \SpaArticles::max('sort')+1;
 				$newArticle->meta_name = \Input::get('meta_name');
 				$newArticle->meta_content = \Input::get('meta_content');
+				$newArticle->meta_title = \Input::get('meta_title');
 
 				$newArticle->ref_id = $refArticle->id;
 				$newArticle->save();
 
 				$refArticle->ref_id = $newArticle->id;
 				$refArticle->save();
-				return \Redirect::route('spa.admin.articles.list', array('category'=>$newArticle->category));
+				return Redirect::route('spa.admin.articles.list', array('category'=>$newArticle->category));
 			}else{
 				$article = \SpaArticles::find($id);
 				$sort = 'doNot';
@@ -193,6 +194,7 @@ class ArticleController extends \BaseController {
 			$article->lang = \Input::get('lang');
 			$article->meta_name = \Input::get('meta_name');
 			$article->meta_content = \Input::get('meta_content');
+			$article->meta_title = \Input::get('meta_title');
 			if($sort=='do')
 				$article->sort = \SpaArticles::max('sort')+1;
 			$article->save();

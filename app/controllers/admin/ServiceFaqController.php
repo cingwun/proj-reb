@@ -465,6 +465,8 @@ class ServiceFaqController extends BaseController{
             $model->updated_at = time();
             $model->meta_keywords = Input::get('meta_keywords');
             $model->meta_desc = Input::get('meta_desc');
+            $model->meta_title = Input::get('meta_title');
+
             $model->save();
 
             # Handling Images
@@ -515,6 +517,8 @@ class ServiceFaqController extends BaseController{
                 $refModel->updated_at = time();
                 $refModel->meta_keywords = Input::get('meta_keywords');
                 $refModel->meta_desc = Input::get('meta_desc');
+                $refModel->meta_title = Input::get('meta_title');
+
                 $refModel->save();
 
                 //set ref

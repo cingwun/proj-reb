@@ -92,6 +92,10 @@
             <div>
                 <input type="text" class="form-control" id="meta_content" name="meta_content" size="12" value="{{array_get($article, 'meta_content', '')}}">
             </div>
+            <label for="meta">Meta title:</label>
+            <div>
+                <input type="text" class="form-control" id="meta_title" name="meta_title" size="12" value="{{array_get($article, 'meta_title', '')}}">
+            </div>
         </div>
 
         @include('spa_admin._partials.widget_labels', array('label'=>array('elementId'=>'label-service', 'formTitle'=>'美麗服務', 'fieldName'=>'label_service[]', 'selected'=>$labelSelected['serv'], 'items'=>$labelItems['service'])))

@@ -14,7 +14,7 @@
         
         <div class="form-group">
             <label for="lang">語系</label>
-            @if(empty($article))
+            @if(empty($article->id))
             <label class="radio-inline">
                 <input type="radio" name="lang" value="tw" id="optionsRadiosInline" checked> 繁體
             </label>
@@ -93,6 +93,10 @@
             <label for="meta">Meta description:</label>
             <div>
                 <input type="text" class="form-control" id="meta_content" name="meta_content" size="12" value="{{Arr::get($article, 'meta_content', '')}}">
+            </div>
+            <label for="meta">Meta title:</label>
+            <div>
+                <input type="text" class="form-control" id="meta_title" name="meta_title" size="12" value="{{Arr::get($article, 'meta_title', '')}}">
             </div>
         </div>
 

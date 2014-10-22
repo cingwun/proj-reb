@@ -75,6 +75,8 @@ class ArticlesController extends \BaseController
             $article->lang = Input::get('lang');
             $article->meta_name = Input::get('meta_name');
             $article->meta_content = Input::get('meta_content');
+            $article->meta_title = Input::get('meta_title');
+
             $article->save();
             //create a corresponding tw/cn article at same time.
             $refLang = (Input::get('lang')=='tw') ? 'cn' : 'tw';
@@ -86,6 +88,8 @@ class ArticlesController extends \BaseController
             $refArticle->lang = $refLang;
             $article->meta_name = Input::get('meta_name');
             $article->meta_content = Input::get('meta_content');
+            $article->meta_title = Input::get('meta_title');
+
             $refArticle->save();
 
             $refArticle->langRef = $article->id;
@@ -143,6 +147,7 @@ class ArticlesController extends \BaseController
             $article->status = Input::get('status');
             $article->meta_name = Input::get('meta_name');
             $article->meta_content = Input::get('meta_content');
+            $article->meta_title = Input::get('meta_title');
 
             $article->save();
 
