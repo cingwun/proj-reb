@@ -21,7 +21,7 @@ class CreateSpaArticleTable extends Migration {
 			$table->enum('category', array('about', 'news', 'oversea'));
 			$table->date('open_at');
 			$table->integer('sort');
-			$table->integer('status', array('1', '0'));
+			$table->enum('status', array('1', '0'));
 			$table->integer('views');
 			$table->enum('lang', array('tw', 'cn'));
 			$table->integer('ref_id');

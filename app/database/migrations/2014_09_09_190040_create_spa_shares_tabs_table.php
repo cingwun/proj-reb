@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSpaSharesLabelsTable extends Migration {
+class CreateSpaSharesTabsTable extends Migration {
 
 	/**
 	 * Run the migrations.
