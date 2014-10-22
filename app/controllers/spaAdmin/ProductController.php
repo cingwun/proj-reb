@@ -236,6 +236,7 @@ class ProductController extends \BaseController {
 			$price = \Input::get('price');
 			$meta_name = \Input::get('meta_name');
 			$meta_content = \Input::get('meta_content');
+			$meta_title = \Input::get('meta_title');
 
 			$product->title = !empty($title) ? $title : "";;
 			$product->image = !empty($image) ? $image : "";
@@ -249,6 +250,7 @@ class ProductController extends \BaseController {
 			$product->lang = $listLang;
 			$product->meta_name = !empty($meta_name) ? $meta_name : "";
 			$product->meta_content = !empty($meta_content) ? $meta_content : "";
+			$product->meta_title = !empty($meta_title) ? $meta_title : "";
 			$product->save();
 
 			//create service id
@@ -301,6 +303,7 @@ class ProductController extends \BaseController {
 				$anotherProduct->ref = $inserted_id;
 				$anotherProduct->meta_name = !empty($meta_name) ? $meta_name : "";
 				$anotherProduct->meta_content = !empty($meta_content) ? $meta_content : "";
+				$anotherProduct->meta_title = !empty($meta_title) ? $meta_title : "";
 				$anotherProduct->save();
 
 				$anotherId = $anotherProduct->id;

@@ -61,6 +61,11 @@
 		<input type="text" class="form-control" id="meta_content" name="meta_content" size="12" value="{{ $article->meta_content }}">
 	</div>
 
+	<div class="form-group">
+		<label for="meta_title">Meta title: </label>
+		<input type="text" class="form-control" id="meta_title" name="meta_title" size="12" value="{{ $article->meta_title }}">
+	</div>
+
 	<input type="hidden" name="_method" value="PUT" />
 	<button class="btn btn-danger" type="button" onclick="history.back();">取消</button>
 	<button class="btn btn-primary">編輯完成</button>

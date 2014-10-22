@@ -75,6 +75,8 @@ class ArticlesController extends \BaseController
             $article->lang = Input::get('lang');
             $article->meta_name = Input::get('meta_name');
             $article->meta_content = Input::get('meta_content');
+            $article->meta_title = Input::get('meta_title');
+
             $article->save();
             //create a corresponding tw/cn article at same time.
             $refLang = (Input::get('lang')=='tw') ? 'cn' : 'tw';
@@ -86,6 +88,8 @@ class ArticlesController extends \BaseController
             $refArticle->lang = $refLang;
             $article->meta_name = Input::get('meta_name');
             $article->meta_content = Input::get('meta_content');
+            $article->meta_title = Input::get('meta_title');
+
             $refArticle->save();
 
             $refArticle->langRef = $article->id;
@@ -143,6 +147,7 @@ class ArticlesController extends \BaseController
             $article->status = Input::get('status');
             $article->meta_name = Input::get('meta_name');
             $article->meta_content = Input::get('meta_content');
+            $article->meta_title = Input::get('meta_title');
 
             $article->save();
 
@@ -222,10 +227,10 @@ class ArticlesController extends \BaseController
                 } elseif ($article->category == '3') {
                      //最新消息
                     //上一篇 ID
-                    $previousId = Article::ofCategory('3')->where('id', '<', $article->id)->orderBy('id', 'DESC')->max('id');
+                    $previousId = Article::ofCategory('3')->where('id', '<', $article->id)->where('status', '1')->orderBy('id', 'DESC')->max('id');
 
                     //下一篇 ID
-                    $nextId = Article::ofCategory('3')->where('id', '>', $article->id)->orderBy('id', 'DESC')->min('id');
+                    $nextId = Article::ofCategory('3')->where('id', '>', $article->id)->where('status', '1')->orderBy('id', 'DESC')->min('id');
                     return View::make('aesthetics.news.post')->with(array('article' => $article, 'prev' => Article::find($previousId), 'next' => Article::find($nextId)));
                 }
             } else {
@@ -279,7 +284,7 @@ class ArticlesController extends \BaseController
             $data = Cache::get($key);
 
             if (!$data) {
-                $data = Article::ofCategory('3')->open()->orderBy('open_at', 'DESC')->take(10)->get();
+                $data = Article::ofCategory('3')->open()->orderBy('open_at', 'DESC')->where('status', '1')->take(10)->get();
                 Cache::put($key, $data, 2);
             }
             return $data;

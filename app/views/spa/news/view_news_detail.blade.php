@@ -63,4 +63,6 @@
 @section('head')
 <meta name="keyword" content="{{$article->meta_name}}">
 <meta name="description" content="{{$article->meta_content}}">
+<meta name="title" content="{{$article->meta_title}}">
+
 @stop

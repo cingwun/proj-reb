@@ -243,6 +243,8 @@ class ShareController extends \BaseController {
             ($sort == 'do') ? $model->sort = \SpaShares::max('sort')+1 : $sort = 'doNot';
             $model->meta_name = \Input::get('meta_name');
             $model->meta_content = \Input::get('meta_content');
+            $model->meta_title = \Input::get('meta_title');
+
             $model->language = \Input::get('lang');
 
             if(isset($refmodel)){

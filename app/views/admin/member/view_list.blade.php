@@ -5,6 +5,7 @@
 @stop
 
 @section('main')
+<div class="col-lg-12">
     <div class="pull-left" style="margin: 0px 0px 10px;">
         <form action="<?=route('admin.member.list')?>" method="get" class="form-inline" role="form" id="search-form">
             <div class="form-group">
@@ -41,7 +42,7 @@
                 endif;?>
         </tbody>
     </table>
-
+</div>
     @include('spa_admin._partials.widget_pager', array('wp'=>$wp))
 @stop
 

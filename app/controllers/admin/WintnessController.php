@@ -421,6 +421,8 @@ class WintnessController extends BaseController{
             $model->isInSiderbar = $isInSiderbar % 2;
             $model->meta_name = Input::get('meta_name', '');
             $model->meta_content = Input::get('meta_content', '');
+            $model->meta_title = Input::get('meta_title', '');
+
             $model->created_at = time();
             $model->updated_at = time();
             $model->save();
@@ -434,6 +436,8 @@ class WintnessController extends BaseController{
                 $refModel->isInSiderbar = 0;
                 $refModel->meta_name = Input::get('meta_name', '');
                 $refModel->meta_content = Input::get('meta_content', '');
+                $refModel->meta_title = Input::get('meta_title', '');
+
                 $refModel->created_at = time();
                 $refModel->updated_at = time();
                 $refModel->ref = $model->id;

@@ -5,7 +5,10 @@ Banner&nbsp;管理&nbsp;(&nbsp;<?=$size['text']?>&nbsp;)
 @stop
 
 @section('main')
-    <div class="pull-right" style="margin: 0px 0px 10px;"><a href="<?=URL::route('admin.banners.action', array($size['value'], 0))?>" class="btn btn-success">新增</a></div>
+<div class="col-lg-12" >
+    <a href="<?=URL::route('admin.banners.action', array($size['value'], 0))?>" class="btn btn-success pull-right">新增</a>
+</div>
+<div class="col-lg-12" id="clearTop">
     <table class="table table-bordered" ng-controller="articlesCtrl">
         <thead>
             <tr>
@@ -39,7 +42,8 @@ Banner&nbsp;管理&nbsp;(&nbsp;<?=$size['text']?>&nbsp;)
             ?>
         </tbody>
     </table>
-    @include('spa_admin._partials.widget_pager', array('wp'=>$wp))
+</div>
+@include('spa_admin._partials.widget_pager', array('wp'=>$wp))
 @stop
 @section('bottom')
     <script type="text/javascript">

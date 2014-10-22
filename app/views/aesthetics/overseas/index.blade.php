@@ -14,7 +14,7 @@
 		<span>{{ $article->title }}</span>
 	</div><!-- ======================== breadcrumb end ======================== -->
 
-	<h1><img src="/aesthetics/img/sign/icon/about.png" alt="about" width="109" height="56" />&nbsp;&nbsp;{{ $article->title }}</h1>
+	<h1><img src="/aesthetics/img/sign/icon/reservation.png" alt="about" width="109" height="56" />&nbsp;&nbsp;{{ $article->title }}</h1>
 
 	<div class="contentInfo">
 		<time datetime="{{ date('Y-m-d',time($article->created_at)) }}">發表日期：{{ date('Y/m/d',time($article->created_at)) }}</time>
@@ -35,4 +35,6 @@
 @section('head')
 <meta name="keyword" content="{{$article->meta_name}}">
 <meta name="description" content="{{$article->meta_content}}">
+<meta name="title" content="{{$article->meta_title}}">
+
 @stop

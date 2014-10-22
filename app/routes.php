@@ -96,7 +96,7 @@ Route::group(array('prefix'=>'admin', 'before'=>'auth.admin'), function()
 {
         //admin index
         Route::any('/', array('as'=>'admin.index', 'uses'=>'AuthController@index'));
-
+        
         //switch to spa backgroupd
         Route::get('switch_to_spa', array('as'=>'switch.to.admin.spa', 'uses'=>'BackendSwitchController@getSpa'));
 

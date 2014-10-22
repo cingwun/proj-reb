@@ -234,6 +234,8 @@ class ServiceController extends \BaseController {
 			$content = \Input::get('content');
 			$meta_name = \Input::get('meta_name');
 			$meta_content = \Input::get('meta_content');
+			$meta_title = \Input::get('meta_title');
+
 
 			$service->title = !empty($title) ? $title : "";
 			$service->image = !empty($image) ? $image : "";
@@ -245,6 +247,8 @@ class ServiceController extends \BaseController {
 			$service->lang = $listLang;
 			$service->meta_name = !empty($meta_name) ? $meta_name : "";
 			$service->meta_content = !empty($meta_content) ? $meta_content : "";
+			$service->meta_title = !empty($meta_title) ? $meta_title : "";
+
 			$service->save();
 
 			//create service id
@@ -296,6 +300,8 @@ class ServiceController extends \BaseController {
 				$anotherService->ref = $inserted_id;
 				$anotherService->meta_name = !empty($meta_name) ? $meta_name : "";
 				$anotherService->meta_content = !empty($meta_content) ? $meta_content : "";
+				$anotherService->meta_title = !empty($meta_title) ? $meta_title : "";
+
 				$anotherService->save();
 
 				$anotherId = $anotherService->id;

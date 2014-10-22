@@ -55,4 +55,6 @@
 @section('head')
 <meta name="keywords" content="{{$service['meta_name']}}">
 <meta name="description" content="{{$service['meta_content']}}">
+<meta name="title" content="{{$service['meta_title']}}">
+
 @stop

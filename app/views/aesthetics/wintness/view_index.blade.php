@@ -2,6 +2,9 @@
 
 @section('bodyId'){{$bodyId}}@stop
 
+@section('mainBanner')
+    @include('aesthetics._partials.banner', array('size'=>'large'))
+@stop
 
 @section('mainContent')
 <div id="mainContent" class="postBox" role="main">
@@ -13,8 +16,9 @@
 <div>
 </div>
 <!-- mainBanner end -->
-
-    <div class="slider"><div class="wrapper">
+<!--
+<div class="slider">
+    <div class="wrapper">
         <ul class="cycle-slideshow"
             data-cycle-fx=carousel
             data-cycle-timeout=0
@@ -34,13 +38,12 @@
             endif;
         ?>
         </ul>
-        </div>
-        <!-- wrapper end -->
-        <span class="nex prevControl" id="prev"></span>
-        <span class="pre nextControl" id="next"></span>
     </div>
-    <!-- slider end -->
-
+    
+    <span class="nex prevControl" id="prev"></span>
+    <span class="pre nextControl" id="next"></span>
+</div>
+-->
 <div id="search-info" style="display: none; text-align: center; padding: 10px 0px;"></div>
 
 <ul class="caseList" id="container" data-loadURL="<?php echo URL::route('frontend.wintness.ajax.load.articles')?>"></ul>

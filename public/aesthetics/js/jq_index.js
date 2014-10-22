@@ -4,35 +4,35 @@
 
 var $newTechBox = $('#newTechBox'),
 	$servBox = $('#servBox');
-
+	
 
 
 $(function(){
 
 /* 首頁 Banner slider */
-$('.bannerSlider').cycle({
-    fx:   				'fade',
-    slides:				'> .slide',
-    //pager:  			'#mainBannerNav',
-    next:   			'> .bannerNext',
+$('.bannerSlider').cycle({ 
+    fx:   				'fade', 
+    slides:				'> .slide', 
+    //pager:  			'#mainBannerNav', 
+    next:   			'> .bannerNext', 
     prev:   			'> .bannerPrev',
     pauseOnHover:		true,
-    speed:				750,
+    speed:				750, 
 	timeout:			6000
 	});
 
 
 /* 美麗新技術 */
 /*
-$newTechBox.cycle({
-    timeout: 		0,
-    slide:			'> .tabBox',
-    speed:   		300,
+$newTechBox.cycle({ 
+    timeout: 		0, 
+    slide:			'> .tabBox', 
+    speed:   		300, 
     startingSlide: 	0
 	});
 */
 
-$newTechBox.find('.tabNav li').click(function(e) {
+$newTechBox.find('.tabNav li').click(function(e) { 
 	e.stopPropagation();
 	e.preventDefault();
 	$newTechBox.find('.curr').removeClass('curr').end().find('.tabBox').eq($(this).index()).addClass('curr');
@@ -49,7 +49,7 @@ $('#quickReservation').click(function(e){
 });
 
 /* 服務項目 */
-$servBox.find('.tabNav a').click(function(e) {
+$servBox.find('.tabNav a').click(function(e) { 
 	e.stopPropagation();
 	e.preventDefault();
 
@@ -58,8 +58,20 @@ $servBox.find('.tabNav a').click(function(e) {
 	$(this).addClass('curr');
 });
 
+/* Change the services page's servList menu open/collapse event from hover to click */
+$("ul.servList > li").each(function(e) {
+	var this_list = $(this).find('ul.sub').find('li');
+	if(this_list.length != 0) {
+		$(this).click(function() {
+			$(this).siblings().removeClass("active");
+			$(this).toggleClass("active");
+		});
+	} else {}
+});
+
+
 /* 美麗留言 */
-/*var $popBox =  $(".popBox");
+var $popBox =  $(".popBox");
 $("#messageAsk").find(".sent").click(function(e){
  	e.stopPropagation();
 	e.preventDefault();
@@ -71,7 +83,6 @@ $("#messageAsk").find(".sent").click(function(e){
 	e.preventDefault();
 	$popBox.hide();
  });
-*/
 /*
 $('a').not('#quickReservation').not('.tabNav a').on('click', function(e){
 	e.stopPropagation();
