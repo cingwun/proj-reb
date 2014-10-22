@@ -18,6 +18,7 @@ class CreateSpaServiceTable extends Migration {
 				$table->string('title');
 				$table->string('image');
 				$table->string('image_desc');
+				$table->text('content');
 				$table->text('tag');
 				$table->integer('views');
 				$table->string('_parent')->default('N');
