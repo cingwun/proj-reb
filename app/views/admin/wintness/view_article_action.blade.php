@@ -14,7 +14,7 @@
         
         <div class="form-group">
             <label for="lang">語系</label>
-            @if(empty($article))
+            @if(empty($article->id))
             <label class="radio-inline">
                 <input type="radio" name="lang" value="tw" id="optionsRadiosInline" checked> 繁體
             </label>

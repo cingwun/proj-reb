@@ -28,7 +28,7 @@
 					<div class="languageSwitch">
 						<a href="{{Host::getLangURL('tw')}}">繁體中文</a>
 						<a class="last" href="{{Host::getLangURL('cn')}}">简体中文</a>
-						<form class="" action="{{URL::to('/')}}/search" method="get"><input type="text" name="q" placeholder="請輸入關鍵字" /><button type="submit"><span>搜尋</span></button></form>
+						<form class="searchBox" action="{{URL::to('/')}}/search" method="get"><input type="text" name="q" placeholder="請輸入關鍵字" /><button type="submit"><span>搜尋</span></button></form>
 					</div>
 					<div class="memberFunc funcBar">
 						<span>會員獨享</span>
