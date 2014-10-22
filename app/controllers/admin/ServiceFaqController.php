@@ -157,8 +157,8 @@ class ServiceFaqController extends BaseController{
             'params' => &$params
         );
 
-        $twListUrl = URL::route('admin.service_faq.article.list', array('type'=>'service', 'langList'=>'tw', 'category'=>$category));
-        $cnListUrl = URL::route('admin.service_faq.article.list', array('type'=>'service', 'langList'=>'cn', 'category'=>$category));
+        $twListUrl = URL::route('admin.service_faq.article.list', array('type'=>$type, 'langList'=>'tw', 'category'=>$category));
+        $cnListUrl = URL::route('admin.service_faq.article.list', array('type'=>$type, 'langList'=>'cn', 'category'=>$category));
         $category = Arr::get($categories, $category, '');
 
         $langControlGroup = array(
