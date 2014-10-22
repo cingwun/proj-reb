@@ -11,7 +11,7 @@
 	<div class="breadcrumb">
 		<a href="/">首頁</a><span class="arrow"></span>
 		<a href="<?php echo route('frontend.board.list')?>">美麗留言</a><span class="arrow"></span>
-		<a href="#">我要發問</a>
+		<a href="{{URL::route('frontend.board.post', array('postId'=>\HTML::decode($board->id)))}}">{{\HTML::decode($board->topic)}}</a>
 	</div>
 	<!-- breadcrumb end -->
 

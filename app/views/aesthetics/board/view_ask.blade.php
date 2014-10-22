@@ -16,7 +16,7 @@
 	<!-- breadcrumb end -->
 	<div class="infoList">
 		<h2>我要發問</h2>
-		<p>此留言版僅供作為醫美整型保養等相關話題之討論專用，嚴禁刑登任何廣告以及使用飆罵、人身攻擊或不文雅的用詞。若氏緊急重大問題，請直接電話聯繫我我&nbsp;02-2562-3631。</p>
+		<p>此留言版僅供作為醫美整型保養等相關話題之討論專用，嚴禁刑登任何廣告以及使用飆罵、人身攻擊或不文雅的用詞。若為緊急重大問題，請直接電話聯繫我&nbsp;02-2562-3631。</p>
 		<p class="br">請在下方欄位填寫</p>
 		<form>
 			<label for="name">您的大名:</label><input type="text" name="name" id="" value="<?php echo Arr::get($user, 'name', '')?>"><br/>
