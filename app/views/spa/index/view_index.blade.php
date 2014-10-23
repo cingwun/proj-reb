@@ -10,7 +10,7 @@ $size = "large";
 <aside id="indexSetContent" class="hotEv">
 	<h2 class="titleRp title_spa-hotEv">熱門推薦</h2>
 
-	<img src="@if($cover){{asset($cover[0]->image)}}?w=288&h=343@endif" alt=""/>
+	@include('spa._partials.widget_hotBanner')
 </aside><!-- ======================== regBox end ======================== -->
 <div id="mainContent" role="main">
 	<article class="newsList">

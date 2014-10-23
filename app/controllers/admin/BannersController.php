@@ -1,4 +1,4 @@
-<?php
+	<?php
 /*
  * This controller is used to handle request of banner
  */
@@ -37,7 +37,7 @@ class BannersController extends BaseController {
 	/*
 	 * display all banners according to size
 	 *
-	 * @params (string) $size, values: large[960x430], medium[960x250], small[700x300]
+	 * @params (string) $size, values: large[960x430], medium[960x250], small[700x300], hot[288x343]
 	 */
 	public function getList($size='large'){
 		$page = Input::get('page', 1);
