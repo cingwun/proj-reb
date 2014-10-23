@@ -4,7 +4,7 @@
 	$images = BannersController::bannerShow('hot', 'spa');
 ?>
 
-<div class="topBanner bannerSlider">
+<div class="topBanner hotSlider">
 	@foreach($images as &$i)
 	<a class="slide" href="{{$i->link}}" target="{{$i->target}}"><img src="{{$i->image.'?'.$val['qs']}}" alt="{{$i->title}}" {{$sizeAttr}} /></a>
 	@endforeach

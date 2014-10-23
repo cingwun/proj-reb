@@ -9,7 +9,6 @@ $size = "large";
 @section('content')
 <aside id="indexSetContent" class="hotEv">
 	<h2 class="titleRp title_spa-hotEv">熱門推薦</h2>
-
 	@include('spa._partials.widget_hotBanner')
 </aside><!-- ======================== regBox end ======================== -->
 <div id="mainContent" role="main">
