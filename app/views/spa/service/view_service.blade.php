@@ -21,7 +21,7 @@
 				<div class="serOpt noOpt">
 					<!-- @text for serList_btn1 title -->
 					<a  href="javascript:void(0)">
-						<div class="serList_btn1">{{\Text::preEllipsize(strip_tags($serviceCat['cat']['title']), 8)}}
+						<div class="serList_btn1">{{\Text::preEllipsize(strip_tags($serviceCat['cat']['title']), 10)}}
 							<img class="side_arrow" src="../spa/img/sign/arrow_yellow.png"/>
 							<img class="side_arrow active" src="../spa/img/sign/arrow_white.png"/>  
 						</div>
