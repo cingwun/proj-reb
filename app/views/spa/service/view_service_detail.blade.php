@@ -56,5 +56,8 @@
 <meta name="keywords" content="{{$service['meta_name']}}">
 <meta name="description" content="{{$service['meta_content']}}">
 <meta name="title" content="{{$service['meta_title']}}">
+@stop
 
+@section('h1')
+<h1 style='display:none;'>{{$service['h1']}}</h1>
 @stop

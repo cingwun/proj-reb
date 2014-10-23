@@ -31,5 +31,8 @@
 <meta name="keywords" content="{{$product['meta_name']}}">
 <meta name="description" content="{{$product['meta_content']}}">
 <meta name="title" content="{{$product['meta_title']}}">
+@stop
 
+@section('h1')
+<h1 style="display:none">{{$product['h1']}}</h1>
 @stop

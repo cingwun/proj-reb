@@ -235,6 +235,7 @@ class ServiceController extends \BaseController {
 			$meta_name = \Input::get('meta_name');
 			$meta_content = \Input::get('meta_content');
 			$meta_title = \Input::get('meta_title');
+			$h1 = \Input::get('h1');
 
 
 			$service->title = !empty($title) ? $title : "";
@@ -248,7 +249,7 @@ class ServiceController extends \BaseController {
 			$service->meta_name = !empty($meta_name) ? $meta_name : "";
 			$service->meta_content = !empty($meta_content) ? $meta_content : "";
 			$service->meta_title = !empty($meta_title) ? $meta_title : "";
-
+			$service->h1= !empty($h1) ? $h1 : "";
 			$service->save();
 
 			//create service id

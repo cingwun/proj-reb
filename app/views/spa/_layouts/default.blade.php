@@ -12,6 +12,8 @@
 	<![endif]-->
 </head>
 <body id="@yield('bodyId')">
+	@yield('h1')
+
 	<noscript><div class="noscriptNotify">
 		<p><i class="fa fa-warning"></i>&nbsp;為了正常瀏覽本站，請開啟瀏覽器的 JavaScript，然後<a href="">再試一次</a>。</p>
 	</div></noscript><!-- ======================== JavaScript 停用警告 end ======================== -->

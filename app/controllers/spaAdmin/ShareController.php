@@ -244,6 +244,8 @@ class ShareController extends \BaseController {
             $model->meta_name = \Input::get('meta_name');
             $model->meta_content = \Input::get('meta_content');
             $model->meta_title = \Input::get('meta_title');
+            $model->h1 = \Input::get('h1');
+
 
             $model->language = \Input::get('lang');
 

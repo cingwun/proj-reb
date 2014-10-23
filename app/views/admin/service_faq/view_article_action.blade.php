@@ -69,6 +69,10 @@ echo $title;
     <label>title</label>
     <textarea class="form-control" rows="1" name="meta_title"><?php echo Arr::get($article, 'meta_title', '')?></textarea>
   </div>
+  <div class="form-group">
+    <label>h1</label>
+    <textarea class="form-control" rows="1" name="h1"><?php echo Arr::get($article, 'h1', '')?></textarea>
+  </div>
   <input type="hidden" name="id" value="<?php echo Arr::get($article, 'id', null)?>" />
   <input type="hidden" name="articleLang" value="{{$articleLang}}"/>
   <a href='javascript:history.back()' type="button" class="btn btn-danger">取消</a>

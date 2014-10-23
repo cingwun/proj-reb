@@ -66,6 +66,10 @@
 		<textarea class="form-control" rows="1" name="meta_title">@if($action == 'edit'){{$product->meta_title}}@endif</textarea>
 	</div>
 	<div class="form-group">
+		<label>h1</label>
+		<textarea class="form-control" rows="1" name="h1">@if($action == 'edit'){{$product->h1}}@endif</textarea>
+	</div>
+	<div class="form-group">
 		<input type="hidden" name="action" value="{{$action}}"/>
 		<input type="hidden" name="listLang" value="{{$listLang}}"/>
 		<a href='javascript:history.back()' type="button" class="btn btn-danger">取消</a>
