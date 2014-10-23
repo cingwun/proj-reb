@@ -6,12 +6,15 @@ Banner&nbsp;管理&nbsp;(&nbsp;<?=$size['text']?>&nbsp;)
 
 @section('main')
 <div class="col-lg-12" >
+    <input type="hidden" value="{{URL::route('admin.banners.many.delete')}}" name="manyDeleteURL">
+    <button onclick="manyDelete()" class="btn btn-danger pull-left" >多項刪除</button>
     <a href="<?=URL::route('admin.banners.action', array($size['value'], 0))?>" class="btn btn-success pull-right">新增</a>
 </div>
 <div class="col-lg-12" id="clearTop">
     <table class="table table-bordered" ng-controller="articlesCtrl">
         <thead>
             <tr>
+                <th></th>
                 <th>Banner</th>
                 <th>標題</th>
                 <th>[&nbsp;視窗&nbsp;]&nbsp;連結</th>
@@ -28,6 +31,7 @@ Banner&nbsp;管理&nbsp;(&nbsp;<?=$size['text']?>&nbsp;)
             <?php else:?>
             <?php   foreach($data as $r):?>
             <tr>
+                <td><input type="checkbox" name="waitForDelete" value="{{$r->bid}}" ajaxDeleteURL="{{URL::route('admin.banners.many.delete')}}"></td> 
                 <td width="120" align="center"><img src="<?=$r->image?>?w=100" class="img-rounded"/></td>
                 <td><?=$r->title?></td>
                 <td>[&nbsp;<strong><?=($r->target=='_self')?'原視窗':'另開';?></strong>&nbsp;]&nbsp;<a href="<?=$r->link?>" target="_blank"><?=(mb_strlen($r->link)>30)?mb_substr($r->link, 0, 30):$r->link;?></a></td>
@@ -52,5 +56,37 @@ Banner&nbsp;管理&nbsp;(&nbsp;<?=$size['text']?>&nbsp;)
                 return (confirm("提醒您:\n\n\t確定要刪除該Banner資料嗎?"));
             });
         });
+
+        
+        function manyDelete() {
+            var url = $('input[name=manyDeleteURL]').val();
+            var ids = [];
+            $('input:checkbox:checked[name="waitForDelete"]').each(function(i) {
+                ids[i] = (this.value);
+            });
+            if(ids.length==0) {
+                alert('請勾選欲刪除之項目');
+                exit;
+            }
+            if(confirm("提醒您:\n\n\t確定要刪除選取之資料嗎?")) {
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {
+                        ids: ids
+                    },
+                    dataType: 'json',
+                    success: function(res, s, xhr){
+                        alert(res.message);
+                        if (res.status=='ok')
+                            window.location.reload();
+                        return;
+                    },
+                    error: function(){
+                        alert('提醒您:\n\n    系統刪除錯誤，請通知工程師');
+                    }
+                });
+            }
+        }
     </script>
 @stop

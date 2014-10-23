@@ -140,6 +140,19 @@ class BannersController extends BaseController {
 	}
 
 	/*
+	 * delete 2 up picutres
+	 * @params (array) ids
+	 */
+	public function getManyDelete() {
+		try {
+			$banner = \Banners::whereIn('bid', Input::get('ids'))->delete();
+			return \Response::json(array('status'=>'ok', 'message'=>'刪除完成'));
+		}catch (Exception $e) {
+			return \Response::json(array('status'=>'ok', 'message'=>$e->getMessage()));
+		}
+	}
+
+	/*
 	 * get banner
 	 *
 	 * @params (string) $size

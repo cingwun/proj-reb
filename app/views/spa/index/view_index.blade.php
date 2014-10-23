@@ -22,9 +22,9 @@ $size = "large";
 			<li>
 				<span class="imgWrap"><img src="{{$cover[0]->image}}?w=100" /></span>
 				<div class="newsFirstWrapper">
-					<a class="firstLink" href="{{URL::route('spa.news.detail')}}/{{array_get($news[0], 'id')}}">{{ \Text::preEllipsize(strip_tags(array_get($news[0], 'title')), 87) }}</a>
+					<a class="firstLink" href="{{URL::route('spa.news.detail')}}/{{array_get($news[0], 'id')}}">{{ \Text::preEllipsize(strip_tags(array_get($news[0], 'title')), 27) }}</a>
 					<time class="firstDate" datetime="{{array_get($news[0], 'open_at')}}">{{array_get($news[0], 'open_at')}}</time>
-					<p class="firstArticle">{{ \Text::preEllipsize(strip_tags(array_get($news[0], 'content')), 87) }}<!-- 限兩行 --><a href="{{URL::route('spa.news.detail')}}/{{array_get($news[0], 'id')}}" class="seeMore">詳全文</a></p>
+					<p class="firstArticle">{{ \Text::preEllipsize(strip_tags(array_get($news[0], 'content')), 52) }}<!-- 限兩行 --><a href="{{URL::route('spa.news.detail')}}/{{array_get($news[0], 'id')}}" class="seeMore">詳全文</a></p>
 				</div>
 			</li>
 			@endif

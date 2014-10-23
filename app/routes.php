@@ -141,6 +141,9 @@ Route::group(array('prefix'=>'admin', 'before'=>'auth.admin'), function()
         // banners list
         Route::get('banners/{size}', array('as'=>'admin.banners.list', 'uses'=>'BannersController@getList'));
 
+        // banners many deletes
+        Route::post('banners/many/delete', array('as'=>'admin.banners.many.delete', 'uses'=>'BannersController@getManyDelete'));
+
         // test
         //Route::controller('test', 'TestController');
 
