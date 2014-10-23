@@ -14,13 +14,13 @@
 		<img src="<?=asset('spa/img/sign/product_title.png');?>" height="20" width="200">
 	</div>
 	<div id="contain_inner">
-		@foreach($products as $product)
+		@foreach($prodCats as $cat)
 		<!-- @href for the link to product list pages -->
-		<a class="products_categories" href="{{$detailURL}}/{{$product['id']}}">
+		<a class="products_categories" href="{{ \URL::route('spa.product.list', array('cat'=>$cat['id'])) }}">
 			<!-- @src for the product list images -->
-			<img class="products_img" src="{{$product['image']}}?w=310&h=215"/>
+			<img class="products_img" src="{{$cat['image']}}?w=310&h=215"/>
 			<!-- @text for the product names -->
-			<p class="products_name">[{{\Text::preEllipsize(strip_tags($product['title']), 10)}}]</p>
+			<p class="products_name">[{{\Text::preEllipsize(strip_tags($cat['title']), 10)}}]</p>
 		</a>
 		@endforeach
 	</div>
