@@ -9,7 +9,8 @@ class BannersController extends BaseController {
 	private $size = array(
 		array('text'=>'尺寸700x300', 'value'=>'small'),
 		array('text'=>'尺寸960x250', 'value'=>'medium'),
-		array('text'=>'尺寸960x430', 'value'=>'large')
+		array('text'=>'尺寸960x430', 'value'=>'large'),
+		array('text'=>'熱門推薦 288x343', 'value'=>'hot')
 	);
 
     protected $filterExcept = array();
@@ -73,7 +74,8 @@ class BannersController extends BaseController {
 		return View::make('admin.banners.view_action', array(
 				'size' => $this->_getSize($size),
 				'layout' => $layout,
-				'data' => $data
+				'data' => $data,
+				'where' => Session::get('where')
 				));
 	}
 

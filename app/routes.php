@@ -96,7 +96,7 @@ Route::group(array('prefix'=>'admin', 'before'=>'auth.admin'), function()
 {
         //admin index
         Route::any('/', array('as'=>'admin.index', 'uses'=>'AuthController@index'));
-        
+
         //switch to spa backgroupd
         Route::get('switch_to_spa', array('as'=>'switch.to.admin.spa', 'uses'=>'BackendSwitchController@getSpa'));
 
@@ -130,10 +130,10 @@ Route::group(array('prefix'=>'admin', 'before'=>'auth.admin'), function()
 
         // banners
         Route::get('banners/action/{size}/{id?}', array('as'=>'admin.banners.action', 'uses'=>'BannersController@getAction'))
-               ->where(array('size'=>'(large|medium|small)', 'id'=>'([0-9]+)'));
+               ->where(array('size'=>'(large|medium|small|hot)', 'id'=>'([0-9]+)'));
 
         Route::get('banners/delete/{size}/{id?}', array('as'=>'admin.banners.delete', 'uses'=>'BannersController@getDelete'))
-               ->where(array('size'=>'(large|medium|small)', 'id'=>'([0-9]+)'));
+               ->where(array('size'=>'(large|medium|small|hot)', 'id'=>'([0-9]+)'));
 
         // banners action
         Route::post('banners/action', array('as'=>'admin.banners.enAction', 'uses'=>'BannersController@postAction'));

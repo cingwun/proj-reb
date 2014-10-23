@@ -159,6 +159,9 @@
                         <li>
                             <a href="{{ URL::route('admin.banners.list', array('small', 'where'=>Input::get('where')))}}">尺寸 700x300</a>
                         </li>
+                        <li>
+                            <a href="{{ URL::route('admin.banners.list', array('hot'))}}">熱門推薦 288x343</a>
+                        </li>
                     </ul>
                 </li>
 
