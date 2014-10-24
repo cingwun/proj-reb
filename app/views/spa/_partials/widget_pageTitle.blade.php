@@ -22,7 +22,7 @@
 			<img class="arrow_g" src="<?=asset('spa/img/sign/arrow_g.png');?>">
 			<div class="date_wrapper">
 				<label class="date_label">發表日期：</label>
-				<span class="date_detail">{{$publish}}</span>
+				<span class="date_detail">{{str_replace('-', '/', $publish)}}</span>
 			</div>
 		</div>
 		<div id="views">
