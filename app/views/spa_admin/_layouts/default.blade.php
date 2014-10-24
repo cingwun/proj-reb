@@ -78,6 +78,7 @@
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <ul class="nav navbar-nav side-nav">
                 <!-- 系統管理 -->
+                @if(Sentry::getUser()->hasAccess(array('system')))
                 <li>
                     <a href="javascript:;" data-toggle="collapse" data-target="#system"><i class="glyphicon glyphicon-dashboard"></i> 系統管理 <i class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="system" class="collapse">
@@ -92,7 +93,7 @@
                         </li>
                     </ul>
                 </li>
-
+                @endif
                 <!-- 文章管理 -->
                 <li class="active">
                     <a href="{{URL::route('spa.admin.articles.list')}}"><i class="glyphicon glyphicon-pencil"></i> 文章管理</a>
