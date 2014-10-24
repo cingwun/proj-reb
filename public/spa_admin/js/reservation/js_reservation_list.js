@@ -90,3 +90,21 @@ function getSelectBox() {
         }
     });
 }
+function selectAll(allBox) {
+    $('input[name="selectBox"]').each(function(i, obj) { 
+        obj.checked = allBox.checked;
+    });
+}
+function checkSelect() {
+    var checkBox = $('input[name="selectBox"]');
+    var checkSum = checkBox.size();
+    var checkAmount = 0;
+    checkBox.each(function(i,obj) { 
+        if(obj.checked)
+            checkAmount++;
+    });
+    if(checkSum == checkAmount)
+        $('#allCheckBox')[0].checked=true;
+    else
+        $('#allCheckBox')[0].checked=false;
+}

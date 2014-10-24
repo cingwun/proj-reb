@@ -18,7 +18,7 @@
 		<!-- @href for the link to product list pages -->
 		<a class="products_categories" href="{{ \URL::route('spa.product.list', array('cat'=>$cat['id'])) }}">
 			<!-- @src for the product list images -->
-			<img class="products_img" src="{{$cat['image']}}?w=310&h=215"/>
+			<img class="products_img" src="{{$cat['image']}}?w=310&h=215" alt="{{$cat['image_desc']}}"/>
 			<!-- @text for the product names -->
 			<p class="products_name">[{{\Text::preEllipsize(strip_tags($cat['title']), 10)}}]</p>
 		</a>

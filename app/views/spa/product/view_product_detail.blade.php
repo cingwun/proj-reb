@@ -18,7 +18,7 @@
 	</div><!-- ======================== breadcrumb end ======================== -->
 	<!-- @image, for the Products_detail Image -->
 	<div class="products_detail_pic">
-		<img src="{{$product['image']}}?w=700&h=450">
+		<img src="{{$product['image']}}?w=700&h=450" alt="{{$product['image_desc']}}">
 	</div>
 	<!-- @text, for Products_detail Content -->
 	<div class="products_detail_content">

@@ -14,7 +14,7 @@ class ProductController extends \BaseController{
 									  ->where('display', 'yes')
 									  ->where('lang', $this->getLocale())
 									  ->orderBy('sort', 'DESC')
-									  ->get(array('id', 'title', 'image'))
+									  ->get(array('id', 'title', 'image', 'image_desc'))
 									  ->toArray();
 			if($prodCatsCmd)
 				$prodCats = $prodCatsCmd;
@@ -124,7 +124,7 @@ class ProductController extends \BaseController{
 				$products = $productsCmd;
 			//category
 			$productCat = \SpaProduct::where('id', $cat)
-									 ->first(array('id', 'title', 'image'))
+									 ->first(array('id', 'title', 'image', 'image_desc'))
 									 ->toArray();
 
 			$productListURL = \URL::route('spa.product.list');

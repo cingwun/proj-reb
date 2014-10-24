@@ -18,14 +18,14 @@
 
 	<div class="products_list_pic">
 		<!-- @image, for the Products_list Image -->
-		<img src="{{$productCat['image']}}?w=700&h=450">
+		<img src="{{$productCat['image']}}?w=700&h=450" alt="{{$productCat['image_desc']}}">
 	</div>
 
 	<div class="contentList">
 		@foreach($products as $product)
 		<div class="proList">
 			<!-- @image, for the Products_list Image -->
-			<div class="proPic"><img src="{{$product['image']}}?w=165&h=165"></div>
+			<div class="proPic"><img src="{{$product['image']}}?w=165&h=165" alt="{{$product['image_desc']}}"></div>
 			<!-- @text, for Products_list Title -->
 			<div class="proTitle"><a href="{{$productDetailURL}}/{{$product['id']}}">{{\Text::preEllipsize(strip_tags($product['title']), 9)}}</a></div>
 			<!-- @text, for Products_list Content -->

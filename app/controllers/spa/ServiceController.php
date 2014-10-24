@@ -13,7 +13,7 @@ class ServiceController extends \BaseController{
 										 ->where('display', 'yes')
 										 ->where('lang', $this->getLocale())
 										 ->orderBy('sort', 'DESC')
-									  	 ->get(array('id', 'title', 'image'))
+									  	 ->get(array('id', 'title', 'image', 'image_desc'))
 									  	 ->toArray();
 			$services = array();
 			if ($serviceCatsCmd) {
@@ -24,7 +24,7 @@ class ServiceController extends \BaseController{
 										  ->where('display', 'yes')
 										  ->where('lang', $this->getLocale())
 										  ->orderBy('sort', 'DESC')
-										  ->get(array('id', 'title', 'image'))
+										  ->get(array('id', 'title', 'image', 'image_desc'))
 			  	 						  ->toArray();
 					$serviceCats[$row][] = array(
 						'cat'=>$serviceCatCmd,

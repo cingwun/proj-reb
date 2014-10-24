@@ -14,7 +14,9 @@
     <table class="table table-bordered table-hover" id="reservationTable" data-detailsAction="{{$detailsURL}}" data-deleteAction="{{$deleteURL}}">
     	<thead>
     		<tr>
-                <th></th>
+                <th>
+                    <input type="checkbox" onclick="selectAll(this)" id="allCheckBox"/>
+                </th>
     			<th>姓名</th>
                 <th>性別</th>
     			<th>國家</th>
@@ -28,7 +30,9 @@
     	<tbody>
     		@foreach($reservations as $key => $reservation)
     		<tr id="{{$reservation->id}}">
-                <td><input type="checkbox" value="{{$reservation->id}}" name="selectBox"/></td>
+                <td>
+                    <input type="checkbox" value="{{$reservation->id}}" name="selectBox" onclick="checkSelect()"/>
+                </td>
     			<td>{{$reservation->name}}</td>
                 <td>{{$sexArray[$reservation->sex]}}</td>
     			<td>@if($reservation->country != ""){{$reservation->country}} @endif</td>
