@@ -32,7 +32,7 @@
 	</div>
 
 	<div class="form-group">
-		<label>身份</label>
+		<label>身份</label><br>
 		@foreach(Sentry::findAllGroups() as $group)
 		<label class="radio-inline">
 			<input type="radio" name="group" value="{{ $group->id }}">

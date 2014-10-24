@@ -3,38 +3,38 @@
 @section('title')
 權限管理
 @stop
- 
+
 @section('main')
-<div class="pull-right"><a href="{{ URL::to('admin/permissions/create') }}" class="btn btn-success">新增</a></div>
-<br>
-<br>
-<table class="table table-bordered" ng-controller="permissionsCtrl">
-<thead>
-                <tr>
-                  <th>權限</th>
-                  <th>標題</th>
-                  <th>狀態</th>
-                  <th>功能</th>
-                </tr>
-              </thead>
+<div class="col-lg-12"><a href="{{ URL::to('admin/permissions/create') }}" class="pull-right btn btn-success">新增</a></div>
+<div class="col-lg-12" id="clearTop">
+  <table class="table table-bordered" ng-controller="permissionsCtrl" >
+    <thead>
+      <tr>
+        <th>權限</th>
+        <th>標題</th>
+        <th>狀態</th>
+        <th>功能</th>
+    </tr>
+</thead>
 <tbody id="sortable">
-@foreach ($permissions as $permission)
-                <tr id="{{ $permission->id }}">
-                  <td>{{ $permission->name }}</td>
-                  <td>{{ $permission->title }}</td>
-                  <td>{{ $permission->status?'ON':'OFF' }}</td>
-                  <td><a href="{{ URL::to('admin/permissions/'.$permission->id.'/edit') }}" class="btn btn-primary">修改</a> <a href ng-click="deletePermission({{ $permission->id }})" class="btn btn-danger">刪除</a></td>
-                </tr>
+  @foreach ($permissions as $permission)
+  <tr id="{{ $permission->id }}">
+    <td>{{ $permission->name }}</td>
+    <td>{{ $permission->title }}</td>
+    <td>{{ $permission->status?'ON':'OFF' }}</td>
+    <td><a href="{{ URL::to('admin/permissions/'.$permission->id.'/edit') }}" class="btn btn-primary">修改</a> <a href ng-click="deletePermission({{ $permission->id }})" class="btn btn-danger">刪除</a></td>
+</tr>
 @endforeach
 </tbody>
 </table>
+</div>
 @stop
 
 @section('bottom')
 <style>
-.table tbody tr 
-{
-  cursor:move;
+  .table tbody tr 
+  {
+    cursor:move;
 }
 </style>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
@@ -50,21 +50,21 @@
         {
           // Set helper cell sizes to match the original sizes
           $(this).width($originals.eq(index).width());
-        });
+      });
         return $helper;
-      },
-      update: function( event, ui ) {
+    },
+    update: function( event, ui ) {
         var sort = $(this).sortable("toArray").toString();
 
         $.ajax({
           type: "POST",
           url: "/admin/permissions/sort",
           data: { sort:sort }
-        }).done(function( msg ) {
-        });
-      }
-    });
+      }).done(function( msg ) {
+      });
+  }
+});
     $( "#sortable" ).disableSelection();
-  });
+});
 </script>
 @stop

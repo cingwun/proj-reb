@@ -22,7 +22,7 @@
 	</div>
 
 	<div class="form-group">
-		<label>狀態</label>
+		<label>狀態</label><br>
 		<label class="radio-inline">
 			<input type="radio" name="status" value="1" checked="checked"> ON
 		</label>

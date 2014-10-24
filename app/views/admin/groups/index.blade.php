@@ -1,8 +1,12 @@
 @extends('admin._layouts.default')
  
+@section('title')
+群組管理
+@stop
+
 @section('main')
-<h2>群組管理</h2>
-<div class="pull-right"><a href="{{ URL::to('admin/groups/create') }}" class="btn">新增</a></div>
+<div class="col-lg-12"><a class="btn btn-success pull-right" href="{{ URL::to('admin/groups/create')}} ">新增</a></div>
+<div class="col-lg-12" id="clearTop">
 <table class="table table-bordered" ng-controller="groupsCtrl">
 <thead>
                 <tr>
@@ -19,6 +23,7 @@
 @endforeach
 </tbody>
 </table>
+</div>
 @stop
 
 @section('bottom')
