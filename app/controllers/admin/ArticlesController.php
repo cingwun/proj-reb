@@ -76,6 +76,7 @@ class ArticlesController extends \BaseController
             $article->meta_name = Input::get('meta_name');
             $article->meta_content = Input::get('meta_content');
             $article->meta_title = Input::get('meta_title');
+            $article->h1 = Input::get('h1');
 
             $article->save();
             //create a corresponding tw/cn article at same time.
@@ -89,6 +90,7 @@ class ArticlesController extends \BaseController
             $article->meta_name = Input::get('meta_name');
             $article->meta_content = Input::get('meta_content');
             $article->meta_title = Input::get('meta_title');
+            $article->h1 = Input::get('h1');
 
             $refArticle->save();
 
@@ -148,6 +150,7 @@ class ArticlesController extends \BaseController
             $article->meta_name = Input::get('meta_name');
             $article->meta_content = Input::get('meta_content');
             $article->meta_title = Input::get('meta_title');
+            $article->h1 = Input::get('h1');
 
             $article->save();
 

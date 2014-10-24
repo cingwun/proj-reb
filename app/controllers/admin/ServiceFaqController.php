@@ -466,6 +466,7 @@ class ServiceFaqController extends BaseController{
             $model->meta_keywords = Input::get('meta_keywords');
             $model->meta_desc = Input::get('meta_desc');
             $model->meta_title = Input::get('meta_title');
+            $model->h1 = Input::get('h1');
 
             $model->save();
 
@@ -518,6 +519,7 @@ class ServiceFaqController extends BaseController{
                 $refModel->meta_keywords = Input::get('meta_keywords');
                 $refModel->meta_desc = Input::get('meta_desc');
                 $refModel->meta_title = Input::get('meta_title');
+                $refModel->h1 = Input::get('h1');
 
                 $refModel->save();
 

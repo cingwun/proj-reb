@@ -64,5 +64,8 @@
 <meta name="keyword" content="{{$article->meta_name}}">
 <meta name="description" content="{{$article->meta_content}}">
 <meta name="title" content="{{$article->meta_title}}">
+@stop
 
+@section(h1)
+<h1 style="display:none">{{array_get($article, 'h1')}}</h1>
 @stop

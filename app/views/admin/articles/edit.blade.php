@@ -65,6 +65,11 @@
 		<label for="meta_title">Meta title: </label>
 		<input type="text" class="form-control" id="meta_title" name="meta_title" size="12" value="{{ $article->meta_title }}">
 	</div>
+	
+	<div class="form-group">
+		<label for="h1">h1: </label>
+		<input type="text" class="form-control" id="h1" name="h1" size="12" value="{{ $article->h1 }}">
+	</div>
 
 	<input type="hidden" name="_method" value="PUT" />
 	<button class="btn btn-danger" type="button" onclick="history.back();">取消</button>

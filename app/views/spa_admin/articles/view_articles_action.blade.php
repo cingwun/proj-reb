@@ -103,6 +103,10 @@
 			<div>
 				<input type="text" class="form-control" id="meta_title" name="meta_title" size="12" value="{{array_get($specArticle, 'meta_title', '')}}">
 			</div>
+			<label for="meta">h1:</label>
+			<div>
+				<input type="text" class="form-control" id="h1" name="h1" size="12" value="{{array_get($specArticle, 'h1', '')}}">
+			</div>
 		</div>
 
 

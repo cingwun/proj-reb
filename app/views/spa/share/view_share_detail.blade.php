@@ -117,3 +117,8 @@
 <meta name="title" content="{{$article->meta_title}}">
 
 @stop
+
+
+@section('h1')
+<h1 style='display:none'>{{$article->h1}}</h1>
+@stop

@@ -237,6 +237,7 @@ class ProductController extends \BaseController {
 			$meta_name = \Input::get('meta_name');
 			$meta_content = \Input::get('meta_content');
 			$meta_title = \Input::get('meta_title');
+			$h1 = \Input::get('h1');
 
 			$product->title = !empty($title) ? $title : "";;
 			$product->image = !empty($image) ? $image : "";
@@ -251,6 +252,7 @@ class ProductController extends \BaseController {
 			$product->meta_name = !empty($meta_name) ? $meta_name : "";
 			$product->meta_content = !empty($meta_content) ? $meta_content : "";
 			$product->meta_title = !empty($meta_title) ? $meta_title : "";
+			$product->h1 = !empty($h1) ? $h1 : "";
 			$product->save();
 
 			//create service id
@@ -304,6 +306,7 @@ class ProductController extends \BaseController {
 				$anotherProduct->meta_name = !empty($meta_name) ? $meta_name : "";
 				$anotherProduct->meta_content = !empty($meta_content) ? $meta_content : "";
 				$anotherProduct->meta_title = !empty($meta_title) ? $meta_title : "";
+
 				$anotherProduct->save();
 
 				$anotherId = $anotherProduct->id;

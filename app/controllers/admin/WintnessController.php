@@ -422,6 +422,8 @@ class WintnessController extends BaseController{
             $model->meta_name = Input::get('meta_name', '');
             $model->meta_content = Input::get('meta_content', '');
             $model->meta_title = Input::get('meta_title', '');
+            $model->h1 = Input::get('h1', '');
+
 
             $model->created_at = time();
             $model->updated_at = time();
@@ -437,6 +439,8 @@ class WintnessController extends BaseController{
                 $refModel->meta_name = Input::get('meta_name', '');
                 $refModel->meta_content = Input::get('meta_content', '');
                 $refModel->meta_title = Input::get('meta_title', '');
+                $refModel->h1 = Input::get('h1', '');
+
 
                 $refModel->created_at = time();
                 $refModel->updated_at = time();

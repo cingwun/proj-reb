@@ -38,6 +38,7 @@
     </head>
 
     <body id="admin">
+        @yield('h1')
         <div id="wrapper">
 
             <!-- Navigation -->
