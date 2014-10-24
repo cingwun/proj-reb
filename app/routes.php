@@ -497,3 +497,5 @@ Route::group(array('prefix'=>$locale, 'domain'=>$spa), function() {
      */
     Route::get('reservation/quick', array('as'=>'spa.reservation.quick', 'uses'=>'spa\\ReservationController@getQuick'));
 });
+
+Route::get('check/fileExists', array('uses'=>'ImgsFileController@checkImgsFile'));
