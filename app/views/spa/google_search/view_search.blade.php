@@ -1,17 +1,18 @@
+<?php
+$titleType = 'news';
+?>
+
 @extends('spa._layouts.default')
 
 @section('bodyId')
-{{''}}
+{{'index'}}
 @stop
 
 @section('mainBanner')
 @stop
 
 @section('content')
-<aside id="indexSetContent" class="hotEv">
-	<h2 class="titleRp title_spa-hotEv">熱門推薦</h2>
-	@include('spa._partials.widget_hotBanner')
-</aside>
+@include('spa._partials.widget_setContent')
 <div id="mainContent" class="postBox" role="main">
 <script>
   (function() {
