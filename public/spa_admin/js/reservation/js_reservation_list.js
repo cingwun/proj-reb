@@ -103,5 +103,5 @@ function checkSelect() {
         if(obj.checked)
             checkAmount++;
     });
-    $('#allCheckBox')[0].checked = (checkSum == checkAmount) ? true : false;
+    $('#allCheckBox')[0].checked = (checkSum == checkAmount);
 }
