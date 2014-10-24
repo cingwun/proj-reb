@@ -27,13 +27,13 @@
 			<!-- @image, for the Products_list Image -->
 			<div class="proPic"><img src="{{$product['image']}}?w=165&h=165"></div>
 			<!-- @text, for Products_list Title -->
-			<div class="proTitle"><a href="{{$productDetailURL}}/{{$product['id']}}">{{\Text::preEllipsize(strip_tags($product['title']), 10)}}</a></div>
+			<div class="proTitle"><a href="{{$productDetailURL}}/{{$product['id']}}">{{\Text::preEllipsize(strip_tags($product['title']), 9)}}</a></div>
 			<!-- @text, for Products_list Content -->
-			<div class="proContent">{{\Text::preEllipsize(strip_tags($product['image_desc']), 46)}}</div>
+			<div class="proContent">{{\Text::preEllipsize(strip_tags($product['image_desc']), 44)}}</div>
 			<!-- @text, for Products_list  Capacity and Price -->
 			<div class="proPrice">
 				<p>容量：<font>{{$product['capacity']}}</font></p>
-				<p>價格：<font>{{$product['price']}}</font></p>
+				<p>價格：<font>${{$product['price']}}</font></p>
 			</div>
 		</div>
 		@endforeach
