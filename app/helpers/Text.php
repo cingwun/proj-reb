@@ -53,11 +53,12 @@ class Text {
      * @see http://www.codeigniter.org.tw/user_guide/helpers/text_helper.html
      * @param   string      string to ellipsize
      * @param   integer     max length of string
+     * @param   string      check whether the string is for spa_share or not
      * @param   string      encording
      * @param   string      ellipsis ; Default '...'
      * @return  string      ellipsized string
      */
-    public static function preEllipsize($str, $max_length, $rate=0.4, $ellipsis = '...', $encode='UTF-8'){
+    public static function preEllipsize($str, $max_length, $type=null, $rate=0.4, $ellipsis = '...', $encode='UTF-8'){
         // Is the string long enough to ellipsize?
         if (mb_strlen($str, $encode) <= $max_length)
             return $str;
@@ -74,7 +75,7 @@ class Text {
             }
         }
 
-        return $preStr.$ellipsis;
+        return ($type=='spa_share') ? $preStr.$ellipsis.'more' : $preStr.$ellipsis;
     }
 
     /**

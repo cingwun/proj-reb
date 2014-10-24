@@ -28,7 +28,7 @@
 						<img src="" data-src="{{$cover[0]->image}}?w=209" alt="" class="img-rounded">
 					</div>
 					<!-- @strings for each shareCase description -->
-					<div class="itemTop_con">{{$share['share']['description']}}</div>
+					<div class="itemTop_con">{{ \Text::preEllipsize(strip_tags($share['share']['description']), 46, 'spa_share') }}</div>
 				</div>
 				<!-- @text for each shareCase class list -->
 				<div class="itemDown">

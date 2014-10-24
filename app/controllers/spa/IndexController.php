@@ -17,7 +17,7 @@ class IndexController extends \BaseController{
 		if($news)
 			$cover = json_decode($news[0]['cover']);
 
-		$service = \SpaService::where('_parent', 'N')
+		$service = \SpaService::where('_parent', '<>', 'N')
 							  ->where('lang', $this->getLocale())
 							  ->where('display', 'yes')
 							  ->orderBy('sort', 'desc')
