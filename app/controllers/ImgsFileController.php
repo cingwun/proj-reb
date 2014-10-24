@@ -74,6 +74,19 @@ class ImgsFileController extends BaseController{
 		//remove file
 		try {
 			foreach ($imgsfile as $row) {
+				//cache
+				$imgName = basename($row);
+				if (is_dir("../app/storage/files/cache/$imgName")) {
+					
+					$cacheFile = glob("../app/storage/files/cache/$imgName/*.*");
+					if(!empty($cacheFile)) {
+						foreach ($cacheFile as $cache) {
+							unlink($cache);
+						}
+					}
+					rmdir("../app/storage/files/cache/$imgName");
+				}
+				//img
 				unlink($row);
 			}
 		} catch (Exception $e) {
