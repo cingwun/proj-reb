@@ -9,6 +9,7 @@ $titleType = 'news';
 ?>
 
 @section('content')
+@include('spa._partials.widget_setContent')
 <div id="mainContent" role="main">
 <script>
   (function() {

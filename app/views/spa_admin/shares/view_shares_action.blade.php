@@ -48,21 +48,19 @@
         <br>
 
         <!--The admin._partials.widget_imageUploader's div class had been modified by Kettan.-->
-        <div>
-            <div>
+        <div class="col-lg-12">
+            <div class="col-lg-6">
                 @include('spa_admin._partials.widget_imageUploader', array('options'=>array('elementId'=>'image-box-cover', 'title'=>'封面圖片', 'uploadURL'=>fps::getUploadURL(), 'deleteURL'=>fps::getDeleteURL())))
                 <!-- image uploader -->
             </div>
-            <br>
-            <div>
+            <div class="col-lg-6">
                 @include('spa_admin._partials.widget_imageUploader', array('options'=>array('elementId'=>'image-box', 'title'=>'圖片', 'uploadURL'=>fps::getUploadURL(), 'deleteURL'=>fps::getDeleteURL())))
                 <!-- image uploader -->
             </div>
-        </div>
-
-        <div>
-        @include('spa_admin._partials.widget_imageUploader', array('options'=>array('elementId'=>'image-box-gallery', 'title'=>'單文圖片集', 'uploadURL'=>fps::getUploadURL(), 'deleteURL'=>fps::getDeleteURL())))
-        <!-- image uploader -->
+            <div class="col-lg-12">
+                @include('spa_admin._partials.widget_imageUploader', array('options'=>array('elementId'=>'image-box-gallery', 'title'=>'單文圖片集', 'uploadURL'=>fps::getUploadURL(), 'deleteURL'=>fps::getDeleteURL())))
+                <!-- image uploader -->
+            </div>
         </div>
         <br>
 

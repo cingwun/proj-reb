@@ -38,25 +38,26 @@
                 <input class="form-control colorField " type="text" value="<?php echo Arr::get($article, 'background_color', '#CCC') ?>" name="colorField" style="display: inline-table; margin: 1px 5px 1px 0px;"/><input class="form-control" id="background-color" name="background_color" value="<?php echo Arr::get($article, 'background_color', '#CCC') ?>">
         </div>
 
-        <div>
-            <div>
+        <div class="col-lg-12">
+            <div class="col-lg-4">
                 @include('admin._partials.widget_imageUploader', array('options'=>array('elementId'=>'image-box-cover', 'title'=>'封面圖片', 'uploadURL'=>fps::getUploadURL(), 'deleteURL'=>fps::getDeleteURL())))
                 <!-- image uploader -->
             </div>
-            <div>
+            <div class="col-lg-4">
                 @include('admin._partials.widget_imageUploader', array('options'=>array('elementId'=>'image-box-before', 'title'=>'before圖片', 'uploadURL'=>fps::getUploadURL(), 'deleteURL'=>fps::getDeleteURL())))
                 <!-- image uploader -->
             </div>
-            <div>
+            <div class="col-lg-4">
                 @include('admin._partials.widget_imageUploader', array('options'=>array('elementId'=>'image-box-after', 'title'=>'after圖片', 'uploadURL'=>fps::getUploadURL(), 'deleteURL'=>fps::getDeleteURL())))
+                <!-- image uploader -->
+            </div>
+            <div class="col-lg-12">
+                @include('admin._partials.widget_imageUploader', array('options'=>array('elementId'=>'image-box-gallery', 'title'=>'單文圖片集', 'uploadURL'=>fps::getUploadURL(), 'deleteURL'=>fps::getDeleteURL())))
                 <!-- image uploader -->
             </div>
         </div>
 
-        <div>
-            @include('admin._partials.widget_imageUploader', array('options'=>array('elementId'=>'image-box-gallery', 'title'=>'單文圖片集', 'uploadURL'=>fps::getUploadURL(), 'deleteURL'=>fps::getDeleteURL())))
-            <!-- image uploader -->
-        </div>
+        
 
         <div class="form-group">
             <label for="link">說明文字</label>
