@@ -33,7 +33,7 @@
 	</div>
 
 	<div class="form-group">
-		<label for="status">狀態</label>
+		<label for="status">狀態</label><br>
 		<label class="radio-inline">
 			<input type="radio" name="status" value="1" checked="checked"> ON
 		</label>
@@ -43,7 +43,7 @@
 	</div>
 
 	<div class="form-group">
-		<label for="lang">語言</label>
+		<label for="lang">語言</label><br>
 		<label class="radio-inline">
 			<input type="radio" name="lang" value="tw" checked="checked"> 繁體
 		</label>
@@ -53,22 +53,19 @@
 	</div>
 
 	<div class="form-group">
+		<label for="meta_title">Meta title: </label>
+			<input type="text" class="form-control" id="meta_title" name="meta_title" size="12" value="{{ Input::old('meta_title') }}">
+	</div>
+	<div class="form-group">
 		<label for="meta_name">Meta keyword: </label>
 			<input type="text" class="form-control" id="meta_name" name="meta_name" size="12" value="{{ Input::old('meta_name') }}">
 	</div>
-
 	<div class="form-group">
 		<label for="meta_content">Meta description: </label>
 			<input type="text" class="form-control" id="meta_content" name="meta_content" size="12" value="{{ Input::old('meta_content') }}">
 	</div>
-
 	<div class="form-group">
-		<label for="meta_title">Meta title: </label>
-			<input type="text" class="form-control" id="meta_title" name="meta_title" size="12" value="{{ Input::old('meta_title') }}">
-	</div>
-		
-	<div class="form-group">
-		<label for="h1">h1: </label>
+		<label for="h1">h1標籤: </label>
 			<input type="text" class="form-control" id="h1" name="h1" size="12" value="{{ Input::old('h1') }}">
 	</div>	
 

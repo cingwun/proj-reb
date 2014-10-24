@@ -54,43 +54,47 @@
 		</div>
 
 		<div class="form-group">
-			<label for="status">狀態</label>
+			<label for="status">狀態</label><br>
 			<label class="radio-inline">
-				<input type="radio" name="status" value="1" id="optionsRadiosInline" @if(array_get($specArticle, 'status')==1) {{"checked"}} @endif >顯示
+				<input type="radio" name="status" value="1" @if(array_get($specArticle, 'status')==1) {{"checked"}} @endif >顯示
 			</label>
 			<label class="radio-inline">
-				<input type="radio" name="status" value="0" id="optionsRadiosInline" @if(array_get($specArticle, 'status')==0) {{"checked"}} @endif >隱藏
+				<input type="radio" name="status" value="0" @if(array_get($specArticle, 'status')==0) {{"checked"}} @endif >隱藏
 			</label>
 		</div>
 
 		<div class="form-group">
-			<label for="lang">語言</label>
+			<label for="lang">語言</label><br>
 			@if(array_get($specArticle, 'id')==0)
 			<label class="radio-inline">
-				<input type="radio" name="lang" value="tw" id="optionsRadiosInline" checked> 繁體
+				<input type="radio" name="lang" value="tw" checked> 繁體
 			</label>
 			<label class="radio-inline">
-				<input type="radio" name="lang" value="cn" id="optionsRadiosInline"> 簡體
+				<input type="radio" name="lang" value="cn"> 簡體
 			</label>
 			@elseif(array_get($specArticle, 'id')!=0 && $changeLang==null)
 			<label class="radio-inline">
-				<input type="radio" name="lang" value="tw" id="optionsRadiosInline" @if(array_get($specArticle, 'lang')=='tw') {{"checked"}} @endif > 繁體
+				<input type="radio" name="lang" value="tw" @if(array_get($specArticle, 'lang')=='tw') {{"checked"}} @endif > 繁體
 			</label>
 			<label class="radio-inline">
-				<input type="radio" name="lang" value="cn" id="optionsRadiosInline" @if(array_get($specArticle, 'lang')=='cn') {{"checked"}} @endif > 簡體
+				<input type="radio" name="lang" value="cn" @if(array_get($specArticle, 'lang')=='cn') {{"checked"}} @endif > 簡體
 			</label>
 			@elseif(array_get($specArticle, 'lang')=='tw')
 			<label class="radio-inline">
-				<input type="radio" name="lang" value="cn" id="optionsRadiosInline" checked> 簡體
+				<input type="radio" name="lang" value="cn" checked> 簡體
 			</label>
 			@else
 			<label class="radio-inline">
-				<input type="radio" name="lang" value="tw" id="optionsRadiosInline" checked> 繁體
+				<input type="radio" name="lang" value="tw" checked> 繁體
 			</label>
 			@endif
 		</div>
 
 		<div class="form-group">
+			<label for="meta">Meta title:</label>
+			<div>
+				<input type="text" class="form-control" id="meta_title" name="meta_title" size="12" value="{{array_get($specArticle, 'meta_title', '')}}">
+			</div>
 			<label for="meta">Meta keyword:</label>
 			<div>
 				<input type="text" class="form-control" id="meta_name" name="meta_name" size="12" value="{{array_get($specArticle, 'meta_name', '')}}">
@@ -99,11 +103,7 @@
 			<div>
 				<input type="text" class="form-control" id="meta_content" name="meta_content" size="12" value="{{array_get($specArticle, 'meta_content', '')}}">
 			</div>
-			<label for="meta">Meta title:</label>
-			<div>
-				<input type="text" class="form-control" id="meta_title" name="meta_title" size="12" value="{{array_get($specArticle, 'meta_title', '')}}">
-			</div>
-			<label for="meta">h1:</label>
+			<label for="meta">h1標籤:</label>
 			<div>
 				<input type="text" class="form-control" id="h1" name="h1" size="12" value="{{array_get($specArticle, 'h1', '')}}">
 			</div>

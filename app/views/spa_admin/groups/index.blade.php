@@ -5,9 +5,8 @@
 @stop
 
 @section('main')
-<div class="pull-right"><a href="{{ URL::to('admin/groups/create') }}" class="btn btn-success">新增</a></div>
-<br>
-<br>
+<div class="col-lg-12"><a href="{{ URL::to('admin/groups/create') }}" class="pull-right btn btn-success">新增</a></div>
+<div class="col-lg-12" id="clearTop">
 <table class="table table-bordered" ng-controller="groupsCtrl">
 	<thead>
 		<tr>
@@ -24,6 +23,7 @@
 		@endforeach
 	</tbody>
 </table>
+</div>
 @stop
 
 @section('bottom')

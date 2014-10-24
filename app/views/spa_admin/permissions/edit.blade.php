@@ -23,7 +23,7 @@
 
 
 	<div class="form-group">
-		<label>狀態</label>
+		<label>狀態</label><br>
 		<label class="radio-inline">
 			<input type="radio" name="status" value="1" @if ($permission->status==1) checked="checked" @endif> ON
 		</label>

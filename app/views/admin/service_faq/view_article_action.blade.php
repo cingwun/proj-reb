@@ -58,21 +58,22 @@ echo $title;
   @include('spa_admin._partials.widget_tabs', array('tabs'=>$tab))
   <!-- tabs -->
   <div class="form-group">
-    <label>Keywords</label>
-    <input class="form-control" type="text" name="meta_keywords" value="<?php echo Arr::get($article, 'meta_keywords', '')?>"/>
-  </div>
-  <div class="form-group">
-    <label>description</label>
-    <textarea class="form-control" rows="6" name="meta_desc"><?php echo Arr::get($article, 'meta_desc', '')?></textarea>
-  </div>
-  <div class="form-group">
-    <label>title</label>
+    <label>Meta title:</label>
     <textarea class="form-control" rows="1" name="meta_title"><?php echo Arr::get($article, 'meta_title', '')?></textarea>
   </div>
   <div class="form-group">
-    <label>h1</label>
+    <label>Meta keywords:</label>
+    <input class="form-control" type="text" name="meta_keywords" value="<?php echo Arr::get($article, 'meta_keywords', '')?>"/>
+  </div>
+  <div class="form-group">
+    <label>Meta description:</label>
+    <textarea class="form-control" rows="6" name="meta_desc"><?php echo Arr::get($article, 'meta_desc', '')?></textarea>
+  </div>
+  <div class="form-group">
+    <label>h1標籤:</label>
     <textarea class="form-control" rows="1" name="h1"><?php echo Arr::get($article, 'h1', '')?></textarea>
   </div>
+
   <input type="hidden" name="id" value="<?php echo Arr::get($article, 'id', null)?>" />
   <input type="hidden" name="articleLang" value="{{$articleLang}}"/>
   <a href='javascript:history.back()' type="button" class="btn btn-danger">取消</a>

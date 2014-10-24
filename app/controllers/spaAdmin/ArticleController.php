@@ -197,6 +197,7 @@ class ArticleController extends \BaseController {
 			$article->meta_content = \Input::get('meta_content');
 			$article->meta_title = \Input::get('meta_title');
 			$article->h1 = \Input::get('h1');
+
 			if($sort=='do')
 				$article->sort = \SpaArticles::max('sort')+1;
 			$article->save();
