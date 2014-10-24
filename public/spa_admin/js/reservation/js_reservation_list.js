@@ -65,8 +65,8 @@ function getSelectBox() {
     var url = $('#manyDeleteURL').val();
 
     var deleteRes = new Array();
-    $('input:checkbox:checked[name="selectBox"]').each(function(i) { 
-        deleteRes[i] = this.value; 
+    $('input:checkbox:checked[name="selectBox"]').each(function(i) {
+        deleteRes[i] = this.value;
     });
     if(deleteRes.length == 0) {
         alert('請勾選需要刪除的預約資料');
@@ -91,7 +91,7 @@ function getSelectBox() {
     });
 }
 function selectAll(allBox) {
-    $('input[name="selectBox"]').each(function(i, obj) { 
+    $('input[name="selectBox"]').each(function(i, obj) {
         obj.checked = allBox.checked;
     });
 }
@@ -99,12 +99,9 @@ function checkSelect() {
     var checkBox = $('input[name="selectBox"]');
     var checkSum = checkBox.size();
     var checkAmount = 0;
-    checkBox.each(function(i,obj) { 
+    checkBox.each(function(i,obj) {
         if(obj.checked)
             checkAmount++;
     });
-    if(checkSum == checkAmount)
-        $('#allCheckBox')[0].checked=true;
-    else
-        $('#allCheckBox')[0].checked=false;
+    $('#allCheckBox')[0].checked = (checkSum == checkAmount) ? true : false;
 }
