@@ -147,6 +147,7 @@ class ArticleController extends \BaseController {
 				$newArticle->meta_name = \Input::get('meta_name');
 				$newArticle->meta_content = \Input::get('meta_content');
 				$newArticle->meta_title = \Input::get('meta_title');
+				$newArticle->h1 = \Input::get('h1');
 
 				$newArticle->ref_id = $refArticle->id;
 				$newArticle->save();
@@ -195,6 +196,7 @@ class ArticleController extends \BaseController {
 			$article->meta_name = \Input::get('meta_name');
 			$article->meta_content = \Input::get('meta_content');
 			$article->meta_title = \Input::get('meta_title');
+			$article->h1 = \Input::get('h1');
 			if($sort=='do')
 				$article->sort = \SpaArticles::max('sort')+1;
 			$article->save();

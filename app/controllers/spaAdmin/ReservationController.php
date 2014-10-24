@@ -50,6 +50,7 @@ class ReservationController extends \BaseController{
 			$detailsURL = \URL::route('spa.admin.reservation.details');
 			$deleteURL = \URL::route('spa.admin.reservation.delete');
 			$actionURL = \URL::route('spa.admin.reservation.action');
+			$manyDeleteURL = \URL::route('spa.admin.reservation.manyDelete');
 
 			$widgetParam = array(
 				'currPage' => $page,
@@ -68,7 +69,8 @@ class ReservationController extends \BaseController{
 				'detailsURL'=>$detailsURL,
 				'pagerParam' => &$widgetParam,
 				'deleteURL'=>$deleteURL,
-				'actionURL'=>$actionURL
+				'actionURL'=>$actionURL,
+				'manyDeleteURL' => $manyDeleteURL
 			));
 		} catch (Exception $e) {
 			echo $e->getMessage();
@@ -259,6 +261,28 @@ class ReservationController extends \BaseController{
 		} catch (Exception $e) {
 			echo $e->getMessage();
 			return;
+		}
+	}
+
+	/*
+     * AJAX mony delete reservation
+     */
+	public function postManyDelete() {
+		try {
+			$deleteRes = \Input::get('deleteRes');
+
+			\SpaReservation::whereIn('id', $deleteRes)
+						   ->delete();
+
+			return \Response::json(array(
+				'status' => 'ok',
+				'message' => '刪除完成'
+			));
+		} catch (Exception $e) {
+			return \Response::json(array(
+				'status' => 'error',
+				'message' => $e->getMessage()
+			));
 		}
 	}
 }

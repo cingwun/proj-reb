@@ -29,6 +29,7 @@ class CreateSpaServiceTable extends Migration {
 				$table->text('meta_name');
 				$table->text('meta_content');
 				$table->text('meta_title');
+				$table->text('h1');
 				$table->timestamps();
 			});
 		}

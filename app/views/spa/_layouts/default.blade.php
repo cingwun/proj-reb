@@ -8,10 +8,12 @@
 	<title>煥儷美顏SPA</title>
 	{{ HTML::style(asset('spa/css/layout_spa.css'))}}
 	<!--[if lt IE 9]>
-	<script type="text/javascript" src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>		
+	<script type="text/javascript" src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 </head>
 <body id="@yield('bodyId')">
+	@yield('h1')
+
 	<noscript><div class="noscriptNotify">
 		<p><i class="fa fa-warning"></i>&nbsp;為了正常瀏覽本站，請開啟瀏覽器的 JavaScript，然後<a href="">再試一次</a>。</p>
 	</div></noscript><!-- ======================== JavaScript 停用警告 end ======================== -->
@@ -27,7 +29,7 @@
 			</div><!-- ======================== midWrap end ======================== -->
 		</div>
 	</div><!-- ======================== wrap end ======================== -->
-	
+
 	@include('spa._partials.widget_footer')
 	@include('spa._partials.widget_quickReservation')
 

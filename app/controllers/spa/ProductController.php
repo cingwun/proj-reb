@@ -8,23 +8,21 @@ class ProductController extends \BaseController{
 	 */
 	public function getProduct() {
 		try {
-			$products = array();
+			$prodCats = array();
 
-			$productsCmd = \SpaProduct::where('_parent', '<>', 'N')
+			$prodCatsCmd = \SpaProduct::where('_parent', 'N')
 									  ->where('display', 'yes')
 									  ->where('lang', $this->getLocale())
 									  ->orderBy('sort', 'DESC')
 									  ->get(array('id', 'title', 'image'))
 									  ->toArray();
-			if($productsCmd)
-				$products = $productsCmd;
+			if($prodCatsCmd)
+				$prodCats = $prodCatsCmd;
 			
-			$detailURL = \URL::route('spa.product.detail');
 			$indexURL = \URL::route('spa.index');
 
 			return \View::make('spa.product.view_product', array(
-				"products" => $products,
-				"detailURL" => $detailURL,
+				"prodCats" => $prodCats,
 				"indexURL" => $indexURL
 			));
 		} catch (Exception $e) {

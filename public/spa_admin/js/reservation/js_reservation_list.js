@@ -61,3 +61,32 @@ var reservationTable = function(o){
     }
     return o.init();
 }({el: '#reservationTable'});
+function getSelectBox() {
+    var url = $('#manyDeleteURL').val();
+
+    var deleteRes = new Array();
+    $('input:checkbox:checked[name="selectBox"]').each(function(i) { 
+        deleteRes[i] = this.value; 
+    });
+    if(deleteRes.length == 0) {
+        alert('請勾選需要刪除的預約資料');
+        return;
+    }
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data:{
+            deleteRes: deleteRes
+        },
+        dataType: 'json',
+        async: true,
+        success: function(res, s, xhr) {
+            alert(res.message);
+            if(res.status == 'ok')
+                window.location.reload();
+        },
+        error: function() {
+            alert('提醒您:\n\n    系統刪除錯誤，請通知工程師');
+        }
+    });
+}
