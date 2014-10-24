@@ -1,22 +1,18 @@
+@extends('spa._layouts.default')
+
+@section('bodyId')
+{{'service'}}
+@stop
+
 <?php
 $titleType = 'news';
 ?>
 
-@extends('spa._layouts.default')
-
-@section('bodyId')
-{{'index'}}
-@stop
-
-@section('mainBanner')
-@stop
-
 @section('content')
-@include('spa._partials.widget_setContent')
-<div id="mainContent" class="postBox" role="main">
+<div id="mainContent" role="main">
 <script>
   (function() {
-    var cx = '017730374180726895139:6xs9iqhrlp8';
+    var cx = '007704823241692022177:6np-68t2xs4';
     var gcse = document.createElement('script');
     gcse.type = 'text/javascript';
     gcse.async = true;
@@ -27,7 +23,7 @@ $titleType = 'news';
   })();
 </script>
 <gcse:searchresults-only></gcse:searchresults-only>
-</div><!-- ======================== mainContent end ======================== -->
+</div><!-- ======================== searchContent end ======================== -->
 @stop
 
 
