@@ -19,19 +19,15 @@ $(function(){
     pauseOnHover:		true,
     speed:				750,
     timeout:			6000
-});
+	});
 
 	/* 首頁 熱門推薦 slider */
 	$('.hotSlider').cycle({
 		fx:   				'fade',
 		slides:				'> .slide',
-	
-    next:   			'> .bannerNext',
-    prev:   			'> .bannerPrev',
-    pauseOnHover:		true,
-    speed:				500,
-    timeout:			6000
-});
+    	speed:				1000,
+    	timeout:			4500
+	});
 
 
 	/* 美麗新技術 */

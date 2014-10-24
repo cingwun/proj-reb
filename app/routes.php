@@ -424,6 +424,11 @@ Route::group(array('prefix'=>$locale, 'domain'=>$spa), function() {
 
     Route::get('/', array('as'=>'spa.index', 'uses'=>'spa\\IndexController@getIndex'));
 
+    /*------google search-------*/
+    Route::post('search', function(){
+        return View::make('spa.google_search.view_search');
+    });
+
     /*----------about----------*/
     Route::get('about/{id?}', array('as'=>'spa.about', 'uses'=>'spa\\AboutController@getArticle'))
          ->where(array('id'=>'([0-9]+)'));

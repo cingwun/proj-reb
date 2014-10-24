@@ -61,3 +61,6 @@ $size = "large";
 </article><!-- ======================== serviceList end ======================== -->
 
 @stop
+
+@section('head')
+@stop
