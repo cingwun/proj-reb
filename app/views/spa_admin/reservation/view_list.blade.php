@@ -1,7 +1,7 @@
 @extends('spa_admin._layouts.default')
 
 @section('title')
-預約管理
+<i class="glyphicon glyphicon-list-alt"></i> 預約管理
 @stop
 
 @section('main')
@@ -53,7 +53,7 @@
     		@endforeach
     	</tbody>
     </table>
-    @include('spa_admin._partials.widget_pager', array('wp'=>$pagerParam))  
+    @include('spa_admin._partials.widget_pager', array('wp'=>$pagerParam))
 </div>
 <script type="text/x-tmpl" id="tmpl-details">
 <div class="panel panel-info">

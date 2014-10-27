@@ -1,8 +1,9 @@
 @extends('spa_admin._layouts.default')
 
 @section('title')
+<i class="glyphicon glyphicon-camera"></i> 美麗分享-
 <?php $title = (!isset($article['id']) || $article['id']==null) ? '新增' : '編輯'; ?>
-<h2> {{ $title}}文章&nbsp;<span class="btn btn-inverse" onclick="window.history.back();">回上一頁</span></h2>
+{{ $title}}文章&nbsp;<span class="btn btn-default" onclick="window.history.back();">回上一頁</span>
 @stop
 
 @section('main')

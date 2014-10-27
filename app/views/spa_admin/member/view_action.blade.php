@@ -1,7 +1,8 @@
 @extends('spa_admin._layouts.default')
 
 @section('title')
-編輯會員
+<i class="glyphicon glyphicon-user"></i> 會員管理 - 編輯會員
+&nbsp;<span class="btn btn-default" onclick="window.history.back();">回上一頁</span>
 @stop
 
 @section('main')

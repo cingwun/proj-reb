@@ -1,7 +1,7 @@
 @extends('spa_admin._layouts.default')
 
 @section('title')
-會員管理
+<i class="glyphicon glyphicon-user"></i> 會員管理
 @stop
 
 @section('main')

@@ -1,7 +1,8 @@
 @extends('spa_admin._layouts.default')
 
 @section('title')
-類型列表-@if($action=='create')新增@else 修改@endif
+<i class="glyphicon glyphicon-exclamation-sign"></i> 美麗服務 - @if($action=='create')新增類型@else 修改類型@endif
+&nbsp;<span class="btn btn-default" onclick="window.history.back();">回上一頁</span>
 @stop
 
 @section('main')

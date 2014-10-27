@@ -2,7 +2,7 @@
 
 @section('title')
 
-產品項目<?php echo (!empty($category)) ? sprintf(' ( %s ) ', \Text::preEllipsize(strip_tags($category_array[$category]), 10)) : ' '?>-文章列表
+<i class="glyphicon glyphicon-th"></i> 美麗產品<?php echo (!empty($category)) ? sprintf(' ( %s ) ', \Text::preEllipsize(strip_tags($category_array[$category]), 10)) : ' '?> - 文章列表
 
 @stop
 

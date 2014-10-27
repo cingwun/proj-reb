@@ -2,7 +2,7 @@
 
 @section('title')
 
-服務項目<?php echo (!empty($category)) ? sprintf(' ( %s ) ', \Text::preEllipsize(strip_tags($category_array[$category]), 10)) : ' '?>-文章列表
+<i class="glyphicon glyphicon-exclamation-sign"></i> 美麗服務<?php echo (!empty($category)) ? sprintf(' ( %s ) ', \Text::preEllipsize(strip_tags($category_array[$category]), 10)) : ' '?> - 文章列表
 
 @stop
 

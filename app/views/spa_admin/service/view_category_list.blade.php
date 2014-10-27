@@ -1,7 +1,7 @@
 @extends('spa_admin._layouts.default')
 
 @section('title')
-服務項目-類型列表
+<i class="glyphicon glyphicon-exclamation-sign"></i> 美麗服務 - 類型列表
 @stop
 
 @section('main')

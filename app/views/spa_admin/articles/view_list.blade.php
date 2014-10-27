@@ -1,7 +1,7 @@
 @extends('spa_admin._layouts.default')
 
 @section('title')
-文章管理
+<i class="glyphicon glyphicon-pencil"></i> 文章管理
 {{ HTML::style(asset('css/admin/service_faq/css_category_list.css'))}}
 @stop
 
@@ -22,10 +22,10 @@
 <br>
 
 		<?php switch($category) {case 'about':$cat = "關於煥麗";break; case 'news':$cat = "最新消息";break; case 'oversea':$cat = "海外專區";break;} ?>
-	<div  class="col-lg-12">				
+	<div  class="col-lg-12">
 		<div class="table-responsive" id="clearTop">
 			<table class="table table-bordered" id="sortable" data-sortAction="<?php echo URL::route('spa.admin.articles.sort')?>" >
-			
+
 				<thead>
 					<tr>
 						<th>標題</th>
@@ -62,7 +62,7 @@
 
 
 <!--{{ HTML::style(asset('css/admin/service_faq/css_category_list.css'))}}
-{{ HTML::script(asset('packages/tableDnD/js/jquery.tablednd.0.8.min.js'))}}	
+{{ HTML::script(asset('packages/tableDnD/js/jquery.tablednd.0.8.min.js'))}}
 {{ HTML::script(asset('js/admin/service_faq/js_category_list.js'))}}-->
 
 
@@ -86,7 +86,7 @@
 {{ HTML::script('js/admin/app.js'); }}
 
 <style>
-.table tbody tr 
+.table tbody tr
 {
   cursor:move;
 }

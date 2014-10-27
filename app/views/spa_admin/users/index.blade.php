@@ -1,13 +1,13 @@
 @extends('spa_admin._layouts.default')
 
 @section('title')
-使用者列表
+<i class="glyphicon glyphicon-dashboard"></i> 系統管理 - 使用者列表
 @stop
 
 @section('main')
 <div class="pull-right"><a href="{{ URL::to('admin/users/create') }}" class="btn btn-success">新增使用者</a></div>
 <table class="table table-bordered" ng-controller="usersCtrl">
-  <thead>                                                 
+  <thead>
     <tr>
       <th>Email</th>
       <th>姓名</th>
@@ -30,7 +30,7 @@
       <td>{{ $user->last_login }}</td>
       <td>{{ ($user->activated == 1)?'ON':'OFF' }}</td>
       <td>
-        <a href="{{ URL::to('admin/users/'.$user->id.'/edit') }}" class="btn btn-primary">修改</a> 
+        <a href="{{ URL::to('admin/users/'.$user->id.'/edit') }}" class="btn btn-primary">修改</a>
         <a href ng-click="deleteUser('{{ $user->id}}')" class="btn btn-danger">刪除</a>
       </td>
     </tr>

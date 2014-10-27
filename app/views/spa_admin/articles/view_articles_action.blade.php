@@ -1,7 +1,9 @@
 @extends('spa_admin._layouts.default')
 
 @section('title')
+<i class="glyphicon glyphicon-pencil"></i> 文章管理-
 <?php if((array_get($specArticle, 'id')==0)){echo "新增文章";}else{echo "編輯文章";} ?>
+&nbsp;<span class="btn btn-default" onclick="window.history.back();">回上一頁</span>
 @stop
 
 @section('main')

@@ -1,7 +1,7 @@
 @extends('spa_admin._layouts.default')
 
 @section('title')
-美麗分享
+<i class="glyphicon glyphicon-camera"></i> 美麗分享
 @stop
 
 @section('main')
@@ -43,7 +43,7 @@
                 ?>
                 <tr id="{{ $article->id}}">
                     <td>
-                        @if(is_array($cover))  
+                        @if(is_array($cover))
                         <img src="{{ $cover[0]->image}}?w=90" alt="" class="img-rounded">
                         @endif
                     </td>

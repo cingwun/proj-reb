@@ -11,10 +11,10 @@
 @include('admin._partials.notifications')
 <div class="clo-lg-12">
     <form name="form1" action="<?=URL::route('admin.wintness.article.write')?>" method="post" enctype="multipart/form-data">
-        
+
         <div class="form-group">
             <label for="lang">語系</label><br>
-            @if(empty($article->id))
+            @if(!Arr::get($article, 'lang'))
             <label class="radio-inline">
                 <input type="radio" name="lang" value="tw" id="optionsRadiosInline" checked> 繁體
             </label>
@@ -23,14 +23,14 @@
             </label>
             @else
             <label class="radio-inline">
-                <input type="radio" name="lang" value="<?=(Arr::get($article, 'lang')=='tw')?'tw':'cn'; ?>" id="optionsRadiosInline" checked> <?=(Arr::get($article, 'lang')=='tw')?'繁體':'簡體'; ?>
+                <input type="radio" name="lang" value="{{(Arr::get($article, 'lang')=='tw')?'tw':'cn'}}" id="optionsRadiosInline" checked> <?=(Arr::get($article, 'lang')=='tw')?'繁體':'簡體'; ?>
             </label>
             @endif
         </div>
 
         <div class="form-group">
-            <label for="title">標題</label>         
-                <input type="text" class="form-control" id="title" name="title" style="width: 320px;" value="<?php echo Arr::get($article, 'title', '') ?>">           
+            <label for="title">標題</label>
+                <input type="text" class="form-control" id="title" name="title" style="width: 320px;" value="<?php echo Arr::get($article, 'title', '') ?>">
         </div>
 
         <div class="form-group">
@@ -57,7 +57,7 @@
             </div>
         </div>
 
-        
+
 
         <div class="form-group">
             <label for="link">說明文字</label>

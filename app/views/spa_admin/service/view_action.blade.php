@@ -1,6 +1,7 @@
 @extends('spa_admin._layouts.default')
 
 @section('title')
+<i class="glyphicon glyphicon-exclamation-sign"></i> 美麗服務 -
 @if($action == 'create')
 新增服務項目
 @elseif($action == 'edit')
@@ -12,6 +13,7 @@
 @else
 ( 簡體 )
 @endif
+&nbsp;<span class="btn btn-default" onclick="window.history.back();">回上一頁</span>
 @stop
 
 @section('main')

@@ -1,7 +1,7 @@
 @extends('spa_admin._layouts.default')
 
 @section('title')
-權限管理
+<i class="glyphicon glyphicon-dashboard"></i> 系統管理 - 權限管理
 @stop
 
 @section('main')
@@ -32,7 +32,7 @@
 
 @section('bottom')
 <style>
-  .table tbody tr 
+  .table tbody tr
   {
     cursor:move;
 }

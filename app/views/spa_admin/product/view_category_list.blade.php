@@ -1,7 +1,7 @@
 @extends('spa_admin._layouts.default')
 
 @section('title')
-產品項目-類型列表
+<i class="glyphicon glyphicon-th"></i> 美麗產品 - 類型列表
 @stop
 
 @section('main')

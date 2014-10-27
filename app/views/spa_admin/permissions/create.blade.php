@@ -1,7 +1,8 @@
 @extends('spa_admin._layouts.default')
 
 @section('title')
-新增權限
+<i class="glyphicon glyphicon-dashboard"></i> 系統管理 - 新增權限
+&nbsp;<span class="btn btn-default" onclick="window.history.back();">回上一頁</span>
 @stop
 
 @section('main')

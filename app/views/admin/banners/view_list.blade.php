@@ -1,7 +1,7 @@
 @extends($layout)
 
 @section('title')
-Banner&nbsp;管理&nbsp;(&nbsp;<?=$size['text']?>&nbsp;)
+<i class="glyphicon glyphicon-picture"></i> Banner管理 -&nbsp;(&nbsp;<?=$size['text']?>&nbsp;)
 @stop
 
 @section('main')
