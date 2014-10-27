@@ -1,7 +1,8 @@
 @extends('admin._layouts.default')
 
 @section('title')
-類型列表-@if($action=='create')新增@else編輯@endif
+<i class="glyphicon glyphicon-exclamation-sign"></i> 類型列表 - @if($action=='create')新增@else編輯@endif
+ <span class="btn btn-default" onclick="window.history.back();">回上一頁</span>
 @stop
 
 @section('main')
@@ -10,7 +11,7 @@
         <div class="form-group">
             <label class="control-label" for="title">類別標題</label>
             <input type="text" class="form-control" name="title" size="12" value="@if($action=='edit'){{$category->title}}@endif" />
-            
+
             <label class="control-label" for="title">排序 (輸入數字)</label>
             <input type="text" class="form-control" name="sort" size="12" value="@if($action=='edit'){{$category->sort}}@else 1@endif" onkeyup="value=value.replace(/[^\d]/g,'')"/>
             <label>狀態</label><br/>
@@ -29,7 +30,7 @@
 @stop
 
 @section('head')
-    
+
 @stop
 
 @section('bottom')

@@ -1,6 +1,7 @@
 @extends('admin._layouts.default')
 
 @section('title')
+<i class="glyphicon glyphicon-leaf"></i> 美麗新知 -
 <?php
 
 if (!isset($article['id']) || $article['id']==null){
@@ -11,7 +12,8 @@ if (!isset($article['id']) || $article['id']==null){
     $isNew = false;
 }
 ?>
-<?php echo $title ?> - 新知文章
+<?php echo $title ?>文章
+<span class="btn btn-default" onclick="window.history.back();">回上一頁</span>
 @stop
 @section('main')
 @include('admin._partials.notifications')

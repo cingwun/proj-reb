@@ -1,13 +1,13 @@
 @extends('admin._layouts.default')
 
 @section('title')
-文章管理
+<i class="glyphicon glyphicon-pencil"></i> 文章管理
 @stop
 
 
 @section('main')
 
-<?php 
+<?php
 
 $cc = $category;
 

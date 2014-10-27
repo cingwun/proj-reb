@@ -1,7 +1,8 @@
 @extends('admin._layouts.default')
 
 @section('title')
-{{ ($isNew) ? '新增' : '編輯'}}圖片
+<i class="glyphicon glyphicon-camera"></i> 美麗見證 - {{ ($isNew) ? '新增' : '編輯'}}圖片
+<span class="btn btn-default" onclick="window.history.back();">回上一頁</span>
 @stop
 
 @section('main')

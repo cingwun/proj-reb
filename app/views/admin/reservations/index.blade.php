@@ -1,7 +1,7 @@
 @extends('admin._layouts.default')
 
 @section('title')
-預約管理
+<i class="glyphicon glyphicon-list-alt"></i> 預約管理
 @stop
 
 @section('main')

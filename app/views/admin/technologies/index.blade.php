@@ -1,7 +1,7 @@
 @extends('admin._layouts.default')
 
 @section('title')
-美麗新技術
+<i class="glyphicon glyphicon-certificate"></i>  美麗新技術
 @stop
 
 @section('main')
@@ -39,7 +39,7 @@
 
 @section('bottom')
 <style>
-.table tbody tr 
+.table tbody tr
 {
   cursor:move;
 }

@@ -1,6 +1,7 @@
 @extends('admin._layouts.default')
 
 @section('title')
+<i class="glyphicon glyphicon-exclamation-sign"></i>
 <?php echo ($type=='service') ? '服務項目' : '常見問題'?> - 分類列表
 @stop
 

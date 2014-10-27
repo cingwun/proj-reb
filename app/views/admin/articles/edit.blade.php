@@ -1,7 +1,8 @@
 @extends('admin._layouts.default')
 
 @section('title')
-修改文章
+<i class="glyphicon glyphicon-pencil"></i> 文章管理 - 修改文章
+<span class="btn btn-default" onclick="window.history.back();">回上一頁</span>
 @stop
 
 @section('main')
