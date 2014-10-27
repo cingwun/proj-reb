@@ -1,7 +1,7 @@
 @extends($layout)
 
 @section('title')
-<i class="glyphicon glyphicon-picture"></i> Banner管理 - {{ (Arr::get($data, 'bid', null)==null)?'新增':'編輯'}}Banner ({{ $size['text']}})
+<i class="glyphicon glyphicon-picture"></i> Banner管理 - {{ (Arr::get($data, 'bid', null)==null)?'新增':'編輯'}} ({{ $size['text']}})
 &nbsp;<span class="btn btn-default" onclick="window.history.back();">回上一頁</span>
 @stop
 
