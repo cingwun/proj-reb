@@ -69,7 +69,7 @@ class ServiceFaqController extends BaseController{
                 ));
             foreach($list as $item)
                 $labelItmes[$item->id] = $item->title;
-            
+
             // detect is the request has labels
             return View::make('admin.service_faq.view_article_action', array(
                 'type' => $type,
@@ -118,7 +118,7 @@ class ServiceFaqController extends BaseController{
             $cateCmd = ServiceFaq::find($category);
             if($cateCmd->lang != $articleLang)
                 $category = $cateCmd->ref;
-            $cmd = $cmd->where("_parent", "=", $category); 
+            $cmd = $cmd->where("_parent", "=", $category);
             $params['category'] = $category;
         }else
             $cmd = $cmd->where('_parent', '<>', 'N');
@@ -139,7 +139,7 @@ class ServiceFaqController extends BaseController{
                                                           ->status;
             }
         }
-        
+
         $cats = ServiceFaq::where('type', '=', $type)
                           ->where('_parent', '=', 'N')
                           ->get();
@@ -202,7 +202,7 @@ class ServiceFaqController extends BaseController{
                           ->orderBy('sort', 'desc')
                           ->orderBy('updated_at', 'desc')
                           ->get();
-        
+
         $cats = array(
             'twList' => $catsTW,
             'cnList' => $catsCN
@@ -529,7 +529,7 @@ class ServiceFaqController extends BaseController{
                 $ModelCmd->save();
             }
 
-            return Redirect::route('admin.service_faq.article.list', array('type'=>$model->type, 'category'=>$model->_parent, 'afterAction'=>1));
+            return Redirect::route('admin.service_faq.article.list', array('type'=>$model->type, 'category'=>$model->_parent, 'afterAction'=>1, 'langList'=>$articleLang));
         }catch (Exception $e) {
             return Redirect::back()->withInput()->withErrors($e->getMessage());
         }
