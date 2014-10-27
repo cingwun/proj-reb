@@ -7,11 +7,14 @@ class Imagehandler{
 	}
 
 	public static function json($content) {
-		$img="";
-		
+		$img=array();
+
 		$cmd = json_decode($content);
-		if(!empty($cmd))
-			$img = $cmd[0]->id;
+		if(!empty($cmd)) {
+			foreach ($cmd as $row) {
+				$img[] = $row->id;
+			}
+		}
 
 		return $img;
 	}
@@ -24,7 +27,7 @@ class Imagehandler{
 			$html_content = $content;
 		else
 			$html_content = $row[0]->content;
-		
+
 		$html = strip_tags($html_content, '<img>');
 
 		preg_match_all('/<img.*src="([^"]*)"/i', $html, $matches);

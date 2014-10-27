@@ -31,7 +31,7 @@ class ImgsFileController extends BaseController{
 	        array('table'=>'wintness', 'columns'=>'tabs', 'format'=>'html'),
 	        array('table'=>'wintness', 'columns'=>'gallery', 'format'=>'json')
 		);
-		    
+
 		$imgList = array();
 		foreach ($modelColumn as $row) {
 			try {
@@ -42,17 +42,20 @@ class ImgsFileController extends BaseController{
 						if(!empty($data->$row['columns'])) {
 							switch ($row['format']) {
 								case 'url':
-								$imgs[] = Imagehandler::url($data->$row['columns']);
-								break;
+									$imgs[] = Imagehandler::url($data->$row['columns']);
+									break;
 								case 'json':
-								$imgs[] = Imagehandler::json($data->$row['columns']);
-								break;
+									$jsonCmd = Imagehandler::json($data->$row['columns']);
+									if(!empty($jsonCmd)){
+										$imgs = array_merge($imgs, $jsonCmd);
+									}
+									break;
 								case 'html':
-								$htmlCmd = Imagehandler::html($data->$row['columns']);
-								if(!empty($htmlCmd)){
-									$imgs = array_merge($imgs, $htmlCmd);
-								}
-								break;
+									$htmlCmd = Imagehandler::html($data->$row['columns']);
+									if(!empty($htmlCmd)){
+										$imgs = array_merge($imgs, $htmlCmd);
+									}
+									break;
 							}
 						}
 					}
@@ -77,7 +80,7 @@ class ImgsFileController extends BaseController{
 				//cache
 				$imgName = basename($row);
 				if (is_dir("../app/storage/files/cache/$imgName")) {
-					
+
 					$cacheFile = glob("../app/storage/files/cache/$imgName/*.*");
 					if(!empty($cacheFile)) {
 						foreach ($cacheFile as $cache) {
