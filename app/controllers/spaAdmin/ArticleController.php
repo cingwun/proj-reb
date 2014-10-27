@@ -14,7 +14,7 @@ class ArticleController extends \BaseController {
 	/**
 	 * Get specific categroy articles' list.
 	 * @params (string) $category about / news / oversea
-	 * 
+	 *
 	 */
 	public function getList($category = 'about', $lang = 'all') {
 		try{
@@ -43,7 +43,7 @@ class ArticleController extends \BaseController {
 	/*
 	 * Get the form for create new article or modify a specific article.
 	 * @params (int) $id, (string) $changeLang, (string) $Category
-	 * 
+	 *
 	 */
 	public function getAction($id = null, $changeLang = null, $Category = null) {
 		if(empty($id)){
@@ -93,12 +93,12 @@ class ArticleController extends \BaseController {
 	/**
 	 * Save the modidied article into database.
 	 * @params (int) $id, (string) $changeLang
-	 * 
+	 *
 	 */
 	public function postAction($id = null, $changeLang = null) {
 
 		try
-		{   
+		{
 			$sort = 'do';
 			if(empty($id)){
 				$article = new \SpaArticles;
@@ -135,12 +135,12 @@ class ArticleController extends \BaseController {
 
 	                $imgUploaderList[$key]['items'] = $list;
 	            }
-				
+
 				$newArticle->title = \Input::get('title');
 				$newArticle->cover = json_encode($imgUploaderList['cover']['items']);
 				$newArticle->content = \Input::get('content');
 				$newArticle->category = \Input::get('category');
-				$newArticle->open_at = \Input::get('open_at');   
+				$newArticle->open_at = \Input::get('open_at');
 				$newArticle->status = \Input::get('status');
 				$newArticle->lang = \Input::get('lang');
 				$newArticle->sort = \SpaArticles::max('sort')+1;
@@ -154,7 +154,7 @@ class ArticleController extends \BaseController {
 
 				$refArticle->ref_id = $newArticle->id;
 				$refArticle->save();
-				return Redirect::route('spa.admin.articles.list', array('category'=>$newArticle->category));
+				return \Redirect::route('spa.admin.articles.list', array('category'=>$newArticle->category));
 			}else{
 				$article = \SpaArticles::find($id);
 				$sort = 'doNot';
@@ -206,13 +206,13 @@ class ArticleController extends \BaseController {
 		{
 			return Redirect::route('spa.admin.articles.list', array('errorMessage'=>$e->getMessage()));
 		}
-		
+
 	}
 
 	/**
 	 * Delete a specific article.
 	 * @params (int) $id
-	 * 
+	 *
 	 */
 	public function postDelete($id)
 	{
@@ -242,7 +242,7 @@ class ArticleController extends \BaseController {
 	public function postSort(){
 		try{
 		    if (!isset($_POST) || !isset($_POST['id']) || !isset($_POST['sort']) || !isset($_POST['role']))
-		        throw new Exception('Error request [10]');	
+		        throw new Exception('Error request [10]');
 
 		    $id = (int) \Input::get('id');
 		    $role = \Input::get('role');
