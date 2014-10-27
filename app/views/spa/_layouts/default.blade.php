@@ -7,7 +7,6 @@
 	@yield('title','<title>煥儷美顏SPA</title>')
 
 	<!-- <meta name="viewport" content="width=device-width, initial-scale=0.7, maximum-scale=3.0, user-scalable=1" /> -->
-	<title>煥儷美顏SPA</title>
 	{{ HTML::style(asset('spa/css/layout_spa.css'))}}
 	<!--[if lt IE 9]>
 	<script type="text/javascript" src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
