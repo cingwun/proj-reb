@@ -20,7 +20,7 @@ class AboutController extends \BaseController {
             else
                 $article = \SpaArticles::where('status', '1')
                                        ->find($id);
-            if($this->getLocale()!=$article->lang){
+            if($article && $this->getLocale()!=$article->lang){
               $refId = $article->ref_id;
               $article = \SpaArticles::find($refId);
             }
