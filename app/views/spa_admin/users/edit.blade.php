@@ -25,7 +25,7 @@
 	</div>
 
 	<div class="form-group">
-		<label>身份</label>
+		<label>身份</label><br>
 		@foreach(Sentry::findAllGroups() as $group)
 		<label class="radio-inline">
 			<input type="radio" name="group" value="{{ $group->id }}" @foreach ($user->groups()->get() as $u_group) @if($group->id == $u_group->id) checked="checked"@endif @endforeach >
@@ -35,7 +35,7 @@
 	</div>
 
 	<div class="form-group">
-		<label>狀態</label>
+		<label>狀態</label><br>
 		<label class="radio-inline">
 			<input type="radio" name="activated" value="1" @if($user->activated) checked="checked" @endif > ON
 		</label>

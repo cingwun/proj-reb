@@ -1,21 +1,19 @@
 @extends('spa._layouts.default')
 
 @section('bodyId')
-{{''}}
+{{'service'}}
 @stop
 
-@section('mainBanner')
-@stop
+<?php
+$titleType = 'news';
+?>
 
 @section('content')
-<aside id="indexSetContent" class="hotEv">
-	<h2 class="titleRp title_spa-hotEv">熱門推薦</h2>
-	@include('spa._partials.widget_hotBanner')
-</aside>
-<div id="mainContent" class="postBox" role="main">
+@include('spa._partials.widget_setContent')
+<div id="mainContent" role="main">
 <script>
   (function() {
-    var cx = '017730374180726895139:6xs9iqhrlp8';
+    var cx = '007704823241692022177:6np-68t2xs4';
     var gcse = document.createElement('script');
     gcse.type = 'text/javascript';
     gcse.async = true;
@@ -26,7 +24,7 @@
   })();
 </script>
 <gcse:searchresults-only></gcse:searchresults-only>
-</div><!-- ======================== mainContent end ======================== -->
+</div><!-- ======================== searchContent end ======================== -->
 @stop
 
 

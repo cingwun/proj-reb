@@ -49,8 +49,8 @@ $size = "large";
 		<li>
 			<a href="{{URL::route('spa.service.detail', array($s['id']))}}">
 			<img src="{{$s['image'] }}?w=200"/>
-			<h4>{{ \Text::preEllipsize(strip_tags($s['title']), 26) }}</h4><!-- 限兩行 -->
-			<p class="servContent">{{ \Text::preEllipsize(strip_tags($s['image_desc']), 52) }}</p><!-- 限四行 -->
+			<h4>{{ \Text::preEllipsize(strip_tags($s['title']), 24) }}</h4><!-- 限兩行 -->
+			<p class="servContent">{{ \Text::preEllipsize(strip_tags($s['image_desc']), 64) }}</p><!-- 限四行 -->
 			<p class="more">深入了解</p>
 			</a>
 		</li>

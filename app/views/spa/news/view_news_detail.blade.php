@@ -22,7 +22,7 @@
 	<!-- pagedetails -->
 	<div id="contentInner">
 		<!-- @image, for the Post Image -->
-		<img src="{{$cover[0]->image}}?w=700&h=430">
+		<img src="{{$cover[0]->image}}?w=700&h=430" alt="{{$cover[0]->text}}">
 		<div class="contentArticle">
 			<!-- @text, for Post Content -->
 			<p>
@@ -66,6 +66,6 @@
 <meta name="title" content="{{$article->meta_title}}">
 @stop
 
-@section(h1)
-<h1 style="display:none">{{array_get($article, 'h1')}}</h1>
+@section('h1')
+<h1 style="display:none">{{$article->h1}}</h1>
 @stop

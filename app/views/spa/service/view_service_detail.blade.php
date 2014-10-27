@@ -23,7 +23,7 @@
 	<!-- pagedetails -->
 	<div id="contentInner">
 		<!-- @image, for the Post Image -->
-		<img src="{{$service['image']}}?w=680&h=430">
+		<img src="{{$service['image']}}?w=680&h=430" alt="{{$service['image_desc']}}">
 		<div class="contentArticle">
 			<!-- @text, for Service Content -->
 			<p>{{$service['content']}}</p>
@@ -38,7 +38,7 @@
 			@foreach($hotServices as $hotService)
 			<div class="hotClass">
 				<!-- @image for Service Hotclass Image -->
-				<div class="pic"><img src="{{$hotService['image']}}?w=160&h=104"></div>
+				<div class="pic"><img src="{{$hotService['image']}}?w=160&h=104" alt="{{$hotService['image_desc']}}"></div>
 				<!-- @text, for Service Hotclass Title -->
 				<div class="title"><a href="{{$serviceDetailURL}}/{{$hotService['id']}}">{{\Text::preEllipsize(strip_tags($hotService['title']), 10)}}</a></div>
 				<!-- @text, for Service Hotclass Content -->

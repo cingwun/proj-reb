@@ -419,9 +419,6 @@ Route::group(array('prefix'=>'admin/spa', 'before'=>'auth.admin'), function()
     Route::post('reservation/write/{id?}', array('as'=>'spa.admin.reservation.write', 'uses'=>'spaAdmin\\ReservationController@postReservationWrite'))
              ->where(array('id'=>'([0-9]+)'));
 
-    /*
-     * AJAX mony delete reservation
-     */
     Route::post('reservation/manyDelete', array('as'=>'spa.admin.reservation.manyDelete', 'uses'=>'spaAdmin\\ReservationController@postManyDelete'));
 });
 
@@ -430,9 +427,7 @@ Route::group(array('prefix'=>$locale, 'domain'=>$spa), function() {
     Route::get('/', array('as'=>'spa.index', 'uses'=>'spa\\IndexController@getIndex'));
 
     /*------google search-------*/
-    Route::post('search', function(){
-        return View::make('spa.google_search.view_search');
-    });
+    Route::get('search', array('as'=>'spa.search', 'uses'=>'spa\\SearchController@postSearch'));
 
     /*----------about----------*/
     Route::get('about/{id?}', array('as'=>'spa.about', 'uses'=>'spa\\AboutController@getArticle'))
@@ -504,3 +499,6 @@ Route::group(array('prefix'=>$locale, 'domain'=>$spa), function() {
      */
     Route::get('reservation/quick', array('as'=>'spa.reservation.quick', 'uses'=>'spa\\ReservationController@getQuick'));
 });
+
+/*--------clear non-use image files--------*/
+Route::get('garbageCollect', array('uses'=>'ImgsFileController@checkImgsFile'));

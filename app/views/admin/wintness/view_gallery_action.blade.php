@@ -64,7 +64,7 @@
     <!-- sort -->
 
     <div class="form-group">
-        <label for="link">狀態</label>
+        <label for="link">狀態</label><br/>
         <label class="radio-inline">
             <input type="radio" name="status" value="1" {{ (($status=Arr::get($data, 'status', null))=='1' || $status==null) ? 'checked="checked"' : ''}}>顯示
         </label>

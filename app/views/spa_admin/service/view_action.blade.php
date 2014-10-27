@@ -46,19 +46,19 @@
 		</label>
 	</div>
 	<div class="form-group">
-		<label>Keywords</label>
-		<input class="form-control" type="text" name="meta_name" value="@if($action == 'edit'){{$service->meta_name}}@endif"/>
-	</div>
-	<div class="form-group">
-		<label>Description</label>
-		<textarea class="form-control" rows="6" name="meta_content">@if($action == 'edit'){{$service->meta_content}}@endif</textarea>
-	</div>
-	<div class="form-group">
-		<label>Title</label>
+		<label>Meta Title:</label>
 		<textarea class="form-control" rows="1" name="meta_title">@if($action == 'edit'){{$service->meta_tltle}}@endif</textarea>
 	</div>
 	<div class="form-group">
-		<label>h1</label>
+		<label>Meta Keywords:</label>
+		<input class="form-control" type="text" name="meta_name" value="@if($action == 'edit'){{$service->meta_name}}@endif"/>
+	</div>
+	<div class="form-group">
+		<label>Meta Description:</label>
+		<textarea class="form-control" rows="6" name="meta_content">@if($action == 'edit'){{$service->meta_content}}@endif</textarea>
+	</div>
+	<div class="form-group">
+		<label>h1標籤:</label>
 		<textarea class="form-control" rows="1" name="h1">@if($action == 'edit'){{$service->h1}}@endif</textarea>
 	</div>
 	<div class="form-group">

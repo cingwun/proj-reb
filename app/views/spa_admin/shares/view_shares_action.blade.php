@@ -48,21 +48,19 @@
         <br>
 
         <!--The admin._partials.widget_imageUploader's div class had been modified by Kettan.-->
-        <div>
-            <div>
+        <div class="col-lg-12">
+            <div class="col-lg-6">
                 @include('spa_admin._partials.widget_imageUploader', array('options'=>array('elementId'=>'image-box-cover', 'title'=>'封面圖片', 'uploadURL'=>fps::getUploadURL(), 'deleteURL'=>fps::getDeleteURL())))
                 <!-- image uploader -->
             </div>
-            <br>
-            <div>
+            <div class="col-lg-6">
                 @include('spa_admin._partials.widget_imageUploader', array('options'=>array('elementId'=>'image-box', 'title'=>'圖片', 'uploadURL'=>fps::getUploadURL(), 'deleteURL'=>fps::getDeleteURL())))
                 <!-- image uploader -->
             </div>
-        </div>
-
-        <div>
-        @include('spa_admin._partials.widget_imageUploader', array('options'=>array('elementId'=>'image-box-gallery', 'title'=>'單文圖片集', 'uploadURL'=>fps::getUploadURL(), 'deleteURL'=>fps::getDeleteURL())))
-        <!-- image uploader -->
+            <div class="col-lg-12">
+                @include('spa_admin._partials.widget_imageUploader', array('options'=>array('elementId'=>'image-box-gallery', 'title'=>'單文圖片集', 'uploadURL'=>fps::getUploadURL(), 'deleteURL'=>fps::getDeleteURL())))
+                <!-- image uploader -->
+            </div>
         </div>
         <br>
 
@@ -74,7 +72,7 @@
         </div>
 
         <div class="form-group">
-            <label for="link">狀態</label>
+            <label for="link">狀態</label><br>
             <label class="radio-inline">
                 <input type="radio" name="status" value="1" <?php echo ($article['status']=='1') ? 'checked' : '' ?> />顯示
             </label>
@@ -84,6 +82,10 @@
         </div>
 
         <div class="form-group">
+            <label for="meta">Meta title:</label>
+            <div>
+                <input type="text" class="form-control" id="meta_title" name="meta_title" size="12" value="{{array_get($article, 'meta_title', '')}}">
+            </div>
             <label for="meta">Meta keyword:</label>
             <div>
                 <input type="text" class="form-control" id="meta_name" name="meta_name" size="12" value="{{array_get($article, 'meta_name', '')}}">
@@ -92,11 +94,7 @@
             <div>
                 <input type="text" class="form-control" id="meta_content" name="meta_content" size="12" value="{{array_get($article, 'meta_content', '')}}">
             </div>
-            <label for="meta">Meta title:</label>
-            <div>
-                <input type="text" class="form-control" id="meta_title" name="meta_title" size="12" value="{{array_get($article, 'meta_title', '')}}">
-            </div>
-             <label for="meta">h1:</label>
+             <label for="meta">h1標籤:</label>
             <div>
                 <input type="text" class="form-control" id="h1" name="h1" size="12" value="{{array_get($article, 'h1', '')}}">
             </div>

@@ -35,7 +35,7 @@
 
 
 	<div class="form-group">
-		<label for="status">狀態</label>
+		<label for="status">狀態</label><br>
 		<label class="radio-inline">
 			<input type="radio" name="status" value="1" @if($article->status==1) checked="checked" @endif> ON
 		</label>
@@ -45,29 +45,26 @@
 	</div>
 
 	<div class="form-group">
-		<label for="status">語言</label>
+		<label for="status">語言</label><br>
 		<label class="radio-inline">
 			<input type="radio" checked="checked"> <?php echo ($article->lang=='tw') ? '繁體' : '簡體' ; ?>
 		</label>
 	</div>
 
 	<div class="form-group">
+		<label for="meta_title">Meta title: </label>
+		<input type="text" class="form-control" id="meta_title" name="meta_title" size="12" value="{{ $article->meta_title }}">
+	</div>
+	<div class="form-group">
 		<label for="meta_name">Meta keyword: </label>
 		<input type="text" class="form-control" id="meta_name" name="meta_name" size="12" value="{{ $article->meta_name }}">
 	</div>
-
 	<div class="form-group">
 		<label for="meta_content">Meta description: </label>
 		<input type="text" class="form-control" id="meta_content" name="meta_content" size="12" value="{{ $article->meta_content }}">
 	</div>
-
 	<div class="form-group">
-		<label for="meta_title">Meta title: </label>
-		<input type="text" class="form-control" id="meta_title" name="meta_title" size="12" value="{{ $article->meta_title }}">
-	</div>
-	
-	<div class="form-group">
-		<label for="h1">h1: </label>
+		<label for="h1">h1標籤: </label>
 		<input type="text" class="form-control" id="h1" name="h1" size="12" value="{{ $article->h1 }}">
 	</div>
 
