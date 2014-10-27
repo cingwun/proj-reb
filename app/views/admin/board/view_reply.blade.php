@@ -2,6 +2,7 @@
 
 @section('title')
 <i class="glyphicon glyphicon-pencil"></i> 美麗留言 - 回覆
+ <span class="btn btn-default" onclick="window.history.back();">回上一頁</span>
 @stop
 
 @section('main')
