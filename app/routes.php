@@ -418,8 +418,6 @@ Route::group(array('prefix'=>'admin/spa', 'before'=>'auth.admin'), function()
      */
     Route::post('reservation/write/{id?}', array('as'=>'spa.admin.reservation.write', 'uses'=>'spaAdmin\\ReservationController@postReservationWrite'))
              ->where(array('id'=>'([0-9]+)'));
-
-    Route::post('reservation/manyDelete', array('as'=>'spa.admin.reservation.manyDelete', 'uses'=>'spaAdmin\\ReservationController@postManyDelete'));
 });
 
 Route::group(array('prefix'=>$locale, 'domain'=>$spa), function() {
@@ -454,7 +452,7 @@ Route::group(array('prefix'=>$locale, 'domain'=>$spa), function() {
      * params (int) $id
      */
     Route::get('service/detail/{id?}', array('as'=>'spa.service.detail', 'uses'=>'spa\\ServiceController@getServiceDetail'))
-        ->where(array('id'=>'([0-9]+)'));
+         ->where(array('id'=>'([0-9]+)'));
 
     /*----------product----------*/
 
