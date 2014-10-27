@@ -1,7 +1,7 @@
 @extends('admin._layouts.default')
 
 @section('title')
-新增新技術
+<i class="glyphicon glyphicon-certificate"></i>  美麗新技術 - 新增
 @stop
 
 @section('main')

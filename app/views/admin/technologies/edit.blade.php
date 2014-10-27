@@ -1,7 +1,7 @@
 @extends('admin._layouts.default')
 
 @section('title')
-修改新技術
+<i class="glyphicon glyphicon-certificate"></i>  美麗新技術 - 修改
 @stop
 
 @section('main')
@@ -14,7 +14,7 @@
 		</div>
 
 		@include('spa_admin._partials.widget_imageUploader', array('options'=>array('elementId'=>'image-box', 'title'=>'描述圖片', 'uploadURL'=>fps::getUploadURL(), 'deleteURL'=>fps::getDeleteURL())))
-		
+
 		<div class="form-group">
 			<label class="control-label" for="link">連結</label>
 				<input type="text" class="form-control" id="link" name="link" size="12" value="{{ $technology->link }}">

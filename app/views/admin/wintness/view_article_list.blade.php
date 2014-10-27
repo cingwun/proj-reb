@@ -1,7 +1,7 @@
 @extends('admin._layouts.default')
 
 @section('title')
-美麗見證 - 文章列表
+<i class="glyphicon glyphicon-camera"></i> 美麗見證 - 文章列表
 @stop
 
 @section('main')

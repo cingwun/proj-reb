@@ -1,7 +1,7 @@
 @extends('admin._layouts.default')
 
 @section('title')
-美麗新知
+<i class="glyphicon glyphicon-leaf"></i> 美麗新知
 @stop
 
 @section('main')

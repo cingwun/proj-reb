@@ -1,7 +1,7 @@
 @extends('admin._layouts.default')
 
 @section('title')
-美麗見證&nbsp;-&nbsp;圖片集
+<i class="glyphicon glyphicon-camera"></i> 美麗見證 - 圖片集
 @stop
 
 @section('main')

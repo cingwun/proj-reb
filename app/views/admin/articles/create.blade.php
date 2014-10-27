@@ -1,7 +1,8 @@
 @extends('admin._layouts.default')
 
 @section('title')
-新增文章
+<i class="glyphicon glyphicon-pencil"></i> 文章管理 - 新增文章
+<span class="btn btn-default" onclick="window.history.back();">回上一頁</span>
 @stop
 
 @section('main')
@@ -67,7 +68,7 @@
 	<div class="form-group">
 		<label for="h1">h1標籤: </label>
 			<input type="text" class="form-control" id="h1" name="h1" size="12" value="{{ Input::old('h1') }}">
-	</div>	
+	</div>
 
 	<input type="hidden" name="_method" value="POST" />
 	<button class="btn btn-danger" type="button" onclick="history.back();">取消</button>

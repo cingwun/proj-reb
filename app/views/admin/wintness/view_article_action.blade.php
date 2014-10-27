@@ -4,7 +4,7 @@
     $title = (!isset($article['id']) || $article['id']==null) ? '新增' : '編輯';
 ?>
 @section('title')
-<?php echo $title ?>文章&nbsp;<span class="btn btn-default" onclick="window.history.back();">回上一頁</span>
+<i class="glyphicon glyphicon-camera"></i> 美麗見證 - <?php echo $title ?>文章&nbsp;<span class="btn btn-default" onclick="window.history.back();">回上一頁</span>
 @stop
 
 @section('main')

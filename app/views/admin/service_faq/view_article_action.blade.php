@@ -1,12 +1,14 @@
 @extends('admin._layouts.default')
 
 @section('title')
+<i class="glyphicon glyphicon-exclamation-sign"></i>
 <?php
 $id = Arr::get($article, 'id', null);
 $title = ($id==null) ? '新增' : '編輯';
 $title .= ($type=='service') ? '服務項目' : '常見問題';
 echo $title;
 ?>
+ <span class="btn btn-default" onclick="window.history.back();">回上一頁</span>
 @stop
 
 @section('main')
