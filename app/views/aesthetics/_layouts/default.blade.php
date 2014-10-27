@@ -4,8 +4,9 @@
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		@yield('head')
+		@yield('title','<title>煥儷美形診所</title>')
 		<!-- <meta name="viewport" content="width=device-width, initial-scale=0.7, maximum-scale=3.0, user-scalable=1" /> -->
-		<title>煥儷美形診所</title>
+		<!-- <title>煥儷美形診所</title> -->
 
         {{ HTML::style('aesthetics/css/layout.css'); }}
         {{ HTML::style('aesthetics/css/ckeditor.css'); }}
@@ -16,6 +17,7 @@
 	</head>
 	<body id="@yield('bodyId')">
 		@yield('h1')
+
 		<noscript>
 			<div class="noscriptNotify">
 				<p><i class="fa fa-warning"></i>&nbsp;為了正常瀏覽本站，請開啟瀏覽器的 JavaScript，然後<a href="">再試一次</a>。</p>

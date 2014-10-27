@@ -35,8 +35,13 @@
 @section('head')
 <meta name="keyword" content="{{array_get($article, 'meta_name')}}">
 <meta name="description" content="{{array_get($article, 'meta_content')}}">
-<meta name="title" content="{{array_get($article, 'meta_title')}}">
 @stop
+
+@if($article->meta_title!="")
+	@section('title')
+	<title>{{$article->meta_title}}</title>
+	@stop
+@endif
 
 @section('h1')
 <h1 style="display:none">{{array_get($article, 'h1')}}</h1>

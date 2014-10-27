@@ -119,6 +119,12 @@
 @stop
 
 
+@if($article->meta_title!="")
+	@section('title')
+	<title>{{$article->meta_title}}</title>
+@stop
+
+
 @section('h1')
 <h1 style='display:none'>{{$article->h1}}</h1>
 @stop

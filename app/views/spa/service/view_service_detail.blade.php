@@ -55,7 +55,12 @@
 @section('head')
 <meta name="keywords" content="{{$service['meta_name']}}">
 <meta name="description" content="{{$service['meta_content']}}">
-<meta name="title" content="{{$service['meta_title']}}">
+@stop
+
+
+@if($article->meta_title!="")
+	@section('title')
+	<title>{{$service['meta_title']}}</title>
 @stop
 
 @section('h1')

@@ -108,8 +108,13 @@
 @section('head')
 <meta name="keywords" content="<?php echo $model->meta_name?>">
 <meta name="description" content="<?php echo $model->meta_content?>">
-<meta name="title" content="<?php echo $model->meta_title?>">
 @stop
+
+@if($article->meta_title!="")
+    @section('title')
+    <title>{{$model->meta_title}}</title>
+    @stop
+@endif
 
 @section('h1')
 <h1 style="display:none">{{$model->h1}}</h1>
