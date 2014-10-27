@@ -18,14 +18,14 @@
 	</div><!-- ======================== breadcrumb end ======================== -->
 	<div class="allTop_con">
 		<div class="shareTop_pic">
-			<img src="{{$image[0]->image}}?w=500">
+			<img src="{{$image[0]->image}}?w=500" alt="{{$image[0]->text}}">
 		</div>
 		<div class="shareTop_con">
 			<div class="classList">
 				<div><p>服務項目：</p></div>
 				<!-- @text for shareTag -->
 				<div class="shareTag">
-					@foreach($labelService as $ls)                                  
+					@foreach($labelService as $ls)
 					<a href="{{URL::route('spa.service.detail', array($ls['id']))}}"><div class="shareTag_btn">{{ \Text::preEllipsize(strip_tags($ls['title']), 5) }}</div></a>
 					@endforeach
 				</div>
@@ -57,7 +57,7 @@
 				<li>
 					<a rel="gallery1" href="{{$gallery->image}}" title="{{$gallery->text}}">
 					<!--@images for shareDemo slider-->
-					<img src="{{$gallery->image}}?w=130">
+					<img src="{{$gallery->image}}?w=130" alt="{{$gallery->text}}">
 					<!-- @text for the list title-->
 					<p>{{$gallery->text}}</p></a>
 				</li>

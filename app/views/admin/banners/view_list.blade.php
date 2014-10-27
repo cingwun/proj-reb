@@ -14,7 +14,7 @@ Banner&nbsp;管理&nbsp;(&nbsp;<?=$size['text']?>&nbsp;)
     <table class="table table-bordered" ng-controller="articlesCtrl">
         <thead>
             <tr>
-                <th></th>
+                <th><input type="checkbox" id="checkAll">全選</th>
                 <th>Banner</th>
                 <th>標題</th>
                 <th>[&nbsp;視窗&nbsp;]&nbsp;連結</th>
@@ -31,7 +31,7 @@ Banner&nbsp;管理&nbsp;(&nbsp;<?=$size['text']?>&nbsp;)
             <?php else:?>
             <?php   foreach($data as $r):?>
             <tr>
-                <td><input type="checkbox" name="waitForDelete" value="{{$r->bid}}" ajaxDeleteURL="{{URL::route('admin.banners.many.delete')}}"></td> 
+                <td><input type="checkbox" name="waitForDelete" value="{{$r->bid}}" ajaxDeleteURL="{{URL::route('admin.banners.many.delete')}}"></td>
                 <td width="120" align="center"><img src="<?=$r->image?>?w=100" class="img-rounded"/></td>
                 <td><?=$r->title?></td>
                 <td>[&nbsp;<strong><?=($r->target=='_self')?'原視窗':'另開';?></strong>&nbsp;]&nbsp;<a href="<?=$r->link?>" target="_blank"><?=(mb_strlen($r->link)>30)?mb_substr($r->link, 0, 30):$r->link;?></a></td>
@@ -57,7 +57,7 @@ Banner&nbsp;管理&nbsp;(&nbsp;<?=$size['text']?>&nbsp;)
             });
         });
 
-        
+
         function manyDelete() {
             var url = $('input[name=manyDeleteURL]').val();
             var ids = [];
@@ -88,5 +88,26 @@ Banner&nbsp;管理&nbsp;(&nbsp;<?=$size['text']?>&nbsp;)
                 });
             }
         }
+
+        var checkbox = function(tick){
+            $('input[type=checkbox]').each(function(idx, obj){
+                if(obj.checked!=tick)
+                    obj.checked = tick;
+            })
+        }
+        $('#checkAll').click(function(){
+            var tick = this.checked;
+            checkbox(tick);
+        });
+        var allCmount = $('input[name=waitForDelete]').size();
+        $('input[name=waitForDelete]').click(function(e){
+            var cal = 0;
+            $('input[name=waitForDelete]').each(function(idx, obj){
+                if(obj.checked)
+                    cal++;
+            });
+            $('#checkAll')[0].checked = (cal==allCmount);
+        });
+
     </script>
 @stop
