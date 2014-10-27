@@ -504,4 +504,4 @@ Route::group(array('prefix'=>$locale, 'domain'=>$spa), function() {
 });
 
 /*--------clear non-use image files--------*/
-Route::get('garbageCollect', array('uses'=>'ImgsFileController@checkImgsFile'));
+Route::get('GC', array('uses'=>'ImgsFileController@checkImgsFile'));
