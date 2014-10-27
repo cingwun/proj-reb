@@ -57,11 +57,11 @@
 <meta name="description" content="{{$service['meta_content']}}">
 @stop
 
-
-@if($article->meta_title!="")
+@if($service['meta_title']!="")
 	@section('title')
 	<title>{{$service['meta_title']}}</title>
 @stop
+@endif
 
 @section('h1')
 <h1 style='display:none;'>{{$service['h1']}}</h1>

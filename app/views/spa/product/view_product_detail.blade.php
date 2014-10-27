@@ -32,7 +32,7 @@
 <meta name="description" content="{{$product['meta_content']}}">
 @stop
 
-@if($article->meta_title!="")
+@if($product['meta_title']!="")
 	@section('title')
 	<title>{{$product['meta_title']}}</title>
 	@stop

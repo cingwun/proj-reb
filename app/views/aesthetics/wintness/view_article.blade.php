@@ -110,7 +110,7 @@
 <meta name="description" content="<?php echo $model->meta_content?>">
 @stop
 
-@if($article->meta_title!="")
+@if($model->meta_title!="")
     @section('title')
     <title>{{$model->meta_title}}</title>
     @stop
