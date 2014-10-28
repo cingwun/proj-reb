@@ -7,8 +7,8 @@ var app = function(o){
         self.isotopeOptions = {
             layoutMode: 'masonry',
             masonry: {
-                columnWidth: 304,
-                gutter: 12,
+                columnWidth:219,
+                gutter: 28,
                 animationEngine : 'best-available',
             },
             selectItem: '.caseWrapper'

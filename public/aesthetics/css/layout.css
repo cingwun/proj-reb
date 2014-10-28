@@ -2125,7 +2125,7 @@ body {
 	display: none
 }
 #case #mainContent, #casePost #mainContent {
-	width: 950px
+	width: 960px
 }
 #case::selection {
 	background: transparent
@@ -2232,7 +2232,7 @@ body {
 	display: block
 }
 #case .caseWrapper {
-	width: 304px;
+	width: 219px;
 	background: #32aeee;
 	-webkit-box-shadow: 0px 0px 5px #333;
 	-moz-box-shadow: 0px 0px 5px #333;
@@ -2244,7 +2244,6 @@ body {
 	padding: 15px 0;
 	margin: 0;
 	font-size: 18px;
-	width: 280px
 }
 #case .caseWrapper h3::selection {
 	color: #fff
@@ -2274,7 +2273,7 @@ body {
 	opacity: 0.85
 }
 #case .caseWrapper img {
-	width: 280px
+	width: 193px
 }
 #case .caseWrapper .tags {
 	background: #3b3f41;
@@ -2285,9 +2284,6 @@ body {
 }
 #case .caseWrapper .tags:before {
 	content: "治療項目："
-}
-#casePost #mainContent {
-	width: 960px
 }
 #casePost .serviceInfo h1 img {
 	width: 120px
