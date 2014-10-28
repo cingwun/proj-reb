@@ -21,7 +21,7 @@
 			<img class="side_arrow" src="<?=asset('spa/img/sign/arrow_white.png');?>"/>
 			<ul class="servDetail">
 				@foreach($category['serv'] as $service)
-				<li class="servDetailInner"><a class="servDetailLink" href="{{$serviceDetailURL}}/{{$service['id']}}">{{\Text::preEllipsize(strip_tags($service['title']), 10)}}</a></li>
+				<li class="servDetailInner"><a class="servDetailLink" href="{{URL::route('spa.service.detail', array('id'=>$service['id'], 'title'=>$service['title']))}}">{{\Text::preEllipsize(strip_tags($service['title']), 10)}}</a></li>
 				@endforeach
 			</ul>
 		</li>

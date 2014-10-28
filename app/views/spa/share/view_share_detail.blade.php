@@ -14,7 +14,7 @@
 		<span class="arrow"></span>
 		<a href="{{URL::route('spa.share')}}">美麗分享</a>
 		<span class="arrow"></span>
-		<a href="{{URL::route('spa.share.detail', array($article->id))}}">{{$article->title}}</a>
+		<a href="{{URL::route('spa.share.detail', array('id'=>$article->id,'title'=>$article->title))}}">{{$article->title}}</a>
 	</div><!-- ======================== breadcrumb end ======================== -->
 	<div class="allTop_con">
 		<div class="shareTop_pic">
@@ -92,7 +92,7 @@
 
 	<div class="postNav">
 		<div>
-			@if(empty($pervArticle))
+			@if(empty($prevArticle))
 			<a href="{{URL::route('spa.share')}}">回列表</a>
 			@else
 			上一篇
@@ -101,7 +101,9 @@
 			@endif
 		</div>
 		<div>
-			@if(!empty($nextArticle))
+			@if(empty($nextArticle))
+			<a href="{{URL::route('spa.share')}}">回列表</a>
+			@else
 			下一篇
 			<span class="arrow"></span>
 			<a href="{{URL::route('spa.share')}}/{{$nextArticle->id}}">{{$nextArticle->title}}</a>

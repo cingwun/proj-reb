@@ -40,9 +40,9 @@
 				<!-- @image for Service Hotclass Image -->
 				<div class="pic"><img src="{{$hotService['image']}}?w=160&h=104" alt="{{$hotService['image_desc']}}"></div>
 				<!-- @text, for Service Hotclass Title -->
-				<div class="title"><a href="{{$serviceDetailURL}}/{{$hotService['id']}}">{{\Text::preEllipsize(strip_tags($hotService['title']), 10)}}</a></div>
+				<div class="title"><a href="{{URL::route('spa.service.detail', array('id'=>$hotService['id'], 'title'=>$hotService['title']))}}">{{\Text::preEllipsize(strip_tags($hotService['title']), 10)}}</a></div>
 				<!-- @text, for Service Hotclass Content -->
-				<div class="content"><a href="{{$serviceDetailURL}}/{{$hotService['id']}}">(more)</a></div>
+				<div class="content"><a href="{{URL::route('spa.service.detail', array('id'=>$hotService['id'], 'title'=>$hotService['title']))}}">(more)</a></div>
 			</div>
 			@endforeach
 		</div>
