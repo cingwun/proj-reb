@@ -14,7 +14,7 @@
 		<span class="arrow"></span>
 		<a href="{{URL::route('spa.news')}}">最新消息</a>
 		<span class="arrow"></span>
-		<a href="{{URL::route('spa.news.detail', array($article->id))}}">{{$article->title}}</a>
+		<a href="{{URL::route('spa.news.detail', array('id'=>$article->id, 'title'=>$article->title))}}">{{$article->title}}</a>
 	</div>
 	<!-- breadcrumb end -->
 	@include('spa._partials.widget_pageTitle')
@@ -38,20 +38,23 @@
 	<!-- pagedetails end -->
 	<div class="postNav">
 		<div>
+			@if(empty($nextArticle))
+			<span class="arrow"></span>
+			<a href="{{URL::route('spa.news')}}">回列表</a>
+			@else
+			下一篇
+			<span class="arrow"></span>
+			<a href="{{URL::route('spa.news.detail', array('id'=>$nextArticle->id, 'title'=>$nextArticle->title))}}">{{$nextArticle->title}}</a>
+			@endif
+		</div>
+		<div>
 			@if(empty($prevArticle))
 			<span class="arrow"></span>
 			<a href="{{URL::route('spa.news')}}">回列表</a>
 			@else
 			上一篇
 			<span class="arrow"></span>
-			<a href="{{URL::route('spa.news.detail', array($prevArticle->id))}}">{{$prevArticle->title}}</a>
-			@endif
-		</div>
-		<div>
-			@if($nextArticle)
-			下一篇
-			<span class="arrow"></span>
-			<a href="{{URL::route('spa.news.detail', array($nextArticle->id))}}">{{$nextArticle->title}}</a>
+			<a href="{{URL::route('spa.news.detail', array('id'=>$prevArticle->id, 'title'=>$prevArticle->title))}}">{{$prevArticle->title}}</a>
 			@endif
 		</div>
 	</div>

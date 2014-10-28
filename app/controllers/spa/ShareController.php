@@ -60,14 +60,17 @@ class ShareController extends \BaseController {
 			$gallery = json_decode($article->gallery);
 
 			$prevArticle = \SpaShares::where('status', '1')
-									 ->where('sort', '>=', $article->sort)
-									 ->where('updated_at', '>', $article->updated_at)
+									 ->where('language', $article->language)
+									 ->where('sort', '<=', $article->sort)
+									 ->orderBy('id', 'desc')
+									 ->where('id', '<', $article->id)
 									 ->first(array('id', 'title'));
 			$nextArticle = \SpaShares::where('status', '1')
-									 ->where('sort', '<=', $article->sort)
-									 ->where('updated_at', '<', $article->updated_at)
+									 ->where('language', $article->language)
+									 ->where('sort', '>=', $article->sort)
+									 ->orderBy('id', 'asc')
+									 ->where('id', '>', $article->id)
 									 ->first(array('id', 'title'));
-
 			$tabs = \SpaSharesTabs::where('item_id', $id)
 								  ->get(array('title', 'content'))
 								  ->toArray();

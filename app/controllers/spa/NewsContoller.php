@@ -51,20 +51,25 @@ class NewsContoller extends \BaseController {
             }
 
 			$prevArticle = \SpaArticles::where('category', 'news')
-									   ->where('lang', $this->getLocale())
+									   ->where('lang', $article->lang)
 									   ->where('status', '=', '1')
 									   ->where('open_at', '<=', new \DateTime('today'))
-                             		   ->where('sort', '>=', $article->sort)
-                             		   ->where('updated_at', '>', $article->updated_at)
-                             		   ->orderBy('sort', 'asc')
-                             		   ->first(array('id', 'title'));
+									   ->orderBy('open_at', 'desc')
+									   ->where('open_at', '<=', $article->open_at)
+									   ->orderBy('sort', 'desc')
+									   ->orderBy('id', 'desc')
+									   ->where('id', '<', $article->id)
+									   ->first(array('id', 'title'));
+
             $nextArticle = \SpaArticles::where('category', 'news')
-            						   ->where('lang', $this->getLocale())
+            						   ->where('lang', $article->lang)
 									   ->where('status', '=', '1')
 									   ->where('open_at', '<=', new \DateTime('today'))
-                             		   ->where('sort', '<=', $article->sort)
-                             		   ->where('updated_at', '<', $article->updated_at)
-                             		   ->orderBy('sort', 'desc')
+									   ->orderBy('open_at', 'desc')
+									   ->where('open_at', '>=', $article->open_at)
+									   ->orderBy('sort', 'asc')
+									   ->orderBy('id', 'adc')
+									   ->where('id', '>', $article->id)
                              		   ->first(array('id', 'title'));
 
             $hotService = \SpaService::where('_parent', '!=', 'N')

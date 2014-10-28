@@ -43,7 +43,7 @@ $titleType = "oversea";
 				<input type="text" name="qq" class="qq" placeholder="非必填">
 			</div><br/>
 
-			<label for="birth">生日：</label>西元s
+			<label for="birth">生日：</label>西元
 			<select name="birth_year">
 				@for($i=(date("Y")-100) ; $i<=date("Y") ; $i++)
 				<option>{{$i}}</option>

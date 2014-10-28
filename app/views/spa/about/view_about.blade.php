@@ -13,7 +13,7 @@
 		<span class="arrow"></span>
 		<a href="{{URL::route('spa.about')}}">關於煥麗</a>
 		<span class="arrow"></span>
-		<a href="{{URL::route('spa.about', array(array_get($article, 'id')))}}">{{ array_get($article, 'title')}}</a>
+		<a href="{{URL::route('spa.about', array('id'=>array_get($article, 'id'), 'title'=>array_get($article, 'title')))}}">{{ array_get($article, 'title')}}</a>
 		<!-- <a href="#">經營理念</a> -->
 	</div>
 	<!-- breadcrumb end -->

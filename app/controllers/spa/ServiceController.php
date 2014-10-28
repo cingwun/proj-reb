@@ -107,7 +107,6 @@ class ServiceController extends \BaseController{
 			if($hotServicesCmd)
 				$hotServices = $hotServicesCmd;
 
-			$serviceDetailURL = \URL::route('spa.service.detail');
 			$indexURL = \URL::route('spa.index');
 			$serviceURL = \URL::route('spa.service');
 
@@ -115,7 +114,6 @@ class ServiceController extends \BaseController{
 				'service' => $service,
 				'categorys' => $categorys,
 				'hotServices' => $hotServices,
-				'serviceDetailURL' => $serviceDetailURL,
 				'indexURL' => $indexURL,
 				'serviceURL' => $serviceURL
 			));
