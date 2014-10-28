@@ -8,6 +8,7 @@
 
 	<!-- <meta name="viewport" content="width=device-width, initial-scale=0.7, maximum-scale=3.0, user-scalable=1" /> -->
 	{{ HTML::style(asset('spa/css/layout_spa.css'))}}
+
 	<!--[if lt IE 9]>
 	<script type="text/javascript" src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
@@ -35,12 +36,11 @@
 	@include('spa._partials.widget_quickReservation')
 
 	{{ HTML::script(asset('spa_admin/js/jquery-1.11.0.js'))}}
-	@yield('bottom')
+	{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'); }}
 	<!--[if IE]>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<![endif]-->
 	<!--[if !IE]>-->
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 	<!--<![endif]-->
 	<!-- // <script type="text/javascript" src="../js/share_slider.js"></script> -->
 	{{ HTML::script('spa/js/jq_plugin.js'); }}
@@ -49,5 +49,6 @@
 	{{ HTML::script('spa/js/jquery.colorbox.js'); }}
 	{{ HTML::script('spa/js/jq_slider.js'); }}
 	<!--<%= livereload_js if ENV["RACK_ENV"] != "production" %>-->
+	@yield('bottom')
 </body>
 </html>
