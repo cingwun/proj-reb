@@ -97,7 +97,7 @@
 			@else
 			上一篇
 			<span class="arrow"></span>
-			<a href="{{URL::route('spa.share')}}/{{$prevArticle->id}}">{{$prevArticle->title}}</a>
+			<a href="{{URL::route('spa.share.detail', array('id'=>$prevArticle->id, 'title'=>$prevArticle->title))}}">{{$prevArticle->title}}</a>
 			@endif
 		</div>
 		<div>
@@ -106,7 +106,7 @@
 			@else
 			下一篇
 			<span class="arrow"></span>
-			<a href="{{URL::route('spa.share')}}/{{$nextArticle->id}}">{{$nextArticle->title}}</a>
+			<a href="{{URL::route('spa.share.detail', array('id'=>$nextArticle->id, 'title'=>$nextArticle->title))}}">{{$nextArticle->title}}</a>
 			@endif
 		</div>
 	</div>
