@@ -54,7 +54,7 @@
 	</div>
 
 	<div class="form-group">
-		<label for="meta_title">Meta title: </label>
+		<label for="meta_title">title tag: </label>
 			<input type="text" class="form-control" id="meta_title" name="meta_title" size="12" value="{{ Input::old('meta_title') }}">
 	</div>
 	<div class="form-group">
