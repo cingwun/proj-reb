@@ -38,7 +38,7 @@
     			<td>@if($reservation->country != ""){{$reservation->country}} @endif</td>
     			<td>
                 @for ($i = 0; $i < $contactArray[$key]['count']; $i++)
-                    {{$styleArray[$i]}}{{$contactArray[$key]['data'][$i]}}a<br/>
+                    {{$styleArray[$i]}}{{$contactArray[$key]['data'][$i]}}<br/>
                 @endfor
                 </td>
                 <td>{{$reservation->email}}</td>
