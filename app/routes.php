@@ -53,14 +53,14 @@ Route::group(array('prefix'=>$locale, 'domain'=>$www), function(){
     });
 
     //文章
-    Route::get('articles/{id}',array('uses'=>'ArticlesController@article', 'as'=>'frontend.article'))->where('id', '[0-9]+'); //單文
+    Route::get('articles/{id}/{title?}',array('uses'=>'ArticlesController@article', 'as'=>'frontend.article'))->where('id', '[0-9]+'); //單文
 
     //最新消息列表
     Route::get('news',array('uses'=>'ArticlesController@news', 'as'=>'frontend.news')); //列表
 
     // wintness
     Route::get('wintness', array('uses'=>'aesthetics\\WintnessController@getIndex', 'as'=>'frontend.wintness.index'));
-    Route::get('wintness/article/{id}', array('uses'=>'aesthetics\\WintnessController@getArticle', 'as'=>'frontend.wintness.article'))
+    Route::get('wintness/article/{id}/{title?}', array('uses'=>'aesthetics\\WintnessController@getArticle', 'as'=>'frontend.wintness.article'))
          ->where(array('id'=>'([0-9]+)'));
     Route::get('wintness/load/articles', array('uses'=>'aesthetics\\WintnessController@getAjaxArticles', 'as'=>'frontend.wintness.ajax.load.articles'));
 
@@ -68,7 +68,7 @@ Route::group(array('prefix'=>$locale, 'domain'=>$www), function(){
     Route::post('reservation', array('uses'=>'aesthetics\\ReservationController@postForm', 'as'=>'frontend.reservation.post'));
 
     // service and faq
-    Route::get('{type}/article/{id}', array('uses'=>'aesthetics\\ServiceFaqController@getArticle', 'as'=>'frontend.service_faq.article'))
+    Route::get('{type}/article/{id}/{title?}', array('uses'=>'aesthetics\\ServiceFaqController@getArticle', 'as'=>'frontend.service_faq.article'))
              ->where(array('type'=>'(service|faq)', 'id'=>'([0-9]+)'));
 
     // board
@@ -433,17 +433,17 @@ Route::group(array('prefix'=>$locale, 'domain'=>$spa), function() {
     Route::get('search', array('as'=>'spa.search', 'uses'=>'spa\\SearchController@postSearch'));
 
     /*----------about----------*/
-    Route::get('about/{id?}', array('as'=>'spa.about', 'uses'=>'spa\\AboutController@getArticle'))
+    Route::get('about/{id?}/{title?}', array('as'=>'spa.about', 'uses'=>'spa\\AboutController@getArticle'))
          ->where(array('id'=>'([0-9]+)'));
 
     /*----------share----------*/
     Route::get('share', array('as'=>'spa.share', 'uses'=>'spa\\ShareController@getShareList'));
-    Route::get('share/{id?}', array('as'=>'spa.share.detail', 'uses'=>'spa\\ShareController@getArticle'))
+    Route::get('share/{id?}/{title?}', array('as'=>'spa.share.detail', 'uses'=>'spa\\ShareController@getArticle'))
          ->where(array('id'=>'([0-9]+)'));
 
     /*----------news----------*/
     Route::get('news', array('as'=>'spa.news', 'uses'=>'spa\\NewsContoller@getNewsList'));
-    Route::get('news/{id?}', array('as'=>'spa.news.detail', 'uses'=>'spa\\NewsContoller@getArticle'))
+    Route::get('news/{id?}/{title?}', array('as'=>'spa.news.detail', 'uses'=>'spa\\NewsContoller@getArticle'))
          ->where(array('id'=>'([0-9]+)'));
 
     /*----------service----------*/
@@ -456,7 +456,7 @@ Route::group(array('prefix'=>$locale, 'domain'=>$spa), function() {
      * Display service derail page
      * params (int) $id
      */
-    Route::get('service/detail/{id?}', array('as'=>'spa.service.detail', 'uses'=>'spa\\ServiceController@getServiceDetail'))
+    Route::get('service/detail/{id?}/{title?}', array('as'=>'spa.service.detail', 'uses'=>'spa\\ServiceController@getServiceDetail'))
          ->where(array('id'=>'([0-9]+)'));
 
     /*----------product----------*/
@@ -470,7 +470,7 @@ Route::group(array('prefix'=>$locale, 'domain'=>$spa), function() {
      * Display product derail page
      * params (int) $id
      */
-    Route::get('product/detail/{id?}', array('as'=>'spa.product.detail', 'uses'=>'spa\\ProductController@getProductDetail'))
+    Route::get('product/detail/{id?}/{title?}', array('as'=>'spa.product.detail', 'uses'=>'spa\\ProductController@getProductDetail'))
          ->where(array('id'=>'([0-9]+)'));
 
     /*

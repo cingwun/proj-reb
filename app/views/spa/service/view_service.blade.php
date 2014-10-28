@@ -23,14 +23,14 @@
 					<a  href="javascript:void(0)">
 						<div class="serList_btn1">{{\Text::preEllipsize(strip_tags($serviceCat['cat']['title']), 10)}}
 							<img class="side_arrow" src="../spa/img/sign/arrow_yellow.png"/>
-							<img class="side_arrow active" src="../spa/img/sign/arrow_white.png"/>  
+							<img class="side_arrow active" src="../spa/img/sign/arrow_white.png"/>
 						</div>
 					</a>
 					<div class="serList_btn2">
 						<ul class="btn2_list">
 							@foreach($serviceCat['serv'] as $service)
 							<!-- @text for serList_btn2 title -->
-							<li><a data-src="{{$service['image']}}?w=215&h=140" href="{{$detailURL}}/{{$service['id']}}">{{\Text::preEllipsize(strip_tags($service['title']), 10)}}</a></li>
+							<li><a data-src="{{$service['image']}}?w=215&h=140" href="{{URL::route('spa.service.detail', array('id'=>$service['id'], 'title'=>Urlhandler::encode_url($service['title'])))}}">{{\Text::preEllipsize(strip_tags($service['title']), 10)}}</a></li>
 							@endforeach
 						</ul>
 					</div>

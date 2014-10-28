@@ -16,7 +16,7 @@
 	<!-- isotope start -->
 	<div id="isoCon">
 		@foreach($shares as $share)
-		<a href="{{URL::route('spa.share.detail', array($share['share']['id']))}}">
+		<a href="{{URL::route('spa.share.detail', array('id'=>$share['share']['id'], 'title'=>Urlhandler::encode_url($share['share']['title'])))}}">
 		<div class="isoItem">
 			<div class="itemWrapper" style="background:{{$share['share']['background_color']}}">
 				<div class="itemTop">

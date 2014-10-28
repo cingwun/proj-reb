@@ -52,14 +52,14 @@ class ReservationController extends \BaseController{
 	public function postWriteForm(){
 		try {
 			$reservation = new \SpaReservation;
-			
+
 			$name = trim(\Input::get('name', "")," ");
 			$sex = \Input::get('sex', "");
 			$country = trim(\Input::get('country', "")," ");
-			$birthday = \Input::get('birthday', "");
+			$birthday = \Input::get('birth_year', "")."-".\Input::get('birth_month', "")."-".\Input::get('birth_day', "");
 			$email = trim(\Input::get('email', "")," ");
-			$stay_start_date = \Input::get('stay_start_date', "");
-			$stay_exit_date = \Input::get('stay_exit_date', "");
+			$stay_start_date = \Input::get('stay_start_date', "")." ".\Input::get('stay_start_time', "").":00:00";
+			$stay_exit_date = \Input::get('stay_exit_date', "")." ".\Input::get('stay_exit_time', "").":00:00";
 			$service_date = \Input::get('service_date', "");
 			$contact_time = \Input::get('contact_time', "");
 			$improve_item = trim(\Input::get('improve_item', "")," ");
@@ -85,14 +85,14 @@ class ReservationController extends \BaseController{
 			$reservation->country = $country;
 			$reservation->contact = json_encode($contact);
 			$reservation->contact_time = $contact_time;
-			$reservation->birthday = date("Y-m-d H:i:s", strtotime($birthday));
+			$reservation->birthday = date("Y-m-d", strtotime($birthday));
 			$reservation->email = $email;
 			$reservation->stay_start_date = date("Y-m-d H:i:s", strtotime($stay_start_date));
 			$reservation->stay_exit_date = date("Y-m-d H:i:s", strtotime($stay_exit_date));
 			$reservation->service_date = date("Y-m-d H:i:s", strtotime($service_date));
 			$reservation->improve_item = $improve_item;
 			$reservation->other_notes = $other_notes;
-			
+
 			$reservation->save();
 
 			return \Response::json(array(

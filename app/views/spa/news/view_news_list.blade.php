@@ -19,7 +19,7 @@
 	<article>
 		<h2>
 			<!-- @(string) text,  for Post Title -->
-			<a href="{{URL::route('spa.news.detail', array($n->id))}}"> {{$n->title}}</a>
+			<a href="{{URL::route('spa.news.detail', array('id'=>$n->id, 'title'=>Urlhandler::encode_url($n->title)))}}"> {{$n->title}}</a>
 		</h2>
 		<!-- @text, for Post Content -->
 		<p>{{ \Text::preEllipsize(strip_tags($n->content), 120) }}</p>
@@ -31,7 +31,7 @@
 			<!-- @date, for Post Date -->
 			</span>{{$n->open_at}}</time>
 			<!-- @href, for the Post Link -->
-			<a class="btn" href="{{URL::route('spa.news.detail', array($n->id))}}">詳全文</a>
+			<a class="btn" href="{{URL::route('spa.news.detail', array($n->id, 'title'=>Urlhandler::encode_url($n->title)))}}">詳全文</a>
 		</div>
 	</article>
 	@endforeach
