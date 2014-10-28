@@ -25,7 +25,7 @@ class ProductController extends \BaseController {
 				$parent_equality = "=";
 				$parent_value = $category;
 			}
-			
+
 			$cmd = \SpaProduct::where('_parent', $parent_equality, $parent_value)
 			->where('lang', $listLang);
 
@@ -73,6 +73,7 @@ class ProductController extends \BaseController {
 				'tw' => 'cn',
 				'cn' => 'tw'
 				);
+
 			return \View::make('spa_admin.product.view_list', array(
 				'products'=>&$products,
 				'category_array'=>&$category_array,
@@ -125,7 +126,7 @@ class ProductController extends \BaseController {
 						'image' => $product->image,
 						'text' => $product->image_desc
 						);
-				
+
 				$serviceImagesList = \SpaProductImages::where('pro_id',$id)
 				->get(array('id', 'image_path', 'description'));
 				if (!empty($serviceImagesList)){
@@ -135,9 +136,9 @@ class ProductController extends \BaseController {
 							'image' => $img->image_path,
 							'text' => $img->description
 							);
-					}	
+					}
 				}
-				
+
 				$tags = json_decode($product->tag);
 				if (!empty($tags)) {
 					foreach ($tags as $tag) {
@@ -219,7 +220,7 @@ class ProductController extends \BaseController {
 
 			$ref = \Input::get('ref');
 
-			//product_table 
+			//product_table
 			if($action == 'create') {
 				$product = new \SpaProduct;
 			}else {
@@ -265,7 +266,7 @@ class ProductController extends \BaseController {
 			//service_image_table
 			$images = \Input::get('images');
 			$images_desc = \Input::get('imageDesc');
-			
+
 			if($action == 'edit'){
 				\SpaProductImages::where('pro_id',$id)->delete();
 			}
@@ -321,14 +322,14 @@ class ProductController extends \BaseController {
 			exit;
 		}
 	}
-	
+
 	/*
      * AJAX request for Delete product by specific id.
      */
 	public function postDeleteProduct() {
 		try {
 			$id = \Input::get('id');
-			
+
 			//delete service
 			\SpaProduct::find($id)->delete();;
 
@@ -423,14 +424,14 @@ class ProductController extends \BaseController {
 
     		$cateCmd = \SpaProduct::find($category_id);
     		$cateRefCmd = \SpaProduct::find($cateCmd->ref);
-    		
+
     		//delete categroy service article
     		$servCmd = \SpaProduct::where('_parent', $category_id);
-    		if(!$servCmd->get()){
+    		if($servCmd->get()){
     			$servCmd->delete();
     		}
     		$servRefCmd = \SpaProduct::where('_parent', $cateRefCmd->id);
-    		if(!$servRefCmd->get())
+    		if($servRefCmd->get())
     			$servRefCmd->delete();
 
     		//delete category
@@ -580,7 +581,7 @@ class ProductController extends \BaseController {
 				$refCategoryCmd->lang = 'cn';
 				$refCategoryCmd->ref = $inserted_id;
 				$refCategoryCmd->display = 'no';
-				
+
 	    		$refCategoryCmd->save();
 	    		$ref_inserted_id = $refCategoryCmd->id;
 

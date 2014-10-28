@@ -25,12 +25,12 @@ class ServiceController extends \BaseController {
 				$parent_equality = "=";
 				$parent_value = $category;
 			}
-			
+
 			$cmd = \SpaService::where('_parent', $parent_equality, $parent_value)
 							  ->where('lang', $listLang);
 
 			$rowsNum = $cmd->count();
-			
+
 			$services = $cmd->orderBy('_parent', 'DESC')
 								->orderBy('sort','DESC')
 								->orderBy('updated_at', 'desc')
@@ -57,7 +57,7 @@ class ServiceController extends \BaseController {
 					}
 				}
 			}
-			
+
 			$actionURL = \URL::route('spa.admin.service.article.action');
 			$deleteURL = \URL::route('spa.admin.service.article.delete');
 			$updateSortURL = \URL::route('spa.admin.service.sort.update');
@@ -107,7 +107,7 @@ class ServiceController extends \BaseController {
 			$articleCat = \Input::get('category', null);
 
 			$writeURL = \URL::route('spa.admin.service.article.write');
-			
+
 			//edit data
 			$service = array();
 			$serviceCover = array();
@@ -127,7 +127,7 @@ class ServiceController extends \BaseController {
 						'image' => $service->image,
 						'text' => $service->image_desc
 					);
-				
+
 				$serviceImagesList = \SpaServiceImages::where('ser_id',$id)
 													   ->get(array('id', 'image_path', 'description'));
 				if (!empty($serviceImagesList)){
@@ -137,9 +137,9 @@ class ServiceController extends \BaseController {
 							'image' => $img->image_path,
 							'text' => $img->description
 						);
-					}	
+					}
 				}
-				
+
 				$tags = json_decode($service->tag);
 				if (!empty($tags)) {
 					foreach ($tags as $tag) {
@@ -169,7 +169,7 @@ class ServiceController extends \BaseController {
 					$categorys[] = $category;
 				}
 			}
-			
+
 			return \View::make('spa_admin.service.view_action', array(
 				'action' => $action,
 				'service' => &$service, //edit data
@@ -219,7 +219,7 @@ class ServiceController extends \BaseController {
 	            }
 			}
 
-			//service_table 
+			//service_table
 			if($action == 'create') {
 				$service = new \SpaService;
 			}else {
@@ -227,7 +227,7 @@ class ServiceController extends \BaseController {
 				if (!$service)
 					$service = new \SpaService;
 			}
-			
+
 			$title = \Input::get('title');
 			$image = \Input::get('main_image')[0];
 			$image_desc = \Input::get('main_imageDesc')[0];
@@ -262,7 +262,7 @@ class ServiceController extends \BaseController {
 			//service_image_table
 			$images = \Input::get('images');
 			$images_desc = \Input::get('imageDesc');
-			
+
 			if($action == 'edit'){
 				\SpaServiceImages::where('ser_id',$id)->delete();
 			}
@@ -317,7 +317,7 @@ class ServiceController extends \BaseController {
 			exit;
 		}
 	}
-	
+
 	/*
      * AJAX request for Delete service by specific id.
      */
@@ -403,14 +403,14 @@ class ServiceController extends \BaseController {
 
     		$cateCmd = \SpaService::find($category_id);
     		$cateRefCmd = \SpaService::find($cateCmd->ref);
-    		
+
     		//delete categroy service article
     		$servCmd = \SpaService::where('_parent', $category_id);
-    		if(!$servCmd->get()){
+    		if($servCmd->get()){
     			$servCmd->delete();
     		}
     		$servRefCmd = \SpaService::where('_parent', $cateRefCmd->id);
-    		if(!$servRefCmd->get())
+    		if($servRefCmd->get())
     			$servRefCmd->delete();
 
     		//delete category
@@ -442,8 +442,8 @@ class ServiceController extends \BaseController {
             $sort = \Input::get('sort');
             $isUpdatedTime = \Input::get('isUpdatedTime', false);
             $lastUpdatedId = \Input::get('lastUpdatedId', false);
-            
-            
+
+
             $model = \SpaService::find($id);
             if (empty($model))
                 throw new Exception("Error request [11]");
@@ -474,7 +474,7 @@ class ServiceController extends \BaseController {
                     }
                 }
             }
-	
+
 		    return \Response::json(array(
 	            'status' => 'ok',
 	            'message' => '更新排序完成'
@@ -494,7 +494,7 @@ class ServiceController extends \BaseController {
     public function getCategoryAction($id = null){
     	try {
     		$action = 'create';
- 			
+
     		$writeURL = \URL::route('spa.admin.service.category.write');
 
     		$category = array();
@@ -524,7 +524,7 @@ class ServiceController extends \BaseController {
 			exit;
     	}
     }
-    
+
     /*
 	 * Write(create/edit action) category data.
 	 * @params (int) $id
@@ -544,7 +544,7 @@ class ServiceController extends \BaseController {
     		$categoryCmd->display = \Input::get('display');
     		if($action == 'create')
     			$categoryCmd->lang = 'tw';
-				
+
 
     		$categoryCmd->save();
 			$inserted_id = $categoryCmd->id;
