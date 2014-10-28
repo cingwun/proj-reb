@@ -56,7 +56,7 @@ class ReservationController extends \BaseController{
 			$name = trim(\Input::get('name', "")," ");
 			$sex = \Input::get('sex', "");
 			$country = trim(\Input::get('country', "")," ");
-			$birthday = \Input::get('birthday', "");
+			$birthday = \Input::get('birth_year', "")."-".\Input::get('birth_month', "")."-".\Input::get('birth_day', "");
 			$email = trim(\Input::get('email', "")," ");
 			$stay_start_date = \Input::get('stay_start_date', "")." ".\Input::get('stay_start_time', "").":00:00";
 			$stay_exit_date = \Input::get('stay_exit_date', "")." ".\Input::get('stay_exit_time', "").":00:00";
@@ -85,7 +85,7 @@ class ReservationController extends \BaseController{
 			$reservation->country = $country;
 			$reservation->contact = json_encode($contact);
 			$reservation->contact_time = $contact_time;
-			$reservation->birthday = date("Y-m-d H:i:s", strtotime($birthday));
+			$reservation->birthday = date("Y-m-d", strtotime($birthday));
 			$reservation->email = $email;
 			$reservation->stay_start_date = date("Y-m-d H:i:s", strtotime($stay_start_date));
 			$reservation->stay_exit_date = date("Y-m-d H:i:s", strtotime($stay_exit_date));

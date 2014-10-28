@@ -43,15 +43,19 @@ $titleType = "oversea";
 				<input type="text" name="qq" class="qq" placeholder="非必填">
 			</div><br/>
 
-			<label for="birth">生日：</label>西元
-			<input class="dates" type="text" onkeyup="value=value.replace(/[^\d]/g,'')" maxlength="4"/><span> 年</span>
-			<select>
+			<label for="birth">生日：</label>西元s
+			<select name="birth_year">
+				@for($i=(date("Y")-100) ; $i<=date("Y") ; $i++)
+				<option>{{$i}}</option>
+				@endfor
+			</select>
+			<select name="birth_month">
 				@for($i=1;$i<=12;$i++)
 				<option>{{$i}}</option>
 				@endfor
 			</select>
 			<span> 月</span>
-			<select>
+			<select name="birth_day">
 				@for($i=1;$i<=31;$i++)
 				<option>{{$i}}</option>
 				@endfor
