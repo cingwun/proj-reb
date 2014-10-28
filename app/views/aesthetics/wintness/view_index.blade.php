@@ -39,7 +39,7 @@
         ?>
         </ul>
     </div>
-    
+
     <span class="nex prevControl" id="prev"></span>
     <span class="pre nextControl" id="next"></span>
 </div>
@@ -62,7 +62,7 @@
 
 @section('bottomContent')
     <script type="text/x-tmpl" id="template">
-        <li class="item" id="item-{%=o.id%}"><div class="caseWrapper" style="background-color: {%=o.background_color%};"><a href="<?php echo URL::route('frontend.wintness.article', array('id'=>''))?>/{%=o.id%}" class="cases">
+        <li class="item" id="item-{%=o.id%}"><div class="caseWrapper" style="background-color: {%=o.background_color%};"><a href="<?php echo URL::route('frontend.wintness.article', array('id'=>'', 'title'=>''))?>/{%=o.id%}/{%=o.title%}" class="cases">
         <h3>{%=o.title%}</h3>
         <img alt="h3"/>
         <p>{%=o.description%}</p>

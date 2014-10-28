@@ -32,7 +32,7 @@ $spa = 'http://' . Host::get('spa');
             <a href="#">關於煥儷</a>
             <ul class="subNav lv1">
                 @foreach (ArticlesController::getNav(1) as $article)
-                <li><a href="{{ URL::to('articles/'.$article->id) }}">{{ $article->title }}</a></li>
+                <li><a href="{{URL::route('frontend.article', array('id'=>$article->id, 'title'=>Urlhandler::encode_url($article->title)))}}">{{ $article->title }}</a></li>
                 @endforeach
             </ul>
         </li>
@@ -44,7 +44,7 @@ $spa = 'http://' . Host::get('spa');
                     <a href="#">{{ $category['title'] }}</a>
                     <ul class="subNav lv2">
                         @foreach ($category['subItems'] as $service)
-                        <li><a href="{{ URL::route('frontend.service_faq.article', array('type'=>'service', 'id'=>$service->id)) }}">{{$service->title}}</a></li>
+                        <li><a href="{{ URL::route('frontend.service_faq.article', array('type'=>'service', 'id'=>$service->id, 'title'=> Urlhandler::encode_url($service->title))) }}">{{$service->title}}</a></li>
                         @endforeach
                     </ul>
                 </li>
@@ -62,7 +62,7 @@ $spa = 'http://' . Host::get('spa');
                     <a href="#">{{ isset($category['title']) ? $category['title'] : ''}}</a>
                     <ul class="subNav lv2">
                         @foreach ($category['subItems'] as $faq)
-                        <li><a href="{{ URL::route('frontend.service_faq.article', array('type'=>'faq', 'id'=>$faq->id)) }}">{{$faq->title}}</a></li>
+                        <li><a href="{{ URL::route('frontend.service_faq.article', array('type'=>'faq', 'id'=>$faq->id, 'title'=> Urlhandler::encode_url($faq->title))) }}">{{$faq->title}}</a></li>
                         @endforeach
                     </ul>
                 </li>

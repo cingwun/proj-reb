@@ -18,7 +18,7 @@
 
 @foreach($articles as $article)
 	<article>
-		<h2><a href="{{ URL::to('articles/'.$article->id) }}">{{ $article->title }}</a></h2>
+		<h2><a href="{{URL::route('frontend.article', array('id'=>$article->id, 'title'=>Urlhandler::encode_url($article->title)))}}">{{ $article->title }}</a></h2>
                 <p>
                 {{ \Text::preEllipsize(strip_tags($article->description), 120) }}
                 </p>

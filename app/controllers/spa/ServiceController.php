@@ -19,7 +19,7 @@ class ServiceController extends \BaseController{
 			if ($serviceCatsCmd) {
 				$row = 0;
 				foreach ($serviceCatsCmd as $key => $serviceCatCmd) {
-					
+
 					$servCmd = \SpaService::where('_parent', $serviceCatCmd['id'])
 										  ->where('display', 'yes')
 										  ->where('lang', $this->getLocale())
@@ -36,13 +36,11 @@ class ServiceController extends \BaseController{
 				}
 			}
 
-			$detailURL = \URL::route('spa.service.detail');
 			$indexURL = \URL::route('spa.index');
 
 			return \View::make('spa.service.view_service', array(
 				"serviceCats" => $serviceCats,
 				"services" => $services,
-				"detailURL" => $detailURL,
 				"indexURL" => $indexURL
 			));
 		} catch (Exception $e) {
@@ -68,15 +66,15 @@ class ServiceController extends \BaseController{
 				throw new \Exception("the service $id data is not exist .");
 				exit;
 			}
-			
+
 			//set views
 			if(\ViewsAdder::views_cookie('service', $id)) {
 				$serviceCmd = $serviceCmd->first();
             	$serviceCmd->views = $serviceCmd->views + 1;
               	$serviceCmd->save();
             }
-            
-			$categorysCmd = \SpaService::where('_parent', 'N') 
+
+			$categorysCmd = \SpaService::where('_parent', 'N')
 									   ->where('display', 'yes')
 									   ->where('lang', $this->getLocale())
 									   ->get(array('id', 'title'))
@@ -95,7 +93,7 @@ class ServiceController extends \BaseController{
 			  	 	);
 				}
 			}
-			
+
 			$hotServices = array();
 			$hotServicesCmd = \SpaService::where('_parent', '<>', 'N')
 										 ->where('display', 'yes')
@@ -108,7 +106,7 @@ class ServiceController extends \BaseController{
 										 ->toArray();
 			if($hotServicesCmd)
 				$hotServices = $hotServicesCmd;
-			
+
 			$serviceDetailURL = \URL::route('spa.service.detail');
 			$indexURL = \URL::route('spa.index');
 			$serviceURL = \URL::route('spa.service');

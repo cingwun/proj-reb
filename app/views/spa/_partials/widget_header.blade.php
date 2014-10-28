@@ -37,6 +37,8 @@ $prodCatsCmd = \SpaProduct::where('_parent', 'N')
 						  ->orderBy('sort', 'desc')
 						  ->get(array('id', 'title'))
 						  ->toArray();
+if(!empty($prodCatsCmd))
+	$prodCats = $prodCatsCmd;
 
 $www = 'http://' . Host::get('rebeauty');
 ?>
@@ -63,7 +65,7 @@ $www = 'http://' . Host::get('rebeauty');
 				<ul class="subNav lv1">
 					@foreach($aboutArticle as $list)
 					<li class="lv1_list">
-						<a class="lv1_link" href="{{URL::route('spa.about', array($list->id))}}">{{$list->title}}</a>
+						<a class="lv1_link" href="{{URL::route('spa.about', array('id'=>$list->id, 'title'=>Urlhandler::encode_url($list->title)))}}">{{$list->title}}</a>
 					</li>
 					@endforeach
 				</ul>
@@ -76,7 +78,7 @@ $www = 'http://' . Host::get('rebeauty');
 						<a class="lv1_link" href="{{URL::route('spa.service')}}">{{\Text::preEllipsize(strip_tags($servCat['cat']['title']), 8)}}</a>
 						<ul class="subNav lv2">
 							@foreach($servCat['serv'] as $serv)
-							<li class="lv2_list"><a class="lv2_link" href="{{URL::route('spa.service.detail')}}/{{$serv['id']}}">{{\Text::preEllipsize(strip_tags($serv['title']), 8)}}</a></li>
+							<li class="lv2_list"><a class="lv2_link" href="{{URL::route('spa.service.detail', array('id'=>$serv['id'], 'title'=>Urlhandler::encode_url($serv['title'])))}}">{{\Text::preEllipsize(strip_tags($serv['title']), 8)}}</a></li>
 							@endforeach
 						</ul>
 					</li>
@@ -88,7 +90,7 @@ $www = 'http://' . Host::get('rebeauty');
 				<ul class="subNav lv1">
 					@foreach($prodCats as $prodCat)
 					<li class="lv1_list">
-						<a class="lv1_link" href="{{URL::route('spa.product.list')}}/{{$prodCat['id']}}">{{\Text::preEllipsize(strip_tags($prodCat['title']), 8)}}</a>
+						<a class="lv1_link" href="{{URL::route('spa.product.list', array('cat'=>$prodCat['id']))}}">{{\Text::preEllipsize(strip_tags($prodCat['title']), 8)}}</a>
 					</li>
 					@endforeach
 				</ul>

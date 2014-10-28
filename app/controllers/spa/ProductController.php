@@ -18,7 +18,7 @@ class ProductController extends \BaseController{
 									  ->toArray();
 			if($prodCatsCmd)
 				$prodCats = $prodCatsCmd;
-			
+
 			$indexURL = \URL::route('spa.index');
 
 			return \View::make('spa.product.view_product', array(
@@ -38,7 +38,7 @@ class ProductController extends \BaseController{
 	public function getProductDetail($id = null) {
 		try {
 			$categorys = array();
-			$categorysCmd = \SpaProduct::where('_parent', 'N') 
+			$categorysCmd = \SpaProduct::where('_parent', 'N')
 									   ->where('display', 'yes')
 									   ->where('lang', $this->getLocale())
 									   ->get(array('id', 'title'))
@@ -46,11 +46,11 @@ class ProductController extends \BaseController{
 
 			if($categorysCmd)
 				$categorys = $categorysCmd;
-				
+
 			$product = array();
 			$productCmd = \SpaProduct::where('id', $id)
 									 ->where('lang', $this->getLocale());
-			
+
 			if($productCmd->first()) {
 				$product = $productCmd->first()
 									  ->toArray();
@@ -58,7 +58,7 @@ class ProductController extends \BaseController{
 				throw new \Exception("the product $id data is not exist");
 				exit;
 			}
-			
+
 			//set views
 			if(\ViewsAdder::views_cookie('product', $id)) {
 				$productCmd = $productCmd->first();
@@ -68,7 +68,7 @@ class ProductController extends \BaseController{
 
 			$productCat = \SpaProduct::find($product['_parent'])
 									 ->toArray();
-			
+
 			$productListURL = \URL::route('spa.product.list', array('cat'=>$productCat['id']));
 			$productURL = \URL::route('spa.product');
 			$indexURL = \URL::route('spa.index');
@@ -103,7 +103,7 @@ class ProductController extends \BaseController{
 									   ->toArray();
 			if($categorysCmd)
 				$categorys = $categorysCmd;
-			
+
 			//products
 			$page = \Input::get('page', 1);
 			$limit = 8;
@@ -129,7 +129,6 @@ class ProductController extends \BaseController{
 
 			$productListURL = \URL::route('spa.product.list');
 			$pageURL = \URL::route('spa.product.list', array('cat'=>$cat));
-			$productDetailURL = \URL::route('spa.product.detail');
 			$productURL = \URL::route('spa.product');
 			$indexURL = \URL::route('spa.index');
 
@@ -140,7 +139,6 @@ class ProductController extends \BaseController{
 				'pageURL' => $pageURL,
 				'page' => $page,
 				'rowsNum' => $rowsNum,
-				'productDetailURL' => $productDetailURL,
 				'productCat' => $productCat,
 				'productURL' => $productURL,
 				'indexURL' => $indexURL
