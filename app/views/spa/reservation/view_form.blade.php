@@ -79,15 +79,14 @@ $titleType = "oversea";
 			<label class="dates" for="">日期：</label>
 			<input class="datepicker" data-date-format="yyyy/mm/dd" id="open_at" name="service_date" size="9" value="">
 			<select>
-				@for($i=0 ; $i<24 ; $i++)
-				<option @if($i=='12')selected @endif>{{$i}}</option>
+				@for($i=13 ; $i<21 ; $i++)
+				<option>{{$i}}</option>
 				@endfor
 			</select><span>點</span><br/>
 
 			<label class="contactWay">方便聯繫的時間：</label>
 			<select name="contact_time">
 				<option value="morning">早上</option>
-				<option value="noon">中午</option>
 				<option value="afternoon">下午</option>
 				<option value="night">晚上</option>
 			</select>

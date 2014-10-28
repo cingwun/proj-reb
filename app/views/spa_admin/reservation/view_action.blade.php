@@ -95,7 +95,6 @@
 					<label>方便聯繫的時間</label><br/>
 					<select name="contact_time">
 						<option value="morning" @if($action == 'edit' && $reservation->contact_time == "morning")selected@endif>早上</option>
-						<option value="noon" @if($action == 'edit' && $reservation->contact_time == "noon")selected@endif>中午</option>
 						<option value="afternoon" @if($action == 'edit' && $reservation->contact_time == "afternoon")selected@endif>下午</option>
 						<option value="night" @if($action == 'edit' && $reservation->contact_time == "night")selected@endif>晚上</option>
 					</select>
