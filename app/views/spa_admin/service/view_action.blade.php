@@ -48,7 +48,7 @@
 		</label>
 	</div>
 	<div class="form-group">
-		<label>Meta Title:</label>
+		<label>title tag:</label>
 		<textarea class="form-control" rows="1" name="meta_title">@if($action == 'edit'){{$service->meta_tltle}}@endif</textarea>
 	</div>
 	<div class="form-group">

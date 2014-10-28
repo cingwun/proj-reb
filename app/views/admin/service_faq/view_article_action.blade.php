@@ -60,7 +60,7 @@ echo $title;
   @include('spa_admin._partials.widget_tabs', array('tabs'=>$tab))
   <!-- tabs -->
   <div class="form-group">
-    <label>Meta title:</label>
+    <label>title tag:</label>
     <textarea class="form-control" rows="1" name="meta_title"><?php echo Arr::get($article, 'meta_title', '')?></textarea>
   </div>
   <div class="form-group">

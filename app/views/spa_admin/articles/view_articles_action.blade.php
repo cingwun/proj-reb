@@ -93,7 +93,7 @@
 		</div>
 
 		<div class="form-group">
-			<label for="meta">Meta title:</label>
+			<label for="meta">title tag:</label>
 			<div>
 				<input type="text" class="form-control" id="meta_title" name="meta_title" size="12" value="{{array_get($specArticle, 'meta_title', '')}}">
 			</div>
